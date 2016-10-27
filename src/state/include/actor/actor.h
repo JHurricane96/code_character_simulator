@@ -2,7 +2,7 @@
 #define STATE_ACTOR_ACTOR_H
 
 #include <cstdint>
-#include "point.h"
+#include "vector2d.h"
 #include "state_export.h"
 
 namespace state {
@@ -13,11 +13,17 @@ private:
 	int64_t attack;
 	int64_t hp;
 	int64_t speed;
-	point::Point position;
-	point::Point velocity;
-	int64_t attacking_which;
+	physics::Vector2D position;
+	physics::Vector2D velocity;
+	int64_t attack_target_id;
 public:
 	virtual void Update() = 0;
+	int64_t GetId();
+	int64_t GetHp();
+	int64_t GetSpeed();
+	int64_t GetAttackTargetId();
+	physics::Vector2D GetVelocity();
+	physics::Vector2D GetPosition();
 };
 
 }

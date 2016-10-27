@@ -2,7 +2,7 @@
 #define STATE_TERRAIN_TERRAIN_ELEMENT_H
 
 #include <cstdint>
-#include "point.h"
+#include "vector2d.h"
 #include "state_export.h"
 
 namespace state {
@@ -22,7 +22,7 @@ enum LOS_TYPE {
 
 class STATE_EXPORT TerrainElement {
 private:
-	point::Point position;
+	physics::Vector2D position;
 	int64_t size;
 	TERRAIN_TYPE terrain_type;
 	LOS_TYPE los_type_player_1;
@@ -31,7 +31,7 @@ private:
 public:
 	TerrainElement(
 		TERRAIN_TYPE terrain_type,
-		point::Point position,
+		physics::Vector2D position,
 		int64_t size
 	);
 };
