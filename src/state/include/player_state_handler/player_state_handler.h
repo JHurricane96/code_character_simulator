@@ -4,8 +4,11 @@
 #include <memory>
 #include <cstdint>
 #include "vector2d.h"
+#include "actor/actor.h"
+#include "state.h"
 #include "terrain/terrain_element.h"
 #include "state_export.h"
+#include "utilities.h"
 
 namespace state {
 
@@ -18,40 +21,46 @@ struct TerrainElementView {
 
 class UnitView {
 private:
-
+	std::shared_ptr<Actor> unit;
 public:
 	physics::Vector2D GetPosition();
-	int64_t GetId();
+	act_id_t GetId();
 	int64_t GetHp();
 	int64_t GetSpeed();
-	int64_t GetAttackTargetId();
+	act_id_t GetAttackTargetId();
 	physics::Vector2D GetVelocity();
 	physics::Vector2D GetPosition();
+	void SetAttackTargetId(act_id_t attack_target_id);
 };
-
 
 class STATE_EXPORT StateView {
 private:
 	std::shared_ptr<State> state;
 public:
-	std::vector<int64_t> GetUnitIds();
-	std::vector<int64_t> GetEnemyIds();
-	std::vector<int64_t> GetTowerIds();
-	std::vector<int64_t> GetFlagIds();
+	list_act_id_t GetUnitIds();
+	list_act_id_t GetEnemyIds();
+	list_act_id_t GetTowerIds();
+	list_act_id_t GetFlagIds();
 	TerrainElementView XYToTerrainElement();
 	TerrainElementView OffsetToTerrainElement();
-	Actor
+	UnitView GetUnitFromId();
 };
 
 
 class STATE_EXPORT PlayerStateHandler {
 private:
-	int64_t player_id;
+	const shared_ptr<StateView> state_view;
+	act_id_t player_id;
 public:
 	PlayerStateHandler();
-	void MoveUnits();
-	void AttackUnit();
+	void MoveUnits(
+		list_act_id_t unit_ids,
+		physics::Vector2D destination,
+		Formation formation_type
+	);
+	void AttackUnit(list_act_id_t attacker_ids, act_id_t attack_target_id);
 	int64_t PlanPath();
+	StateView GetState();
 };
 
 }

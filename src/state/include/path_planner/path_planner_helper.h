@@ -9,17 +9,23 @@
 
 namespace state {
 
+class STATE_EXPORT Formation {
+public:
+    int64_t formation_id;
+    virtual std::vector<physics::Vector2D> ReturnFormation(int64_t formation_sizeR);
+};
+
 class STATE_EXPORT PathPlannerHelper {
 private:
 	std::vector<physics::Vector2D> next_points;
-	int64_t leader_id;
+	act_id_t leader_id;
 	physics::Vector2D relative_position;
 	bool is_in_formation;
 public:
 	bool IsPathPlanning();
 	void SetPath(
 		std::vector<physics::Vector2D> points,
-		int64_t leader_id,
+		act_id_t leader_id,
 		Point relative_position,
 		bool is_in_formation
 	);

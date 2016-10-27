@@ -9,19 +9,19 @@ namespace state {
 
 class STATE_EXPORT Actor {
 private:
-	int64_t id;
+	act_id_t id;
 	int64_t attack;
 	int64_t hp;
 	int64_t speed;
 	physics::Vector2D position;
 	physics::Vector2D velocity;
-	int64_t attack_target_id;
+	act_id_t attack_target_id;
 public:
 	virtual void Update() = 0;
-	int64_t GetId();
+	act_id_t GetId();
 	int64_t GetHp();
 	int64_t GetSpeed();
-	int64_t GetAttackTargetId();
+	act_id_t GetAttackTargetId();
 	physics::Vector2D GetVelocity();
 	physics::Vector2D GetPosition();
 };
