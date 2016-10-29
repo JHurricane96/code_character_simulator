@@ -37,6 +37,7 @@ class STATE_EXPORT StateView {
 private:
 	std::shared_ptr<State> state;
 public:
+	StateView(State &state);
 	list_act_id_t GetUnitIds();
 	list_act_id_t GetEnemyIds();
 	list_act_id_t GetTowerIds();
@@ -46,13 +47,12 @@ public:
 	UnitView GetUnitFromId();
 };
 
-
 class STATE_EXPORT PlayerStateHandler {
 private:
 	const StateView state_view;
 	act_id_t player_id;
 public:
-	PlayerStateHandler();
+	PlayerStateHandler(State &state);
 	void MoveUnits(
 		list_act_id_t unit_ids,
 		physics::Vector2D destination,
