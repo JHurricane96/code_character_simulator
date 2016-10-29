@@ -49,7 +49,7 @@ public:
 
 class STATE_EXPORT PlayerStateHandler {
 private:
-	const shared_ptr<StateView> state_view;
+	const StateView state_view;
 	act_id_t player_id;
 public:
 	PlayerStateHandler();
