@@ -19,6 +19,13 @@ struct TerrainElementView {
 	LOS_TYPE los_type;
 };
 
+class PathPlannerHelperView {
+private:
+	std::shared_ptr<PathPlannerHelper> path_planner_helper;
+public:
+	bool IsPathPlanning();
+};
+
 class UnitView {
 private:
 	std::shared_ptr<Actor> unit;
@@ -30,6 +37,7 @@ public:
 	act_id_t GetAttackTargetId();
 	physics::Vector2D GetVelocity();
 	physics::Vector2D GetPosition();
+	PathPlannerHelperView GetPathPlannerHelper();
 	void SetAttackTargetId(act_id_t attack_target_id);
 };
 
