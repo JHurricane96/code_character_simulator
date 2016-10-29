@@ -56,7 +56,7 @@ public:
 	void MoveUnits(
 		list_act_id_t unit_ids,
 		physics::Vector2D destination,
-		Formation formation_type
+		const std::unique_ptr<Formation> formation_type
 	);
 	void AttackUnit(list_act_id_t attacker_ids, act_id_t attack_target_id);
 	int64_t PlanPath();
