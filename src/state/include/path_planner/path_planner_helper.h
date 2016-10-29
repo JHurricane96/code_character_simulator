@@ -29,6 +29,7 @@ public:
 		Point relative_position,
 		bool is_in_formation
 	);
+	physics::Vector2D Update(physics::Vector2D current_position);
 };
 
 }
