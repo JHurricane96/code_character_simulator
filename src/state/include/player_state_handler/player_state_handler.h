@@ -244,8 +244,13 @@ public:
 		list_act_id_t attacker_ids,
 		act_id_t attack_target_id
 	);
+    /**
+     * @brief      Instructs the king to capture the flag
+     */
+    void FlagCapture();
 	/**
-	 * @brief      { function_description }
+	 * @brief      Calculates the total weight of the best path between
+     *             the given points
 	 *
 	 * @param[in]  start        The start
 	 * @param[in]  destination  The destination
