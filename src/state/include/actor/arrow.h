@@ -16,6 +16,7 @@ private:
 	int64_t damage;
 	/**
 	 * Damage mutipliers for various terrains
+     * TODO: Set sensible numbers
 	 */
 	const multiplier plane_plane		= 1;
 	const multiplier plane_mountain		= 1;
@@ -33,7 +34,10 @@ public:
 	 *
 	 * @param[in]  destination  The destination of the arrow
 	 */
-	void FireArrow(std::vector<physics::Vector2D> destination);
+	void FireArrow(
+        std::vector<physics::Vector2D> start,
+        std::vector<physics::Vector2D> destination
+        );
     /**
      * @brief      Update function to be called every tick
      */

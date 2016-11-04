@@ -3,6 +3,7 @@
 
 #include <memory>
 #include "actor/actor.h"
+#include "actor/arrow.h"
 #include "path_planner/path_planner_helper.h"
 #include "state_export.h"
 
