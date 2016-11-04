@@ -11,10 +11,20 @@ namespace state {
 class STATE_EXPORT Swordsman: public Actor {
 public:
 	Swordsman();
-	PathPlannerHelper path_planner_helper;
-	const std::unique_ptr<PathPlannerHelper> GetPathPlannerHelper();
-	void Update();
-};
+    /**
+     * An instance of the PathPlannerHelper class to help with path planning
+     */
+    PathPlannerHelper path_planner_helper;
+    /**
+     * @brief      Gets the path planner helper
+     *
+     * @return     The path planner helper
+     */
+    const std::unique_ptr<PathPlannerHelper> GetPathPlannerHelper();
+    /**
+     * @brief      Update function to be called every tick
+     */
+    void Update();};
 
 }
 

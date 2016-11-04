@@ -6,14 +6,29 @@
 #include "state_export.h"
 
 namespace state {
-
+/**
+ * Class for the entire terrain
+ */
 class STATE_EXPORT Terrain {
 private:
-	std::vector<std::vector<TerrainElement> > grid;
+	/**
+     * A 2D matrix of TerrainElements
+     */
+    std::vector<std::vector<TerrainElement> > grid;
 public:
 	Terrain();
-	XYToTerrainElement();
-	OffsetToTerrainElement();
+    /**
+     * @brief      Gets TerrainElement corresponding to position vector
+     *
+     * @return     Required Terrain Element
+     */
+    TerrainElement XYToTerrainElement();
+    /**
+     * @brief      Gets TerrainElement corresponding to position offset
+     *
+     * @return     Required Terrain Element
+     */
+    TerrainElement OffsetToTerrainElement();
 };
 
 }
