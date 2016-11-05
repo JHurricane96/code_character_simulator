@@ -1,3 +1,8 @@
+/**
+ * @file actor.h
+ * Defines the Base Actor class that all actors derive from
+ */
+
 #ifndef STATE_ACTOR_ACTOR_H
 #define STATE_ACTOR_ACTOR_H
 
@@ -13,107 +18,111 @@ namespace state {
 class STATE_EXPORT Actor {
 private:
 	/**
-     * The actor ID
-     */
-    act_id_t id;
-    /**
-     * The damage the actor can deal
-     */
+	 * The actor ID
+	 */
+	act_id_t id;
+	/**
+	 * The damage the actor can deal
+	 */
 	int64_t attack;
-    /**
-     * The number of helath points the actor currently has
-     */
+	/**
+	 * The number of helath points the actor currently has
+	 */
 	int64_t hp;
-    /**
-     * The max HP of the actor
-     */
+	/**
+	 * The max HP of the actor
+	 */
 	int64_t max_hp;
-    /**
-     * The max speed the actor can travel at
-     */
+	/**
+	 * The max speed the actor can travel at
+	 */
 	int64_t max_speed;
-    /**
-     * Total time taken to respawn at the base if dead
-     */
+	/**
+	 * Total time taken to respawn at the base if dead
+	 */
 	int64_t total_respawn_time;
-    /**
-     * The respawn time remaining (0 if alive)
-     */
+	/**
+	 * The respawn time remaining (0 if alive)
+	 */
 	int64_t time_to_respawn;
-    /**
-     * For base poisoning calculation
-     * If the actor spends too much time near the base, he starts to lose hp
-     * To discourage overly defensive formations
-     */
+	/**
+	 * For base poisoning calculation
+	 * If the actor spends too much time near the base, he starts to lose hp
+	 * To discourage overly defensive formations
+	 */
 	int64_t time_spent_near_base;
-    /**
-     * The actor's position vector
-     */
+	/**
+	 * The actor's position vector
+	 */
 	physics::Vector2D position;
-    /**
-     * The actor's velocity vector
-     */
+	/**
+	 * The actor's velocity vector
+	 */
 	physics::Vector2D velocity;
-    /**
-     * The actor's target if it is given one
-     */
+	/**
+	 * The actor's attack target if it is given one
+	 */
 	act_id_t attack_target_id;
+	/**
+	 * The radius of the actor's LOS
+	 */
+	int64_t los_radius;
 public:
-    /**
-     * @brief      Update function to be called every tick
-     */
+	/**
+	 * Update function to be called every tick
+	 */
 	virtual void Update() = 0;
-    /**
-     * @brief      Gets the Actor ID
-     *
-     * @return     The Actor ID
-     */
+	/**
+	 * Gets the Actor ID
+	 *
+	 * @return     The Actor ID
+	 */
 	act_id_t GetId();
-    /**
-     * @brief      Gets the Actor's HP
-     *
-     * @return     The Actor's HP
-     */
+	/**
+	 * Gets the Actor's HP
+	 *
+	 * @return     The Actor's HP
+	 */
 	int64_t GetHp();
-    /**
-     * @brief      Gets the Actor's maximum HP
-     *
-     * @return     The Actor's maximum HP
-     */
+	/**
+	 * Gets the Actor's maximum HP
+	 *
+	 * @return     The Actor's maximum HP
+	 */
 	int64_t GetMaxHp();
-    /**
-     * @brief      Gets the Actor's maximum speed.
-     *
-     * @return     The Actor's maximum speed.
-     */
+	/**
+	 * Gets the Actor's maximum speed.
+	 *
+	 * @return     The Actor's maximum speed.
+	 */
 	int64_t GetMaxSpeed();
-    /**
-     * @brief      Gets the time to respawn.
-     *
-     * @return     The time to respawn.
-     */
+	/**
+	 * Gets the time to respawn.
+	 *
+	 * @return     The time to respawn.
+	 */
 	int64_t GetTimeToRespawn();
-    /**
-     * @brief      Gets the Actor's attack target ID
-     *
-     * @return     The Actor's attack target ID
-     */
+	/**
+	 * Gets the Actor's attack target ID
+	 *
+	 * @return     The Actor's attack target ID
+	 */
 	act_id_t GetAttackTargetId();
-    /**
-     * @brief      Gets the Actor's velocity vector
-     *
-     * @return     The Actor's velocity vector
-     */
+	/**
+	 * Gets the Actor's velocity vector
+	 *
+	 * @return     The Actor's velocity vector
+	 */
 	physics::Vector2D GetVelocity();
-    /**
-     * @brief      Gets the Actor's position vector
-     *
-     * @return     The Actor's position vector
-     */
+	/**
+	 * Gets the Actor's position vector
+	 *
+	 * @return     The Actor's position vector
+	 */
 	physics::Vector2D GetPosition();
-    /**
-     * @brief      Set's the actor's respawn time to 0
-     */
+	/**
+	 * Set's the actor's respawn time to 0
+	 */
 	void Respawn();
 };
 

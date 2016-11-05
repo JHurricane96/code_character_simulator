@@ -1,3 +1,8 @@
+/**
+ * @file terrain_element.h
+ * Defines the Terrain Element class
+ */
+
 #ifndef STATE_TERRAIN_TERRAIN_ELEMENT_H
 #define STATE_TERRAIN_TERRAIN_ELEMENT_H
 
@@ -13,7 +18,7 @@ namespace state {
  * by the player
  */
 enum TERRAIN_TYPE {
-	PLAIN,
+	PLAIN = 0,
 	FOREST,
 	MOUNTAIN,
 	UNDEFINED,
@@ -33,42 +38,42 @@ enum LOS_TYPE {
 };
 
 /**
- * @brief      Class for terrain element
+ * Class for terrain element
  */
 class STATE_EXPORT TerrainElement {
 private:
-    /**
-     * Position vector to the center of the element
-     */
+	/**
+	 * Position vector to the center of the element
+	 */
 	physics::Vector2D position;
-    /**
-     * side length of the element
-     */
+	/**
+	 * Side length of the element
+	 */
 	int64_t size;
 	/**
-     * The type of terrain
-     */
-    TERRAIN_TYPE terrain_type;
-    /**
-     * The LOS type for player 1
-     */
+	 * The type of terrain
+	 */
+	TERRAIN_TYPE terrain_type;
+	/**
+	 * The LOS type for player 1
+	 */
 	LOS_TYPE los_type_player_1;
-    /**
-     * The LOS type for player 2
-     */
+	/**
+	 * The LOS type for player 2
+	 */
 	LOS_TYPE los_type_player_2;
-    /**
-     * The timestamps noting when the element was last visited by the players
-     */
+	/**
+	 * The timestamps noting when the element was last visited by the players
+	 */
 	int64_t last_seen_player_1, last_seen_player_2;
 public:
-    /**
-     * @brief      Constructor fot the Terrain Element
-     *
-     * @param[in]  terrain_type  The terrain type
-     * @param[in]  position      The position vector
-     * @param[in]  size          The side length
-     */
+	/**
+	 * Constructor fot the Terrain Element
+	 *
+	 * @param[in]  terrain_type  The terrain type
+	 * @param[in]  position      The position vector
+	 * @param[in]  size          The side length
+	 */
 	TerrainElement(
 		TERRAIN_TYPE terrain_type,
 		physics::Vector2D position,

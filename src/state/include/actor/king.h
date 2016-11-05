@@ -1,3 +1,8 @@
+/**
+ * @file arrow.h
+ * Defines the King class
+ */
+
 #ifndef STATE_ACTOR_KING_H
 #define STATE_ACTOR_KING_H
 
@@ -16,19 +21,19 @@ class STATE_EXPORT King: public Actor {
 public:
 	King();
 	/**
-     * An instance of the PathPlannerHelper class to help with path planning
-     */
-    PathPlannerHelper path_planner_helper;
-    /**
-     * @brief      Gets the path planner helper
-     *
-     * @return     The path planner helper
-     */
-    const std::unique_ptr<PathPlannerHelper> GetPathPlannerHelper();
-    /**
-     * @brief      Update function to be called every tick
-     */
-    void Update();
+	 * An instance of the PathPlannerHelper class to help with path planning
+	 */
+	PathPlannerHelper path_planner_helper;
+	/**
+	 * Gets the path planner helper
+	 *
+	 * @return     The path planner helper
+	 */
+	const std::unique_ptr<PathPlannerHelper> GetPathPlannerHelper();
+	/**
+	 * Update function to be called every tick
+	 */
+	void Update();
 };
 
 }

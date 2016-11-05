@@ -110,55 +110,55 @@ public:
 	 */
 	list_act_id_t GetFlagIds();
 	/**
-     * @brief      Sets units into motion
-     *
-     * @param[in]  unit_ids        Actor IDs of units to be moved
-     * @param[in]  destination     The destination
-     * @param[in]  formation_type  The formation type
-     */
-    void MoveUnits(
-        list_act_id_t unit_ids,
-        physics::Vector2D destination,
-        const std::unique_ptr<Formation> formation_type
-    );
-    /**
-     * @brief      Sets units a target to attack
-     *
-     * @param[in]  attacker_ids      Actor IDs of player units to be
-     *                               given a target
-     * @param[in]  attack_target_id  The target's Actor ID
-     */
-    void AttackUnit(
-        list_act_id_t attacker_ids,
-        act_id_t attack_target_id
-    );
-    /**
-     * @brief      Instructs the king to capture the flag
-     */
-    void FlagCapture();
-    /**
-     * @brief      Calculates the total weight of the best path between
-     *             the given points
-     *
-     * @param[in]  start        The start
-     * @param[in]  destination  The destination
-     * @param[in]  weights      The weights to be assigned to the
-     *                          terrain elements <Plain, Mountain, Forest>
-     *
-     * @return     The total weight of the path
-     */
-    int64_t PlanPath(
-        physics::Vector2D start,
-        physics::Vector2D destination,
-        std::vector<int64_t> weights
-        );
-    /**
-     * @brief      Gets the state
-     *
-     * @return     The State
-     */
-    State GetState();
-    /**
+	 * Sets units into motion
+	 *
+	 * @param[in]  unit_ids        Actor IDs of units to be moved
+	 * @param[in]  destination     The destination
+	 * @param[in]  formation_type  The formation type
+	 */
+	void MoveUnits(
+		list_act_id_t unit_ids,
+		physics::Vector2D destination,
+		const std::unique_ptr<Formation> formation_type
+	);
+	/**
+	 * Sets units a target to attack
+	 *
+	 * @param[in]  attacker_ids      Actor IDs of player units to be
+	 *                               given a target
+	 * @param[in]  attack_target_id  The target's Actor ID
+	 */
+	void AttackUnit(
+		list_act_id_t attacker_ids,
+		act_id_t attack_target_id
+	);
+	/**
+	 * Instructs the king to capture the flag
+	 */
+	void FlagCapture();
+	/**
+	 * Calculates the total weight of the best path between
+	 *             the given points
+	 *
+	 * @param[in]  start        The start
+	 * @param[in]  destination  The destination
+	 * @param[in]  weights      The weights to be assigned to the
+	 *                          terrain elements <Plain, Mountain, Forest>
+	 *
+	 * @return     The total weight of the path
+	 */
+	int64_t PlanPath(
+		physics::Vector2D start,
+		physics::Vector2D destination,
+		std::vector<int64_t> weights
+		);
+	/**
+	 * Gets the state
+	 *
+	 * @return     The State
+	 */
+	State GetState();
+	/**
 	 * Updates the internal state of the game.
 	 *
 	 * @param[in] delta_time The difference in time in ms between

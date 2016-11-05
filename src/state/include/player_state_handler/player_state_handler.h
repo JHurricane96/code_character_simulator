@@ -62,42 +62,52 @@ private:
 	std::shared_ptr<Actor> unit;
 public:
 	/**
-	 * @brief      Gets the ID of the actor
+	 * Gets the ID of the actor
 	 *
 	 * @return     The ID
 	 */
 	act_id_t GetId();
 	/**
-	 * @brief      Gets the health of the actor
+	 * Gets the health of the actor
 	 *
 	 * @return     The hp
 	 */
 	int64_t GetHp();
 	/**
-	 * @brief      Gets the maximum speed possible for the actor
+	 * Gets the maximum speed possible for the actor
 	 *
 	 * @return     The maximum speed
 	 */
 	int64_t GetMaxSpeed();
 	/**
-	 * @brief      Gets the ID of the actor's target
+	 * Gets the ID of the actor's target
 	 *
 	 * @return     The target's ID
 	 */
 	act_id_t GetAttackTargetId();
 	/**
-	 * @brief      Gets the velocity vector of the actor
+	 * Gets the velocity vector of the actor
 	 *
 	 * @return     The velocity vector
 	 */
 	physics::Vector2D GetVelocity();
 	/**
-	 * @brief      Gets the position vector of the actor
+	 * Gets the position vector of the actor
 	 *
 	 * @return     The position vector
 	 */
 	physics::Vector2D GetPosition();
+	/**
+	 * Gets the path planner helper
+	 *
+	 * @return     The path planner helper
+	 */
 	PathPlannerHelperView GetPathPlannerHelper();
+	/**
+	 * Sets the unit on course to attack the enemy unit specified by the attack_target_id
+	 *
+	 * @param[in]  attack_target_id  The actor's attack target
+	 */
 	void SetAttackTargetId(act_id_t attack_target_id);
 };
 
@@ -114,13 +124,13 @@ private:
 	std::shared_ptr<Actor> unit;
 public:
 	/**
-	 * @brief      Gets the ID of the enemy
+	 * Gets the ID of the enemy
 	 *
 	 * @return     The ID
 	 */
 	act_id_t GetId();
 	/**
-	 * @brief      Gets the position vector of the enemy
+	 * Gets the position vector of the enemy
 	 *
 	 * @return     The position vector
 	 */
@@ -143,43 +153,43 @@ private:
 public:
 	StateView(State &state);
 	/**
-	 * @brief      Gets Actor IDs for player units.
+	 * Gets Actor IDs for player units.
 	 *
 	 * @return     The unit Actor IDs
 	 */
 	list_act_id_t GetUnitIds();
 	/**
-	 * @brief      Gets Actor IDs for enemy units.
+	 * Gets Actor IDs for enemy units.
 	 *
 	 * @return     The enemy Actor IDs
 	 */
 	list_act_id_t GetEnemyIds();
 	/**
-	 * @brief      Gets Tower IDs the player has explored
+	 * Gets Tower IDs the player has explored
 	 *
 	 * @return     The tower IDs
 	 */
 	list_act_id_t GetTowerIds();
 	/**
-	 * @brief      Gets Flag IDs
+	 * Gets Flag IDs
 	 *
 	 * @return     The flag IDs
 	 */
 	list_act_id_t GetFlagIds();
 	/**
-	 * @brief      Gets TerrainElement corresponding to position vector
+	 * Gets TerrainElement corresponding to position vector
 	 *
 	 * @return     Required Terrain Element
 	 */
 	TerrainElementView XYToTerrainElement();
 	/**
-	 * @brief      Gets TerrainElement corresponding to position offset
+	 * Gets TerrainElement corresponding to position offset
 	 *
 	 * @return     Required Terrain Element
 	 */
 	TerrainElementView OffsetToTerrainElement();
 	/**
-	 * @brief      Gets the player's unit from Actor ID
+	 * Gets the player's unit from Actor ID
 	 *
 	 * @param[in]  actor_id  The actor ID
 	 *
@@ -187,7 +197,7 @@ public:
 	 */
 	UnitView GetUnitFromId(act_id_t actor_id);
 	/**
-	 * @brief      Gets the player's enemy unit from Actor ID
+	 * Gets the player's enemy unit from Actor ID
 	 *
 	 * @param[in]  actor_id  The actor ID
 	 *
@@ -222,7 +232,7 @@ public:
 	 */
 	PlayerStateHandler(State &state);
 	/**
-	 * @brief      Sets units into motion
+	 * Sets units into motion
 	 *
 	 * @param[in]  unit_ids        Actor IDs of units to be moved
 	 * @param[in]  destination     The destination
@@ -234,7 +244,9 @@ public:
 		const std::unique_ptr<Formation> formation_type
 	);
 	/**
-	 * @brief      Sets units a target to attack
+	 * Sets units a target to attack
+	 * Calls the PathPlanner for each unit to set the path the units
+	 * would follow
 	 *
 	 * @param[in]  attacker_ids      Actor IDs of player units to be
 	 *                               given a target
@@ -244,13 +256,14 @@ public:
 		list_act_id_t attacker_ids,
 		act_id_t attack_target_id
 	);
-    /**
-     * @brief      Instructs the king to capture the flag
-     */
-    void FlagCapture();
 	/**
-	 * @brief      Calculates the total weight of the best path between
-     *             the given points
+	 * Instructs the king to capture the flag
+	 *
+	 * Calls the PathPlanner to set the path the king would follow
+	 */
+	void FlagCapture();
+	/**
+	 * Calculates the total weight of the best path between the given points
 	 *
 	 * @param[in]  start        The start
 	 * @param[in]  destination  The destination
@@ -265,8 +278,7 @@ public:
 		std::vector<int64_t> weights
 		);
 	/**
-	 * @brief      Gets the restricted copy of the state for the player
-	 *             to examine
+	 * Gets the restricted copy of the state for the player to examine
 	 *
 	 * @return     The StateView
 	 */

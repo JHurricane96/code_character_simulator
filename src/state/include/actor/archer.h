@@ -1,3 +1,8 @@
+/**
+ * @file archer.h
+ * Defines the Archer class
+ */
+
 #ifndef STATE_ACTOR_ARCHER_H
 #define STATE_ACTOR_ARCHER_H
 
@@ -9,35 +14,35 @@
 
 namespace state {
 /**
- * @brief      Class for Archers
+ * Class for Archers
  */
 class STATE_EXPORT Archer: public Actor {
 private:
-    /**
-     * The max max range of an arrow shot by the archer
-     */
+	/**
+	 * The max max range of an arrow shot by the archer
+	 */
 	int64_t range;
 public:
 	Archer();
-    /**
-     * @brief      Gets the max range of an arrow shot by the archer
-     *
-     * @return     The range
-     */
+	/**
+	 * Gets the max range of an arrow shot by the archer
+	 *
+	 * @return     The range
+	 */
 	int64_t GetRange();
-    /**
-     * An instance of the PathPlannerHelper class to help with path planning
-     */
+	/**
+	 * An instance of the PathPlannerHelper class to help with path planning
+	 */
 	PathPlannerHelper path_planner_helper;
-    /**
-     * @brief      Gets the path planner helper
-     *
-     * @return     The path planner helper
-     */
+	/**
+	 * Gets the path planner helper
+	 *
+	 * @return     The path planner helper
+	 */
 	const std::unique_ptr<PathPlannerHelper> GetPathPlannerHelper();
-    /**
-     * @brief      Update function to be called every tick
-     */
+	/**
+	 * Update function to be called every tick
+	 */
 	void Update();
 };
 
