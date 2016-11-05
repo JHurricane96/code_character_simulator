@@ -1,3 +1,8 @@
+/**
+ * @file utilities.h
+ * All typedefs and utility functions go here
+ */
+
 #ifndef STATE_UTILITIES_H
 #define STATE_UTILITIES_H
 

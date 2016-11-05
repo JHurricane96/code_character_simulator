@@ -25,22 +25,22 @@ public:
 	/**
 	 * The ID of the formation.
 	 */
-    int64_t formation_id;
-    /**
-     * Returns a formation.
-     *
-     * A formation is a list of positions.
-     * One position is zero, which is the reference.
-     * All other units are placed relative to the reference.
-     * This method returns a formation.
-     *
-     * @param[in] formation_size The number of units in the formation.
-     *
-     * @return The list of positions that define the formation.
-     */
-    virtual std::vector<physics::Vector2D> ReturnFormation(
-    	int64_t formation_size
-    );
+	int64_t formation_id;
+	/**
+	 * Returns a formation.
+	 *
+	 * A formation is a list of positions.
+	 * One position is zero, which is the reference.
+	 * All other units are placed relative to the reference.
+	 * This method returns a formation.
+	 *
+	 * @param[in] formation_size The number of units in the formation.
+	 *
+	 * @return The list of positions that define the formation.
+	 */
+	virtual std::vector<physics::Vector2D> ReturnFormation(
+		int64_t formation_size
+	);
 };
 
 /**
