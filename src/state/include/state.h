@@ -114,12 +114,12 @@ public:
 	 *
 	 * @param[in]  unit_ids        Actor IDs of units to be moved
 	 * @param[in]  destination     The destination
-	 * @param[in]  formation_type  The formation type
+	 * @param[in]  formation_maker The formation maker
 	 */
 	void MoveUnits(
 		list_act_id_t unit_ids,
 		physics::Vector2D destination,
-		const std::unique_ptr<Formation> formation_type
+		const std::unique_ptr<FormationMaker> formation_maker
 	);
 	/**
 	 * Sets units a target to attack

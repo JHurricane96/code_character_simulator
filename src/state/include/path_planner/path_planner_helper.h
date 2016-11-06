@@ -20,7 +20,7 @@ namespace state {
  * An interface passed to path planners to make units move in
  * formation.
  */
-class STATE_EXPORT Formation {
+class STATE_EXPORT FormationMaker {
 public:
 	/**
 	 * The ID of the formation.
@@ -61,20 +61,20 @@ private:
 	/**
 	 * The Actor ID of the leader of the formation.
 	 *
-	 * @see Formation
+	 * @see FormationMaker
 	 */
 	act_id_t leader_id;
 	/**
 	 * The relative position with respect to the leader of the
 	 * formation.
 	 *
-	 * @see Formation
+	 * @see FormationMaker
 	 */
 	physics::Vector2D relative_position;
 	/**
 	 * Set to true if Actor is moving in formation.
 	 *
-	 * @see Formation
+	 * @see FormationMaker
 	 */
 	bool is_in_formation;
 public:
