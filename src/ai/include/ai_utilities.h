@@ -71,6 +71,20 @@ float GetEnemyAllyHpRatioByThreshold (
 	float threshold
 );
 
+/**
+ * Function to find distance of a unit from a given unit
+ *
+ * @param[in]  unitId   	ID of given unit
+ * @param[in]  unitview 	unit view of the unit to get distance from 
+ *
+ * @return     float distance
+ */
+
+float GetDistanceFromUnit(
+	std::shared_ptr<state::PlayerStateHandler> state,
+	state::act_id_t unitId, physics::Vector2D position
+);
+
 }
 
 #endif // AI_AI_UTILITIES_H
