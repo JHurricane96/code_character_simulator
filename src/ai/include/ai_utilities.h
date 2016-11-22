@@ -39,7 +39,22 @@ state::act_id_t NearestEnemyByType (
  *
  * @return     The result
  */
-float relu (float x);
+float Relu (float x);
+
+/**
+ * Function to find the ratio of hp of enemies to allies in a given unit's k neighbours
+ *
+ * @param[in]  state  The state
+ * @param[in]  id     The identifier for the Unit
+ * @param[in]  k      Number of neighbours to consider
+ *
+ * @return     The enemy ally HP ratio.
+ */
+float GetEnemyAllyHpRatio (
+	std::shared_ptr<state::PlayerStateHandler> state,
+	state::act_id_t id,
+	int k
+);
 
 }
 
