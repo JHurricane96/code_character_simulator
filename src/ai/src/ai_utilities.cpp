@@ -141,4 +141,13 @@ float GetEnemyAllyHpRatio (
 		return (enemyHp / allyHp);
 }
 
+bool InAttackRange (
+	std::shared_ptr<state::PlayerStateHandler> state,
+	state::act_id_t unitId,
+	state::EnemyUnitView enemy
+)	{
+	auto unit = state -> GetUnitFromId(unitId, nullptr);
+	return (enemy.GetPosition().distance(unit.GetPosition()) <= unit.GetAttackRange());
+}
+
 }
