@@ -56,6 +56,21 @@ float GetEnemyAllyHpRatio (
 	int k
 );
 
+/**
+ * Gets the enemy ally hp ratio by threshold.
+ *
+ * @param[in]  state      The state
+ * @param[in]  id         The identifier
+ * @param[in]  threshold  The threshold
+ *
+ * @return     The enemy ally hp ratio by threshold.
+ */
+float GetEnemyAllyHpRatioByThreshold (
+	std::shared_ptr<state::PlayerStateHandler> state,
+	state::act_id_t id,
+	float threshold
+);
+
 }
 
 #endif // AI_AI_UTILITIES_H
