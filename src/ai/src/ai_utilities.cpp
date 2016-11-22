@@ -184,4 +184,51 @@ state::act_id_t GetOptimalTarget (
 	return -1;
 }
 
+float GetDistanceFromUnit(
+	std::shared_ptr<state::PlayerStateHandler> state,
+	state::act_id_t unitId, physics::Vector2D position
+)	{
+		return position.distance(state -> GetUnitFromId(unitId, nullptr).GetPosition());
+}
+
+std::pair<state::act_id_t, float> NearestEnemy (
+	std::shared_ptr<state::PlayerStateHandler> state,
+	state::act_id_t id,
+	state::ActorType* type = nullptr
+)	{
+
+		state::UnitView parentUnit = state->GetUnitFromId(id, nullptr);
+		state::list_act_id_t enemies = state->GetPlayerEnemyIds();
+
+		state::act_id_t nearestEnemyId = -1;
+		float nearestEnemyDistance = FLT_MAX, dist;
+
+		if(type == nullptr) {
+
+			for (int i = 0; i < enemies.size(); i++) {
+
+				state::EnemyUnitView enemyUnit = state->GetEnemyUnitFromId(enemies[i], nullptr);
+				dist = enemyUnit.GetPosition().distance(parentUnit.GetPosition());
+
+				if (dist < nearestEnemyDistance) {
+					nearestEnemyDistance = dist;
+					nearestEnemyId = enemyUnit.GetId();
+				}
+			}
+		}
+		else {
+			for (int i = 0; i < enemies.size(); i++) {
+
+				state::EnemyUnitView enemyUnit = state->GetEnemyUnitFromId(enemies[i], nullptr);
+				dist = enemyUnit.GetPosition().distance(parentUnit.GetPosition());
+
+				if (dist < nearestEnemyDistance && (enemyUnit.GetActorType() == *type) ) {
+					nearestEnemyDistance = dist;
+					nearestEnemyId = enemyUnit.GetId();
+				}
+			}
+		}
+		return std::make_pair(nearestEnemyId, nearestEnemyDistance);
+}
+
 }
