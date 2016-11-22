@@ -85,6 +85,22 @@ float GetDistanceFromUnit(
 	state::act_id_t unitId, physics::Vector2D position
 );
 
+/**
+ * Function to find nearest enemy of a particular type if specified from a given unit
+ *
+ * @param[in]  state  The state
+ * @param[in]  id     The identifier for the Unit
+ * @param[in]  type   The type of enemy unit being searched for
+ *
+ * @return     A pair object containing (NearestEnemyUnitId, NearestEnemyUnitDistance)
+ */
+std::pair<state::act_id_t, float> NearestEnemy (
+	std::shared_ptr<state::PlayerStateHandler> state,
+	state::act_id_t id,
+	state::ActorType* type = nullptr
+);
+
+
 }
 
 #endif // AI_AI_UTILITIES_H
