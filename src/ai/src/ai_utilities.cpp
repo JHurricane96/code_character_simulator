@@ -290,4 +290,38 @@ std::pair<state::act_id_t, int> WeakestEnemy (
 		return std::make_pair(weakestEnemyId, weakestEnemyHP);
 }
 
+bool IsAttackingEnemy (
+	std::shared_ptr<state::PlayerStateHandler> state,
+	state::act_id_t id
+)	{
+		return (state -> GetUnitFromId(id, nullptr).GetAttackTarget(nullptr) != nullptr);
+}
+
+bool IsAttackingKing (
+	std::shared_ptr<state::PlayerStateHandler> state,
+	state::act_id_t id
+)	{
+		auto target = state->GetUnitFromId(id, nullptr).GetAttackTarget(nullptr);
+		if (target == nullptr)
+			return false;
+		if (target->GetActorType() == state::ActorType::KING) {
+			return true;
+		}
+		return false;
+}
+
+bool IsEnemyTowerDominating(std::shared_ptr<state::PlayerStateHandler> state) {
+	std::vector<state::TowerView> allyTowers = state->GetTowers();
+	std::vector<state::EnemyTowerView> foeTowers = state->GetEnemyTowers();
+	float allySum = 0, foeSum = 0;
+	for (int i = 0; i < allyTowers.size(); i++) {
+		allySum += allyTowers[i].GetHp();	
+	}
+	for (int i = 0; i < foeTowers.size(); i++) {
+		foeSum += foeTowers[i].GetHp();	
+	}
+	if (foeSum > allySum) return true;
+	else return false;
+}
+
 }
