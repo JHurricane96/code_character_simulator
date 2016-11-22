@@ -115,6 +115,32 @@ std::pair<state::act_id_t, int> WeakestEnemy (
 	float threshhold
 );
 
+/**
+ * Function to speculate whether a given unit is attacking or not
+ *
+ * @param[in]  state                 The state
+ * @param[in]  id                    The identifier for the Unit
+ *
+ * @return     True if attacking an enemy unit/tower, false otherwise.
+ */
+bool IsAttackingEnemy (
+	std::shared_ptr<state::PlayerStateHandler> state,
+	state::act_id_t id
+);
+
+/**
+ * Function to speculate whether a given unit is attacking the king or not
+ *
+ * @param[in]  state                 The state
+ * @param[in]  id                    The identifier for the Unit
+ *
+ * @return     True if attacking king, False otherwise.
+ */
+bool IsAttackingKing (
+	std::shared_ptr<state::PlayerStateHandler> state,
+	state::act_id_t id
+);
+
 }
 
 #endif // AI_AI_UTILITIES_H
