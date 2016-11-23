@@ -100,6 +100,20 @@ std::pair<state::act_id_t, float> NearestEnemy (
 	state::ActorType* type = nullptr
 );
 
+/**
+ * Function to find weakest enemy in a particular radius
+ *
+ * @param[in]  state       The state
+ * @param[in]  id          The identifier
+ * @param[in]  threshhold  The threshhold radius
+ *
+ * @return     A pair object containing (WeakestEnemyUnitId, WeakestEnemyUnitHP)
+ */
+std::pair<state::act_id_t, int> WeakestEnemy (
+	std::shared_ptr<state::PlayerStateHandler> state,
+	state::act_id_t id,
+	float threshhold
+);
 
 }
 
