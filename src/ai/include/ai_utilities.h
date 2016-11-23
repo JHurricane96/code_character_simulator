@@ -12,6 +12,15 @@
 namespace ai {
 
 /**
+ * Class for default formation.
+ */
+class DefaultFormation : public state::FormationMaker {
+	std::vector<physics::Vector2D> ReturnFormation(int64_t formation_size) override {
+		return std::vector<physics::Vector2D>(formation_size, physics::Vector2D(0, 0));
+	}
+};
+
+/**
 * Comparison function for the sort function used in GetEnemyAllyHpRatio
 *
 * @param[in]  a     Comparison parameter 1
@@ -139,6 +148,47 @@ bool IsAttackingEnemy (
 bool IsAttackingKing (
 	std::shared_ptr<state::PlayerStateHandler> state,
 	state::act_id_t id
+);
+
+/**
+ * Check if enemy unit is within range to attack
+ *
+ * @param[in]  state   The state
+ * @param[in]  unitId  The unit identifier
+ * @param[in]  enemy   The enemy
+ *
+ * @return     True if in range, False otherwise.
+ */
+bool InAttackRange (
+	std::shared_ptr<state::PlayerStateHandler> state,
+	state::act_id_t unitId,
+	state::EnemyUnitView enemy
+);
+
+/**
+ * Determines if enemy tower dominating.
+ *
+ * @param[in]  state  The state
+ *
+ * @return     True if enemy tower dominating, False otherwise.
+ */
+bool IsEnemyTowerDominating(std::shared_ptr<state::PlayerStateHandler> state);
+
+/**
+ * Gets the optimal target.
+ *
+ * @param[in]  state          The state
+ * @param[in]  unitId         The unit identifier
+ * @param[in]  sortedEnemies  The sorted enemies
+ * @param[in]  threshold      The threshold
+ *
+ * @return     The optimal target.
+ */
+state::act_id_t GetOptimalTarget (
+	std::shared_ptr<state::PlayerStateHandler> state,
+	state::act_id_t unitId,
+	std::vector<std::pair<int64_t, int>> sortedEnemies,
+	float threshold = -1
 );
 
 }
