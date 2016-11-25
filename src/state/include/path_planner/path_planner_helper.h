@@ -15,28 +15,28 @@
 namespace state {
 
 /**
- * Makes formations for path planning.
+ * Makes formations for path planning
  *
  * An interface passed to path planners to make units move in
- * formation.
+ * formation
  */
 class STATE_EXPORT FormationMaker {
 public:
 	/**
-	 * The ID of the formation.
+	 * The ID of the formation
 	 */
 	int64_t formation_id;
 	/**
-	 * Returns a formation.
+	 * Returns a formation
 	 *
-	 * A formation is a list of positions.
-	 * One position is zero, which is the reference.
-	 * All other units are placed relative to the reference.
-	 * This method returns a formation.
+	 * A formation is a list of positions
+	 * One position is zero, which is the reference
+	 * All other units are placed relative to the reference
+	 * This method returns a formation
 	 *
-	 * @param[in] formation_size The number of units in the formation.
+	 * @param[in] formation_size The number of units in the formation
 	 *
-	 * @return The list of positions that define the formation.
+	 * @return The list of positions that define the formation
 	 */
 	virtual std::vector<physics::Vector2D> ReturnFormation(
 		int64_t formation_size
@@ -44,79 +44,70 @@ public:
 };
 
 /**
- * Helps with path planning.
+ * Helps with path planning
  *
- * Attach this component to an Actor to allow path planning.
- * Enables fire-and-forget path planning.
+ * Attach this component to an Actor to allow path planning
+ * Enables fire-and-forget path planning
  */
 class STATE_EXPORT PathPlannerHelper {
 private:
 	/**
-	 * List of points to visit in order.
-	 *
-	 * Once the path planner has finished, the list of points to visit
-	 * is stored in this attribute.
+	 * The Actor that owns this PathPlannerHelper
 	 */
-	std::vector<physics::Vector2D> next_points;
+	std::weak_ptr<Actor> self;
 	/**
-	 * The Actor ID of the leader of the formation.
-	 *
-	 * @see FormationMaker
+	 * The leader of the formation to which this unit belongs
 	 */
-	act_id_t leader_id;
+	std::shared_ptr<Actor> leader;
 	/**
-	 * The relative position with respect to the leader of the
-	 * formation.
-	 *
-	 * @see FormationMaker
+	 * The ID of the formation to which this units belongs
+	 */
+	int64_t formation_id;
+	/**
+	 * The relative position of this unit with respect to the leader
+	 * of the formation
 	 */
 	physics::Vector2D relative_position;
-	/**
-	 * Set to true if Actor is moving in formation.
-	 *
-	 * @see FormationMaker
-	 */
-	bool is_in_formation;
 public:
 	/**
-	 * Determines if Actor is path planning.
+	 * Sets a path for this unit
+	 * 
+	 * Used when a unit is to be added to a formation
 	 *
-	 * @return true if path planning, false otherwise.
-	 */
-	bool IsPathPlanning();
-	/**
-	 * Path planner uses this method to set path for the Actor.
-	 *
-	 * @param[in] points            The list of points to move to in
-	 *                              order.
-	 * @param[in] leader_id         The Actor ID of the leader.
-	 * @param[in] relative_position The relative position of the Actor
-	 *                              in the formation.
-	 * @param[in] is_in_formation   Indicates if Actor should move in
-	 *                              formation.
+	 * @param[in]  formation_id       ID of the formation to which
+	 *                                this unit shall belong
+	 * @param[in]  relative_position  Position of this unit with
+	 *                                respect to the leader
+	 * @param[in]  is_leader          Indicates if leader of formation
+	 * @param[in]  leader             The leader of the formation.
+	 *                                Valid only if is_leader is set
 	 */
 	void SetPath(
-		std::vector<physics::Vector2D> next_points,
-		act_id_t leader_id,
-		Point relative_position,
-		bool is_in_formation
+		int64_t formation_id,
+		physics::Vector2D relative_position,
+		bool is_leader,
+		std::shared_ptr<Actor> leader
 	);
 	/**
-	 * Returns direction along which Actor should move.
+	 * Determines if this unit is a formation leader
 	 *
-	 * @param[in] current_position The current position of the Actor.
-	 *
-	 * @return Unit vector in the direction to move.
+	 * @return     true if leader, false otherwise
 	 */
-	physics::Vector2D ReturnDirection(
-		physics::Vector2D current_position
-	);
+	bool IsLeader();
 	/**
-	 * Called every frame to update attributes.
+	 * Update function to be called every tick
+	 * 
+	 * Sets the velocity of this unit
 	 *
-	 * @param[in] current_position The current position of the Actor.
+	 * @param      sorted_allies   Ally units sorted by x co-ordinate
+	 * @param      sorted_enemies  Enemy units sorted by x co-ordinate
+	 * @param[in]  destination     The destination
 	 */
-	void Update(physics::Vector2D current_position);
+	Update(
+		std::vector<std::shared_ptr<Actor> > &sorted_allies,
+		std::vector<std::shared_ptr<Actor> > &sorted_enemies,
+		physics::Vector2D destination
+	);
 };
 
 }
