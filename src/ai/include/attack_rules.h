@@ -45,6 +45,7 @@ public:
 	 * @return     int var (1-GoToAtack, 2-GoToRetreat, 3-GoToExplore, 4-GoToGuard)
 	 */
 	int Utility(state::act_id_t unitId, std::shared_ptr<state::PlayerStateHandler> state);
+	
 };
 
 }
