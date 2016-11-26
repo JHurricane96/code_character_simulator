@@ -21,7 +21,30 @@ class AttackRules {
 	state::FormationMaker *formation;
 public:
 
+	/**
+	 * Constructor for attack rules
+	 */
 	AttackRules();
+
+	/**
+	 * The strategy for the attack per unit per tick
+	 *
+	 * @param[in]  unitId  The unit identifier
+	 */
+	void Strategy (
+		state::act_id_t unitId,
+		std::shared_ptr<state::PlayerStateHandler> state,
+		std::vector<std::pair<int64_t, int>> sortedEnemies
+	);
+
+	/**
+	 * The utility function or the transition specifier for the Attack state
+	 *
+	 * @param[in]  unitId  The unit identifier
+	 *
+	 * @return     int var (1-GoToAtack, 2-GoToRetreat, 3-GoToExplore, 4-GoToGuard)
+	 */
+	int Utility(state::act_id_t unitId, std::shared_ptr<state::PlayerStateHandler> state);
 };
 
 }
