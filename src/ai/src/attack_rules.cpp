@@ -101,6 +101,53 @@ void AttackRules::Strategy (
 					break;
 			}
 		}
+
+		else {
+			std::unique_ptr<int> success(new int());
+			auto enemy_king = state -> GetEnemyKing(success.get());
+			float AttackValidity = GetEnemyAllyHpRatio(state, unitId, 20);
+
+			state::ActorType typeTower = state::ActorType::TOWER;
+			auto nearestEnemyTower = NearestEnemy(state, unitId, &typeTower);
+
+			/* Look for enemy's nearest tower */
+
+			if( nearestEnemyTower.first != -1) {
+				if (InAttackRange(state, unitId, state -> GetEnemyUnitFromId(nearestEnemyTower.first, nullptr)) ) {
+					state::list_act_id_t attackers;
+					attackers.push_back(unitId);
+					state->AttackUnit(attackers, nearestEnemyTower.first, nullptr);
+				}
+				else {
+					auto target = state->GetEnemyUnitFromId (nearestEnemyTower.first, nullptr);
+					state::list_act_id_t attackers;
+					attackers.push_back(unitId);
+					std::vector<physics::Vector2D> tempPath;
+					state->MoveUnits(attackers, std::vector<physics::Vector2D>({target.GetPosition()}), formation, nullptr);
+				}
+			}
+
+			/* Try to attack king if in LOS */
+
+			if (*success == 1) {
+				if (InAttackRange(state, unitId, enemy_king)) {
+					state::list_act_id_t attackers;
+					attackers.push_back(unitId);
+					state -> AttackUnit(attackers,enemy_king.GetId(), nullptr);
+				}
+				else {
+					state::list_act_id_t attackers;
+					attackers.push_back(unitId);
+					std::vector<physics::Vector2D> tempPath;
+					state->MoveUnits (
+						attackers,
+						std::vector<physics::Vector2D>({enemy_king.GetPosition()}),
+						formation,
+						nullptr);
+				}
+			}
+
+		}
 }
 
 }
