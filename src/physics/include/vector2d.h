@@ -6,12 +6,14 @@
 #ifndef PHYSICS_VECTOR2D_H
 #define PHYSICS_VECTOR2D_H
 
+#include "physics_export.h"
+
 namespace physics {
 
 /**
  * Class for 2D vectors
  */
-class Vector2D {
+class PHYSICS_EXPORT Vector2D {
 public:
 	Vector2D();
 	Vector2D(double x, double y);
