@@ -1,0 +1,28 @@
+cmake_minimum_required(VERSION 3.6.2)
+project(physics)
+
+set(SOURCE_FILES src/vector2d.cpp)
+set(INCLUDE_PATH include)
+set(EXPORTS_DIR ${CMAKE_BINARY_DIR}/exports)
+set(EXPORTS_FILE_PATH ${EXPORTS_DIR}/physics_export.h)
+
+set(LIBRARY_INSTALL_PATH ${CMAKE_INSTALL_PREFIX}/lib)
+set(RUNTIME_INSTALL_PATH ${CMAKE_INSTALL_PREFIX}/bin)
+set(INCLUDE_INSTALL_PATH ${CMAKE_INSTALL_PREFIX}/include)
+
+add_library(physics SHARED ${SOURCE_FILES})
+generate_export_header(physics EXPORT_FILE_NAME ${EXPORTS_FILE_PATH})
+target_include_directories(physics PUBLIC
+	$<BUILD_INTERFACE:;${EXPORTS_DIR} ${INCLUDE_PATH}>
+	$<INSTALL_INTERFACE:$<INSTALL_PREFIX>/include>
+)
+#export(TARGETS physics FILE physics_config.cmake)
+
+install(TARGETS physics EXPORT physics_config
+	ARCHIVE DESTINATION ${CMAKE_INSTALL_PREFIX}/lib
+	LIBRARY DESTINATION ${CMAKE_INSTALL_PREFIX}/lib
+	RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin
+)
+install(EXPORT physics_config DESTINATION ${CMAKE_INSTALL_PREFIX})
+install(DIRECTORY ${INCLUDE_PATH} DESTINATION ${CMAKE_INSTALL_PREFIX})
+install(FILES ${EXPORTS_FILE_PATH} DESTINATION ${CMAKE_INSTALL_PREFIX}/include)
