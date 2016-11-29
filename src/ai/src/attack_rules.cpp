@@ -147,6 +147,63 @@ void AttackRules::Strategy (
 				}
 			}
 
+			/* Check if wise to attack */
+
+			else if (AttackValidity < 1 && AttackValidity != -1 || true) {
+				auto unit = state -> GetUnitFromId (unitId, nullptr);
+				auto weakestEnemy = WeakestEnemy(state, unitId, unit.GetAttackRange());
+
+				/* Try to attack weakest enemy in LOS */
+
+				if(weakestEnemy.second < unit.GetHp() && (weakestEnemy.first != -1)) {
+					if( InAttackRange(state, unitId, state -> GetEnemyUnitFromId(weakestEnemy.first, nullptr)) ) {
+						state::list_act_id_t attackers;
+						attackers.push_back(unitId);
+						state -> AttackUnit(attackers, weakestEnemy.first, nullptr);
+					}
+				}
+
+				/* Otherwise pursue nearest enemy */
+
+				else {
+
+					state::ActorType typeScout = state::ActorType::SCOUT;
+					state::ActorType typeBase = state::ActorType::BASE;
+					state::ActorType typeSwordsman = state::ActorType::SWORDSMAN;
+					state::ActorType typeMagician = state::ActorType::MAGICIAN;
+
+					auto nearestEnemyScout = NearestEnemy(state, unitId, &typeScout);
+					auto nearestEnemyBase = NearestEnemy(state, unitId, &typeBase);
+
+					/* Look for enemy's nearest scout */
+
+					if( nearestEnemyScout.first != -1
+						&& InAttackRange(state, unitId, state -> GetEnemyUnitFromId(nearestEnemyScout.first, nullptr)) ) {
+							state::list_act_id_t attackers;
+							attackers.push_back(unitId);
+							state->AttackUnit(attackers, nearestEnemyScout.first, nullptr);
+						}
+
+					/* Look for enemy's base */
+
+					else if( nearestEnemyBase.first != -1) {
+						if (InAttackRange(state, unitId, state -> GetEnemyUnitFromId(nearestEnemyBase.first, nullptr)) ) {
+							state::list_act_id_t attackers;
+							attackers.push_back(unitId);
+							state->AttackUnit(attackers, nearestEnemyBase.first, nullptr);
+						}
+						else {
+							auto target = state->GetEnemyUnitFromId (nearestEnemyBase.first, nullptr);
+							state::list_act_id_t attackers;
+							attackers.push_back(unitId);
+							std::vector<physics::Vector2D> tempPath;
+							state->MoveUnits(attackers, std::vector<physics::Vector2D>({target.GetPosition()}), formation, nullptr);
+						}
+					}
+
+				}
+			}
+
 		}
 }
 
