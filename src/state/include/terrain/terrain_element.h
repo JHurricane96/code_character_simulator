@@ -7,6 +7,7 @@
 #define STATE_TERRAIN_TERRAIN_ELEMENT_H
 
 #include <cstdint>
+#include <vector>
 #include "vector2d.h"
 #include "state_export.h"
 
@@ -43,7 +44,7 @@ enum LOS_TYPE {
 class STATE_EXPORT TerrainElement {
 private:
 	/**
-	 * Position vector to the center of the element
+	 * Position vector to the top-left of the element
 	 */
 	physics::Vector2D position;
 	/**
@@ -55,18 +56,15 @@ private:
 	 */
 	TERRAIN_TYPE terrain_type;
 	/**
-	 * The LOS type for player 1
+	 * The LOS type for players
 	 */
-	LOS_TYPE los_type_player_1;
-	/**
-	 * The LOS type for player 2
-	 */
-	LOS_TYPE los_type_player_2;
+	std::vector<LOS_TYPE> los_type_player;
 	/**
 	 * The timestamps noting when the element was last visited by the players
 	 */
-	int64_t last_seen_player_1, last_seen_player_2;
+	std::vector<int64_t> last_seen_player;
 public:
+	TerrainElement();
 	/**
 	 * Constructor fot the Terrain Element
 	 *
@@ -79,6 +77,18 @@ public:
 		physics::Vector2D position,
 		int64_t size
 	);
+	/**
+	 * Gets the size of the TerrainElement
+	 *
+	 * @return     The size of the TerrainElement
+	 */
+	int64_t GetSize();
+	/**
+	 * Gets the position vector of the TerrainElement
+	 *
+	 * @return     The position vector
+	 */
+	physics::Vector2D GetPosition();
 };
 
 }
