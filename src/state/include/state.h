@@ -52,13 +52,11 @@ private:
 	/**
 	 * List of Actor IDs belonging each player
 	 */
-	list_act_id_t player_1_unit_ids, player_2_unit_ids;
+	std::vector<list_act_id_t> player_unit_ids;
 	/**
 	 * List of Actor IDs of visible enemy units for each player
 	 */
-	list_act_id_t
-		player_1_visible_enemy_unit_ids,
-		player_2_visible_enemy_unit_ids;
+	std::vector<list_act_id_t> player_visible_enemy_unit_ids;
 	/**
 	 * List of Actor IDs for towers
 	 */
@@ -74,29 +72,23 @@ public:
 	Terrain terrain;
 	State();
 	/**
-	 * Gets Actor IDs for player 1 units.
+	 * Gets Actor IDs of the given player's units.
 	 *
-	 * @return List of required Actor IDs.
+	 * @param[in]  player_id  ID of the player whose units are to be
+	 *                        returned
+	 *
+	 * @return     List of required Actor IDs.
 	 */
-	list_act_id_t GetPlayer1Ids();
+	list_act_id_t GetPlayerUnitIds(PlayerId player_id);
 	/**
-	 * Gets Actor IDs for player 2 units.
+	 * Gets Actor IDs for enemy units visible to a particular player
 	 *
-	 * @return List of required Actor IDs.
-	 */
-	list_act_id_t GetPlayer2Ids();
-	/**
-	 * Gets Actor IDs for enemy units visible to player 1.
+	 * @param[in]  player_id  ID of the player whose enemies are to be
+	 *                        returned
 	 *
-	 * @return List of required Actor IDs.
+	 * @return     List of required Actor IDs.
 	 */
-	list_act_id_t GetPlayer1EnemyIds();
-	/**
-	 * Gets Actor IDs for enemy units visible to player 2.
-	 *
-	 * @return List of required Actor IDs.
-	 */
-	list_act_id_t GetPlayer2EnemyIds();
+	list_act_id_t GetPlayerEnemyIds(PlayerId player_id);
 	/**
 	 * Gets Actor IDs for towers.
 	 *
