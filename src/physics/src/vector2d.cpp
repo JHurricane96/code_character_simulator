@@ -17,6 +17,14 @@ Vector2D Vector2D::operator-(Vector2D rhs){
 	return Vector2D(x - rhs.x, y - rhs.y);
 }
 
+Vector2D Vector2D::operator+(double scalar){
+    return Vector2D(x + scalar, y + scalar);
+}
+
+Vector2D Vector2D::operator-(double scalar){
+    return Vector2D(x - scalar, y - scalar);
+}
+
 Vector2D Vector2D::operator*(double scalar){
 	return Vector2D(x * scalar, y * scalar);
 }
