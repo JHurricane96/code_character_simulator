@@ -1,6 +1,6 @@
 /**
  * @file state.proto
- * Defines message format for entire state object
+ * Define message format for entire state object
  */
 
 /**
@@ -15,19 +15,19 @@ syntax = "proto3";
 package IPC;
 
 /**
- * Message format describing the state object
- * Repeated: Mapping a vector
+ * Message describes the state object
+ * Repeated: Map a vector
  * Enum: Composite message type with open enum types
  * Enum defaults to value set with tag 0
  */
 message State {
 
 	/**
-	 * Message describing base class actor which is used as is
+	 * Message describes base class actor which is used as is
 	 * for base, flag, king, scout and swordsman with corresponding 
 	 * actor_type set
 	 */
-	message Actor{
+	message Actor {
 		int64 id = 1;
 		int64 attack = 2;
 		int64 hp = 3;
@@ -38,148 +38,91 @@ message State {
 		int64 time_spent_near_base = 8;
 		int64 attack_target_id = 9;
 		int64 los_radius = 10;
+		
 		/**
 		 * Set type of actor
-		 * Defaults to actor with tag 0
+		 * Default to actor with tag 0
 		 */
-		enum actor_type{
-			actor = 0;
-			archer = 1;
-			arrow = 2;
-			base = 3;
-			flag = 4;
-			king = 5;
-			scout = 6;
-			swordsman = 7;
-			tower = 8;
+		enum Actor_type {
+			ACTOR = 0;
+			ARCHER = 1;
+			ARROW = 2;
+			BASE = 3;
+			FLAG = 4;
+			KING = 5;
+			SCOUT = 6;
+			SWORDSMAN = 7;
+			TOWER = 8;
 		}
-		actor_type = 11;
+		Actor_type actor_type = 11;
 	}
+
 	/**
-	 * Expecting an vector of actors of the form base, flag, king, scout and swordsman
+	 * Expects a vector of actors of the form base, flag, king, scout and swordsman
 	 */
 	repeated Actor actors = 1;
 
 	/**
-	 * Message describing derived class archer
+	 * Message describes derived class archer
 	 * Contains range in addition to actor attributes
 	 */
-	message Archer{
-		int64 id = 1;
-		int64 attack = 2;
-		int64 hp = 3;
-		int64 max_hp = 4;
-		int64 max_speed = 5;
-		int64 total_respawn_time = 6;
-		int64 time_to_respawn = 7;
-		int64 time_spent_near_base = 8;
-		int64 attack_target_id = 9;
-		int64 los_radius = 10;
-		int64 range = 11;
-		enum actor_type{
-			actor = 0;
-			archer = 1;
-			arrow = 2;
-			base = 3;
-			flag = 4;
-			king = 5;
-			scout = 6;
-			swordsman = 7;
-			tower = 8;
-		}
-		actor_type = 12;
+	message Archer {
+		Actor derived = 1;
+		int64 range = 2;
 	}
+
 	/**
-	 * Expecting an vector of archers
+	 * Expects a vector of archers
 	 */
 	repeated Archer archers = 2;
 
 	/**
-	 * Message describing derived class arrow
+	 * Message describes derived class arrow
 	 * Contains damage and multiplier(2D) in addition to actor attributes
 	 */
-	message Arrow{
-		int64 id = 1;
-		int64 attack = 2;
-		int64 hp = 3;
-		int64 max_hp = 4;
-		int64 max_speed = 5;
-		int64 total_respawn_time = 6;
-		int64 time_to_respawn = 7;
-		int64 time_spent_near_base = 8;
-		int64 attack_target_id = 9;
-		int64 los_radius = 10;
-		int64 damage = 11;
+	message Arrow {
+		Actor derived = 1;
+		int64 damage = 2;
+
 		/**
-	 	 * Expecting 64 bit ints
+	 	 * Expects 64 bit ints
 	 	 */
-		message array{
-			repeated int64;
+		message Array {
+			repeated int64 value;
 		}
+
 		/**
-	 	 * Expecting row of 64 bit ints
+	 	 * Expects row of 64 bit ints
 	 	 */
-		repeated array multiplier = 12;
-		enum actor_type{
-			actor = 0;
-			archer = 1;
-			arrow = 2;
-			base = 3;
-			flag = 4;
-			king = 5;
-			scout = 6;
-			swordsman = 7;
-			tower = 8;
-		}
-		actor_type = 13;
+		repeated Array multiplier = 3;
 	}
+
 	/**
-	 * Expecting an vector of arrows
+	 * Expects a vector of arrows
 	 */
 	repeated Arrow arrows = 3;
 
 	/**
-	 * Message describing derived class Tower
+	 * Message describes derived class Tower
 	 * Contains t_owner of composite type tower_owner in addition to actor attributes
 	 */
-	message Tower{
-		int64 id = 1;
-		int64 attack = 2;
-		int64 hp = 3;
-		int64 max_hp = 4;
-		int64 max_speed = 5;
-		int64 total_respawn_time = 6;
-		int64 time_to_respawn = 7;
-		int64 time_spent_near_base = 8;
-		int64 attack_target_id = 9;
-		int64 los_radius = 10;
-		enum tower_owner{
-			unowned = 0;
-			player1 = 1;
-			player2 = 2;
+	message Tower {
+		Actor derived = 1;
+		enum Tower_owner {
+			UNOWNED = 0;
+			PLAYER1 = 1;
+			PLAYER2 = 2;
 		}
-		tower_owner t_owner = 11;
-
-		enum actor_type{
-			actor = 0;
-			archer = 1;
-			arrow = 2;
-			base = 3;
-			flag = 4;
-			king = 5;
-			scout = 6;
-			swordsman = 7;
-			tower = 8;
-		}
-		actor_type = 12;
+		Tower_owner t_owner = 2;
 	}
+
 	/**
-	 * Expecting an vector of towers
+	 * Expects a vector of towers
 	 */
 	repeated Tower towers = 4;
 	
 	/**
-	 * Message describing derived class TowerCaptureLogEntry
+	 * Message describes derived class TowerCaptureLogEntry
 	 * Contains tower_id, timestamp and player_id
 	 */
 	message TowerCaptureLogEntry {
@@ -188,26 +131,32 @@ message State {
 	int64 player_id = 3;
 	}
 	repeated TowerCaptureLogEntry tower_capture_log = 5;
+
 	/**
 	 * IDs of units held by player 1
 	 */
 	repeated int64 player_1_unit_ids = 6;
+	
 	/**
 	 * IDs of units held by player 2
 	 */
 	repeated int64 player_2_unit_ids = 7;
+	
 	/**
 	 * IDs of enemy units seen by player 1
 	 */
 	repeated int64 player_1_visible_enemy_unit_ids = 8; 
+	
 	/**
 	 * IDs of enemy units seen by player 2
 	 */
 	repeated int64 player_2_visible_enemy_unit_ids = 9;
+	
 	/**
 	 * IDs of actors of type Tower
 	 */
 	repeated int64 tower_ids = 10;
+	
 	/**
 	 * IDs of actors of type Flag
 	 */
