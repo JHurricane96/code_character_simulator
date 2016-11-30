@@ -234,14 +234,17 @@ public:
 	/**
 	 * Sets units into motion
 	 *
-	 * @param[in]  unit_ids        Actor IDs of units to be moved
-	 * @param[in]  destination     The destination
-	 * @param[in]  formation_maker The formation maker
+	 * @param[in]  unit_ids         Actor IDs of units to be moved
+	 * @param[in]  destination      The destination
+	 * @param[in]  formation_maker  The formation maker
+	 * @param[in]  terrain_weights  Weights determining terrain
+	 *                              preference while path finding
 	 */
 	void MoveUnits(
 		list_act_id_t unit_ids,
 		physics::Vector2D destination,
-		const std::unique_ptr<FormationMaker> formation_maker
+		const std::unique_ptr<FormationMaker> formation_maker,
+		std::vector<int64_t> terrain_weights
 	);
 	/**
 	 * Sets units a target to attack
@@ -265,18 +268,18 @@ public:
 	/**
 	 * Calculates the total weight of the best path between the given points
 	 *
-	 * @param[in]  start        The start
-	 * @param[in]  destination  The destination
-	 * @param[in]  weights      The weights to be assigned to the
-	 *                          terrain elements <Plain, Mountain, Forest>
+	 * @param[in]  start            The start
+	 * @param[in]  destination      The destination
+	 * @param[in]  terrain_weights  Weights determining terrain
+	 *                              preference while path finding
 	 *
 	 * @return     The total weight of the path
 	 */
 	int64_t PlanPath(
 		physics::Vector2D start,
 		physics::Vector2D destination,
-		std::vector<int64_t> weights
-		);
+		std::vector<int64_t> terrain_weights
+	);
 	/**
 	 * Gets the restricted copy of the state for the player to examine
 	 *
