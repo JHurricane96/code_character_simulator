@@ -5,22 +5,17 @@
 
 #include <bits/stdc++.h>
 
+namespace ai {
+
 #define INF 10000
 #define TINY 0.00001
 #define SWORDHIT 100
 #define MAGEHIT 150
-namespace ai {
 
 AttackRules::AttackRules() {
 	formation = new DefaultFormation();
 }
 
-/**
- * Strategy to effectively attack enemies whilst in attack state
- *
- * @param[in]  unitId  The unit identifier
- * @param[in]  state   The state
- */
 void AttackRules::Strategy (
 	state::act_id_t unitId,
 	std::shared_ptr<state::PlayerStateHandler> state,
@@ -242,6 +237,50 @@ void AttackRules::Strategy (
 			}
 
 		}
+}
+
+
+int AttackRules::Utility(state::act_id_t unitId, std::shared_ptr<state::PlayerStateHandler> state) {
+
+	if(state->GetEnemyUnitFromId (unitId, nullptr).GetActorType() == state::ActorType::KING)
+		return 1;
+
+	float enemyAllyHpRatio = GetEnemyAllyHpRatio(state, unitId, 20);
+	float distFromEnemyBase = GetDistanceFromUnit(state, unitId, state -> GetEnemyBase().GetPosition());
+	float distFromBase = GetDistanceFromUnit(state, unitId, state -> GetBase().GetPosition());
+	float distFromKing = GetDistanceFromUnit(state, unitId, state -> GetKing().GetPosition());
+
+	std::unique_ptr<int> success(new int());
+	auto enemy_king = state -> GetEnemyKing(success.get());
+	float distFromEnemyKing = INF;
+	if (*success == 1) {
+		distFromEnemyKing = GetDistanceFromUnit(state, unitId, enemy_king.GetPosition());
+	}
+
+	bool isAttackingKing = IsAttackingKing(state, unitId);
+	bool isAttackingEnemy = IsAttackingEnemy(state, unitId);
+
+	float eaHPratioKing = GetEnemyAllyHpRatio(state, state -> GetKing().GetId(), 20);
+	float eaHPratioBase = GetEnemyAllyHpRatio(state, state -> GetBase().GetId(), 20);
+
+	if (isAttackingKing) return 1;
+
+	float attackUtility = (1.0 / enemyAllyHpRatio) * (1.0 / sqrt(distFromBase) + 1.0 / distFromEnemyBase + 1.0 / sqrt(distFromKing) + 1.0 / sqrt(distFromEnemyKing)); 
+	float guard_utility = relu(eaHPratioBase - 0.8) + relu(eaHPratioKing - 1);
+	float retreat_utility = 1. / (attackUtility + TINY);
+	float explore_utility = 1. / distFromBase + 1. / (attackUtility + guard_utility + TINY);
+
+	std::vector <float> utilities(4);
+	utilities.push_back(attackUtility);
+	utilities.push_back(guard_utility);
+	utilities.push_back(retreat_utility);
+	utilities.push_back(explore_utility);
+
+	float maxutility = *std::max_element(utilities.begin(), utilities.end());
+	if (maxutility == attackUtility) return 1;
+	if (maxutility == guard_utility) return 4;
+	if (maxutility == retreat_utility) return 2;
+	if (maxutility == explore_utility) return 3;
 }
 
 }
