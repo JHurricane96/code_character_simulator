@@ -52,22 +52,27 @@ public:
 	 * @param[in]  formation_maker  Returns list of points that defines
 	 *                              the formation layout
 	 * @param[in]  destination      The destination
+	 * @param[in]  terrain_weights  Weights determining terrain
+	 *                              preference while path finding
 	 */
 	void MakeFormation(
 		PlayerId player_id,
 		std::vector<std::shared_ptr<Actor> > &units,
 		Terrain &terrain,
 		std::shared_ptr<FormationMaker> formation_maker,
-		physics::Vector2D destination
+		physics::Vector2D destination,
+		std::vector<int64_t> terrain_weights
 	);
 	/**
 	 * Plans a path
 	 *
-	 * @param[in]  start_point  The start point
-	 * @param[in]  destination  The destination
-	 * @param      terrain      The terrain
-	 * @param[out] next_points  Ordered list of points to visit to
-	 *                          reach the destination
+	 * @param[in]  start_point      The start point
+	 * @param[in]  destination      The destination
+	 * @param      terrain          The terrain
+	 * @param[out] next_points      Ordered list of points to visit to
+	 *                              reach the destination
+	 * @param[in]  terrain_weights  Weights determining terrain
+	 *                              preference while path finding
 	 *
 	 * @return     The weight of the path
 	 */
@@ -75,7 +80,8 @@ public:
 		physics::Vector2D start_point,
 		physics::Vector2D destination,
 		Terrain &terrain,
-		std::vector<physics::Vector2D> &next_points
+		std::vector<physics::Vector2D> &next_points,
+		std::vector<int64_t> terrain_weights
 	);
 	/**
 	 * Update function to be called every tick

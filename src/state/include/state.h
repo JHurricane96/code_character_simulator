@@ -112,14 +112,17 @@ public:
 	/**
 	 * Sets units into motion
 	 *
-	 * @param[in]  unit_ids        Actor IDs of units to be moved
-	 * @param[in]  destination     The destination
-	 * @param[in]  formation_maker The formation maker
+	 * @param[in]  unit_ids         Actor IDs of units to be moved
+	 * @param[in]  destination      The destination
+	 * @param[in]  formation_maker  The formation maker
+	 * @param[in]  terrain_weights  The weights to be assigned to the
+	 *                              terrain elements <Plain, Mountain, Forest>
 	 */
 	void MoveUnits(
 		list_act_id_t unit_ids,
 		physics::Vector2D destination,
-		const std::unique_ptr<FormationMaker> formation_maker
+		std::shared_ptr<FormationMaker> formation_maker,
+		std::vector<int64_t> terrain_weights
 	);
 	/**
 	 * Sets units a target to attack
