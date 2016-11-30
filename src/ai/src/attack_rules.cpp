@@ -201,6 +201,43 @@ void AttackRules::Strategy (
 						}
 					}
 
+					/* Look for nearest enemy swordsman/mage */
+
+					else {
+						auto nearestEnemySwordsman = NearestEnemy(state, unitId, &typeSwordsman);
+						auto nearestEnemyMagician = NearestEnemy(state, unitId, &typeMagician);
+						std::pair<state::act_id_t, float> target(-1, FLT_MAX);
+
+						if(nearestEnemySwordsman.first == -1 && nearestEnemyMagician.first != -1) {
+							target = nearestEnemyMagician;
+						}
+						else if(nearestEnemySwordsman.first != -1 && nearestEnemyMagician.first == -1) {
+							target = nearestEnemySwordsman;
+						}
+						else if(nearestEnemySwordsman.first != -1 && nearestEnemyMagician.first != -1) {
+							auto swordsmanUnit = state -> GetEnemyUnitFromId(nearestEnemySwordsman.first, nullptr);
+							auto magicianUnit = state -> GetEnemyUnitFromId(nearestEnemyMagician.first, nullptr);
+
+							target = ( (MAGEHIT/(magicianUnit.GetHp() + TINY)) > (SWORDHIT/(swordsmanUnit.GetHp() + TINY)) )
+							? nearestEnemyMagician : nearestEnemySwordsman;
+						}
+
+						if(target.first != -1) {
+							if (InAttackRange(state, unitId, state -> GetEnemyUnitFromId(target.first, nullptr)) ) {
+								state::list_act_id_t attackers;
+								attackers.push_back(unitId);
+								state->AttackUnit(attackers, target.first, nullptr);
+							}
+							else {
+								auto targetUnit = state->GetEnemyUnitFromId (target.first, nullptr);
+								state::list_act_id_t attackers;
+								attackers.push_back(unitId);
+								std::vector<physics::Vector2D> tempPath;
+								state->MoveUnits(attackers, std::vector<physics::Vector2D>({targetUnit.GetPosition()}), formation, nullptr);
+							}
+						}
+					}
+
 				}
 			}
 
