@@ -11,11 +11,13 @@
 
 #include <vector>
 #include <memory>
+#include <cstdint>
 #include "vector2d.h"
 #include "utilities.h"
 #include "terrain/terrain.h"
 #include "actor/actor.h"
 #include "path_planner/formation.h"
+#include "path_planner/graph.h"
 #include "path_planner/path_planner_helper.h"
 #include "state_export.h"
 
@@ -38,7 +40,19 @@ private:
 	 * Incremented when a formation is made
 	 */
 	std::vector<int64_t> next_formation_id;
+	/**
+	 * Graph that helps with path planning
+	 * 
+	 * Does the actual path finding
+	 */
+	Graph graph;
 public:
+	/**
+	 * Constructor for PathPlanner
+	 *
+	 * @param[in]  map_size  The map size
+	 */
+	PathPlanner(int64_t map_size);
 	/**
 	 * Makes a formation
 	 *
