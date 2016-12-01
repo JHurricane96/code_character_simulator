@@ -54,7 +54,7 @@ private:
 	/**
 	 * The Actor that owns this PathPlannerHelper
 	 */
-	std::weak_ptr<Actor> self;
+	std::shared_ptr<Actor> self;
 	/**
 	 * The leader of the formation to which this unit belongs
 	 */
