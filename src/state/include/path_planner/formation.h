@@ -73,7 +73,7 @@ public:
 	 * @param      sorted_allies   Ally units sorted by x co-ordinate
 	 * @param      sorted_enemies  Enemy units sorted by x co-ordinate
 	 */
-	Update(
+	void Update(
 		std::vector<std::shared_ptr<Actor> > &sorted_allies,
 		std::vector<std::shared_ptr<Actor> > &sorted_enemies
 	);
