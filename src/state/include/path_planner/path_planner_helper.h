@@ -70,6 +70,12 @@ private:
 	physics::Vector2D relative_position;
 public:
 	/**
+	 * Constructor for PathPlannerHelper
+	 *
+	 * @param[in]  self  Actor that owns this PathPlannerHelper
+	 */
+	PathPlannerHelper(std::shared_ptr<Actor> self);
+	/**
 	 * Sets a path for this unit
 	 * 
 	 * Used when a unit is to be added to a formation
