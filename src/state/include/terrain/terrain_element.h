@@ -89,6 +89,20 @@ public:
 	 * @return     The position vector
 	 */
 	physics::Vector2D GetPosition();
+	/**
+	 * Gets the terrain type of the TerrainElement
+	 *
+	 * @return     The terrain type
+	 */
+	TERRAIN_TYPE GetTerrainType();
+	/**
+	 * Gets the Line of Sight for a given player
+	 *
+	 * @param[in]  player_id  The id of the player
+	 *
+	 * @return     The LOS Type
+	 */
+	LOS_TYPE GetLOS(int64_t player_id);
 };
 
 }
