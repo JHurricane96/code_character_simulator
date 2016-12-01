@@ -53,12 +53,14 @@ public:
 	 *
 	 * @param[in]  player_id        ID of the player that owns the
 	 *                              formation
+	 * @param[in]  formation_id     ID of the formation
 	 * @param[in]  units            Units in the formation
 	 * @param[in]  formation_maker  The formation maker
 	 * @param[in]  destinations     The destinations
 	 */
 	Formation(
 		PlayerId player_id,
+		int64_t formation_id,
 		std::vector<std::shared_ptr<Actor> > units,
 		std::shared_ptr<FormationMaker> formation_maker,
 		std::vector<physics::Vector2D> destinations
