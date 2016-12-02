@@ -46,6 +46,10 @@ private:
 	 */
 	std::vector<const std::shared_ptr<Actor> > actors;
 	/**
+	 * List of actors sorted by x co-ordinate
+	 */
+	std::vector<std::vector<std::shared_ptr<Actor> > > sorted_actors;
+	/**
 	 * Log of tower captures
 	 */
 	std::vector<TowerCaptureLogEntry> tower_capture_log;
