@@ -27,11 +27,11 @@ private:
 	/**
 	 * A helper vector that holds offsets to adjacent grid neighbours
 	 */
-	std::vector<physics::Vector2D> adj_neighbours;
+	std::vector<physics::Vector2D> adjacent_neighbours;
 	/**
 	 * A helper vector that holds offsets to diagonal grid neighbours
 	 */
-	std::vector<physics::Vector2D> dia_neighbours;
+	std::vector<physics::Vector2D> diagonal_neighbours;
 
 public:
 	Terrain(int64_t nrows);
@@ -64,28 +64,34 @@ public:
 	 *
 	 * @param[in]  offset  The grid offsets of the TerrainElement
 	 *                     whose neighbours are needed
+	 * @param[in]  width   The width from the edge of the map to be ignored
+	 *                     value is zero by default
 	 *
 	 * @return     The adjacent neighbours
 	 */
-	std::vector<physics::Vector2D> GetAdjacentNeighbours(physics::Vector2D offset);
+	std::vector<physics::Vector2D> GetAdjacentNeighbours(physics::Vector2D offset, int64_t width);
 	/**
 	 * Gets the diagonal neighbours of a given TerrainElement
 	 *
 	 * @param[in]  offset  The grid offset of the TerrainElement
 	 *                     whose neighbours are needed
+	 * @param[in]  width   The width from the edge of the map to be ignored
+	 *                     value is zero by default
 	 *
 	 * @return     The diagonal neighbours
 	 */
-	std::vector<physics::Vector2D> GetDiagonalNeighbours(physics::Vector2D offset);
+	std::vector<physics::Vector2D> GetDiagonalNeighbours(physics::Vector2D offset, int64_t width);
 	/**
 	 * Gets all the neighbours of a given TerrainElement
 	 *
 	 * @param[in]  offset  The grid offset of the TerrainElement
 	 *                     whose neighbours are needed
+	 * @param[in]  width   The width from the edge of the map to be ignored
+	 *                     value is zero by default
 	 *
 	 * @return     The neighbours
 	 */
-	std::vector<physics::Vector2D> GetAllNeighbours(physics::Vector2D offset);
+	std::vector<physics::Vector2D> GetAllNeighbours(physics::Vector2D offset, int64_t width);
 
 };
 

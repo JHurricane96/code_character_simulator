@@ -66,7 +66,7 @@ private:
 public:
 	TerrainElement();
 	/**
-	 * Constructor fot the Terrain Element
+	 * Constructor for the Terrain Element
 	 *
 	 * @param[in]  terrain_type  The terrain type
 	 * @param[in]  position      The position vector
@@ -102,7 +102,7 @@ public:
 	 *
 	 * @return     The LOS Type
 	 */
-	LOS_TYPE GetLOS(int64_t player_id);
+	LOS_TYPE GetLos(int64_t player_id);
 };
 
 }
