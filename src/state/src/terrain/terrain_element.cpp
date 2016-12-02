@@ -16,12 +16,12 @@ physics::Vector2D TerrainElement::GetPosition() {
 	return position;
 }
 
-TERRAIN_TYPE TerrainElement::GetTerrainType(){
+TERRAIN_TYPE TerrainElement::GetTerrainType() {
 	return terrain_type;
 }
 
-LOS_TYPE TerrainElement::GetLOS(int64_t player_id){
-		return los_type_player[player_id];
+LOS_TYPE TerrainElement::GetLos(int64_t player_id) {
+	return los_type_player[player_id];
 }
 
 }
