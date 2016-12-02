@@ -47,6 +47,26 @@ public:
 	Vector2D operator-(Vector2D rhs);
 
 	/**
+	 * Scalar Addition operator
+	 * vec.x + scalar, vec.y + scalar
+	 *
+	 * @param[in]  scalar  The scalar to add
+	 *
+	 * @return     The new vector
+	 */
+	Vector2D operator+(double scalar);
+
+	/**
+	 * Scalar Subtraction operator
+	 * vec.x - scalar, vec.y - scalar
+	 *
+	 * @param[in]  scalar  The scalar to subtract
+	 *
+	 * @return     The new vector
+	 */
+	Vector2D operator-(double scalar);
+
+	/**
 	 * Scalar multiplication operator
 	 *
 	 * @param[in]  scalar  The factor to multiply by
