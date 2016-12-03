@@ -88,12 +88,10 @@ public:
 	 *
 	 * Sets the units' velocities in each formation
 	 *
-	 * @param      sorted_allies   Ally units sorted by x co-ordinate
-	 * @param      sorted_enemies  Enemy units sorted by x co-ordinate
+	 * @param      sorted_units  Units sorted by x co-ordinate
 	 */
 	void Update(
-		std::vector<std::shared_ptr<Actor> > &sorted_allies,
-		std::vector<std::shared_ptr<Actor> > &sorted_enemies
+		std::vector<std::vector<std::shared_ptr<Actor> > > &sorted_units
 	);
 }
 
