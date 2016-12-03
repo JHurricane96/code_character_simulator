@@ -68,6 +68,10 @@ private:
 	 * of the formation
 	 */
 	physics::Vector2D relative_position;
+	/**
+	 * Set to true if the unit is currently moving
+	 */
+	bool is_path_planning;
 public:
 	/**
 	 * Constructor for PathPlannerHelper
@@ -100,6 +104,12 @@ public:
 	 * @return     true if leader, false otherwise
 	 */
 	bool IsLeader();
+	/**
+	 * Determines if unit is moving
+	 *
+	 * @return     true if moving, false otherwise.
+	 */
+	bool IsPathPlanning();
 	/**
 	 * Update function to be called every tick
 	 * 
