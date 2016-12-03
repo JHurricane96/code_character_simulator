@@ -105,6 +105,20 @@ public:
 	 */
 	bool IsLeader();
 	/**
+	 * Updates this unit's formation leader
+	 * 
+	 * Used when the old leader is dead/in another formation
+	 *
+	 * @param[in]  new_leader  The new leader
+	 */
+	void UpdateLeader(std::shared_ptr<Actor> new_leader);
+	/**
+	 * Makes this unit its formation's leader
+	 * 
+	 * Used when the old leader is dead/in another formation
+	 */
+	void MakeLeader();
+	/**
 	 * Determines if unit is moving
 	 *
 	 * @return     true if moving, false otherwise.
