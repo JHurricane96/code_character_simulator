@@ -13,6 +13,7 @@ enum PlayerId
 {
 	PLAYER1 = 0,
 	PLAYER2 = 1,
+	LAST_PLAYER = PLAYER2,
 };
 
 #endif
