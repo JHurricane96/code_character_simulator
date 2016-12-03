@@ -150,4 +150,38 @@ bool InAttackRange (
 	return (enemy.GetPosition().distance(unit.GetPosition()) <= unit.GetAttackRange());
 }
 
+state::act_id_t GetOptimalTarget (
+	std::shared_ptr<state::PlayerStateHandler> state,
+	state::act_id_t unitId,
+	std::vector<std::pair<int64_t, int>> sortedEnemies,
+	float threshold
+) {
+	auto enemies = sortedEnemies;
+
+	/** 
+	 * Check if enemy king is available, 
+	 * in range and return it if it needs to be attacked 
+	 */
+	std::unique_ptr<int> success(new int());
+	auto enemy_king = state -> GetEnemyKing(success.get());
+	if (*success == 1 
+		&& InAttackRange(state, unitId, enemy_king) 
+		&& (GetEnemyAllyHpRatio( state, enemy_king.GetId(), threshold) > 1)
+	) {
+		return enemy_king.GetId();
+	}
+	
+	/* If king not available, get the next weakest enemy */
+	else {
+		for(auto enemy : sortedEnemies) {
+			if (InAttackRange(state, unitId, state->GetEnemyUnitFromId(enemy.first, nullptr))
+				&& (GetEnemyAllyHpRatio( state, enemy.first, threshold) > 1)
+			) {
+				return enemy.first;
+			}	
+		}
+	}
+	return -1;
+}
+
 }
