@@ -72,6 +72,12 @@ private:
 	 * Set to true if the unit is currently moving
 	 */
 	bool is_path_planning;
+	/**
+	 * True when the unit is in the right place in the formation
+	 * 
+	 * Always true for leaders
+	 */
+	bool is_in_formation;
 public:
 	/**
 	 * Constructor for PathPlannerHelper
@@ -150,6 +156,12 @@ public:
 	 * Called if all units in this unit's formation are in formation
 	 */
 	void SpeedUp();
+	/**
+	 * Determines if the unit is in formation
+	 *
+	 * @return     true if in formation, false otherwise
+	 */
+	bool IsInFormation();
 	/**
 	 * Update function to be called every tick
 	 * 
