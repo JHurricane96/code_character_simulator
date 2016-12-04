@@ -161,9 +161,75 @@ message State {
 	 * IDs of actors of type Flag
 	 */
 	repeated int64 flag_ids = 11;
-}
 
-/**
- * TO-DO
- * Add formations and terrain support
- */
+	/**
+	 * Message describing Vector2D Class
+	 *
+	 */
+	message Vector2D {
+		double x = 1;
+		double y = 2;
+	}
+
+	/**
+	 * Message describing TerrainElement Class
+	 */
+	message TerrainElement {
+		Vector2D position = 1;
+		int64 size = 2;
+		enum TERRAIN_TYPE {
+			PLAIN = 0,
+			FOREST,
+			MOUNTAIN,
+			UNDEFINED,
+		};
+		TERRAIN_TYPE terrain_type = 3;
+		enum LOS_TYPE {
+			UNEXPLORED,
+			EXPLORED,
+			DIRECT_LOS,
+		};
+		LOS_TYPE los_type_player_1 = 4;
+		LOS_TYPE los_type_player_2 = 5;
+		int64 last_seen_player_1 = 6;
+		int64 last_seen_player_2 = 7;
+	}
+
+	/**
+	 * Message describing Terrain Class
+	 */
+	message Terrain {
+		/**
+		 * Message containing rows of terrain grid
+		 */
+		message terrain_rows {
+			repeated TerrainElement terrain_element = 1;
+		}
+
+		repeated terrain_rows grid = 2;
+	}
+
+	/**
+	 * Message describing FormationMaker Class
+	 */
+	message FormationMaker {
+		int64 formation_id = 1;
+	}
+	
+	/**
+	 * Message describing Formation Class
+	 */
+	message Formation {
+		enum PlayerId
+		{
+			PLAYER1 = 0,
+			PLAYER2 = 1,
+		};
+		PlayerId player_id = 1;
+		int64 formation_id = 2;
+		repeated Actor units = 3;
+		Actor leader = 4;
+		repeated FormationMaker formation_maker = 5;
+		repeated Vector2D destinations = 6;
+	}
+}
