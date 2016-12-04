@@ -231,4 +231,36 @@ std::pair<state::act_id_t, float> NearestEnemy (
 		return std::make_pair(nearestEnemyId, nearestEnemyDistance);
 }
 
+state::act_id_t NearestEnemyByType (
+	std::shared_ptr<state::PlayerStateHandler> state,
+	state::act_id_t id,
+	std::vector<state::ActorType> types
+)	{
+
+		state::UnitView parentUnit = state->GetUnitFromId(id, nullptr);
+		state::list_act_id_t enemies = state->GetPlayerEnemyIds();
+
+		state::act_id_t nearestEnemyId = -1;
+		float nearestEnemyDistance = FLT_MAX, dist;
+
+		for (int i = 0; i < enemies.size(); i++) {
+
+			state::EnemyUnitView enemyUnit = state->GetEnemyUnitFromId(enemies[i], nullptr);
+			dist = enemyUnit.GetPosition().distance(parentUnit.GetPosition());
+
+			bool isTypeValid = false;
+			for (int j = 0; j < types.size();j++){
+				if (enemyUnit.GetActorType() == types[j]){
+					isTypeValid = true;
+					break;
+				}
+			}
+			if (dist < nearestEnemyDistance && isTypeValid ) {
+				nearestEnemyDistance = dist;
+				nearestEnemyId = enemyUnit.GetId();
+			}
+		}
+		return nearestEnemyId;
+}
+
 }
