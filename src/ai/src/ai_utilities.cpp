@@ -263,4 +263,31 @@ state::act_id_t NearestEnemyByType (
 		return nearestEnemyId;
 }
 
+std::pair<state::act_id_t, int> WeakestEnemy (
+	std::shared_ptr<state::PlayerStateHandler> state,
+	state::act_id_t id,
+	float threshhold
+)	{
+
+		state::UnitView parentUnit = state->GetUnitFromId(id, nullptr);
+		state::list_act_id_t enemies = state->GetPlayerEnemyIds();
+
+		state::act_id_t weakestEnemyId = -1;
+		int weakestEnemyHP = INT_MAX, hp;
+		float dist;
+
+		for (int i = 0; i < enemies.size(); i++) {
+
+			state::EnemyUnitView enemyUnit = state->GetEnemyUnitFromId(enemies[i], nullptr);
+			hp = enemyUnit.GetHp();
+			dist = enemyUnit.GetPosition().distance(parentUnit.GetPosition());
+
+			if (hp < weakestEnemyHP && dist < threshhold) {
+				weakestEnemyHP = hp;
+				weakestEnemyId = enemyUnit.GetId();
+			}
+		}
+		return std::make_pair(weakestEnemyId, weakestEnemyHP);
+}
+
 }
