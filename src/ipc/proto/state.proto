@@ -164,7 +164,6 @@ message State {
 
 	/**
 	 * Message describing Vector2D Class
-	 *
 	 */
 	message Vector2D {
 		double x = 1;
@@ -178,17 +177,17 @@ message State {
 		Vector2D position = 1;
 		int64 size = 2;
 		enum TERRAIN_TYPE {
-			PLAIN = 0,
-			FOREST,
-			MOUNTAIN,
-			UNDEFINED,
-		};
+			PLAIN = 0;
+			FOREST = 1;
+			MOUNTAIN = 2;
+			UNDEFINED = 3;
+		}
 		TERRAIN_TYPE terrain_type = 3;
 		enum LOS_TYPE {
-			UNEXPLORED,
-			EXPLORED,
-			DIRECT_LOS,
-		};
+			UNEXPLORED = 0;
+			EXPLORED = 1;
+			DIRECT_LOS = 2;
+		}
 		LOS_TYPE los_type_player_1 = 4;
 		LOS_TYPE los_type_player_2 = 5;
 		int64 last_seen_player_1 = 6;
@@ -202,11 +201,11 @@ message State {
 		/**
 		 * Message containing rows of terrain grid
 		 */
-		message terrain_rows {
+		message TerrainRows {
 			repeated TerrainElement terrain_element = 1;
 		}
 
-		repeated terrain_rows grid = 2;
+		repeated TerrainRows grid = 2;
 	}
 
 	/**
@@ -220,11 +219,10 @@ message State {
 	 * Message describing Formation Class
 	 */
 	message Formation {
-		enum PlayerId
-		{
-			PLAYER1 = 0,
-			PLAYER2 = 1,
-		};
+		enum PlayerId {
+			PLAYER1 = 0;
+			PLAYER2 = 1;
+		}
 		PlayerId player_id = 1;
 		int64 formation_id = 2;
 		repeated Actor units = 3;
