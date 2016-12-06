@@ -88,7 +88,7 @@ message State {
 	 	 * Expects 64 bit ints
 	 	 */
 		message Array {
-			repeated int64 value;
+			repeated int64 value = 1;
 		}
 
 		/**

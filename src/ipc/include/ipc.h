@@ -5,9 +5,8 @@
 #ifndef IPC_IPC_H
 #define IPC_IPC_H
 
-#include<memory>
-#include<atomic>
-#include<string>
+#include <memory>
+#include <string>
 #include "state.h"
 
 namespace ipc {
