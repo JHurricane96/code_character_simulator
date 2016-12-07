@@ -94,4 +94,22 @@ public:
 	GroupState* SelectState(state::act_id_t unitId, std::shared_ptr<state::PlayerStateHandler> state_handler);
 };
 
+GroupState* Attack::update (
+	state::act_id_t unitId, 
+	std::shared_ptr<state::PlayerStateHandler> state_handler,
+	std::vector<std::pair<int64_t, int>> sortedEnemies,
+	std::vector<state::act_id_t> &kingsGuard,
+	std::vector<state::act_id_t> &flagsGuard
+) {
+	attack_rules -> Strategy(unitId, state_handler, sortedEnemies);
+	return SelectState(unitId, state_handler);
+}
+
+GroupState* Attack::SelectState(state::act_id_t unitId, std::shared_ptr<state::PlayerStateHandler> state_handler) {
+	int new_state_no = attack_rules -> Utility(unitId, state_handler);
+	if(new_state_no == 4)
+			return new Guard;
+	return NULL; 
+}
+
 }
