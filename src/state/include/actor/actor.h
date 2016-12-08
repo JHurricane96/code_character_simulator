@@ -9,6 +9,7 @@
 #include <cstdint>
 #include "vector2d.h"
 #include "state_export.h"
+#include "utilities.h"
 
 namespace state {
 
@@ -21,6 +22,10 @@ private:
 	 * The actor ID
 	 */
 	act_id_t id;
+	/**
+	 * ID of the player that owns this actor
+	 */
+	PlayerId player_id;
 	/**
 	 * The damage the actor can deal
 	 */
@@ -87,6 +92,12 @@ public:
 	 * @return     The Actor ID
 	 */
 	act_id_t GetId();
+	/**
+	 * Gets the ID of the player that owns this Actor
+	 *
+	 * @return     The required player's ID
+	 */
+	PlayerId GetPlayerId();
 	/**
 	 * Gets the Actor's HP
 	 *
