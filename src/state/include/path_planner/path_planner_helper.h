@@ -139,6 +139,12 @@ public:
 	 */
 	bool IsPathPlanning();
 	/**
+	 * Speeds this unit up
+	 * 
+	 * Called if all units in this unit's formation are in formation
+	 */
+	void SpeedUp();
+	/**
 	 * Update function to be called every tick
 	 * 
 	 * Sets the velocity of this unit
