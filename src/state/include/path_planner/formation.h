@@ -47,6 +47,10 @@ private:
 	 * List of destinations to visit in order
 	 */
 	std::vector<physics::Vector2D> destinations;
+	/**
+	 * true if formation is empty/reached destination, false otherwise
+	 */
+	bool is_finished;
 public:
 	/**
 	 * Creates a new Formation
@@ -65,6 +69,19 @@ public:
 		std::shared_ptr<FormationMaker> formation_maker,
 		std::vector<physics::Vector2D> destinations
 	);
+	/**
+	 * Returns is_finished flag
+	 *
+	 * @return     true if formation is empty/reached destination,
+	 *             false otherwise
+	 */
+	bool IsFinished();
+	/**
+	 * Sets is_finished flag to true
+	 * 
+	 * Done when formation is empty/reached destination
+	 */
+	void Finish();
 	/**
 	 * Update function to be called every tick
 	 * 
