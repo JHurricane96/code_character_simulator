@@ -38,6 +38,12 @@ private:
 	 */
 	int64_t max_speed;
 	/**
+	 * Radius of the actor
+	 *
+	 * Assumes actors are circles
+	 */
+	int64_t size;
+	/**
 	 * Total time taken to respawn at the base if dead
 	 */
 	int64_t total_respawn_time;
@@ -99,6 +105,12 @@ public:
 	 * @return     The Actor's maximum speed.
 	 */
 	int64_t GetMaxSpeed();
+	/**
+	 * Gets the Actor's size
+	 *
+	 * @return     The size
+	 */
+	int64_t GetSize();
 	/**
 	 * Gets the time to respawn.
 	 *
