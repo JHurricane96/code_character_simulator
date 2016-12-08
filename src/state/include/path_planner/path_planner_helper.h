@@ -125,6 +125,14 @@ public:
 	 */
 	void MakeLeader();
 	/**
+	 * Updates this unit's relative position in its formation
+	 * 
+	 * Used after some units leave the formation
+	 *
+	 * @param[in]  relative_position  The new relative position
+	 */
+	void UpdateRelativePosition(physics::Vector2D relative_position);
+	/**
 	 * Determines if unit is moving
 	 *
 	 * @return     true if moving, false otherwise.
