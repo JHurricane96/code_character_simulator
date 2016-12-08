@@ -131,4 +131,33 @@ GroupState* Guard::SelectState(state::act_id_t unitId, std::shared_ptr<state::Pl
 	return NULL;
 }
 
+class Group
+{
+private:
+	int group_id;
+	state::act_id_t unitId;
+	GroupState* state;
+	// list_act_id_t group_actors;	// actors in this group
+public:
+	Group(state::act_id_t actid) : state(new Guard())
+	{
+		unitId = actid;
+		group_id = rand() % mod;
+	}
+
+	virtual void update (
+		std::shared_ptr<state::PlayerStateHandler> state_handler, 
+		std::vector<std::pair<int64_t, int>> sortedEnemies,
+		std::vector<state::act_id_t> &kingsGuard,
+		std::vector<state::act_id_t> &flagsGuard
+	) {
+		GroupState* NewState = state->update(unitId, state_handler, sortedEnemies, kingsGuard, flagsGuard);
+		if(NewState != NULL)
+		{
+			delete state;
+			state = NewState;
+		}
+	};
+};
+
 }
