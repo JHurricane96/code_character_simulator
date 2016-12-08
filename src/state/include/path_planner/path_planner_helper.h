@@ -99,6 +99,12 @@ public:
 		std::shared_ptr<Actor> leader
 	);
 	/**
+	 * Gets unit's formation's ID
+	 *
+	 * @return     The formation ID
+	 */
+	int64_t GetFormationId();
+	/**
 	 * Determines if this unit is a formation leader
 	 *
 	 * @return     true if leader, false otherwise
