@@ -69,6 +69,10 @@ private:
 	 * Actor IDs for flags
 	 */
 	list_act_id_t flag_ids;
+	/**
+	 * The State object's path planning mastermind
+	 */
+	PathPlanner path_planner;
 public:
 	/**
 	 * Contains terrain and LOS details
