@@ -43,4 +43,8 @@ double Vector2D::magnitude() {
 	return sqrt(x*x + y*y);
 }
 
+double Vector2D::distance(Vector2D other) {
+	return sqrt(pow(x - other.x, 2) + pow(y - other.y, 2));
+}
+
 }

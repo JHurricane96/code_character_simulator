@@ -99,6 +99,14 @@ public:
 	 * @return     The magnitude of the vector
 	 */
 	double magnitude();
+	/**
+	 * Distance between this and another vector
+	 *
+	 * @param[in]  other  The other vector
+	 *
+	 * @return     The distance between the two vectors
+	 */
+	double distance(Vector2D other);
 
 	double x;
 	double y;
