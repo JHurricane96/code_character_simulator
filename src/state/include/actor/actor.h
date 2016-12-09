@@ -8,6 +8,7 @@
 
 #include <cstdint>
 #include "vector2d.h"
+#include "path_planner/path_planner_helper.h"
 #include "state_export.h"
 #include "utilities.h"
 
@@ -78,7 +79,21 @@ protected:
 	 * The radius of the actor's LOS
 	 */
 	int64_t los_radius;
+	/**
+	 * An instance of the PathPlannerHelper class to help with path planning
+	 */
+	PathPlannerHelper path_planner_helper;
 public:
+	/**
+	 * Constructor for Actor class
+	 */
+	Actor();
+	/**
+	 * Gets the path planner helper
+	 *
+	 * @return     The path planner helper
+	 */
+	const std::unique_ptr<PathPlannerHelper> GetPathPlannerHelper();
 	/**
 	 * Update function to be called every tick
 	 *
