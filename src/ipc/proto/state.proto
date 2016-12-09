@@ -208,6 +208,8 @@ message State {
 		repeated TerrainRows grid = 2;
 	}
 
+	Terrain terrain = 12;
+
 	/**
 	 * Message describing FormationMaker Class
 	 */
