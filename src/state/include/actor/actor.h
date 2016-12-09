@@ -17,7 +17,7 @@ namespace state {
  * The base Actor Class
  */
 class STATE_EXPORT Actor {
-private:
+protected:
 	/**
 	 * The actor ID
 	 */
