@@ -15,6 +15,7 @@
 #include "utilities.h"
 #include "terrain/terrain.h"
 #include "actor/actor.h"
+#include "path_planner/formation.h"
 #include "path_planner/path_planner_helper.h"
 #include "state_export.h"
 
