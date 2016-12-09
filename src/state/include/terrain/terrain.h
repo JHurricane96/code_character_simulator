@@ -69,7 +69,7 @@ public:
 	 *
 	 * @return     The adjacent neighbours
 	 */
-	std::vector<physics::Vector2D> GetAdjacentNeighbours(physics::Vector2D offset, int64_t width);
+	std::vector<physics::Vector2D> GetAdjacentNeighbours(physics::Vector2D offset, int64_t width = 0);
 	/**
 	 * Gets the diagonal neighbours of a given TerrainElement
 	 *
@@ -80,7 +80,7 @@ public:
 	 *
 	 * @return     The diagonal neighbours
 	 */
-	std::vector<physics::Vector2D> GetDiagonalNeighbours(physics::Vector2D offset, int64_t width);
+	std::vector<physics::Vector2D> GetDiagonalNeighbours(physics::Vector2D offset, int64_t width = 0);
 	/**
 	 * Gets all the neighbours of a given TerrainElement
 	 *
@@ -91,7 +91,7 @@ public:
 	 *
 	 * @return     The neighbours
 	 */
-	std::vector<physics::Vector2D> GetAllNeighbours(physics::Vector2D offset, int64_t width);
+	std::vector<physics::Vector2D> GetAllNeighbours(physics::Vector2D offset, int64_t width = 0);
 
 };
 
