@@ -94,7 +94,7 @@ public:
 	void Update(
 		std::vector<std::vector<std::shared_ptr<Actor> > > &sorted_units
 	);
-}
+};
 
 }
 
