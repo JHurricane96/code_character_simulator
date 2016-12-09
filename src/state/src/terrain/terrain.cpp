@@ -51,7 +51,7 @@ physics::Vector2D Terrain::GetSize() {
 	return last.GetPosition() + last.GetSize();
 }
 
-std::vector<physics::Vector2D> Terrain::GetAdjacentNeighbours(physics::Vector2D offset, int64_t width = 0) {
+std::vector<physics::Vector2D> Terrain::GetAdjacentNeighbours(physics::Vector2D offset, int64_t width) {
 	std::vector<physics::Vector2D> neighbours;
 	double width_offset = (double)width / grid[0][0].GetSize();
 	for(int64_t i = 0; i < 4; i++) {
@@ -64,7 +64,7 @@ std::vector<physics::Vector2D> Terrain::GetAdjacentNeighbours(physics::Vector2D 
 	return neighbours;
 }
 
-std::vector<physics::Vector2D> Terrain::GetDiagonalNeighbours(physics::Vector2D offset, int64_t width = 0) {
+std::vector<physics::Vector2D> Terrain::GetDiagonalNeighbours(physics::Vector2D offset, int64_t width) {
 	std::vector<physics::Vector2D> neighbours;
 	double width_offset = (double)width / grid[0][0].GetSize();
 	for(int64_t i = 0; i < 4; i++) {
@@ -77,7 +77,7 @@ std::vector<physics::Vector2D> Terrain::GetDiagonalNeighbours(physics::Vector2D 
 	return neighbours;
 }
 
-std::vector<physics::Vector2D> Terrain::GetAllNeighbours(physics::Vector2D offset, int64_t width = 0) {
+std::vector<physics::Vector2D> Terrain::GetAllNeighbours(physics::Vector2D offset, int64_t width) {
 	std::vector<physics::Vector2D> neighbours = GetAdjacentNeighbours(offset, width);
 	std::vector<physics::Vector2D> diagonals = GetDiagonalNeighbours(offset, width);
 	neighbours.insert(neighbours.end(), diagonals.begin(), diagonals.end());
