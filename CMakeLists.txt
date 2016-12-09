@@ -5,7 +5,8 @@ include(GenerateExportHeader)
 include(CMakeDependentOption)
 
 option(BUILD_PHYSICS "Build physics shared library" OFF)
-CMAKE_DEPENDENT_OPTION(BUILD_TESTER "Build tester shared library" OFF "NOT BUILD_PHYSICS" OFF)
+CMAKE_DEPENDENT_OPTION(BUILD_STATE "Build state shared library" OFF "NOT BUILD_PHYSICS" OFF)
+CMAKE_DEPENDENT_OPTION(BUILD_TESTER "Build tester shared library" OFF "NOT BUILD_STATE" OFF)
 CMAKE_DEPENDENT_OPTION(BUILD_MAIN "Build main executable" OFF "NOT BUILD_TESTER" OFF)
 
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
@@ -21,6 +22,8 @@ endforeach(OUTPUTCONFIG CMAKE_CONFIGURATION_TYPES)
 
 if(BUILD_PHYSICS)
 	add_subdirectory(src/physics)
+elseif(BUILD_STATE)
+	add_subdirectory(src/state)
 elseif(BUILD_TESTER)
 	add_subdirectory(src/tester)
 elseif(BUILD_MAIN)
