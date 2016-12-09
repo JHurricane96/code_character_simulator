@@ -13,8 +13,10 @@
 #include <cstdint>
 #include "actor/actor.h"
 #include "terrain/terrain.h"
-#include "state_export.h"
+#include "path_planner/path_planner.h"
+#include "path_planner/path_planner_helper.h"
 #include "utilities.h"
+#include "state_export.h"
 
 namespace state {
 
