@@ -156,6 +156,12 @@ public:
 	 */
 	physics::Vector2D GetVelocity();
 	/**
+	 * Sets the Actor's velocity
+	 *
+	 * @param[in]  new_velocity  The new velocity
+	 */
+	void SetVelocity(physics::Vector2D new_velocity);
+	/**
 	 * Gets the Actor's position vector
 	 *
 	 * @return     The Actor's position vector
