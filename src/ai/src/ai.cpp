@@ -160,4 +160,25 @@ public:
 	};
 };
 
+AI::AI() {
+	init_groups = false;
+}
+
+void AI::SetSortedEnemies (
+	std::shared_ptr<state::PlayerStateHandler> state
+) {
+
+	auto enemies = state->GetPlayerEnemyIds();
+	for(auto enemy : enemies) {
+		sortedEnemies.push_back (
+				std::make_pair (
+					enemy,
+					state->GetEnemyUnitFromId(enemy, nullptr).GetHp()
+				)
+			);
+	}
+	std::sort(sortedEnemies.begin(), sortedEnemies.end(), SortedBySecondElement);
+	return;
+}
+
 }
