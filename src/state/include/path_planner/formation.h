@@ -94,7 +94,7 @@ public:
 		std::vector<std::shared_ptr<Actor> > &sorted_allies,
 		std::vector<std::shared_ptr<Actor> > &sorted_enemies
 	);
-}
+};
 
 }
 
