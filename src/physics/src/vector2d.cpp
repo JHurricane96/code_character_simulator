@@ -3,6 +3,8 @@
 
 namespace physics {
 
+Vector2D::Vector2D() : x(), y() {}
+
 Vector2D::Vector2D(double x, double y) : x(x), y(y) {}
 
 bool Vector2D::operator==(Vector2D rhs) {
