@@ -10,6 +10,7 @@
 #include <cstdint>
 #include "vector2d.h"
 #include "utilities.h"
+#include "actor/actor.h"
 #include "path_planner/path_planner_helper.h"
 #include "state_export.h"
 
