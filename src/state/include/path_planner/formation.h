@@ -31,7 +31,7 @@ private:
 	/**
 	 * Units in the formation
 	 */
-	std::vector<shared_ptr<Actor> > units;
+	std::vector<std::shared_ptr<Actor> > units;
 	/**
 	 * Leader of the formation
 	 * 
