@@ -1,7 +1,17 @@
 cmake_minimum_required(VERSION 3.6.2)
 project(state)
 
-set(SOURCE_FILES src/terrain/terrain.cpp src/terrain/terrain_element.cpp)
+set(SOURCE_FILES
+	src/state.cpp
+	src/actor/actor.cpp
+	src/actor/swordsman.cpp
+	src/terrain/terrain.cpp
+	src/terrain/terrain_element.cpp
+	src/path_planner/formation.cpp
+	src/path_planner/graph.cpp
+	src/path_planner/path_planner.cpp
+	src/path_planner/path_planner_helper.cpp
+)
 set(INCLUDE_PATH include)
 set(EXPORTS_DIR ${CMAKE_BINARY_DIR}/exports)
 set(EXPORTS_FILE_PATH ${EXPORTS_DIR}/state_export.h)
