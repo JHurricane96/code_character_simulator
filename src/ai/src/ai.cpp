@@ -181,4 +181,18 @@ void AI::SetSortedEnemies (
 	return;
 }
 
+void AI::Update(std::shared_ptr<state::PlayerStateHandler> state) {
+	if (!init_groups){
+		for (auto actid : state -> GetPlayerUnitIds()) {
+			groups.push_back(new Group(actid));
+		}
+		init_groups = true;
+	}
+
+	AI::SetSortedEnemies(state);
+	
+	for (auto &group : groups)
+		group -> update(state, sortedEnemies, kingsGuard, flagsGuard);
+}
+
 }
