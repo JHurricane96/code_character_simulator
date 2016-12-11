@@ -190,6 +190,18 @@ void AI::Update(std::shared_ptr<state::PlayerStateHandler> state) {
 	}
 
 	AI::SetSortedEnemies(state);
+
+	auto to_respawn_ids = state->GetRespawnables();
+
+	for (auto to_respawn_id : to_respawn_ids) {
+		if (rand() % 2 == 0)
+			state->RespawnUnit(to_respawn_id, state->GetBase().GetId(), NULL);
+		else {
+			auto towers = state->GetTowers();
+			int chosen = rand() % towers.size();
+			state->RespawnUnit(to_respawn_id, towers[chosen].GetId(), NULL);
+		}
+	}
 	
 	for (auto &group : groups)
 		group -> update(state, sortedEnemies, kingsGuard, flagsGuard);
