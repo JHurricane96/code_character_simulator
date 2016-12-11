@@ -3,6 +3,69 @@
 #include "state.pb.h"
 
 /**
+ * Populates the utility message with the play/pause status
+ *
+ * Utility messages can be user logs, play/pause status or level number
+ * @param[in]  play_pause_status  current status of renderer/simulator
+ *
+ * @return     Exit status
+ */
+int PopulateStatus(bool play_pause_status)
+{
+	IPC::Utilities Utility;
+
+	Utility.set_play_pause_status(play_pause_status);
+
+    if (!Utility.SerializeToOstream(std::cout)) {
+      cerr << "Failed to transfer play/pause status" << endl;
+      return -1;
+    }
+    return 0;
+}
+
+/**
+ * Populates the utility message with the level number
+ *
+ * Utility messages can be user logs, play/pause status or level number
+ * @param[in]  play_pause_status  current status of renderer/simulator
+ *
+ * @return     Exit status
+ */
+int PopulateLevelNumber(int level_number)
+{
+	IPC::Utilities Utility;
+
+	Utility.set_level_number(level_number);
+
+	if (!Utility.SerializeToOstream(std::cout)) {
+      cerr << "Failed to transfer level number" << endl;
+      return -1;
+    }
+    return 0;
+}
+
+/**
+ * Populates the utility message with the user debug output
+ *
+ * Utility messages can be user logs, play/pause status or level number
+ * @param[in]  play_pause_status  current status of renderer/simulator
+ *
+ * @return     Exit status
+ */
+int PopulateUserLogs(std::string user_logs)
+{
+	IPC::Utilities Utility;
+
+	Utility.set_user_logs(user_logs);
+
+	if (!Utility.SerializeToOstream(std::cout)) {
+      cerr << "Failed to transfer user logs" << endl;
+      return -1;
+    }
+    return 0;
+}
+
+/**
  * Populates the terrain
  *
  * Terrain is a grid where each unit (terrain element) consists of position
@@ -112,11 +175,11 @@ int PopulateState(std::shared_ptr<state::State> StateVar) {
 	IPC::State StateMessage;
 
 	if (PopulateTerrain(StateMessage->set_allocated_terrain(), &StateVar) < 0) {
-		std::cerr << "Failed to load terrain" <<endl;
+		std::cerr << "Failed to load terrain" << endl;
 		return -1;
 	}
 	if (PopulateActors(&state) < 0) {
-		std::cerr << "Failed to load actors" <<endl;
+		std::cerr << "Failed to load actors" << endl;
 		return -1;
 	}
 	return 0;
