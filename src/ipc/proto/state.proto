@@ -209,27 +209,4 @@ message State {
 	}
 
 	Terrain terrain = 12;
-
-	/**
-	 * Message describing FormationMaker Class
-	 */
-	message FormationMaker {
-		int64 formation_id = 1;
-	}
-	
-	/**
-	 * Message describing Formation Class
-	 */
-	message Formation {
-		enum PlayerId {
-			PLAYER1 = 0;
-			PLAYER2 = 1;
-		}
-		PlayerId player_id = 1;
-		int64 formation_id = 2;
-		repeated Actor units = 3;
-		Actor leader = 4;
-		repeated FormationMaker formation_maker = 5;
-		repeated Vector2D destinations = 6;
-	}
 }
