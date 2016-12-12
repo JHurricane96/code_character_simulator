@@ -108,7 +108,7 @@ int PopulateTerrain(IPC::Terrain* TerrainMessage, std::shared_ptr<state::State>*
 			/**
 			 * Vector2D to store and map coordinate to terrain element
 			 */
-			physics::Vector2D position;
+			physics::Vector2D position, translated_position;
 			/**
 			 * To find x and y coordinates of the grid
 			 */
@@ -125,10 +125,14 @@ int PopulateTerrain(IPC::Terrain* TerrainMessage, std::shared_ptr<state::State>*
 
 			state::TerrainElement terrain_element_object = terrain_grid->CoordinateToTerrainElement(position);
 
+			translated_position = terrain_element_object->GetPosition();
+
 			/**
 			 * Set position of terrain element
 			 */
-			terrain_element_message->set_allocated_position(terrain_element_object->GetPosition());
+			IPC::Vector2D element_position = terrain_element_message->set_allocated_position();
+			element_position.set_x(translated_position.x);
+			element_position.set_y(translated_position.y);
 			/**
 			 * Set size of terrain element
 			 */
