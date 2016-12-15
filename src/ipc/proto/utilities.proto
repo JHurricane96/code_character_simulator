@@ -2,9 +2,9 @@
  * @file utilities.proto
  * Define message format for miscellaneous information passing between
  * renderer and simulator
- * 1. user_logs: Pass user debug output between renderer & simulator
- * 2. play_pause_status: Set the state of simulation
- * 3. level_number: Pass level number between renderer & simulator
+ * user_logs: Pass user debug output between renderer & simulator
+ * play_pause_status: Set the state of simulation
+ * level_number: Pass level number between renderer & simulator
  */
 
 /**
