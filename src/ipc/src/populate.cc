@@ -1,69 +1,11 @@
+/**
+ * @file populate.cc
+ * Function definitions for data transfer class functions
+*/
 #include <iostream>
 #include <string>
+#include "ipc.h"
 #include "state.pb.h"
-
-/**
- * Populates the utility message with the play/pause status
- *
- * Utility messages can be user logs, play/pause status or level number
- * @param[in]  play_pause_status  current status of renderer/simulator
- *
- * @return     Exit status
- */
-int PopulateStatus(bool play_pause_status)
-{
-	IPC::Utilities Utility;
-
-	Utility.set_play_pause_status(play_pause_status);
-
-    if (!Utility.SerializeToOstream(std::cout)) {
-      cerr << "Failed to transfer play/pause status" << endl;
-      return -1;
-    }
-    return 0;
-}
-
-/**
- * Populates the utility message with the level number
- *
- * Utility messages can be user logs, play/pause status or level number
- * @param[in]  play_pause_status  current status of renderer/simulator
- *
- * @return     Exit status
- */
-int PopulateLevelNumber(int level_number)
-{
-	IPC::Utilities Utility;
-
-	Utility.set_level_number(level_number);
-
-	if (!Utility.SerializeToOstream(std::cout)) {
-      cerr << "Failed to transfer level number" << endl;
-      return -1;
-    }
-    return 0;
-}
-
-/**
- * Populates the utility message with the user debug output
- *
- * Utility messages can be user logs, play/pause status or level number
- * @param[in]  play_pause_status  current status of renderer/simulator
- *
- * @return     Exit status
- */
-int PopulateUserLogs(std::string user_logs)
-{
-	IPC::Utilities Utility;
-
-	Utility.set_user_logs(user_logs);
-
-	if (!Utility.SerializeToOstream(std::cout)) {
-      cerr << "Failed to transfer user logs" << endl;
-      return -1;
-    }
-    return 0;
-}
 
 /**
  * Populates the terrain
@@ -158,33 +100,122 @@ int PopulateTerrain(IPC::Terrain* TerrainMessage, std::shared_ptr<state::State>*
 	return 0;
 }
 
-/**
- * Populates the state message
- *
- * State message consists of actors & terrain
- *
- * @param[in]  StateVar  the state object
- *
- * @return     Exit status
- */
-
-int PopulateState(std::shared_ptr<state::State> StateVar) {
+namespace ipc {
 
 	/**
-	 * Verify that the version of the library that we linked against is 
-	 * compatible with the version of the headers we compiled against
+	 * Populates the utility message with the play/pause status
+	 *
+	 * Utility messages can be user logs, play/pause status or level number
+	 * @param[in]  play_pause_status  current status of renderer/simulator
+	 *
+	 * @return     Exit status
 	 */
-	GOOGLE_PROTOBUF_VERIFY_VERSION;
+	int DataTransfer::InterruptCall(bool PlayPauseStatus)
+	{
+		/**
+		 * Verify that the version of the library that we linked against is
+		 * compatible with the version of the headers we compiled against
+		 */
+		GOOGLE_PROTOBUF_VERIFY_VERSION;
 
-	IPC::State StateMessage;
+		IPC::Utilities Utility;
 
-	if (PopulateTerrain(StateMessage->set_allocated_terrain(), &StateVar) < 0) {
-		std::cerr << "Failed to load terrain" << endl;
-		return -1;
+		Utility.set_play_pause_status(PlayPauseStatus);
+
+		if (!Utility.SerializeToOstream(std::cout)) {
+			cerr << "Failed to transfer play/pause status" << endl;
+			return -1;
+		}
+		return 0;
 	}
-	if (PopulateActors(&state) < 0) {
-		std::cerr << "Failed to load actors" << endl;
-		return -1;
+
+	/**
+	 * Populates the utility message with the level number
+	 *
+	 * Utility messages can be user logs, play/pause status or level number
+	 * @param[in]  play_pause_status  current status of renderer/simulator
+	 *
+	 * @return     Exit status
+	 */
+	int DataTransfer::UpdateLevel(int LevelNumber)
+	{
+		/**
+		 * Verify that the version of the library that we linked against is
+		 * compatible with the version of the headers we compiled against
+		 */
+		GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+		IPC::Utilities Utility;
+
+		Utility.set_level_number(LevelNumber);
+
+		if (!Utility.SerializeToOstream(std::cout)) {
+			cerr << "Failed to transfer level number" << endl;
+			return -1;
+		}
+		return 0;
 	}
-	return 0;
+
+	/**
+	 * Populates the utility message with the user debug output
+	 *
+	 * Utility messages can be user logs, play/pause status or level number
+	 * @param[in]  play_pause_status  current status of renderer/simulator
+	 *
+	 * @return     Exit status
+	 */
+	int DataTransfer::DebugLogs(std::string DebugOut)
+	{
+		/**
+		 * Verify that the version of the library that we linked against is
+		 * compatible with the version of the headers we compiled against
+		 */
+		GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+		IPC::Utilities Utility;
+
+		Utility.set_user_logs(DebugOut);
+
+		if (!Utility.SerializeToOstream(std::cout)) {
+			cerr << "Failed to transfer user logs" << endl;
+			return -1;
+		}
+		return 0;
+	}
+
+	/**
+	 * Populates the state message
+	 *
+	 * State message consists of actors & terrain
+	 *
+	 * @param[in]  StateVar  the state object
+	 *
+	 * @return     Exit status
+	 */
+
+	int DataTransfer::StateTransfer(std::shared_ptr<state::State> StateVar) {
+
+		/**
+		 * Verify that the version of the library that we linked against is
+		 * compatible with the version of the headers we compiled against
+		 */
+		GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+		IPC::State StateMessage;
+
+		if (PopulateTerrain(StateMessage->set_allocated_terrain(), &StateVar) < 0) {
+			std::cerr << "Failed to load terrain" << endl;
+			return -1;
+		}
+		if (PopulateActors(&state) < 0) {
+			std::cerr << "Failed to load actors" << endl;
+			return -1;
+		}
+
+		if (!StateMessage.SerializeToOstream(std::cout)) {
+			cerr << "Failed to transfer state message" << endl;
+			return -1;
+		}
+		return 0;
+	}
 }
