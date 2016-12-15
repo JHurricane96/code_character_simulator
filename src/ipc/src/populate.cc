@@ -4,6 +4,7 @@
 */
 #include <iostream>
 #include <string>
+#include "state.h"
 #include "ipc.h"
 #include "state.pb.h"
 
@@ -38,7 +39,7 @@ int PopulateTerrain(IPC::Terrain* TerrainMessage, std::shared_ptr<state::State>*
 	/**
 	 * Add a grid message
 	 */
-	IPC::TerrainRows* terrain_grid_message = terrain_message->add_grid();
+	IPC::TerrainRows* terrain_grid_message = TerrainMessage->add_grid();
 
 	/**
 	 * Loop through the grid to fill the terrain element messages unit by unit
@@ -98,6 +99,33 @@ int PopulateTerrain(IPC::Terrain* TerrainMessage, std::shared_ptr<state::State>*
 	}
 
 	return 0;
+}
+
+/**
+ * Populates the tower log message
+ *
+ * Towerlog contains tower_id, timestamp and owner player_id
+ *
+ * @param[in]  StateVar              the state object
+ * @param[in]  TowerCaptureLogEntry  the tower capture log message object
+ *
+ * @return     Exit status
+ */
+int PopulateTowerLog(std::shared_ptr<state::State>* StateVar, IPC::TowerCaptureLogEntry* TowerCaptureLogMessage) {
+
+	std::vector<TowerCaptureLogEntry> TowerCaptureLogEntry = StateVar->GetTowerCaptureLog();
+
+	/**
+	 * Iterator to traverse the log entry tuple
+	 */
+	std::vector<TowerCaptureLogEntry>::iterator it;
+
+	for(it = TowerCaptureLogEntry.begin(); it!= TowerCaptureLogEntry.end(); ++it) {
+
+		TowerCaptureLogMessage->set_tower_id(TowerCaptureLogEntry.tower_id);
+		TowerCaptureLogMessage->set_timestamp(TowerCaptureLogEntry.timestamp);
+		TowerCaptureLogMessage->set_player_id(TowerCaptureLogEntry.player_id);
+	}
 }
 
 namespace ipc {
@@ -203,12 +231,12 @@ namespace ipc {
 
 		IPC::State StateMessage;
 
-		if (PopulateTerrain(StateMessage->set_allocated_terrain(), &StateVar) < 0) {
+		if (PopulateTerrain(&StateVar, StateMessage->set_allocated_terrain()) < 0) {
 			std::cerr << "Failed to load terrain" << endl;
 			return -1;
 		}
-		if (PopulateActors(&state) < 0) {
-			std::cerr << "Failed to load actors" << endl;
+		if (PopulateTowerLog(&StateVar, StateMessage->add_tower_capture_log()) < 0) {
+			std::cerr << "Failed to load tower log" << endl;
 			return -1;
 		}
 
