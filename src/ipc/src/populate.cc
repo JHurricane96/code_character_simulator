@@ -5,6 +5,7 @@
 #include <iostream>
 #include <string>
 #include "state.h"
+#include "utilities.h"
 #include "ipc.h"
 #include "state.pb.h"
 
@@ -122,9 +123,58 @@ int PopulateTowerLog(std::shared_ptr<state::State>* StateVar, IPC::TowerCaptureL
 
 	for(it = TowerCaptureLogEntry.begin(); it!= TowerCaptureLogEntry.end(); ++it) {
 
-		TowerCaptureLogMessage->set_tower_id(TowerCaptureLogEntry.tower_id);
-		TowerCaptureLogMessage->set_timestamp(TowerCaptureLogEntry.timestamp);
-		TowerCaptureLogMessage->set_player_id(TowerCaptureLogEntry.player_id);
+		TowerCaptureLogMessage->set_tower_id(TowerCaptureLogEntry[it].tower_id);
+		TowerCaptureLogMessage->set_timestamp(TowerCaptureLogEntry[it].timestamp);
+		TowerCaptureLogMessage->set_player_id(TowerCaptureLogEntry[it].player_id);
+	}
+}
+
+/**
+ * Populates the state message with details like player 1(2) unit_ids,
+ * player 1(2) visible enemy unit ids, tower ids and flag ids
+ *
+ * @param[in]  StateVar      the state object
+ * @param[in]  StateMessage  the state message object
+ *
+ * @return     Exit status
+ */
+int PopulateTowerLog(std::shared_ptr<state::State>* StateVar, IPC::State StateMessage) {
+
+	list_act_id_t Player1Ids      = StateVar->GetPlayer1Ids();
+	list_act_id_t Player2Ids      = StateVar->GetPlayer2Ids();
+	list_act_id_t Player1EnemyIds = StateVar->GetPlayer1EnemyIds();
+	list_act_id_t Player2EnemyIds = StateVar->GetPlayer2EnemyIds();
+	list_act_id_t TowerIds        = StateVar->GetTowerIds();
+	list_act_id_t FlagIds         = StateVar->GetFlagIds();
+
+	/**
+	 * Iterator to traverse the vectors
+	 */
+	list_act_id_t::iterator it;
+
+	for(it = Player1Ids.begin(); it!= Player1Ids.end(); ++it) {
+
+		StateMessage->set_player_1_unit_ids(Player1Ids[it]);
+	}
+	for(it = Player2Ids.begin(); it!= Player2Ids.end(); ++it) {
+
+		StateMessage->set_player_2_unit_ids(Player2Ids[it]);
+	}
+	for(it = Player1EnemyIds.begin(); it!= Player1EnemyIds.end(); ++it) {
+
+		StateMessage->set_player_1_visible_enemy_unit_ids(Player1EnemyIds[it]);
+	}
+	for(it = Player2EnemyIds.begin(); it!= Player2EnemyIds.end(); ++it) {
+
+		StateMessage->set_player_2_visible_enemy_unit_ids(Player2EnemyIds[it]);
+	}
+	for(it = TowerIds.begin(); it!= TowerIds.end(); ++it) {
+
+		StateMessage->set_tower_ids(TowerIds[it]);
+	}
+	for(it = FlagIds.begin(); it!= FlagIds.end(); ++it) {
+
+		StateMessage->set_flag_ids(FlagIds[it]);
 	}
 }
 
@@ -235,8 +285,14 @@ namespace ipc {
 			std::cerr << "Failed to load terrain" << endl;
 			return -1;
 		}
+
 		if (PopulateTowerLog(&StateVar, StateMessage->add_tower_capture_log()) < 0) {
 			std::cerr << "Failed to load tower log" << endl;
+			return -1;
+		}
+
+		if (PopulateStateDetails(&StateVar, &StateMessage) < 0) {
+			std::cerr << "Failed to load state details" << endl;
 			return -1;
 		}
 
