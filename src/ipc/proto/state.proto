@@ -30,7 +30,7 @@ message State {
 		int64 player_id = 2;
 		int64 pos_x = 3;
 		int64 pos_y = 4;
-		int64 attack = 5;
+		bool attack = 5;
 		int64 hp = 6;
 		int64 max_hp = 7;
 

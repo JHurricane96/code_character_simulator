@@ -20,6 +20,21 @@
  */
 int PopulateActors(IPC::Actor* ActorMessage, std::shared_ptr<state::State>* StateVar) {
 
+	ActorMessage->set_id(actor->GetId());
+	ActorMessage->set_player_id(actor->GetPlayerId())
+	
+	auto pos = actor->GetPosition();
+
+	ActorMessage->set_pos_x(pos.x)
+	ActorMessage->set_pos_y(pos.y)
+
+	if(actor->GetAttackTarget() == NULL)
+		ActorMessage->set_attack(false);
+	else
+		ActorMessage->set_attack(true);
+
+	ActorMessage->set_hp(actor->GetHp());
+	ActorMessage->set_max_hp(actor->GetMaxHp());
 
 	return 0;
 }
