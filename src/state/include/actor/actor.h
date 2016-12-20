@@ -93,7 +93,7 @@ public:
 	 *
 	 * @return     The path planner helper
 	 */
-	const std::unique_ptr<PathPlannerHelper> GetPathPlannerHelper();
+	PathPlannerHelper* GetPathPlannerHelper();
 	/**
 	 * Update function to be called every tick
 	 *
