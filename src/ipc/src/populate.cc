@@ -5,6 +5,7 @@
 #include <iostream>
 #include <string>
 #include "state.h"
+#include "utilities.h"
 #include "ipc.h"
 #include "state.pb.h"
 
@@ -20,22 +21,51 @@
  */
 int PopulateActors(IPC::Actor* ActorMessage, std::shared_ptr<state::State>* StateVar) {
 
-	ActorMessage->set_id(actor->GetId());
-	ActorMessage->set_player_id(actor->GetPlayerId())
+	PlayerId P1 = PLAYER1;
+	PlayerId P2 = PLAYER2;
+
+	std::vector<std::shared_ptr<Actor> > P1_Actors = GetPlayerActors(PlayerId P1);
+	std::vector<std::shared_ptr<Actor> > P2_Actors = GetPlayerActors(PlayerId P2);
+
+	for (auto actor1 : P1_Actors)
+	{
+		ActorMessage->set_id(actor1->GetId());
+		ActorMessage->set_player_id(actor1->GetPlayerId())
 	
-	auto pos = actor->GetPosition();
+		auto pos = actor1->GetPosition();
 
-	ActorMessage->set_pos_x(pos.x)
-	ActorMessage->set_pos_y(pos.y)
+		ActorMessage->set_pos_x(pos.x)
+		ActorMessage->set_pos_y(pos.y)
 
-	if(actor->GetAttackTarget() == NULL)
-		ActorMessage->set_attack(false);
-	else
-		ActorMessage->set_attack(true);
+		if(actor1->GetAttackTarget() == NULL)
+			ActorMessage->set_attack(false);
+		else
+			ActorMessage->set_attack(true);
 
-	ActorMessage->set_hp(actor->GetHp());
-	ActorMessage->set_max_hp(actor->GetMaxHp());
+		ActorMessage->set_hp(actor1->GetHp());
+		ActorMessage->set_max_hp(actor1->GetMaxHp());
 
+	}
+
+	for (auto actor2 : P2_Actors)
+	{
+		ActorMessage->set_id(actor2->GetId());
+		ActorMessage->set_player_id(actor2->GetPlayerId())
+	
+		auto pos = actor2->GetPosition();
+
+		ActorMessage->set_pos_x(pos.x)
+		ActorMessage->set_pos_y(pos.y)
+
+		if(actor2->GetAttackTarget() == NULL)
+			ActorMessage->set_attack(false);
+		else
+			ActorMessage->set_attack(true);
+
+		ActorMessage->set_hp(actor2->GetHp());
+		ActorMessage->set_max_hp(actor2->GetMaxHp());
+
+	}
 	return 0;
 }
 
