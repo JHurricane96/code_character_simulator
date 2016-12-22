@@ -99,6 +99,12 @@ public:
 		std::shared_ptr<Actor> leader
 	);
 	/**
+	 * Sets is_path_planning to false
+	 * 
+	 * Called when this unit reaches its final destination
+	 */
+	void FinishPath();
+	/**
 	 * Gets unit's formation's ID
 	 *
 	 * @return     The formation ID
