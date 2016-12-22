@@ -171,7 +171,7 @@ public:
 	 * @param      sorted_enemies  Enemy units sorted by x co-ordinate
 	 * @param[in]  destination     The destination
 	 */
-	Update(
+	void Update(
 		std::vector<std::shared_ptr<Actor> > &sorted_allies,
 		std::vector<std::shared_ptr<Actor> > &sorted_enemies,
 		physics::Vector2D destination
