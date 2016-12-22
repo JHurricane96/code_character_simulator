@@ -70,6 +70,13 @@ int PopulateActors(std::shared_ptr<state::State>* StateVar, IPC::State* StateMes
 		ActorMessageP2->set_max_hp(actor2->GetMaxHp());
 
 	}
+
+	fstream output('output.txt', ios::out | ios::trunc | ios::binary);
+    if (!StateMessage.SerializeToOstream(&output)) {
+      cerr << "Failed to write address book." << endl;
+      return -1;
+    }
+
 	return 0;
 }
 
@@ -96,7 +103,7 @@ namespace ipc {
 		IPC::State StateMessage;
 
 		if (PopulateActors(&StateVar, &StateMessage) < 0) {
-			std::cerr << "Failed to load terrain" << endl;
+			std::cerr << "Failed to load actors" << endl;
 			return -1;
 		}
 
