@@ -19,7 +19,7 @@
  *
  * @return     Exit status
  */
-int PopulateActors(IPC::Actor* ActorMessage, std::shared_ptr<state::State>* StateVar) {
+int PopulateActors(std::shared_ptr<state::State>* StateVar, IPC::State* StateMessage, ) {
 
 	PlayerId P1 = PLAYER1;
 	PlayerId P2 = PLAYER2;
@@ -29,41 +29,45 @@ int PopulateActors(IPC::Actor* ActorMessage, std::shared_ptr<state::State>* Stat
 
 	for (auto actor1 : P1_Actors)
 	{
-		ActorMessage->set_id(actor1->GetId());
-		ActorMessage->set_player_id(actor1->GetPlayerId())
+		IPC::Actor* ActorMessageP1 = StateMessage->add_actors();
+
+		ActorMessageP1->set_id(actor1->GetId());
+		ActorMessageP1->set_player_id(actor1->GetPlayerId())
 	
 		auto pos = actor1->GetPosition();
 
-		ActorMessage->set_pos_x(pos.x)
-		ActorMessage->set_pos_y(pos.y)
+		ActorMessageP1->set_pos_x(pos.x)
+		ActorMessageP1->set_pos_y(pos.y)
 
 		if(actor1->GetAttackTarget() == NULL)
-			ActorMessage->set_attack(false);
+			ActorMessageP1->set_attack(false);
 		else
-			ActorMessage->set_attack(true);
+			ActorMessageP1->set_attack(true);
 
-		ActorMessage->set_hp(actor1->GetHp());
-		ActorMessage->set_max_hp(actor1->GetMaxHp());
+		ActorMessageP1->set_hp(actor1->GetHp());
+		ActorMessageP1->set_max_hp(actor1->GetMaxHp());
 
 	}
 
 	for (auto actor2 : P2_Actors)
 	{
-		ActorMessage->set_id(actor2->GetId());
-		ActorMessage->set_player_id(actor2->GetPlayerId())
+		IPC::Actor* ActorMessageP2 = StateMessage->add_actors();
+
+		ActorMessageP2->set_id(actor2->GetId());
+		ActorMessageP2->set_player_id(actor2->GetPlayerId())
 	
 		auto pos = actor2->GetPosition();
 
-		ActorMessage->set_pos_x(pos.x)
-		ActorMessage->set_pos_y(pos.y)
+		ActorMessageP2->set_pos_x(pos.x)
+		ActorMessageP2->set_pos_y(pos.y)
 
 		if(actor2->GetAttackTarget() == NULL)
-			ActorMessage->set_attack(false);
+			ActorMessageP2->set_attack(false);
 		else
-			ActorMessage->set_attack(true);
+			ActorMessageP2->set_attack(true);
 
-		ActorMessage->set_hp(actor2->GetHp());
-		ActorMessage->set_max_hp(actor2->GetMaxHp());
+		ActorMessageP2->set_hp(actor2->GetHp());
+		ActorMessageP2->set_max_hp(actor2->GetMaxHp());
 
 	}
 	return 0;
@@ -91,7 +95,7 @@ namespace ipc {
 
 		IPC::State StateMessage;
 
-		if (PopulateActors(&StateVar, StateMessage->set_allocated_terrain()) < 0) {
+		if (PopulateActors(&StateVar, &StateMessage) < 0) {
 			std::cerr << "Failed to load terrain" << endl;
 			return -1;
 		}
