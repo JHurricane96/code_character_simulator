@@ -70,8 +70,11 @@ private:
 public:
 	/**
 	 * Update function to be called every tick
+	 *
+	 * @param[in]  delta_time  The difference in time between the
+	 *                         previous and current Update calls
 	 */
-	virtual void Update() = 0;
+	virtual void Update(int64_t delta_time) = 0;
 	/**
 	 * Gets the Actor ID
 	 *
