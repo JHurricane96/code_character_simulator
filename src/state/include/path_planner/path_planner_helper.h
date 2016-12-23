@@ -75,7 +75,7 @@ private:
 	bool is_path_planning;
 	/**
 	 * True when the unit is in the right place in the formation
-	 * 
+	 *
 	 * Always true for leaders
 	 */
 	bool is_in_formation;
@@ -85,10 +85,11 @@ public:
 	 *
 	 * @param[in]  self  Actor that owns this PathPlannerHelper
 	 */
+	PathPlannerHelper();
 	PathPlannerHelper(std::shared_ptr<Actor> self);
 	/**
 	 * Sets a path for this unit
-	 * 
+	 *
 	 * Used when a unit is to be added to a formation
 	 *
 	 * @param[in]  formation_id       ID of the formation to which
@@ -107,7 +108,7 @@ public:
 	);
 	/**
 	 * Sets is_path_planning to false
-	 * 
+	 *
 	 * Called when this unit reaches its final destination
 	 */
 	void FinishPath();
@@ -125,7 +126,7 @@ public:
 	bool IsLeader();
 	/**
 	 * Updates this unit's formation leader
-	 * 
+	 *
 	 * Used when the old leader is dead/in another formation
 	 *
 	 * @param[in]  new_leader  The new leader
@@ -133,13 +134,13 @@ public:
 	void UpdateLeader(std::shared_ptr<Actor> new_leader);
 	/**
 	 * Makes this unit its formation's leader
-	 * 
+	 *
 	 * Used when the old leader is dead/in another formation
 	 */
 	void MakeLeader();
 	/**
 	 * Updates this unit's relative position in its formation
-	 * 
+	 *
 	 * Used after some units leave the formation
 	 *
 	 * @param[in]  relative_position  The new relative position
@@ -153,7 +154,7 @@ public:
 	bool IsPathPlanning();
 	/**
 	 * Speeds this unit up
-	 * 
+	 *
 	 * Called if all units in this unit's formation are in formation
 	 */
 	void SpeedUp();
@@ -165,7 +166,7 @@ public:
 	bool IsInFormation();
 	/**
 	 * Update function to be called every tick
-	 * 
+	 *
 	 * Sets the velocity of this unit
 	 *
 	 * @param      sorted_allies   Ally units sorted by x co-ordinate

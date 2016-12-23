@@ -2,6 +2,7 @@
 
 namespace state {
 
+PathPlannerHelper::PathPlannerHelper(){}
 PathPlannerHelper::PathPlannerHelper(std::shared_ptr<Actor> self) :
 	self(self), is_path_planning(false) {}
 
