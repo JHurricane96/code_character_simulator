@@ -104,6 +104,7 @@ public:
 		physics::Vector2D velocity,
 		int64_t los_radius
 	);
+	void AddPathPlanner(PathPlannerHelper p);
 	/**
 	 * Gets the path planner helper
 	 *
