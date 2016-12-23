@@ -8,6 +8,35 @@ PathPlannerHelper* Actor::GetPathPlannerHelper() {
 }
 
 Actor::Actor() : path_planner_helper(std::shared_ptr<Actor>(this)) {}
+Actor::Actor(
+		act_id_t id,
+		PlayerId player_id,
+		int64_t attack,
+		int64_t hp,
+		int64_t max_hp,
+		int64_t max_speed,
+		int64_t size,
+		int64_t total_respawn_time,
+		int64_t time_to_respawn,
+		int64_t time_spent_near_base,
+		physics::Vector2D position,
+		physics::Vector2D velocity,
+		int64_t los_radius
+	):
+	id(id),
+	player_id(player_id),
+	attack(attack),
+	hp(hp),
+	max_hp(max_hp),
+	max_speed(max_speed),
+	size(size),
+	total_respawn_time(total_respawn_time),
+	time_to_respawn(time_to_respawn),
+	time_spent_near_base(time_spent_near_base),
+	position(position),
+	velocity(velocity),
+	los_radius(los_radius),
+	path_planner_helper() {}
 
 act_id_t Actor::GetId() {
 	return id;
