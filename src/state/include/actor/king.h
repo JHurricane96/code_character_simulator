@@ -1,5 +1,5 @@
 /**
- * @file arrow.h
+ * @file king.h
  * Defines the King class
  */
 
