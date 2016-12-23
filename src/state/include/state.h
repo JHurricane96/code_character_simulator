@@ -75,11 +75,11 @@ private:
 	 * The State object's path planning mastermind
 	 */
 	PathPlanner path_planner;
-public:
 	/**
 	 * Contains terrain and LOS details
 	 */
 	Terrain terrain;
+public:
 	State();
 	State(
 		Terrain terrain,
