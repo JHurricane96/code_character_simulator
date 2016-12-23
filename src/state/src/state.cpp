@@ -5,6 +5,14 @@ namespace state {
 
 State::State() : terrain(1), path_planner(1) {}
 
+State::State(
+		Terrain terrain,
+		std::vector<std::shared_ptr<Actor> > actors
+	):
+	terrain(terrain),
+	path_planner(terrain.GetRows()),
+	actors(actors) {}
+
 void State::MoveUnits(
 	list_act_id_t unit_ids,
 	physics::Vector2D destination,
