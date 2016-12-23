@@ -181,4 +181,6 @@ public:
 
 }
 
+#include "actor/actor.h"
+
 #endif
