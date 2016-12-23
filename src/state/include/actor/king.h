@@ -8,6 +8,8 @@
 
 #include <cstdint>
 #include "actor/actor.h"
+#include "actor/king.fwd.h"
+#include "actor/flag.fwd.h"
 #include "state_export.h"
 
 namespace state {
@@ -17,6 +19,13 @@ namespace state {
  * The king is the only unit that can captue a flag and carry it
  */
 class STATE_EXPORT King: public Actor {
+private:
+	/**
+	 * Flag that this king carries
+	 *
+	 * nullptr if this king isn't carrying one
+	 */
+	Flag * flag;
 public:
 	King(
 		act_id_t id,
@@ -33,6 +42,22 @@ public:
 		physics::Vector2D velocity,
 		int64_t los_radius
 	);
+	/**
+	 * Assigns flag to this->flag
+	 *
+	 * @param      flag  The flag
+	 */
+	void CaptureFlag(Flag * flag);
+	/**
+	 * Sets king's flag to nullptr
+	 */
+	void DropFlag();
+	/**
+	 * Determines if this king has a flag
+	 *
+	 * @return     false if king's flag is nullptr, true otherwise
+	 */
+	bool HasFlag();
 	/**
 	 * Update function to be called every tick
 	 *
