@@ -12,6 +12,8 @@
 #include <memory>
 #include <cstdint>
 #include "actor/actor.h"
+#include "actor/tower.h"
+#include "actor/flag.h"
 #include "terrain/terrain.h"
 #include "path_planner/path_planner.h"
 #include "path_planner/path_planner_helper.h"
@@ -64,13 +66,13 @@ private:
 	 */
 	std::vector<list_act_id_t> player_visible_enemy_unit_ids;
 	/**
-	 * List of Actor IDs for towers
+	 * List of Towers for each player
 	 */
-	list_act_id_t tower_ids;
+	std::vector<std::vector<std::shared_ptr<Tower> > > towers;
 	/**
-	 * Actor IDs for flags
+	 * Flags for each player
 	 */
-	list_act_id_t flag_ids;
+	std::vector<std::shared_ptr<Flag> > flags;
 	/**
 	 * The State object's path planning mastermind
 	 */
@@ -104,17 +106,39 @@ public:
 	 */
 	list_act_id_t GetPlayerEnemyIds(PlayerId player_id);
 	/**
-	 * Gets Actor IDs for towers.
+	 * Gets a player's Towers
 	 *
-	 * @return List of required Actor IDs.
+	 * @param[in]  player_id  Player ID
+	 *
+	 * @return     The Towers
 	 */
-	list_act_id_t GetTowerIds();
+	std::vector<std::shared_ptr<Tower> > GetTowers(PlayerId player_id);
 	/**
-	 * Gets Actor IDs for flags.
+	 * Gets an enemy's towers, taking into account LOS
 	 *
-	 * @return List of required Actor IDs.
+	 * @param[in]  player_id  Player ID
+	 *
+	 * @return     The enemy's Towers
 	 */
-	list_act_id_t GetFlagIds();
+	std::vector<std::shared_ptr<Tower> > GetEnemyTowers(
+		PlayerId player_id
+	);
+	/**
+	 * Gets a player's Flag
+	 *
+	 * @param[in]  player_id  Player ID
+	 *
+	 * @return     The player's Flag
+	 */
+	std::shared_ptr<Flag> GetFlag(PlayerId player_id);
+	/**
+	 * Gets the enemy's Flag
+	 *
+	 * @param[in]  player_id  Player ID
+	 *
+	 * @return     The enemy's Flag
+	 */
+	std::shared_ptr<Flag> GetEnemyFlag(PlayerId player_id);
 	/**
 	 * Sets units into motion
 	 *
