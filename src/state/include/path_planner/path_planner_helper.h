@@ -27,6 +27,7 @@ public:
 	 * The ID of the formation
 	 */
 	int64_t formation_id;
+	FormationMaker();
 	/**
 	 * Returns a formation
 	 *
@@ -41,7 +42,7 @@ public:
 	 */
 	virtual std::vector<physics::Vector2D> ReturnFormation(
 		int64_t formation_size
-	);
+	) {};
 };
 
 /**
