@@ -46,7 +46,7 @@ private:
 	/**
 	 * List of actors in the simulation
 	 */
-	std::vector<const std::shared_ptr<Actor> > actors;
+	std::vector<std::shared_ptr<Actor> > actors;
 	/**
 	 * List of actors sorted by x co-ordinate
 	 */
