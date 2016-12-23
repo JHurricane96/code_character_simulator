@@ -1,5 +1,5 @@
 /**
- * @file arrow.h
+ * @file flag.h
  * Defines the Flag Class
  */
 
