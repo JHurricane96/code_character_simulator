@@ -38,6 +38,10 @@ Actor::Actor(
 	los_radius(los_radius),
 	path_planner_helper() {}
 
+void Actor::AddPathPlanner(PathPlannerHelper p) {
+	path_planner_helper = p;
+}
+
 act_id_t Actor::GetId() {
 	return id;
 }
