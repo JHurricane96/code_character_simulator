@@ -81,6 +81,10 @@ public:
 	 */
 	Terrain terrain;
 	State();
+	State(
+		Terrain terrain,
+		std::vector<std::shared_ptr<Actor> > actors
+	);
 	/**
 	 * Gets Actor IDs of the given player's units.
 	 *
