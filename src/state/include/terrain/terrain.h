@@ -60,6 +60,12 @@ public:
 	 */
 	physics::Vector2D GetSize();
 	/**
+	 * Gets the number of rows in the terrain
+	 *
+	 * @return     The number of rows
+	 */
+	int64_t GetRows();
+	/**
 	 * Gets the adjacent neighbours of a given TerrainElement
 	 *
 	 * @param[in]  offset  The grid offsets of the TerrainElement

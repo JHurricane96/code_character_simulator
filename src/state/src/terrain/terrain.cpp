@@ -51,6 +51,10 @@ physics::Vector2D Terrain::GetSize() {
 	return last.GetPosition() + last.GetSize();
 }
 
+int64_t Terrain::GetRows() {
+	return row_size;
+}
+
 std::vector<physics::Vector2D> Terrain::GetAdjacentNeighbours(physics::Vector2D offset, int64_t width) {
 	std::vector<physics::Vector2D> neighbours;
 	double width_offset = (double)width / grid[0][0].GetSize();
