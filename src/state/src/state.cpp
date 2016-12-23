@@ -41,6 +41,10 @@ bool CompareActorsByXCoordinate(
 	return (a->GetPosition().x < b->GetPosition().x);
 }
 
+const Terrain& State::GetTerrain() const {
+	return terrain;
+}
+
 void State::Update(int64_t delta_time) {
 	for (auto units : sorted_actors) {
 		std::sort(

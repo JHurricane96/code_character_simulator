@@ -161,6 +161,12 @@ public:
 		physics::Vector2D destination,
 		std::vector<int64_t> weights
 		);
+    /**
+     * Gets the terrain
+     *
+     * @return     The terrain
+     */
+    const Terrain& GetTerrain() const;
 	/**
 	 * Gets the state
 	 *
