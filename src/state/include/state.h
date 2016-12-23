@@ -168,12 +168,6 @@ public:
      */
     const Terrain& GetTerrain() const;
 	/**
-	 * Gets the state
-	 *
-	 * @return     The State
-	 */
-	State GetState();
-	/**
 	 * Updates the internal state of the game.
 	 *
 	 * @param[in] delta_time The difference in time in ms between
