@@ -14,6 +14,8 @@
 #include "actor/actor.h"
 #include "actor/tower.h"
 #include "actor/flag.h"
+#include "actor/king.h"
+#include "actor/base.h"
 #include "terrain/terrain.h"
 #include "path_planner/path_planner.h"
 #include "path_planner/path_planner_helper.h"
@@ -73,6 +75,14 @@ private:
 	 * Flags for each player
 	 */
 	std::vector<std::shared_ptr<Flag> > flags;
+	/**
+	 * Kings for each player
+	 */
+	std::vector<std::shared_ptr<King> > kings;
+	/**
+	 * Bases for each player
+	 */
+	std::vector<std::shared_ptr<Base> > bases;
 	/**
 	 * The State object's path planning mastermind
 	 */
@@ -139,6 +149,38 @@ public:
 	 * @return     The enemy's Flag
 	 */
 	std::shared_ptr<Flag> GetEnemyFlag(PlayerId player_id);
+	/**
+	 * Gets a player's King
+	 *
+	 * @param[in]  player_id  Player ID
+	 *
+	 * @return     The player's King
+	 */
+	std::shared_ptr<King> GetKing(PlayerId player_id);
+	/**
+	 * Gets an enemy's King, taking into account LOS
+	 *
+	 * @param[in]  player_id  Player ID
+	 *
+	 * @return     The enemy's King
+	 */
+	std::shared_ptr<King> GetEnemyKing(PlayerId player_id);
+	/**
+	 * Gets a player's Base
+	 *
+	 * @param[in]  player_id  Player ID
+	 *
+	 * @return     The player's Base
+	 */
+	std::shared_ptr<Base> GetBase(PlayerId player_id);
+	/**
+	 * Gets an enemy's Base
+	 *
+	 * @param[in]  player_id  Player ID
+	 *
+	 * @return     The enemy's Base
+	 */
+	std::shared_ptr<Base> GetEnemyBase(PlayerId player_id);
 	/**
 	 * Sets units into motion
 	 *
