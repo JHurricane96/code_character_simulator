@@ -8,6 +8,8 @@
 
 #include <cstdint>
 #include "actor/actor.h"
+#include "actor/flag.fwd.h"
+#include "actor/king.fwd.h"
 #include "state_export.h"
 
 namespace state {
@@ -15,6 +17,13 @@ namespace state {
  * Class for Flags that the players try to capture
  */
 class STATE_EXPORT Flag: public Actor {
+private:
+	/**
+	 * King that carries this flag
+	 *
+	 * nullptr if the flag isn't being carried
+	 */
+	King * king;
 public:
 	Flag(
 		act_id_t id,
@@ -31,6 +40,22 @@ public:
 		physics::Vector2D velocity,
 		int64_t los_radius
 	);
+	/**
+	 * Assigns king to this->king
+	 *
+	 * @param      king  The king
+	 */
+	void Capture(King * king);
+	/**
+	 * Sets the flag's king to nullptr
+	 */
+	void Drop();
+	/**
+	 * Determines if this flag has been captured
+	 *
+	 * @return     false if king is nullptr, true otherwise
+	 */
+	bool IsCaptured();
 	/**
 	 * Update function to be called every tick
 	 *
