@@ -13,11 +13,11 @@
 /**
  * Describes the possible owners of the tower
  */
-enum TOWER_OWNER{
+enum class TowerOwner{
 	UNOWNED,
 	PLAYER1,
 	PLAYER2,
-}
+};
 
 namespace state {
 /**
@@ -28,7 +28,7 @@ private:
 	/**
 	 * The tower's owner
 	 */
-	TOWER_OWNER tower_owner;
+	TowerOwner tower_owner;
 public:
 	Tower();
 	/**
