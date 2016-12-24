@@ -68,6 +68,60 @@ std::shared_ptr<Base> State::GetEnemyBase(PlayerId player_id) {
 	return bases[(player_id + 1) % (LAST_PLAYER + 1)];
 }
 
+void State::FlagCapture(PlayerId player_id, int * success) {
+	auto king = GetKing(player_id);
+	auto enemy_flag = GetEnemyFlag(player_id);
+
+	if (king->GetPosition().distance(enemy_flag->GetPosition()) >
+		king->GetSize() + enemy_flag->GetSize()) {
+		if (success) {
+			*success = 0;
+		}
+		return;
+	}
+
+	if (king->HasFlag()) {
+		if (success) {
+			*success = -1;
+		}
+		return;
+	}
+
+	king->CaptureFlag(enemy_flag.get());
+	enemy_flag->Capture(king.get());
+	if (success) {
+		*success = 1;
+	}
+
+}
+
+void State::FlagDrop(PlayerId player_id, int * success) {
+	auto king = GetKing(player_id);
+	auto enemy_flag = GetEnemyFlag(player_id);
+	auto base = GetBase(player_id);
+
+	if (king->GetPosition().distance(base->GetPosition()) >
+		king->GetSize() + base->GetSize()) {
+		if (success) {
+			*success = 0;
+		}
+		return;
+	}
+
+	if (!king->HasFlag()) {
+		if (success) {
+			*success = -1;
+		}
+		return;
+	}
+
+	king->DropFlag();
+	enemy_flag->Drop();
+	if (success) {
+		*success = 1;
+	}
+}
+
 bool CompareActorsByXCoordinate(
 	std::shared_ptr<Actor> a,
 	std::shared_ptr<Actor> b
