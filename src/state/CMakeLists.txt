@@ -5,6 +5,9 @@ set(SOURCE_FILES
 	src/state.cpp
 	src/actor/actor.cpp
 	src/actor/swordsman.cpp
+	src/actor/base.cpp
+	src/actor/flag.cpp
+	src/actor/king.cpp
 	src/terrain/terrain.cpp
 	src/terrain/terrain_element.cpp
 	src/path_planner/formation.cpp
