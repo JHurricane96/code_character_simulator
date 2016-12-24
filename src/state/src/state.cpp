@@ -34,6 +34,40 @@ void State::MoveUnits(
 	);
 }
 
+std::vector<std::shared_ptr<Tower> > State::GetTowers(
+	PlayerId player_id
+) {
+	return towers[player_id];
+}
+
+std::vector<std::shared_ptr<Tower> > State::GetEnemyTowers(
+	PlayerId player_id
+) {
+}
+
+std::shared_ptr<Flag> State::GetFlag(PlayerId player_id) {
+	return flags[player_id];
+}
+
+std::shared_ptr<Flag> State::GetEnemyFlag(PlayerId player_id) {
+	return flags[(player_id + 1) % (LAST_PLAYER + 1)];
+}
+
+std::shared_ptr<King> State::GetKing(PlayerId player_id) {
+	return kings[player_id];
+}
+
+std::shared_ptr<King> State::GetEnemyKing(PlayerId player_id) {
+}
+
+std::shared_ptr<Base> State::GetBase(PlayerId player_id) {
+	return bases[player_id];
+}
+
+std::shared_ptr<Base> State::GetEnemyBase(PlayerId player_id) {
+	return bases[(player_id + 1) % (LAST_PLAYER + 1)];
+}
+
 bool CompareActorsByXCoordinate(
 	std::shared_ptr<Actor> a,
 	std::shared_ptr<Actor> b
