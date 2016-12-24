@@ -208,9 +208,28 @@ public:
 		act_id_t attack_target_id
 	);
 	/**
-	 * Instructs the king to capture the flag
+	 * Instructs a player's King to capture the enemy's Flag
+	 * 
+	 * Fails if the King is not near enough the Flag, if he has it
+	 * already, or he's dead
+	 *
+	 * @param[in]  player_id  King's player's ID
+	 * @param      success    Holds 1 if successful, 0 if he's too far
+	 *                        away, -1 if he already has a flag
 	 */
-	void FlagCapture();
+	void FlagCapture(PlayerId player_id, int * success);
+	/**
+	 * Instructs a player's King to drop the enemy's Flag
+	 * 
+	 * Fails if the King is not near enough his Base, if he doesn't have
+	 * the Flag, or if he's dead
+	 *
+	 * @param[in]  player_id  King's player's ID
+	 * @param      successs   Holds 1 if successful, 0 if he's too far
+	 *                        from his Base, -1 if he doesn't have the
+	 *                        Flag
+	 */
+	void FlagDrop(PlayerId player_id, int * successs);
 	/**
 	 * Calculates the total weight of the best path between
 	 *             the given points
