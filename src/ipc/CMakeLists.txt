@@ -14,12 +14,20 @@ set(INCLUDE_PATH include)
 set(EXPORTS_DIR ${CMAKE_BINARY_DIR}/exports)
 set(EXPORTS_FILE_PATH ${EXPORTS_DIR}/ipc_export.h)
 
+include(${CMAKE_INSTALL_PREFIX}/physics_config.cmake)
+include(${CMAKE_INSTALL_PREFIX}/state_config.cmake)
+include(${CMAKE_INSTALL_PREFIX}/player_config.cmake)
+
+find_package(Threads REQUIRED)
+
 set(LIBRARY_INSTALL_PATH ${CMAKE_INSTALL_PREFIX}/lib)
 set(RUNTIME_INSTALL_PATH ${CMAKE_INSTALL_PREFIX}/bin)
 set(INCLUDE_INSTALL_PATH ${CMAKE_INSTALL_PREFIX}/include)
 
 add_library(ipc SHARED ${SOURCE_FILES})
 generate_export_header(ipc EXPORT_FILE_NAME ${EXPORTS_FILE_PATH})
+target_link_libraries(ipc state physics player Threads::Threads)
+set_property(TARGET ipc PROPERTY CXX_STANDARD 11)
 target_include_directories(ipc PUBLIC
 	$<BUILD_INTERFACE:;${EXPORTS_DIR} ${INCLUDE_PATH}>
 	$<INSTALL_INTERFACE:$<INSTALL_PREFIX>/include>
