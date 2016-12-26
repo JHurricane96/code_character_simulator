@@ -88,6 +88,12 @@ int64_t Graph::FindPath(
 	std::vector<physics::Vector2D> &next_points,
 	std::vector<int64_t> terrain_weights
 ) {
+	auto terrain_elt_size = terrain
+		.OffsetToTerrainElement(physics::Vector2D(0, 0))
+		.GetSize();
+	start_point = start_point / terrain_elt_size;
+	next_points.push_back(destination);
+	destination = destination / terrain_elt_size;
 	InitGraph(terrain, terrain_weights);
 	OpenListEntry cur_node(start_point, 0, cur_time);
 	open_list.push(cur_node);
