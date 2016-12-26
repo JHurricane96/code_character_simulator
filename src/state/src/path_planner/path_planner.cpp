@@ -60,7 +60,7 @@ void PathPlanner::Update(
 		for (auto formation : formations[cur_player_id]) {
 			formation.Update(
 				sorted_units[cur_player_id],
-				sorted_units[(cur_player_id + 1) % LAST_PLAYER]
+				sorted_units[(cur_player_id + 1) % (LAST_PLAYER + 1)]
 			);
 			if (!formation.IsFinished()) {
 				new_formations.push_back(formation);
