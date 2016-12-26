@@ -13,6 +13,20 @@ State::State(
 	path_planner(terrain.GetRows()),
 	actors(actors) {}
 
+State::State(
+		Terrain terrain,
+		std::vector<std::shared_ptr<Actor> > actors,
+		std::vector<std::shared_ptr<King> > kings,
+		std::vector<std::shared_ptr<Base> > bases,
+		std::vector<std::shared_ptr<Flag> > flags
+	):
+	terrain(terrain),
+	path_planner(terrain.GetRows()),
+	actors(actors),
+	kings(kings),
+	bases(bases),
+	flags(flags) {}
+
 void State::MoveUnits(
 	list_act_id_t unit_ids,
 	physics::Vector2D destination,
