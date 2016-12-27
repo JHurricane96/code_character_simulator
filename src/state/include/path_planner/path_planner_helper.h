@@ -42,7 +42,7 @@ public:
 	 */
 	virtual std::vector<physics::Vector2D> ReturnFormation(
 		int64_t formation_size
-	) {};
+	) = 0;
 };
 
 /**
