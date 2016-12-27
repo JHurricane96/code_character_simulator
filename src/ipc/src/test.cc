@@ -6,22 +6,14 @@
 #include "path_planner/graph.h"
 #include "path_planner/path_planner.h"
 #include "path_planner/path_planner_helper.h"
-#include "player_state_handler/player_state_handler.h"
 #include "state.h"
 #include "terrain/terrain.h"
 #include "terrain/terrain_element.h"
-#include "main_driver.h"
-#include "player1.h"
-#include "player2.h"
 #include <unistd.h>
 
 using namespace std;
 using namespace state;
 using namespace physics;
-using namespace player;
-using namespace player1;
-using namespace player2;
-using namespace drivers;
 
 const int te_size = 20;
 
@@ -209,46 +201,17 @@ int main(int argc, char const* argv[])
 	auto sorted_actors = thing.second;
 	auto actors = GetFlatActors(sorted_actors);
 
-	auto thing1 = MakeState(TT);
-	auto S1 = shared_ptr<State>(new State(thing1.first));
-	PlayerStateHandler PSH1(S1.get(), PLAYER1);
-	auto sorted_actors1 = thing1.second;
-	auto actors1 = GetFlatActors(sorted_actors1);
-
-	auto thing2 = MakeState(TT);
-	auto S2 = shared_ptr<State>(new State(thing2.first));
-	PlayerStateHandler PSH2(S2.get(), PLAYER2);
-	auto sorted_actors2 = thing2.second;
-	auto actors2 = GetFlatActors(sorted_actors2);
-
-	// S for main, S1 for player 1, S2 for player 2
-	// S.MoveUnits(l, Vector2D(12 * te_size, 9 * te_size), F, weights);
-	
-	MainDriver driver(
-		PlayerAi(shared_ptr<PlayerAiHelper>(new Player1())),
-		PlayerAi(shared_ptr<PlayerAiHelper>(new Player2())),
-		S, S1, S2
-	);
-
-	driver.Run();
-
 	int bleep = 0;
 
 	while (true) {
-		// PrintLos(S2.GetTerrain(), PLAYER2);
+
 		auto start_time = chrono::high_resolution_clock::now();
 		ofstream file("output.txt");
 		
 		auto arrows = S->GetProjectiles();
-		// cout << arrows.size() << endl;
-		// for (auto arrow: arrows){
-		// 	auto p = arrow->GetPosition();
-		// 	cout << arrow->GetId() << p.x << p.y << endl;
-		// }
 
 		ipc::StateTransfer(S);
 
-		}
 
 		file << arr.dump() << endl;
 		file.flush();
@@ -261,8 +224,6 @@ int main(int argc, char const* argv[])
 			break;
 		}
 	}
-
-	driver.Stop();
 
 	return 0;
 }
