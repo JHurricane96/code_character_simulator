@@ -9,11 +9,13 @@
 #include "state.h"
 #include "terrain/terrain.h"
 #include "terrain/terrain_element.h"
+#include "ipc.h"
 #include <unistd.h>
 
 using namespace std;
 using namespace state;
 using namespace physics;
+using namespace ipc;
 
 const int te_size = 20;
 
@@ -203,27 +205,27 @@ int main(int argc, char const* argv[])
 
 	int bleep = 0;
 
-	while (true) {
+	//while (true) {
 
-		auto start_time = chrono::high_resolution_clock::now();
-		ofstream file("output.txt");
+		//auto start_time = chrono::high_resolution_clock::now();
+		//ofstream file("output.txt");
 		
-		auto arrows = S->GetProjectiles();
+		//auto arrows = S->GetProjectiles();
 
 		ipc::StateTransfer(S);
 
 
-		file << arr.dump() << endl;
-		file.flush();
-		auto end_time = chrono::high_resolution_clock::now();
-		auto duration = chrono::duration_cast<chrono::milliseconds>(end_time - start_time).count();
+		//file << arr.dump() << endl;
+		//file.flush();
+		//auto end_time = chrono::high_resolution_clock::now();
+		//auto duration = chrono::duration_cast<chrono::milliseconds>(end_time - start_time).count();
 		// cout << duration << endl;
-		this_thread::sleep_for(chrono::milliseconds(max((long) 0, 30 - duration)));
-		bleep += 30;
-		if (bleep / 1000 >= 15) {
-			break;
-		}
-	}
+		//this_thread::sleep_for(chrono::milliseconds(max((long) 0, 30 - duration)));
+		//bleep += 30;
+		//if (bleep / 1000 >= 15) {
+			//break;
+		//}
+	//}
 
 	return 0;
 }
