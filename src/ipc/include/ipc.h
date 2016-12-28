@@ -14,7 +14,7 @@ namespace ipc {
  * Inter process communication methods between renderer and simulator
  * Utilises Protocol Buffers for serializing structured data
  */
-	int StateTransfer (std::shared_ptr<state::State>& StateVar);
+	int StateTransfer (std::shared_ptr<state::State> StateVar);
 
 }
 #endif // IPC_IPC_H
