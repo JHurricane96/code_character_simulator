@@ -102,7 +102,8 @@ namespace ipc {
 
 		IPC::State StateMessage;
 
-		fstream output("../file.txt", ios::out | ios::trunc | ios::binary);
+		fstream output("file.txt", ios::out | ios::trunc | ios::binary);
+
 
 		if (PopulateActors(StateVar, &StateMessage) < 0) {
 			cerr << "Failed to load actors" << endl;
