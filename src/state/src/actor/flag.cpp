@@ -16,7 +16,8 @@ Flag::Flag(
 		int64_t time_spent_near_base,
 		physics::Vector2D position,
 		physics::Vector2D velocity,
-		int64_t los_radius
+		int64_t los_radius,
+		int64_t attack_speed
 	):
 	Actor(
 		id,
@@ -31,7 +32,8 @@ Flag::Flag(
 		time_spent_near_base,
 		position,
 		velocity,
-		los_radius
+		los_radius,
+		attack_speed
 	), king(nullptr) {}
 
 void Flag::Capture(King * king) {
