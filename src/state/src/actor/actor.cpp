@@ -52,6 +52,10 @@ PlayerId Actor::GetPlayerId() {
 	return player_id;
 }
 
+int64_t Actor::GetAttack() {
+	return attack;
+}
+
 int64_t Actor::GetHp() {
 	return hp;
 }
