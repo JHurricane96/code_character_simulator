@@ -75,7 +75,7 @@ protected:
 	/**
 	 * The actor's attack target if it is given one
 	 */
-	act_id_t attack_target_id;
+	Actor * attack_target;
 	/**
 	 * The radius of the actor's LOS
 	 */
@@ -166,11 +166,11 @@ public:
 	 */
 	int64_t GetTimeToRespawn();
 	/**
-	 * Gets the Actor's attack target ID
+	 * Gets the Actor's attack_target
 	 *
-	 * @return     The Actor's attack target ID
+	 * @return     The Actor's attack_target
 	 */
-	act_id_t GetAttackTargetId();
+	Actor * GetAttackTarget();
 	/**
 	 * Gets the Actor's velocity vector
 	 *
