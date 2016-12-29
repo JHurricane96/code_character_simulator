@@ -97,4 +97,13 @@ bool Actor::IsDead() {
 	return is_dead;
 }
 
+void Actor::Die() {
+	is_dead = true;
+	time_to_respawn = total_respawn_time;
+	hp = 0;
+	time_spent_near_base = 0;
+	position.x = position.y = 0;
+	attack_target = nullptr;
+}
+
 }
