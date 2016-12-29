@@ -103,6 +103,12 @@ public:
 	 * @return     The LOS Type
 	 */
 	LOS_TYPE GetLos(int64_t player_id);
+	/**
+	 * Sets the Line of Sight for a given player
+	 *
+	 * @param[in]  player_id  The id of the player
+	 */
+	void SetLos(LOS_TYPE los, int64_t player_id);
 };
 
 }

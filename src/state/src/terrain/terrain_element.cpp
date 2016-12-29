@@ -32,4 +32,7 @@ LOS_TYPE TerrainElement::GetLos(int64_t player_id) {
 	return los_type_player[player_id];
 }
 
+void TerrainElement::SetLos(LOS_TYPE los, int64_t player_id) {
+	los_type_player[player_id] = los;
+}
 }
