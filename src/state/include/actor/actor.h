@@ -7,6 +7,7 @@
 #define STATE_ACTOR_ACTOR_H
 
 #include <cstdint>
+#include "actor/actor.fwd.h"
 #include "vector2d.h"
 #include "path_planner/path_planner_helper.h"
 #include "state_export.h"
