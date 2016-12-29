@@ -81,6 +81,13 @@ protected:
 	 */
 	int64_t los_radius;
 	/**
+	 * The Actor's attack speed
+	 *
+	 * The total time it takes to execute an attack,
+	 * i.e., the charge-up time for an attack
+	 */
+	int64_t attack_speed;
+	/**
 	 * If true, actor is dead, false otherwise
 	 */
 	bool is_dead;
@@ -107,7 +114,8 @@ public:
 		int64_t time_spent_near_base,
 		physics::Vector2D position,
 		physics::Vector2D velocity,
-		int64_t los_radius
+		int64_t los_radius,
+		int64_t attack_speed
 	);
 	void AddPathPlanner(PathPlannerHelper p);
 	/**
@@ -189,6 +197,12 @@ public:
 	 * @return     The los radius
 	 */
 	int64_t GetLosRadius();
+	/**
+	 * Gets the Actor's attack_speed
+	 *
+	 * @return     The attack_speed
+	 */
+	int64_t GetAttackSpeed();
 	/**
 	 * Sets the Actor's velocity
 	 *

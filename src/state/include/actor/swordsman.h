@@ -28,7 +28,8 @@ public:
 		int64_t time_spent_near_base,
 		physics::Vector2D position,
 		physics::Vector2D velocity,
-		int64_t los_radius
+		int64_t los_radius,
+		int64_t attack_speed
 	);
 	/**
 	 * Update function to be called every tick

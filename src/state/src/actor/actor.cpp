@@ -21,7 +21,8 @@ Actor::Actor(
 		int64_t time_spent_near_base,
 		physics::Vector2D position,
 		physics::Vector2D velocity,
-		int64_t los_radius
+		int64_t los_radius,
+		int64_t attack_speed
 	):
 	id(id),
 	player_id(player_id),
@@ -38,6 +39,7 @@ Actor::Actor(
 	attack_target(nullptr),
 	los_radius(los_radius),
 	is_dead(false),
+	attack_speed(attack_speed),
 	path_planner_helper() {}
 
 void Actor::AddPathPlanner(PathPlannerHelper p) {
@@ -79,6 +81,9 @@ int64_t Actor::GetTimeToRespawn() {
 Actor * Actor::GetAttackTarget() {
 	return attack_target;
 }
+
+int64_t Actor::GetAttackSpeed() {
+	return attack_speed;
 }
 
 physics::Vector2D Actor::GetVelocity() {
