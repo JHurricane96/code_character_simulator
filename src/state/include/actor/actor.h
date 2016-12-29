@@ -239,6 +239,20 @@ public:
 	 */
 	void Respawn();
 	/**
+	 * Start attacking a target
+	 *
+	 * Sets attack_target to the given target
+	 *
+	 * @param      target  The attack target
+	 */
+	void AttackUnit(Actor * target);
+	/**
+	 * Stops the Actor from attacking if he was attacking
+	 *
+	 * Sets attack_target to nullptr
+	 */
+	void StopAttack();
+	/**
 	 * Sets Actor's hp to hp - damage_amount
 	 *
 	 * @param[in]  damage_amount  The damage amount
