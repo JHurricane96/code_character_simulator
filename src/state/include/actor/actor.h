@@ -81,6 +81,10 @@ protected:
 	 */
 	int64_t los_radius;
 	/**
+	 * If true, actor is dead, false otherwise
+	 */
+	bool is_dead;
+	/**
 	 * An instance of the PathPlannerHelper class to help with path planning
 	 */
 	PathPlannerHelper path_planner_helper;
@@ -191,6 +195,12 @@ public:
 	 * @return     The Actor's position vector
 	 */
 	physics::Vector2D GetPosition();
+	/**
+	 * Determines if the Actor is dead
+	 *
+	 * @return     true if dead, false otherwises
+	 */
+	bool IsDead();
 	/**
 	 * Set's the actor's respawn time to 0
 	 */
