@@ -125,8 +125,8 @@ pair<State, vector<vector<shared_ptr<Actor> > > > MakeState(Terrain terrain) {
 	kings[0] = shared_ptr<King>(new King(2, PLAYER1, 10, 100, 100, 10, 10, 10, 0, 0, Vector2D(200, 20), Vector2D(0, 0), 2, 10));
 	kings[1] = shared_ptr<King>(new King(3, PLAYER2, 10, 1000, 1000, 10, 10, 10, 0, 0, Vector2D(399, 10), Vector2D(0, 0), 2, 10));
 
-	bases[0] = shared_ptr<Base>(new Base(4, PLAYER1, 10, 100, 100, 10, 10, 10, 0, 0, Vector2D(0, 0), Vector2D(0, 0), 2, 10));
-	bases[1] = shared_ptr<Base>(new Base(5, PLAYER2, 10, 100, 100, 10, 10, 10, 0, 0, Vector2D(100, 100), Vector2D(0, 0), 2, 10));
+	bases[0] = shared_ptr<Base>(new Base(4, PLAYER1, 10, 100, 100, 10, 10, 10, 0, 0, Vector2D(0, 0), Vector2D(0, 0), 2, 10, 12, 2));
+	bases[1] = shared_ptr<Base>(new Base(5, PLAYER2, 10, 100, 100, 10, 10, 10, 0, 0, Vector2D(100, 100), Vector2D(0, 0), 2, 10, 12, 2));
 
 	AddActor(actors1, flags[0]);
 	AddActor(actors1, kings[0]);
@@ -212,7 +212,9 @@ int main(int argc, char const* argv[])
 		
 		//auto arrows = S->GetProjectiles();
 
-		ipc::StateTransfer(S);
+		if( ipc::StateTransfer(S) < 0 ) {
+			return -1;
+		}
 
 
 		//file << arr.dump() << endl;
