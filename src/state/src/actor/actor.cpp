@@ -110,4 +110,8 @@ void Actor::Die() {
 	attack_target = nullptr;
 }
 
+void Actor::Damage(int64_t damage_amount) {
+	hp -= damage_amount;
+}
+
 }

@@ -224,6 +224,13 @@ public:
 	 * Set's the actor's respawn time to 0
 	 */
 	void Respawn();
+	/**
+	 * Sets Actor's hp to hp - damage_amount
+	 *
+	 * @param[in]  damage_amount  The damage amount
+	 */
+	void Damage(int64_t damage_amount);
+
 };
 
 }
