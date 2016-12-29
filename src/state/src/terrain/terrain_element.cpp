@@ -2,11 +2,19 @@
 
 namespace state {
 
-TerrainElement::TerrainElement() : terrain_type(), position(), size() {}
+TerrainElement::TerrainElement() :
+	terrain_type(),
+	position(),
+	size(),
+	los_type_player(std::vector<LOS_TYPE>(UNEXPLORED, UNEXPLORED)) {}
 
 TerrainElement::TerrainElement(TERRAIN_TYPE terrain_type,
-                               physics::Vector2D position, int64_t size)
-	: terrain_type(terrain_type), position(position), size(size) {}
+                               physics::Vector2D position,
+                               int64_t size) :
+	terrain_type(terrain_type),
+	position(position),
+	size(size),
+	los_type_player(std::vector<LOS_TYPE>(UNEXPLORED, UNEXPLORED)) {}
 
 int64_t TerrainElement::GetSize() {
 	return size;
