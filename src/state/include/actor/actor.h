@@ -136,6 +136,12 @@ public:
 	 */
 	PlayerId GetPlayerId();
 	/**
+	 * Gets the Actor's attack, the amount of damage it can deal
+	 *
+	 * @return     The Actor's attack
+	 */
+	int64_t GetAttack();
+	/**
 	 * Gets the Actor's HP
 	 *
 	 * @return     The Actor's HP
