@@ -90,4 +90,8 @@ physics::Vector2D Actor::GetPosition() {
 	return position;
 }
 
+bool Actor::IsDead() {
+	return is_dead;
+}
+
 }
