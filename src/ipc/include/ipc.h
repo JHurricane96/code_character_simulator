@@ -15,6 +15,7 @@ namespace ipc {
  * Utilises Protocol Buffers for serializing structured data
  */
 	int StateTransfer (std::shared_ptr<state::State> StateVar);
+	int depop ();
 
 }
 #endif // IPC_IPC_H

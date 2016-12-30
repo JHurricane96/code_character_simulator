@@ -35,6 +35,7 @@ int PopulateActors(shared_ptr<state::State> StateVar, IPC::State* StateMessage) 
 
 	for (auto actor1 : P1_Actors)
 	{
+
 		IPC::State::Actor* ActorMessageP1 = StateMessage->add_actors();
 
 		ActorMessageP1->set_id(actor1->GetId());
@@ -114,6 +115,17 @@ namespace ipc {
 			cerr << "Failed to transfer state message" << endl;
 			return -1;
 		}
+
+		/*if (!RetrievedMessage.ParseFromIstream(&input)) {
+			cerr << "Failed to retrieve state message" << endl;
+			return -1;
+		}
+
+		if (DepopulateActors(RetrievedMessage) < 0) {
+			cerr << "Failed to load actors from file" << endl;
+			return -1;
+		}*/
+
 		return 0;
 	}
 }
