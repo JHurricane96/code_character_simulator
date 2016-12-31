@@ -7,10 +7,55 @@
 #define STATE_TERRAIN_TERRAIN_H
 
 #include <vector>
+#include <memory>
+#include "actor/actor.h"
 #include "terrain/terrain_element.h"
 #include "state_export.h"
 
 namespace state {
+
+/**
+ * LOS mutipliers for various terrain types
+ * 0: PLAIN
+ * 1: FOREST
+ * 2: MOUNTAIN
+ * Multiplier for mountain to plain would be multiplier[MOUNTAIN][PLAIN]
+ */
+const std::vector<std::vector<float>> Multiplier({
+	{ 1, 0.7, 1.3 },
+	{ 0.7, 0.7, 0.7 },
+	{ 1.3, 1, 1 }
+});
+
+/**
+ * An entry in the queue while flooding during LOS update
+ */
+struct LosListEntry {
+	/**
+	 * The TerrainElement offset
+	 */
+	physics::Vector2D offset;
+	/**
+	 * The weight assigned to the TerrainElement
+	 */
+	float score;
+	/**
+	 * Constructor for LosListEntry
+	 *
+	 * @param[in]  offset  The offset
+	 * @param[in]  score   The score
+	 */
+	LosListEntry(physics::Vector2D offset, float score);
+	/**
+	 * Less than operator
+	 *
+	 * @param[in]  rhs   The right hand side
+	 *
+	 * @return     true if this entry is less, false otherwise
+	 */
+	bool operator<(const LosListEntry& rhs);
+};
+
 /**
  * Class for the entire terrain
  */
@@ -32,7 +77,20 @@ private:
 	 * A helper vector that holds offsets to diagonal grid neighbours
 	 */
 	std::vector<physics::Vector2D> diagonal_neighbours;
-
+	/**
+	 * Helper method to update los of grid elements inside a radius
+	 *
+	 * @param[in]  offset  The grid offset
+	 * @param[in]  radius  The radius in offsets to flood
+	 * @param[in]  los     The LOS_TYPE to update with
+	 * @param[in]  pid     The PlayerId whose LOS is to be updated
+	 */
+	void UpdateLos(
+		physics::Vector2D offset,
+		int64_t radius,
+		LOS_TYPE los,
+		PlayerId pid
+	);
 public:
 	Terrain(int64_t nrows);
 	Terrain(std::vector<std::vector<TerrainElement> > grid);
@@ -98,7 +156,13 @@ public:
 	 * @return     The neighbours
 	 */
 	std::vector<physics::Vector2D> GetAllNeighbours(physics::Vector2D offset, int64_t width = 0);
-
+	/**
+	 * Updates the LOS of the TerrainElements
+	 * Updates which units are on which TerrainElement
+	 *
+	 * @param[in]  actors  The actors in the game
+	 */
+	void Update(std::vector<std::vector<std::shared_ptr<Actor> > > actors);
 };
 
 }
