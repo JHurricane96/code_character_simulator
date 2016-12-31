@@ -11,6 +11,7 @@
 #include "terrain/terrain_element.h"
 #include "ipc.h"
 #include <unistd.h>
+#include <thread>
 
 using namespace std;
 using namespace state;
@@ -212,9 +213,13 @@ int main(int argc, char const* argv[])
 		
 		//auto arrows = S->GetProjectiles();
 
+		std::thread RendererInput(ipc::IncomingInterrupts);
+
 		if( ipc::StateTransfer(S) < 0 ) {
 			return -1;
 		}
+
+		RendererInput.join();
 
 
 		//file << arr.dump() << endl;

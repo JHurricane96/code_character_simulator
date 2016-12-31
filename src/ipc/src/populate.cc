@@ -5,6 +5,7 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <thread>
 #include "state.h"
 #include "utilities.h"
 #include "actor/actor.h"
@@ -115,15 +116,10 @@ namespace ipc {
 			cerr << "Failed to transfer state message" << endl;
 			return -1;
 		}
-
-		/*if (!RetrievedMessage.ParseFromIstream(&input)) {
-			cerr << "Failed to retrieve state message" << endl;
-			return -1;
-		}
-
-		if (DepopulateActors(RetrievedMessage) < 0) {
-			cerr << "Failed to load actors from file" << endl;
-			return -1;
+		/*while(true)
+		{
+			std::this_thread::sleep_for(std::chrono::seconds(1));
+			cout<<endl;
 		}*/
 
 		return 0;
