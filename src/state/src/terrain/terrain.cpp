@@ -88,4 +88,27 @@ std::vector<physics::Vector2D> Terrain::GetAllNeighbours(physics::Vector2D offse
 	return neighbours;
 }
 
+void Terrain::Update(
+	std::vector<std::vector<std::shared_ptr<Actor> > > actors
+) {
+	for(int64_t i = 0; i < row_size; i++)
+		for(int64_t j = 0; j < row_size; j++)
+			for(int64_t pid = 0; pid <= LAST_PLAYER; pid++)
+				if (grid[i][j].GetLos(pid) == DIRECT_LOS) {
+					grid[i][j].SetLos(EXPLORED, pid);
+					grid[i][j].SetUnits((PlayerId)pid, list_act_id_t());
+				}
+
+	for (int64_t i = 0; i <= LAST_PLAYER; i++) {
+		for (auto &actor: actors[i]) {
+			if (actor) {
+				auto pos = actor->GetPosition();
+				int64_t size = grid[0][0].GetSize();
+				grid[(int)pos.x / size][(int)pos.y / size]
+					.AddUnit((PlayerId)i, actor->GetId());
+			}
+		}
+	}
+}
+
 }

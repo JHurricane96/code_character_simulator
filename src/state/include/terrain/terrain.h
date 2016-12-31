@@ -7,6 +7,8 @@
 #define STATE_TERRAIN_TERRAIN_H
 
 #include <vector>
+#include <memory>
+#include "actor/actor.h"
 #include "terrain/terrain_element.h"
 #include "state_export.h"
 
@@ -98,7 +100,13 @@ public:
 	 * @return     The neighbours
 	 */
 	std::vector<physics::Vector2D> GetAllNeighbours(physics::Vector2D offset, int64_t width = 0);
-
+	/**
+	 * Updates the LOS of the TerrainElements
+	 * Updates which units are on which TerrainElement
+	 *
+	 * @param[in]  actors  The actors in the game
+	 */
+	void Update(std::vector<std::vector<std::shared_ptr<Actor> > > actors);
 };
 
 }
