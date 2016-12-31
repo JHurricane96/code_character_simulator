@@ -90,8 +90,8 @@ public:
 	Actor();
 
 	Actor(
-    	act_id_t id,
-    	PlayerId player_id,
+		act_id_t id,
+		PlayerId player_id,
 		int64_t attack,
 		int64_t hp,
 		int64_t max_hp,
@@ -172,6 +172,12 @@ public:
 	 * @return     The Actor's velocity vector
 	 */
 	physics::Vector2D GetVelocity();
+	/**
+	 * Gets the los radius of the actor
+	 *
+	 * @return     The los radius
+	 */
+	int64_t GetLosRadius();
 	/**
 	 * Sets the Actor's velocity
 	 *
