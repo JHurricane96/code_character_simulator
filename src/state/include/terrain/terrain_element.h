@@ -64,10 +64,6 @@ private:
 	 * The timestamps noting when the element was last visited by the players
 	 */
 	std::vector<int64_t> last_seen_player;
-	// *
-	//  * List of units per player on the terrain element at present
-
-	// std::vector<list_act_id_t> units;
 public:
 	TerrainElement();
 	/**
