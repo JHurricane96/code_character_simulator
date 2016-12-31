@@ -15,6 +15,28 @@ State::State(
 
 State::State(
 		Terrain terrain,
+		std::vector<std::vector<std::shared_ptr<Actor> > > sorted_actors,
+		std::vector<std::shared_ptr<King> > kings,
+		std::vector<std::shared_ptr<Base> > bases,
+		std::vector<std::shared_ptr<Flag> > flags
+	):
+	terrain(terrain),
+	sorted_actors(sorted_actors),
+	actors(flatten(sorted_actors)),
+	path_planner(terrain.GetRows()),
+	kings(kings),
+	bases(bases),
+	flags(flags) {
+		list_act_id_t l;
+		for (int64_t i = 0; i <= LAST_PLAYER; i++) {
+			for (auto actor: sorted_actors[i])
+				l.push_back(actor->GetId());
+			player_unit_ids.push_back(l);
+		}
+	}
+
+State::State(
+		Terrain terrain,
 		std::vector<std::shared_ptr<Actor> > actors,
 		std::vector<std::shared_ptr<King> > kings,
 		std::vector<std::shared_ptr<Base> > bases,
