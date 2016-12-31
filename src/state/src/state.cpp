@@ -171,12 +171,13 @@ const Terrain& State::GetTerrain() const {
 
 list_act_id_t State::GetActorEnemies(PlayerId player_id, act_id_t actor_id) {
 	list_act_id_t enemies;
-
+    int64_t size = terrain.CoordinateToTerrainElement(physics::Vector2D(0,0))
+                          .GetSize();
 	for (int pid = 0; pid <= LAST_PLAYER; pid++) {
 		if (pid != player_id)
 			for (auto id: player_unit_ids[pid]) {
                 if (actors[id]->GetPosition().distance(actors[actor_id]->GetPosition())
-                     < actors[actor_id]->GetLosRadius())
+                     < actors[actor_id]->GetLosRadius()*size)
 					enemies.push_back(id);
 			}
 	}
@@ -185,15 +186,14 @@ list_act_id_t State::GetActorEnemies(PlayerId player_id, act_id_t actor_id) {
 
 list_act_id_t State::GetPlayerEnemyIds(PlayerId player_id) {
 	list_act_id_t all_enemies;
-	for(int64_t i = 0; i < terrain.GetRows(); ++i)
-		for(int64_t j = 0; j < terrain.GetRows(); ++j)
-			for (int pid = 0; pid <= LAST_PLAYER; pid++)
-					if (pid != player_id) {
-						for (auto id: terrain.OffsetToTerrainElement(
-								physics::Vector2D(i,j)).GetUnits((PlayerId)pid)) {
-							all_enemies.push_back(id);
-						}
-					}
+	for (int pid = 0; pid <= LAST_PLAYER; pid++)
+			if (pid != player_id) {
+                for (auto actor: sorted_actors[pid]) {
+                    auto te = terrain.CoordinateToTerrainElement(actor->GetPosition());
+                    if (te.GetLos(player_id) == DIRECT_LOS)
+                        all_enemies.push_back(actor->GetId());
+                }
+			}
 	return all_enemies;
 }
 

@@ -34,7 +34,20 @@ private:
 	 * A helper vector that holds offsets to diagonal grid neighbours
 	 */
 	std::vector<physics::Vector2D> diagonal_neighbours;
-
+	/**
+	 * @brief      Helper method to update los of grid elements inside a radius
+	 *
+	 * @param[in]  offset  The grid offset
+	 * @param[in]  radius  The radius in offsets to flood
+	 * @param[in]  los     The LOS_TYPE to update with
+	 * @param[in]  pid     The PlayerId whose LOS is to be updated
+	 */
+	void UpdateLos(
+		physics::Vector2D offset,
+		int64_t radius,
+		LOS_TYPE los,
+		PlayerId pid
+	);
 public:
 	Terrain(int64_t nrows);
 	Terrain(std::vector<std::vector<TerrainElement> > grid);

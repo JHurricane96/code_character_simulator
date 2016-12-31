@@ -64,10 +64,10 @@ private:
 	 * The timestamps noting when the element was last visited by the players
 	 */
 	std::vector<int64_t> last_seen_player;
-	/**
-	 * List of units per player on the terrain element at present
-	 */
-	std::vector<list_act_id_t> units;
+	// *
+	//  * List of units per player on the terrain element at present
+
+	// std::vector<list_act_id_t> units;
 public:
 	TerrainElement();
 	/**
@@ -109,33 +109,13 @@ public:
 	 */
 	LOS_TYPE GetLos(int64_t player_id);
 	/**
+	 * Updates the TerrainElement
 	 * Sets the Line of Sight for a given player
 	 *
+	 * @param[in]  los        The los to be set
 	 * @param[in]  player_id  The id of the player
 	 */
-	void SetLos(LOS_TYPE los, int64_t player_id);
-	/**
-	 * Gets the units of a player present on the terrain element
-	 *
-	 * @param[in]  player_id  The player ID whose units are needed
-	 *
-	 * @return     The units
-	 */
-	list_act_id_t GetUnits(PlayerId player_id);
-	/**
-	 * Gets the units present on the terrain element
-	 *
-	 * @param[in]  player_id  The player ID whose units are to be updated
-	 * @param[in]  new_units  The new set of units
- 	 */
-	void SetUnits(PlayerId player_id, list_act_id_t new_units);
-	/**
-	 * Adds a unit to the terrain element
-	 *
-	 * @param[in]  player_id  The player ID whose units are to be updated
-	 * @param[in]  new_units  The new unit to be added
-	 */
-	void AddUnit(PlayerId player_id, act_id_t new_unit);
+	void Update(LOS_TYPE los, int64_t player_id);
 };
 
 }

@@ -88,6 +88,20 @@ std::vector<physics::Vector2D> Terrain::GetAllNeighbours(physics::Vector2D offse
 	return neighbours;
 }
 
+void Terrain::UpdateLos(
+	physics::Vector2D offset,
+	int64_t radius,
+	LOS_TYPE los,
+	PlayerId pid
+) {
+	for(int64_t i = -radius; i <= radius; i++) {
+		for(int64_t j = -radius; j <= radius; j++) {
+			if (i*i + j*j < radius*radius)
+				grid[offset.x+i][offset.y+j].Update(los, pid);
+		}
+	}
+}
+
 void Terrain::Update(
 	std::vector<std::vector<std::shared_ptr<Actor> > > actors
 ) {
@@ -95,8 +109,7 @@ void Terrain::Update(
 		for(int64_t j = 0; j < row_size; j++)
 			for(int64_t pid = 0; pid <= LAST_PLAYER; pid++)
 				if (grid[i][j].GetLos(pid) == DIRECT_LOS) {
-					grid[i][j].SetLos(EXPLORED, pid);
-					grid[i][j].SetUnits((PlayerId)pid, list_act_id_t());
+					grid[i][j].Update(EXPLORED, pid);
 				}
 
 	for (int64_t i = 0; i <= LAST_PLAYER; i++) {
@@ -104,8 +117,8 @@ void Terrain::Update(
 			if (actor) {
 				auto pos = actor->GetPosition();
 				int64_t size = grid[0][0].GetSize();
-				grid[(int)pos.x / size][(int)pos.y / size]
-					.AddUnit((PlayerId)i, actor->GetId());
+				auto offset = physics::Vector2D((int)pos.x / size, (int)pos.y / size);
+				UpdateLos(offset, actor->GetLosRadius(), DIRECT_LOS, (PlayerId)i);
 			}
 		}
 	}
