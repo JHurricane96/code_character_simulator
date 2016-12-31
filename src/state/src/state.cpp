@@ -161,6 +161,8 @@ void State::Update(int64_t delta_time) {
 	for (auto actor : actors) {
 		actor->Update(delta_time);
 	}
+
+	terrain.Update(sorted_actors);
 }
 
 }

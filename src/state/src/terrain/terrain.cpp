@@ -1,6 +1,15 @@
 #include <terrain/terrain.h>
+#include <cmath>
+#include <queue>
 
 namespace state {
+
+LosListEntry::LosListEntry(physics::Vector2D offset, float score)
+	: offset(offset), score(score) {}
+
+bool LosListEntry::operator<(const LosListEntry& rhs) {
+	return score < rhs.score;
+}
 
 Terrain::Terrain(std::vector<std::vector<TerrainElement> > grid)
 	: grid(grid), row_size(grid.size()) {
@@ -86,6 +95,67 @@ std::vector<physics::Vector2D> Terrain::GetAllNeighbours(physics::Vector2D offse
 	std::vector<physics::Vector2D> diagonals = GetDiagonalNeighbours(offset, width);
 	neighbours.insert(neighbours.end(), diagonals.begin(), diagonals.end());
 	return neighbours;
+}
+
+void Terrain::UpdateLos(
+	physics::Vector2D offset,
+	int64_t radius,
+	LOS_TYPE los,
+	PlayerId pid
+) {
+	std::vector<std::vector<bool> >visited(
+		row_size,
+		std::vector<bool>(row_size, false)
+	);
+	std::queue<LosListEntry> q;
+	q.push(LosListEntry(offset, radius - 1));
+	visited[offset.y][offset.y] = true;
+	auto neighbours = adjacent_neighbours;
+	while (!q.empty()) {
+		auto top = q.front();
+		q.pop();
+		auto pos = top.offset;
+		grid[pos.x][pos.y].SetLos(los, pid);
+		auto rad = top.score;
+		for (auto i : adjacent_neighbours) {
+			auto v = pos + i;
+			if (v.x >= 0 && v.x < row_size && v.y >= 0 && v.y < row_size)
+				if (!visited[v.x][v.y] && rad > 0) {
+					visited[v.x][v.y] = true;
+					auto multiplier =
+						Multiplier[grid[pos.x][pos.y].GetTerrainType()]
+								  [grid[v.x][v.y].GetTerrainType()];
+					q.push(LosListEntry(v, rad - (1 / multiplier)));
+				}
+		}
+	}
+}
+
+void Terrain::Update(
+	std::vector<std::vector<std::shared_ptr<Actor> > > actors
+) {
+	for(int64_t i = 0; i < row_size; i++)
+		for(int64_t j = 0; j < row_size; j++)
+			for(int64_t pid = 0; pid <= LAST_PLAYER; pid++)
+				if (grid[i][j].GetLos(static_cast<PlayerId>(pid)) == DIRECT_LOS) {
+					grid[i][j].SetLos(EXPLORED, static_cast<PlayerId>(pid));
+				}
+
+	for (int64_t i = 0; i <= LAST_PLAYER; i++) {
+		for (auto &actor: actors[i]) {
+			if (actor) {
+				auto pos = actor->GetPosition();
+				int64_t size = grid[0][0].GetSize();
+				auto offset = physics::Vector2D((int)pos.x/size, (int)pos.y/size);
+				UpdateLos(
+					offset,
+					actor->GetLosRadius(),
+					DIRECT_LOS,
+					static_cast<PlayerId>(i)
+				);
+			}
+		}
+	}
 }
 
 }
