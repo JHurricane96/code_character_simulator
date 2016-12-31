@@ -35,4 +35,23 @@ LOS_TYPE TerrainElement::GetLos(int64_t player_id) {
 void TerrainElement::SetLos(LOS_TYPE los, int64_t player_id) {
 	los_type_player[player_id] = los;
 }
+
+list_act_id_t TerrainElement::GetUnits(PlayerId player_id) {
+	return units[player_id];
+}
+
+void TerrainElement::SetUnits(
+	PlayerId player_id,
+	list_act_id_t new_units
+) {
+	units[player_id] = new_units;
+}
+
+void TerrainElement::AddUnit(
+	PlayerId player_id,
+	act_id_t new_unit
+) {
+	units[player_id].push_back(new_unit);
+}
+
 }

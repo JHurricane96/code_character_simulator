@@ -10,6 +10,7 @@
 #include <vector>
 #include "vector2d.h"
 #include "state_export.h"
+#include "utilities.h"
 
 namespace state {
 
@@ -63,6 +64,10 @@ private:
 	 * The timestamps noting when the element was last visited by the players
 	 */
 	std::vector<int64_t> last_seen_player;
+	/**
+	 * List of units per player on the terrain element at present
+	 */
+	std::vector<list_act_id_t> units;
 public:
 	TerrainElement();
 	/**
@@ -109,6 +114,28 @@ public:
 	 * @param[in]  player_id  The id of the player
 	 */
 	void SetLos(LOS_TYPE los, int64_t player_id);
+	/**
+	 * Gets the units of a player present on the terrain element
+	 *
+	 * @param[in]  player_id  The player ID whose units are needed
+	 *
+	 * @return     The units
+	 */
+	list_act_id_t GetUnits(PlayerId player_id);
+	/**
+	 * Gets the units present on the terrain element
+	 *
+	 * @param[in]  player_id  The player ID whose units are to be updated
+	 * @param[in]  new_units  The new set of units
+ 	 */
+	void SetUnits(PlayerId player_id, list_act_id_t new_units);
+	/**
+	 * Adds a unit to the terrain element
+	 *
+	 * @param[in]  player_id  The player ID whose units are to be updated
+	 * @param[in]  new_units  The new unit to be added
+	 */
+	void AddUnit(PlayerId player_id, act_id_t new_unit);
 };
 
 }
