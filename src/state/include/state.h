@@ -196,6 +196,24 @@ public:
 	 */
 	std::shared_ptr<Base> GetEnemyBase(PlayerId player_id);
 	/**
+	 * Gets all visible enemies of a player
+	 *
+	 * @param[in]  player_id  The player ID of the player whose enemies
+	 * 						  are to be found
+	 *
+	 * @return     All visible enemies
+	 */
+	list_act_id_t GetAllVisibleEnemies(PlayerId player_id);
+	/**
+	 * Gets the enemies in the los of a given actor
+	 *
+	 * @param[in]  player_id  The player ID that owns the actor
+	 * @param[in]  actor_id   The actor ID
+	 *
+	 * @return     The enemies od the actor
+	 */
+	list_act_id_t GetActorEnemies(PlayerId player_id, act_id_t actor_id);
+	/**
 	 * Sets units into motion
 	 *
 	 * @param[in]  unit_ids         Actor IDs of units to be moved
@@ -223,7 +241,7 @@ public:
 	);
 	/**
 	 * Instructs a player's King to capture the enemy's Flag
-	 * 
+	 *
 	 * Fails if the King is not near enough the Flag, if he has it
 	 * already, or he's dead
 	 *
@@ -234,7 +252,7 @@ public:
 	void FlagCapture(PlayerId player_id, int * success);
 	/**
 	 * Instructs a player's King to drop the enemy's Flag
-	 * 
+	 *
 	 * Fails if the King is not near enough his Base, if he doesn't have
 	 * the Flag, or if he's dead
 	 *
@@ -260,12 +278,12 @@ public:
 		physics::Vector2D destination,
 		std::vector<int64_t> weights
 		);
-    /**
-     * Gets the terrain
-     *
-     * @return     The terrain
-     */
-    const Terrain& GetTerrain() const;
+	/**
+	 * Gets the terrain
+	 *
+	 * @return     The terrain
+	 */
+	const Terrain& GetTerrain() const;
 	/**
 	 * Updates the internal state of the game.
 	 *

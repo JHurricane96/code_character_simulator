@@ -169,6 +169,34 @@ const Terrain& State::GetTerrain() const {
 	return terrain;
 }
 
+list_act_id_t State::GetActorEnemies(PlayerId player_id, act_id_t actor_id) {
+	list_act_id_t enemies;
+
+	for (int pid = 0; pid <= LAST_PLAYER; pid++) {
+		if (pid != player_id)
+			for (auto id: player_unit_ids[pid]) {
+                if (actors[id]->GetPosition().distance(actors[actor_id]->GetPosition())
+                     < actors[actor_id]->GetLosRadius())
+					enemies.push_back(id);
+			}
+	}
+	return enemies;
+}
+
+list_act_id_t State::GetAllVisibleEnemies(PlayerId player_id) {
+	list_act_id_t all_enemies;
+	for(int64_t i = 0; i < terrain.GetRows(); ++i)
+		for(int64_t j = 0; j < terrain.GetRows(); ++j)
+			for (int pid = 0; pid <= LAST_PLAYER; pid++)
+					if (pid != player_id) {
+						for (auto id: terrain.OffsetToTerrainElement(
+								physics::Vector2D(i,j)).GetUnits((PlayerId)pid)) {
+							all_enemies.push_back(id);
+						}
+					}
+	return all_enemies;
+}
+
 void State::Update(int64_t delta_time) {
 	for (auto units : sorted_actors) {
 		std::sort(
