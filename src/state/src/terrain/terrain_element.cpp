@@ -6,7 +6,8 @@ TerrainElement::TerrainElement() :
 	terrain_type(),
 	position(),
 	size(),
-	los_type_player(std::vector<LOS_TYPE>(UNEXPLORED, UNEXPLORED)) {}
+	units(std::vector<list_act_id_t>(LAST_PLAYER + 1)),
+	los_type_player(std::vector<LOS_TYPE>(LAST_PLAYER + 1, UNEXPLORED)) {}
 
 TerrainElement::TerrainElement(TERRAIN_TYPE terrain_type,
                                physics::Vector2D position,
@@ -14,7 +15,8 @@ TerrainElement::TerrainElement(TERRAIN_TYPE terrain_type,
 	terrain_type(terrain_type),
 	position(position),
 	size(size),
-	los_type_player(std::vector<LOS_TYPE>(UNEXPLORED, UNEXPLORED)) {}
+	units(std::vector<list_act_id_t>(LAST_PLAYER + 1)),
+	los_type_player(std::vector<LOS_TYPE>(LAST_PLAYER + 1, UNEXPLORED)) {}
 
 int64_t TerrainElement::GetSize() {
 	return size;
