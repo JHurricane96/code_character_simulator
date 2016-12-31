@@ -97,6 +97,8 @@ void Terrain::UpdateLos(
 	for(int64_t i = -radius; i <= radius; i++) {
 		for(int64_t j = -radius; j <= radius; j++) {
 			if (i*i + j*j < radius*radius)
+				if ( offset.x + i >= 0 && offset.x + i < row_size &&
+			 		 offset.y + j >= 0 && offset.y + j < row_size )
 				grid[offset.x+i][offset.y+j].Update(los, pid);
 		}
 	}

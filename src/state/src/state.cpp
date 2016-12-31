@@ -26,8 +26,8 @@ State::State(
 	kings(kings),
 	bases(bases),
 	flags(flags) {
-		list_act_id_t l;
 		for (int64_t i = 0; i <= LAST_PLAYER; i++) {
+			list_act_id_t l;
 			for (auto actor: sorted_actors[i])
 				l.push_back(actor->GetId());
 			player_unit_ids.push_back(l);
