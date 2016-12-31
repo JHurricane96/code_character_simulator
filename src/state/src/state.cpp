@@ -175,6 +175,34 @@ const Terrain& State::GetTerrain() const {
 	return terrain;
 }
 
+list_act_id_t State::GetActorEnemies(PlayerId player_id, act_id_t actor_id) {
+	list_act_id_t enemies;
+	int64_t size = terrain.CoordinateToTerrainElement(physics::Vector2D(0,0))
+						  .GetSize();
+	for (int pid = 0; pid <= LAST_PLAYER; pid++) {
+		if (pid != player_id)
+			for (auto id: player_unit_ids[pid]) {
+				if (actors[id]->GetPosition().distance(actors[actor_id]->GetPosition())
+					 < actors[actor_id]->GetLosRadius()*size)
+					enemies.push_back(id);
+			}
+	}
+	return enemies;
+}
+
+list_act_id_t State::GetPlayerEnemyIds(PlayerId player_id) {
+	list_act_id_t all_enemies;
+	for (int pid = 0; pid <= LAST_PLAYER; pid++)
+			if (pid != player_id) {
+				for (auto actor: sorted_actors[pid]) {
+					auto te = terrain.CoordinateToTerrainElement(actor->GetPosition());
+					if (te.GetLos(player_id) == DIRECT_LOS)
+						all_enemies.push_back(actor->GetId());
+				}
+			}
+	return all_enemies;
+}
+
 void State::Update(int64_t delta_time) {
 	for (auto units : sorted_actors) {
 		std::sort(
