@@ -78,6 +78,10 @@ physics::Vector2D Actor::GetVelocity() {
 	return velocity;
 }
 
+int64_t Actor::GetLosRadius() {
+	return los_radius;
+}
+
 void Actor::SetVelocity(physics::Vector2D new_velocity) {
 	velocity = new_velocity;
 }
