@@ -1,25 +1,23 @@
 /**
- * @file populate.cc
+ * @file depopulate.cc
  * Function definitions for data transfer class functions
 */
 #include <iostream>
 #include <string>
 #include <fstream>
-#include "state.h"
-#include "utilities.h"
-#include "actor/actor.h"
+#include <thread>
 #include "ipc.h"
 #include "state.pb.h"
 
 using namespace std;
-using namespace state;
-using namespace physics;
 
 
 int DepopulateActors(const IPC::State& RetrievedMessage) {
 
 	for (int i = 0; i < RetrievedMessage.actors_size(); i++)
 	{
+		std::this_thread::sleep_for(std::chrono::seconds(1));
+
 		cout<<"In here"<<endl;
 		const IPC::State::Actor& ActorMessage = RetrievedMessage.actors(i);
 
@@ -42,16 +40,14 @@ int DepopulateActors(const IPC::State& RetrievedMessage) {
 namespace ipc {
 
 	/**
-	 * Populates the state message
+	 * Depopulates the incoming interrupts
 	 *
-	 * State message consists of actors & terrain
-	 *
-	 * @param[in]  StateVar  the state object
+	 * Interrupts could be game level, play/pause state or console logs
 	 *
 	 * @return     Exit status
 	 */
 
-	int depop() {
+	int IncomingInterrupts() {
 
 		/**
 		 * Verify that the version of the library that we linked against is
@@ -61,9 +57,10 @@ namespace ipc {
 
 		IPC::State RetrievedMessage;
 
-		fstream input("file.txt", ios::in | ios::binary);
+		fstream input("file2.txt", ios::in | ios::binary);
+		istream *in = &cin;
 
-		if (!RetrievedMessage.ParseFromIstream(&input)) {
+		if (!RetrievedMessage.ParseFromIstream(in)) {
 			cerr << "Failed to retrieve state message" << endl;
 			return -1;
 		}
@@ -75,10 +72,4 @@ namespace ipc {
 
 		return 0;
 	}
-}
-
-int main()
-{
-	ipc::depop();
-	return 0;
 }
