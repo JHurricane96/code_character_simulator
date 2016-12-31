@@ -183,7 +183,7 @@ list_act_id_t State::GetActorEnemies(PlayerId player_id, act_id_t actor_id) {
 	return enemies;
 }
 
-list_act_id_t State::GetAllVisibleEnemies(PlayerId player_id) {
+list_act_id_t State::GetPlayerEnemyIds(PlayerId player_id) {
 	list_act_id_t all_enemies;
 	for(int64_t i = 0; i < terrain.GetRows(); ++i)
 		for(int64_t j = 0; j < terrain.GetRows(); ++j)

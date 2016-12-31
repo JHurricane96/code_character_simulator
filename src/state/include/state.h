@@ -196,15 +196,6 @@ public:
 	 */
 	std::shared_ptr<Base> GetEnemyBase(PlayerId player_id);
 	/**
-	 * Gets all visible enemies of a player
-	 *
-	 * @param[in]  player_id  The player ID of the player whose enemies
-	 * 						  are to be found
-	 *
-	 * @return     All visible enemies
-	 */
-	list_act_id_t GetAllVisibleEnemies(PlayerId player_id);
-	/**
 	 * Gets the enemies in the los of a given actor
 	 *
 	 * @param[in]  player_id  The player ID that owns the actor
