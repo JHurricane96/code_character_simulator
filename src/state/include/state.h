@@ -220,15 +220,34 @@ public:
 		std::vector<int64_t> terrain_weights
 	);
 	/**
-	 * Sets units a target to attack
+	 * Gives a player's units an attack target
 	 *
-	 * @param[in]  attacker_ids      Actor IDs of player units to be
-	 *                               given a target
-	 * @param[in]  attack_target_id  The target's Actor ID
+	 * The parameter success's value indicates the outcome of the call
+	 *
+	 * success is:
+	 * - 0 if attacker_ids is empty
+	 * - -1 if any attacker's Actor ID is invalid
+	 * - -2 if any attacking unit doesn't belong to the player who's
+	 * attacking
+	 * - -3 if any attacking unit is dead
+	 * - -4 if the target's Actor ID is invalid
+	 * - -5 if the target is in the attacking team
+	 * - -6 if the target is dead
+	 * - -7 if the target isn't in LOS of the attacking team
+	 * - 1 if successful
+	 *
+	 *
+	 * @param[in]  player_id         Units' player's ID
+	 * @param[in]  attacker_ids      Actor IDs of the attacking units
+	 * @param[in]  attack_target_id  The attack target's Actor ID
+	 * @param      success           If valid pointer, holds success
+	 *                               of the function
 	 */
 	void AttackUnit(
+		PlayerId player_id,
 		list_act_id_t attacker_ids,
-		act_id_t attack_target_id
+		act_id_t attack_target_id,
+		int * success
 	);
 	/**
 	 * Instructs a player's King to capture the enemy's Flag
