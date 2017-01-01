@@ -1,5 +1,6 @@
 #include <memory>
 #include "actor/actor.h"
+#include "actor/states/actor_idle_state.h"
 
 namespace state {
 
@@ -26,6 +27,7 @@ Actor::Actor(
 	):
 	id(id),
 	player_id(player_id),
+	state(new ActorIdleState()),
 	attack(attack),
 	hp(hp),
 	max_hp(max_hp),
