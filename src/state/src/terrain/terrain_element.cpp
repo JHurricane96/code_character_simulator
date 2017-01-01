@@ -28,7 +28,7 @@ TERRAIN_TYPE TerrainElement::GetTerrainType() {
 	return terrain_type;
 }
 
-LOS_TYPE TerrainElement::GetLos(int64_t player_id) {
+LOS_TYPE TerrainElement::GetLos(PlayerId player_id) {
 	return los_type_player[player_id];
 }
 
