@@ -10,6 +10,7 @@
 #include <vector>
 #include "vector2d.h"
 #include "state_export.h"
+#include "utilities.h"
 
 namespace state {
 
@@ -102,7 +103,7 @@ public:
 	 *
 	 * @return     The LOS Type
 	 */
-	LOS_TYPE GetLos(int64_t player_id);
+	LOS_TYPE GetLos(PlayerId player_id);
 };
 
 }
