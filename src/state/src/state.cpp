@@ -287,6 +287,14 @@ void State::Update(int64_t delta_time) {
 	path_planner.Update(sorted_actors);
 
 	for (auto actor : actors) {
+		auto target = actor->GetAttackTarget();
+		if (target != nullptr) {
+			if (terrain
+				.CoordinateToTerrainElement(target->GetPosition())
+				.GetLos(actor->GetPlayerId()) != DIRECT_LOS) {
+				actor->StopAttack();
+			}
+		}
 		actor->Update(delta_time);
 	}
 
