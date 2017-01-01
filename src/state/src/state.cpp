@@ -110,6 +110,78 @@ std::shared_ptr<Base> State::GetEnemyBase(PlayerId player_id) {
 	return bases[(player_id + 1) % (LAST_PLAYER + 1)];
 }
 
+void State::AttackUnit(
+	PlayerId player_id,
+	list_act_id_t attacker_ids,
+	act_id_t attack_target_id,
+	int * success
+) {
+	if (attacker_ids.empty()) {
+		if (success) {
+			*success = 0;
+		}
+		return;
+	}
+
+	for (auto act_id : attacker_ids) {
+		if (act_id >= actors.size() || act_id < 0) {
+			if (success) {
+				*success = -1;
+			}
+			return;
+		}
+		if (actors[act_id]->GetPlayerId() != player_id) {
+			if (success) {
+				*success = -2;
+			}
+			return;
+		}
+		if (actors[act_id]->IsDead()) {
+			if (success) {
+				*success = -3;
+			}
+		}
+	}
+
+	if (attack_target_id >= actors.size() || attack_target_id < 0) {
+		if (success) {
+			*success = -4;
+		}
+		return;
+	}
+
+	auto target = actors[attack_target_id];
+
+	if (target->GetPlayerId() == player_id) {
+		if (success) {
+			*success = -5;
+		}
+		return;
+	}
+	if (target->IsDead()) {
+		if (success) {
+			*success = -6;
+		}
+		return;
+	}
+	if (terrain
+		.CoordinateToTerrainElement(target->GetPosition())
+		.GetLos(player_id) != DIRECT_LOS) {
+		if (success) {
+			*success = -7;
+		}
+		return;
+	}
+
+	for (int64_t i = 0; i < attacker_ids.size(); ++i) {
+		actors[attacker_ids[i]]->AttackUnit(target.get());
+	}
+
+	if (success) {
+		*success = 1;
+	}
+}
+
 void State::FlagCapture(PlayerId player_id, int * success) {
 	auto king = GetKing(player_id);
 	auto enemy_flag = GetEnemyFlag(player_id);
