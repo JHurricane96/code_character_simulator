@@ -26,6 +26,7 @@ message State {
 	 * Message describes base class actor
 	 */
 	message Actor {
+
 		int64 id = 1;
 		int64 player_id = 2;
 		int64 pos_x = 3;
@@ -36,7 +37,7 @@ message State {
 
 		/**
 		 * Set type of actor
-		 * Default to actor with tag 0
+		 * Default to archer with tag 0
 		 */
 		enum Actor_type {
 			ARCHER = 0;
@@ -55,4 +56,36 @@ message State {
 	 * Expects a vector of actors
 	 */
 	repeated Actor actors = 1;
+
+	/**
+	 * Message describing LOS Class
+	 */
+	message LOS {
+		
+		enum LOS_TYPE {
+				UNEXPLORED = 0;
+				EXPLORED = 1;
+				DIRECT_LOS = 2;
+		}
+
+		/**
+		 * Message containing rows of LOS
+		 */
+		message LOSRows {
+			repeated LOS_TYPE los_element = 1;
+		}
+
+		repeated LOSRows grid = 2;
+	}
+
+	/**
+	 * Expects a 2D array of LOSElements
+	 */
+	LOS player1_los = 2;
+	
+	/**
+	 * Expects a 2D array of LOSElements
+	 */
+	LOS player2_los = 3;
 }
+
