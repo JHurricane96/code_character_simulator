@@ -117,6 +117,17 @@ void Actor::Die() {
 	attack_target = nullptr;
 }
 
+void Actor::DecideState(int64_t delta_time) {
+	auto new_state = state->Update(this, delta_time);
+
+	while (new_state != nullptr) {
+		state->Exit(this);
+		state = std::move(new_state);
+		state->Enter(this);
+		new_state = state->Update(this, delta_time);
+	}
+}
+
 void Actor::AttackUnit(Actor * target) {
 	attack_target = target;
 }

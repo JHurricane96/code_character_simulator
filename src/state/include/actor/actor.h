@@ -245,6 +245,19 @@ public:
 	 */
 	void Respawn();
 	/**
+	 * Executes the Actor's state machine
+	 *
+	 * Changes Actor's state if necessary
+	 *
+	 * Actor's state calls necessary methods in Actor
+	 *
+	 * Meant to be called in Actor::Update
+	 *
+	 * @param[in]  delta_time  The difference in time between the
+	 *                         previous and current Update calls
+	 */
+	void DecideState(int64_t delta_time);
+	/**
 	 * Start attacking a target
 	 *
 	 * Sets attack_target to the given target
