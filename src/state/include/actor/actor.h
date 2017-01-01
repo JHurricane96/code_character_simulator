@@ -7,8 +7,10 @@
 #define STATE_ACTOR_ACTOR_H
 
 #include <cstdint>
+#include <memory>
 #include "actor/actor.fwd.h"
 #include "vector2d.h"
+#include "actor/states/actor_state.h"
 #include "path_planner/path_planner_helper.h"
 #include "state_export.h"
 #include "utilities.h"
@@ -28,6 +30,10 @@ protected:
 	 * ID of the player that owns this actor
 	 */
 	PlayerId player_id;
+	/**
+	 * The current state of the actor
+	 */
+	std::unique_ptr<ActorState> state;
 	/**
 	 * The damage the actor can deal
 	 */
