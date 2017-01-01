@@ -37,6 +37,7 @@ Swordsman::Swordsman(
 	) {}
 
 void Swordsman::Update(int64_t delta_time) {
+	DecideState(delta_time);
 	position = position + velocity * delta_time;
 }
 
