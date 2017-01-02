@@ -49,7 +49,7 @@ message State {
 			SWORDSMAN = 6;
 			TOWER = 7;
 		}
-		Actor_type actor_type = 11;
+		Actor_type actor_type = 8;
 	}
 
 	/**
@@ -61,7 +61,7 @@ message State {
 	 * Message describing LOS Class
 	 */
 	message LOS {
-		
+
 		enum LOS_TYPE {
 				UNEXPLORED = 0;
 				EXPLORED = 1;
@@ -75,7 +75,7 @@ message State {
 			repeated LOS_TYPE los_element = 1;
 		}
 
-		repeated LOSRows grid = 2;
+		repeated LOSRows grid = 1;
 	}
 
 	/**
@@ -88,4 +88,3 @@ message State {
 	 */
 	LOS player2_los = 3;
 }
-
