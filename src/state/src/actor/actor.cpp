@@ -36,6 +36,7 @@ Actor::Actor(
 	position(position),
 	velocity(velocity),
 	los_radius(los_radius),
+	is_dead(false),
 	path_planner_helper() {}
 
 void Actor::AddPathPlanner(PathPlannerHelper p) {
