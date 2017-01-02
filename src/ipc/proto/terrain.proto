@@ -1,0 +1,64 @@
+/**
+ * @file terrain.proto
+ * Define message format for the terrain object
+ */
+
+/**
+ * Version: Proto3 explicit declaration
+ */
+syntax = "proto3";
+
+/**
+ * Package specifier to prevent name clashes 
+ * between protocol message types
+ */
+package IPC;
+
+/**
+ * Message describes the terrain object
+ * Repeated: Map a vector
+ * Enum: Composite message type with open enum types
+ * Enum defaults to value set with tag 0
+ */
+
+/**
+ * Message describing Terrain Class
+ */
+message Terrain {
+
+	/**
+	* Message describing Vector2D Class
+	*/
+	message Vector2D {
+	double x = 1;
+	double y = 2;
+	}
+
+	/**
+	* Message describing TerrainElement Class
+	*/
+	message TerrainElement {
+
+	Vector2D position = 1;
+	int64 size = 2;
+	enum TERRAIN_TYPE {
+		PLAIN = 0;
+		FOREST = 1;
+		MOUNTAIN = 2;
+		UNDEFINED = 3;
+	}
+	TERRAIN_TYPE terrain_type = 3;
+
+	int64 last_seen_player_1 = 4;
+	int64 last_seen_player_2 = 5;
+	}
+
+	/**
+	 * Message containing rows of terrain grid
+	 */
+	message TerrainRows {
+		repeated TerrainElement terrain_element = 1;
+	}
+
+	repeated TerrainRows grid = 1;
+}
