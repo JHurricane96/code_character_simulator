@@ -12,6 +12,11 @@ std::unique_ptr<ActorState> ActorDeadState::Update(
 	Actor * actor,
 	int64_t delta_time
 ) {
+	if (actor->GetTimeToRespawn() <= 0 &&
+		!(actor->GetRespawnLocation() == physics::Vector2D(-1, -1))) {
+		return std::unique_ptr<ActorState>(new ActorIdleState());
+	}
+	actor->DecreaseRespawnTime(delta_time);
 	return nullptr;
 }
 
