@@ -269,6 +269,7 @@ public:
 	 * Sets hp to 0
 	 * Sets time_spent_near_base to 0
 	 * Sets position to (0, 0)
+	 * Sets respawn_location to (-1, -1)
 	 * Sets attack_target to nullptr
 	 */
 	void Die();
