@@ -285,6 +285,14 @@ public:
 	 */
 	void Respawn();
 	/**
+	 * Decrease time_to_respawn
+	 *
+	 * Used when the Actor is dead and is called every tick
+	 *
+	 * @param[in]  decrease_amount  The decrease amount
+	 */
+	void DecreaseRespawnTime(int64_t decrease_amount);
+	/**
 	 * Executes the Actor's state machine
 	 *
 	 * Changes Actor's state if necessary
