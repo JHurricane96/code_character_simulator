@@ -139,7 +139,8 @@ public:
 		physics::Vector2D position,
 		physics::Vector2D velocity,
 		int64_t los_radius,
-		int64_t attack_speed
+		int64_t attack_speed,
+		ActorType actor_type
 	);
 	void AddPathPlanner(PathPlannerHelper p);
 	/**

@@ -33,7 +33,8 @@ Flag::Flag(
 		position,
 		velocity,
 		los_radius,
-		attack_speed
+		attack_speed,
+		ActorType::FLAG
 	), king(nullptr) {}
 
 void Flag::Capture(King * king) {

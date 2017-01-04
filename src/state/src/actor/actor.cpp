@@ -23,7 +23,8 @@ Actor::Actor(
 		physics::Vector2D position,
 		physics::Vector2D velocity,
 		int64_t los_radius,
-		int64_t attack_speed
+		int64_t attack_speed,
+		ActorType actor_type
 	):
 	id(id),
 	player_id(player_id),
@@ -42,6 +43,7 @@ Actor::Actor(
 	los_radius(los_radius),
 	is_dead(false),
 	attack_speed(attack_speed),
+	actor_type(actor_type),
 	path_planner_helper() {}
 
 void Actor::AddPathPlanner(PathPlannerHelper p) {
