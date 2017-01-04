@@ -52,6 +52,8 @@ public:
 	/**
 	 * Called right before the Actor switches to another state
 	 *
+	 * Calls Actor's Respawn method
+	 *
 	 * @param      actor  The Actor
 	 */
 	virtual void Exit(Actor * actor) override;

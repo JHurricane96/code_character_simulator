@@ -20,6 +20,8 @@ std::unique_ptr<ActorState> ActorDeadState::Update(
 	return nullptr;
 }
 
-void ActorDeadState::Exit(Actor * actor) {}
+void ActorDeadState::Exit(Actor * actor) {
+	actor->Respawn();
+}
 
 }
