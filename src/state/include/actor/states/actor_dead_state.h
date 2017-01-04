@@ -31,6 +31,12 @@ public:
 	/**
 	 * Called every tick by the Actor
 	 *
+	 * If the Actor's time_to_respawn is 0 and its respawn_location has
+	 * been set, i.e., it isn't (-1, -1), returns ActorIdleState.
+	 * Else returns nullptr.
+	 *
+	 * Decreases time_to_respawn each tick
+	 *
 	 * @param      actor       The Actor
 	 * @param[in]  delta_time  The difference in time between the
 	 *                         previous and current Update calls
