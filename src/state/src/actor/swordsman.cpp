@@ -33,7 +33,8 @@ Swordsman::Swordsman(
 		position,
 		velocity,
 		los_radius,
-		attack_speed
+		attack_speed,
+		ActorType::SWORDSMAN
 	) {}
 
 void Swordsman::Update(int64_t delta_time) {

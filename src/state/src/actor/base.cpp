@@ -32,7 +32,8 @@ Base::Base(
 		position,
 		velocity,
 		los_radius,
-		attack_speed
+		attack_speed,
+		ActorType::BASE
 	) {};
 
 void Base::Update(int64_t delta_time) {};
