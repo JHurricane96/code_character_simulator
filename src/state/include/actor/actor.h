@@ -274,7 +274,14 @@ public:
 	 */
 	void Die();
 	/**
-	 * Set's the actor's respawn time to 0
+	 * Respawns the Actor
+	 *
+	 * This is meant to be called after a player sets this Actor's
+	 * respawn location after its time_to_respawn hits 0
+	 *
+	 * Sets is_dead to false
+	 * Sets hp to max_hp
+	 * Sets position to respawn_location
 	 */
 	void Respawn();
 	/**
