@@ -45,6 +45,10 @@ protected:
 	 */
 	PlayerId player_id;
 	/**
+	 * The type of this Actor
+	 */
+	ActorType actor_type;
+	/**
 	 * The current state of the actor
 	 */
 	std::unique_ptr<ActorState> state;
@@ -163,6 +167,12 @@ public:
 	 * @return     The required player's ID
 	 */
 	PlayerId GetPlayerId();
+	/**
+	 * Gets the Actor's type, i.e., actor_type
+	 *
+	 * @return     The Actor's type
+	 */
+	ActorType GetActorType();
 	/**
 	 * Gets the Actor's attack, the amount of damage it can deal
 	 *
