@@ -266,7 +266,7 @@ public:
 	 *
 	 * Sets is_dead to true
 	 * Sets time_to_respawn to total_respawn_time
-	 * Sets hp to max_hp
+	 * Sets hp to 0
 	 * Sets time_spent_near_base to 0
 	 * Sets position to (0, 0)
 	 * Sets attack_target to nullptr
