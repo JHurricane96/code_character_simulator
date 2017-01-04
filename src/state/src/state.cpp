@@ -248,6 +248,70 @@ void State::FlagDrop(PlayerId player_id, int * success) {
 	}
 }
 
+void State::RespawnUnit(
+	PlayerId player_id,
+	act_id_t actor_id,
+	act_id_t respawn_location,
+	int * success
+) {
+	if (actor_id < 0 || actor_id >= actors.size()) {
+		if (success) {
+			*success = 0;
+		}
+		return;
+	}
+
+	auto actor = actors[actor_id];
+	if (actor->GetPlayerId() != player_id) {
+		if (success) {
+			*success = -1;
+		}
+		return;
+	}
+
+	if (!actor->IsDead()) {
+		if (success) {
+			*success = -2;
+		}
+		return;
+	}
+
+	if (actor->GetTimeToRespawn() > 0) {
+		if (success) {
+			*success = -3;
+		}
+		return;
+	}
+
+	if (respawn_location < 0 || respawn_location >= actors.size()) {
+		if (success) {
+			*success = -4;
+		}
+		return;
+	}
+
+	auto respawn_actor = actors[respawn_location];
+	if (respawn_actor->GetPlayerId() != player_id) {
+		if (success) {
+			*success = -5;
+		}
+		return;
+	}
+
+	if (respawn_actor->GetActorType() != ActorType::TOWER &&
+		respawn_actor->GetActorType() != ActorType::BASE) {
+		if (success) {
+			*success = -6;
+		}
+		return;
+	}
+
+	actor->SetRespawnLocation(respawn_actor->GetPosition());
+	if (success) {
+		*success = 1;
+	}
+}
+
 bool CompareActorsByXCoordinate(
 	std::shared_ptr<Actor> a,
 	std::shared_ptr<Actor> b

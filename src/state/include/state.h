@@ -297,6 +297,37 @@ public:
 		std::vector<int64_t> weights
 		);
 	/**
+	 * Sets an Actor's respawn_location if it's dead and its
+	 * time_to_respawn is 0
+	 *
+	 * The player doing the respawning has the ID player_id
+	 *
+	 * The parameter success's value indicates the outcome of the call
+	 *
+	 * success is:
+	 * - 0 if actor_id is an invalid Actor ID
+	 * - -1 if the Actor to respawn isn't the player's
+	 * - -2 if the Actor isn't dead
+	 * - -3 if the Actor's time_to_respawn isn't 0
+	 * - -4 if the respawn_location is an invalid Actor ID
+	 * - -5 if the respawn_location isn't the player's
+	 * - -6 if the respawn_location isn't a tower/base
+	 * - 1 if successful
+	 *
+	 * @param[in]  player_id         ID of player the Actor belongs to
+	 * @param[in]  actor_id          Actor's ID
+	 * @param[in]  respawn_location  Actor ID of the base/tower it
+	 *                               should respawn at
+	 * @param      success           If valid pointer, holds success
+	 *                               of the function call
+	 */
+	void RespawnUnit(
+		PlayerId player_id,
+		act_id_t actor_id,
+		act_id_t respawn_location,
+		int * success
+	);
+	/**
 	 * Gets the terrain
 	 *
 	 * @return     The terrain
