@@ -124,6 +124,12 @@ void Actor::Die() {
 	attack_target = nullptr;
 }
 
+void Actor::Respawn() {
+	is_dead = false;
+	hp = max_hp;
+	position = respawn_location;
+}
+
 void Actor::DecideState(int64_t delta_time) {
 	auto new_state = state->Update(this, delta_time);
 
