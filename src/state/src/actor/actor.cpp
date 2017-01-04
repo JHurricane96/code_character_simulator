@@ -56,6 +56,10 @@ PlayerId Actor::GetPlayerId() {
 	return player_id;
 }
 
+ActorType Actor::GetActorType() {
+	return actor_type;
+}
+
 int64_t Actor::GetAttack() {
 	return attack;
 }
