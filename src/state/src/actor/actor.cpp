@@ -120,6 +120,7 @@ void Actor::Die() {
 	hp = 0;
 	time_spent_near_base = 0;
 	position.x = position.y = 0;
+	respawn_location.x = respawn_location.y = -1;
 	attack_target = nullptr;
 }
 
