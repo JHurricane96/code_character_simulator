@@ -17,7 +17,7 @@ include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
 protobuf_generate_cpp(PROTO_SRCS PROTO_HDRS proto/state.proto)
 
-add_executable(ipc src/test.cc src/depopulate.cc src/populate.cc ${PROTO_SRCS} ${PROTO_HDRS})
+add_executable(ipc src/test.cpp src/depopulate.cpp src/populate.cpp ${PROTO_SRCS} ${PROTO_HDRS})
 set_property(TARGET ipc PROPERTY CXX_STANDARD 11)
 target_link_libraries(ipc ${Protobuf_LIBRARIES} physics state)
 
