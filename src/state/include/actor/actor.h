@@ -116,6 +116,13 @@ protected:
 	 */
 	bool is_dead;
 	/**
+	 * A player sets this for a dead Actor to signal that he's ready to
+	 * respawn it, assuming time_to_respawn is 0
+	 *
+	 * Set to (-1, -1) on death
+	 */
+	physics::Vector2D respawn_location;
+	/**
 	 * An instance of the PathPlannerHelper class to help with path planning
 	 */
 	PathPlannerHelper path_planner_helper;
@@ -302,7 +309,18 @@ public:
 	 * @param[in]  damage_amount  The damage amount
 	 */
 	void Damage(int64_t damage_amount);
-
+	/**
+	 * Gets the Actor's respawn location
+	 *
+	 * @return     The Actor's respawn location
+	 */
+	physics::Vector2D GetRespawnLocation();
+	/**
+	 * Sets the Actor's respawn location
+	 *
+	 * @param[in]  respawn_location  The new respawn location
+	 */
+	void SetRespawnLocation(physics::Vector2D respawn_location);
 };
 
 }

@@ -146,4 +146,12 @@ void Actor::Damage(int64_t damage_amount) {
 	hp -= damage_amount;
 }
 
+physics::Vector2D Actor::GetRespawnLocation() {
+	return respawn_location;
+}
+
+void Actor::SetRespawnLocation(physics::Vector2D respawn_location) {
+	this->respawn_location = respawn_location;
+}
+
 }
