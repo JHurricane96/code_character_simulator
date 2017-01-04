@@ -18,6 +18,20 @@
 namespace state {
 
 /**
+ * The various types of Actors that exist
+ */
+enum class ActorType {
+	ARCHER,
+	ARROW,
+	BASE,
+	FLAG,
+	KING,
+	SCOUT,
+	SWORDSMAN,
+	TOWER,
+};
+
+/**
  * The base Actor Class
  */
 class STATE_EXPORT Actor {
