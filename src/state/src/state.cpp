@@ -110,6 +110,18 @@ std::shared_ptr<Base> State::GetEnemyBase(PlayerId player_id) {
 	return bases[(player_id + 1) % (LAST_PLAYER + 1)];
 }
 
+list_act_id_t State::GetRespawnables(PlayerId player_id) {
+	list_act_id_t respawnables;
+
+	for (auto actor : sorted_actors[player_id]) {
+		if (actor->IsDead() && actor->GetTimeToRespawn() <= 0) {
+			respawnables.push_back(actor->GetId());
+		}
+	}
+
+	return respawnables;
+}
+
 void State::AttackUnit(
 	PlayerId player_id,
 	list_act_id_t attacker_ids,

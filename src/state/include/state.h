@@ -205,6 +205,14 @@ public:
 	 */
 	list_act_id_t GetActorEnemies(PlayerId player_id, act_id_t actor_id);
 	/**
+	 * Gets a player's dead units whose time_to_respawn is 0
+	 *
+	 * @param[in]  player_id  The player's ID
+	 *
+	 * @return     List of respawnables' Actor IDs
+	 */
+	list_act_id_t GetRespawnables(PlayerId player_id);
+	/**
 	 * Sets units into motion
 	 *
 	 * @param[in]  unit_ids         Actor IDs of units to be moved
