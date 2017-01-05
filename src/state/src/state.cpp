@@ -198,17 +198,23 @@ void State::FlagCapture(PlayerId player_id, int * success) {
 	auto king = GetKing(player_id);
 	auto enemy_flag = GetEnemyFlag(player_id);
 
+	if (king->IsDead()) {
+		if (success) {
+			*success = 0;
+		}
+	}
+
 	if (king->GetPosition().distance(enemy_flag->GetPosition()) >
 		king->GetSize() + enemy_flag->GetSize()) {
 		if (success) {
-			*success = 0;
+			*success = -1;
 		}
 		return;
 	}
 
 	if (king->HasFlag()) {
 		if (success) {
-			*success = -1;
+			*success = -2;
 		}
 		return;
 	}
@@ -226,17 +232,23 @@ void State::FlagDrop(PlayerId player_id, int * success) {
 	auto enemy_flag = GetEnemyFlag(player_id);
 	auto base = GetBase(player_id);
 
+	if (king->IsDead()) {
+		if (success) {
+			*success = 0;
+		}
+	}
+
 	if (king->GetPosition().distance(base->GetPosition()) >
 		king->GetSize() + base->GetSize()) {
 		if (success) {
-			*success = 0;
+			*success = -1;
 		}
 		return;
 	}
 
 	if (!king->HasFlag()) {
 		if (success) {
-			*success = -1;
+			*success = -2;
 		}
 		return;
 	}
