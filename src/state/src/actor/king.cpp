@@ -51,6 +51,10 @@ bool King::HasFlag() {
 
 void King::Update(int64_t delta_time) {
 	DecideState(delta_time);
+	if (IsDead() && HasFlag()) {
+		flag->Drop();
+		DropFlag();
+	}
 	position = position + velocity * delta_time;
 }
 
