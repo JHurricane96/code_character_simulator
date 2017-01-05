@@ -3,6 +3,12 @@
 
 namespace state {
 
+void SetIfValid(int * a, int value) {
+	if (a) {
+		* a = value;
+	}
+}
+
 State::State() : terrain(1), path_planner(1) {}
 
 State::State(
@@ -129,59 +135,43 @@ void State::AttackUnit(
 	int * success
 ) {
 	if (attacker_ids.empty()) {
-		if (success) {
-			*success = 0;
-		}
+		SetIfValid(success, 0);
 		return;
 	}
 
 	for (auto act_id : attacker_ids) {
 		if (act_id >= actors.size() || act_id < 0) {
-			if (success) {
-				*success = -1;
-			}
+			SetIfValid(success, -1);
 			return;
 		}
 		if (actors[act_id]->GetPlayerId() != player_id) {
-			if (success) {
-				*success = -2;
-			}
+			SetIfValid(success, -2);
 			return;
 		}
 		if (actors[act_id]->IsDead()) {
-			if (success) {
-				*success = -3;
-			}
+			SetIfValid(success, -3);
 		}
 	}
 
 	if (attack_target_id >= actors.size() || attack_target_id < 0) {
-		if (success) {
-			*success = -4;
-		}
+		SetIfValid(success, -4);
 		return;
 	}
 
 	auto target = actors[attack_target_id];
 
 	if (target->GetPlayerId() == player_id) {
-		if (success) {
-			*success = -5;
-		}
+		SetIfValid(success, -5);
 		return;
 	}
 	if (target->IsDead()) {
-		if (success) {
-			*success = -6;
-		}
+		SetIfValid(success, -6);
 		return;
 	}
 	if (terrain
 		.CoordinateToTerrainElement(target->GetPosition())
 		.GetLos(player_id) != DIRECT_LOS) {
-		if (success) {
-			*success = -7;
-		}
+		SetIfValid(success, -7);
 		return;
 	}
 
@@ -189,9 +179,7 @@ void State::AttackUnit(
 		actors[attacker_ids[i]]->AttackUnit(target.get());
 	}
 
-	if (success) {
-		*success = 1;
-	}
+	SetIfValid(success, 1);
 }
 
 void State::FlagCapture(PlayerId player_id, int * success) {
@@ -199,31 +187,23 @@ void State::FlagCapture(PlayerId player_id, int * success) {
 	auto enemy_flag = GetEnemyFlag(player_id);
 
 	if (king->IsDead()) {
-		if (success) {
-			*success = 0;
-		}
+		SetIfValid(success, 0);
 	}
 
 	if (king->GetPosition().distance(enemy_flag->GetPosition()) >
 		king->GetSize() + enemy_flag->GetSize()) {
-		if (success) {
-			*success = -1;
-		}
+		SetIfValid(success, -1);
 		return;
 	}
 
 	if (king->HasFlag()) {
-		if (success) {
-			*success = -2;
-		}
+		SetIfValid(success, -2);
 		return;
 	}
 
 	king->CaptureFlag(enemy_flag.get());
 	enemy_flag->Capture(king.get());
-	if (success) {
-		*success = 1;
-	}
+	SetIfValid(success, 1);
 
 }
 
@@ -233,31 +213,23 @@ void State::FlagDrop(PlayerId player_id, int * success) {
 	auto base = GetBase(player_id);
 
 	if (king->IsDead()) {
-		if (success) {
-			*success = 0;
-		}
+		SetIfValid(success, 0);
 	}
 
 	if (king->GetPosition().distance(base->GetPosition()) >
 		king->GetSize() + base->GetSize()) {
-		if (success) {
-			*success = -1;
-		}
+		SetIfValid(success, -1);
 		return;
 	}
 
 	if (!king->HasFlag()) {
-		if (success) {
-			*success = -2;
-		}
+		SetIfValid(success, -2);
 		return;
 	}
 
 	king->DropFlag();
 	enemy_flag->Drop();
-	if (success) {
-		*success = 1;
-	}
+	SetIfValid(success, 1);
 }
 
 void State::RespawnUnit(
@@ -267,61 +239,45 @@ void State::RespawnUnit(
 	int * success
 ) {
 	if (actor_id < 0 || actor_id >= actors.size()) {
-		if (success) {
-			*success = 0;
-		}
+		SetIfValid(success, 0);
 		return;
 	}
 
 	auto actor = actors[actor_id];
 	if (actor->GetPlayerId() != player_id) {
-		if (success) {
-			*success = -1;
-		}
+		SetIfValid(success, -1);
 		return;
 	}
 
 	if (!actor->IsDead()) {
-		if (success) {
-			*success = -2;
-		}
+		SetIfValid(success, -2);
 		return;
 	}
 
 	if (actor->GetTimeToRespawn() > 0) {
-		if (success) {
-			*success = -3;
-		}
+		SetIfValid(success, -3);
 		return;
 	}
 
 	if (respawn_location < 0 || respawn_location >= actors.size()) {
-		if (success) {
-			*success = -4;
-		}
+		SetIfValid(success, -4);
 		return;
 	}
 
 	auto respawn_actor = actors[respawn_location];
 	if (respawn_actor->GetPlayerId() != player_id) {
-		if (success) {
-			*success = -5;
-		}
+		SetIfValid(success, -5);
 		return;
 	}
 
 	if (respawn_actor->GetActorType() != ActorType::TOWER &&
 		respawn_actor->GetActorType() != ActorType::BASE) {
-		if (success) {
-			*success = -6;
-		}
+		SetIfValid(success, -6);
 		return;
 	}
 
 	actor->SetRespawnLocation(respawn_actor->GetPosition());
-	if (success) {
-		*success = 1;
-	}
+	SetIfValid(success, 1);
 }
 
 bool CompareActorsByXCoordinate(
