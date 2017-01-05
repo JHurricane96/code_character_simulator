@@ -15,9 +15,14 @@ include_directories(${Protobuf_INCLUDE_DIRS})
 include_directories(include)
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
-protobuf_generate_cpp(PROTO_SRCS PROTO_HDRS proto/state.proto)
+set(ProtoFiles
+	state.proto
+	terrain.proto
+)
+file(GLOB ProtoFiles "${CMAKE_CURRENT_SOURCE_DIR}/proto/*.proto")
+protobuf_generate_cpp(PROTO_SRCS PROTO_HDRS ${ProtoFiles})
 
-add_executable(ipc src/test.cpp src/depopulate.cpp src/populate.cpp ${PROTO_SRCS} ${PROTO_HDRS})
+add_executable(ipc src/test.cpp src/load_terrain.cpp src/depopulate.cpp src/populate.cpp ${PROTO_SRCS} ${PROTO_HDRS})
 set_property(TARGET ipc PROPERTY CXX_STANDARD 11)
 target_link_libraries(ipc ${Protobuf_LIBRARIES} physics state)
 

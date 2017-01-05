@@ -47,18 +47,15 @@ message Terrain {
 		MOUNTAIN = 2;
 		UNDEFINED = 3;
 	}
-	TERRAIN_TYPE terrain_type = 3;
-
-	int64 last_seen_player_1 = 4;
-	int64 last_seen_player_2 = 5;
+	TERRAIN_TYPE type = 3;
 	}
 
 	/**
 	 * Message containing rows of terrain grid
 	 */
-	message TerrainRows {
-		repeated TerrainElement terrain_element = 1;
+	message TerrainRow {
+		repeated TerrainElement element = 1;
 	}
 
-	repeated TerrainRows grid = 1;
+	repeated TerrainRow row = 1;
 }
