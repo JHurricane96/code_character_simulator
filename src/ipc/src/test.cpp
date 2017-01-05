@@ -139,7 +139,7 @@ pair<State, vector<vector<shared_ptr<Actor> > > > MakeState(Terrain terrain) {
 	sorted_actors.push_back(actors1);
 	sorted_actors.push_back(actors2);
 
-	cout << "SIZE: " << archers[1].size() << "\n";
+	//cout << "SIZE: " << archers[1].size() << "\n";
 
 	State S(
 		terrain,
@@ -212,14 +212,15 @@ int main(int argc, char const* argv[])
 		//ofstream file("output.txt");
 		
 		//auto arrows = S->GetProjectiles();
-
-		std::thread RendererInput(ipc::IncomingInterrupts);
-
+		//std::thread RendererInput(ipc::IncomingInterrupts);
+		if( ipc::TerrainTransfer(TT) < 0 ) {
+			return -1;
+		}
 		if( ipc::StateTransfer(S) < 0 ) {
 			return -1;
 		}
 
-		RendererInput.join();
+		//RendererInput.join();
 
 
 		//file << arr.dump() << endl;

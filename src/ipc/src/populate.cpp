@@ -104,7 +104,7 @@ namespace ipc {
 
 		IPC::State StateMessage;
 
-		fstream output("file.txt", ios::out | ios::trunc | ios::binary);
+		fstream output("file2.txt", ios::out | ios::trunc | ios::binary);
 
 
 		if (PopulateActors(StateVar, &StateMessage) < 0) {
@@ -112,7 +112,7 @@ namespace ipc {
 			return -1;
 		}
 
-		if (!StateMessage.SerializeToOstream(&output)) {
+		if (!StateMessage.SerializeToOstream(&std::cout)) {
 			cerr << "Failed to transfer state message" << endl;
 			return -1;
 		}
