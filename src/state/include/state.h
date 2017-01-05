@@ -260,24 +260,33 @@ public:
 	/**
 	 * Instructs a player's King to capture the enemy's Flag
 	 *
-	 * Fails if the King is not near enough the Flag, if he has it
-	 * already, or he's dead
+	 * The parameter success's value indicates the outcome of the call
+	 *
+	 * success is:
+	 * - 0 if the King is dead
+	 * - -1 if the King isn't near enough to the Flag
+	 * - -2 if the King already has the Flag
+	 * - 1 if successful
 	 *
 	 * @param[in]  player_id  King's player's ID
-	 * @param      success    Holds 1 if successful, 0 if he's too far
-	 *                        away, -1 if he already has a flag
+	 * @param      success    If valid pointer, holds success of the
+	 *                        function call
 	 */
 	void FlagCapture(PlayerId player_id, int * success);
 	/**
 	 * Instructs a player's King to drop the enemy's Flag
 	 *
-	 * Fails if the King is not near enough his Base, if he doesn't have
-	 * the Flag, or if he's dead
+	 * The parameter success's value indicates the outcome of the call
+	 *
+	 * success is:
+	 * - 0 if the King is dead
+	 * - -1 if the King isn't near enough to his Base
+	 * - -2 if the King doesn't have a Flag
+	 * - 1 if successful
 	 *
 	 * @param[in]  player_id  King's player's ID
-	 * @param      successs   Holds 1 if successful, 0 if he's too far
-	 *                        from his Base, -1 if he doesn't have the
-	 *                        Flag
+	 * @param      successs   If valid pointer, holds success of the
+	 *                        function call
 	 */
 	void FlagDrop(PlayerId player_id, int * successs);
 	/**
