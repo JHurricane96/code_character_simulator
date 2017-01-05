@@ -1,4 +1,5 @@
 #include "path_planner/path_planner_helper.h"
+#include "actor/actor.h"
 
 namespace state {
 

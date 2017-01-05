@@ -9,11 +9,10 @@
 #include <vector>
 #include <memory>
 #include "vector2d.h"
+#include "actor/actor.fwd.h"
 #include "state_export.h"
 
 namespace state {
-
-class Actor;
 
 /**
  * Makes formations for path planning
@@ -182,7 +181,5 @@ public:
 };
 
 }
-
-#include "actor/actor.h"
 
 #endif
