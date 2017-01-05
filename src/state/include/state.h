@@ -16,6 +16,7 @@
 #include "actor/flag.h"
 #include "actor/king.h"
 #include "actor/base.h"
+#include "actor/projectile_handler.h"
 #include "terrain/terrain.h"
 #include "path_planner/path_planner.h"
 #include "path_planner/path_planner_helper.h"
@@ -83,6 +84,10 @@ private:
 	 * Bases for each player
 	 */
 	std::vector<std::shared_ptr<Base> > bases;
+	/**
+	 * Handles the firing of projectiles
+	 */
+	ProjectileHandler projectile_handler;
 	/**
 	 * The State object's path planning mastermind
 	 */
