@@ -16,12 +16,13 @@ int DepopulateActors(const IPC::State& RetrievedMessage) {
 
 	for (int i = 0; i < RetrievedMessage.actors_size(); i++)
 	{
-		std::this_thread::sleep_for(std::chrono::seconds(1));
+		//std::this_thread::sleep_for(std::chrono::seconds(1));
 
 		cout<<"In here"<<endl;
 		const IPC::State::Actor& ActorMessage = RetrievedMessage.actors(i);
 
 		cout<<"Actor ID: "<<ActorMessage.id()<<endl;
+		cout<<"Actor PlayerID: "<<ActorMessage.player_id()<<endl;
 		cout<<"Actor PosX: "<<ActorMessage.pos_x()<<endl;
 		cout<<"Actor PosY: "<<ActorMessage.pos_y()<<endl;
 		
@@ -57,10 +58,10 @@ namespace ipc {
 
 		IPC::State RetrievedMessage;
 
-		fstream input("file2.txt", ios::in | ios::binary);
+		fstream input("file.txt", ios::in | ios::binary);
 		istream *in = &cin;
 
-		if (!RetrievedMessage.ParseFromIstream(in)) {
+		if (!RetrievedMessage.ParseFromIstream(&input)) {
 			cerr << "Failed to retrieve state message" << endl;
 			return -1;
 		}
