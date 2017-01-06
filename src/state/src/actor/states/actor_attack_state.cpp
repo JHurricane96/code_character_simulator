@@ -32,7 +32,7 @@ std::unique_ptr<ActorState> ActorAttackState::Update(
 		return std::unique_ptr<ActorState>(new ActorIdleState());
 	}
 	else if (actor->GetPosition().distance(target->GetPosition())
-		> actor->GetSize() + target->GetSize()
+		> actor->GetAttackRange() + target->GetSize()
 	) {
 		return std::unique_ptr<ActorState>(new ActorPursuitState());
 	}
