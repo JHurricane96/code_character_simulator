@@ -31,8 +31,22 @@ private:
 	 * True if hit target(done attacking), false if still in motion
 	 */
 	bool is_done;
+	/**
+	 * Lifetime of an arrow
+	 * Dies after `time_to_live` clock ticks
+	 */
+	int64_t time_to_live;
 public:
-	Arrow();
+	Arrow(
+		act_id_t id,
+		PlayerId player_id,
+		int64_t attack,
+		int64_t max_speed,
+		int64_t time_to_live,
+		int64_t size,
+		physics::Vector2D start,
+		Actor* target
+	);
 	/**
 	 * To check if arrow has hit target
 	 * Gets is_done
