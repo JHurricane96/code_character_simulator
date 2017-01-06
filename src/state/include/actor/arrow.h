@@ -12,20 +12,20 @@
 
 namespace state {
 
+/**
+ * Damage mutipliers for various terrains
+ * 0: PLAIN
+ * 1: FOREST
+ * 2: MOUNTAIN
+ * Multiplier for mountain to plain would be multiplier[MOUNTAIN][PLAIN]
+ */
+const std::vector<std::vector<float>> DamageMultiplier({
+	{ (float)1.0, (float)0.7, (float)1.3 },
+	{ (float)0.7, (float)0.7, (float)0.7 },
+	{ (float)1.3, (float)1.0, (float)1.0 }
+});
+
 class STATE_EXPORT Arrow: public Actor {
-private:
-	/**
-	 * The damage the arrow causes
-	 */
-	int64_t damage;
-	/**
-	 * Damage mutipliers for various terrains
-	 * 0: PLAIN
-	 * 1: FOREST
-	 * 2: MOUNTAIN
-	 * Multiplier for mountain to plain would be multiplier[MOUNTAIN][PLAIN]
-	 */
-	const int64_t multiplier[3][3];
 public:
 	Arrow();
 	/**
