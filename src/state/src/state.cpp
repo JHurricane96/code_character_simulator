@@ -28,13 +28,15 @@ State::State(
 		std::vector<std::vector<std::shared_ptr<Actor> > > sorted_actors,
 		std::vector<std::shared_ptr<King> > kings,
 		std::vector<std::shared_ptr<Base> > bases,
-		std::vector<std::shared_ptr<Flag> > flags
+		std::vector<std::shared_ptr<Flag> > flags,
+		std::vector<std::vector<std::shared_ptr<Tower> > > towers
 	):
 	terrain(terrain),
 	sorted_actors(sorted_actors),
 	path_planner(terrain.GetRows()),
 	kings(kings),
 	bases(bases),
+	towers(towers),
 	projectile_handler(actors.size()),
 	flags(flags) {
 		for (int64_t i = 0; i <= LAST_PLAYER; i++) {
