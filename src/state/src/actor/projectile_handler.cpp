@@ -32,6 +32,12 @@ void ProjectileHandler::CreateArrow(
 	next_arrow_id++;
 }
 
+
+std::vector<std::shared_ptr<Arrow> >
+ProjectileHandler::GetProjectiles() {
+	return arrows;
+}
+
 void ProjectileHandler::HandleActors(
 	std::vector<std::vector<std::shared_ptr<Tower> > >& towers,
 	Terrain* terrain

@@ -12,6 +12,7 @@
 #include <memory>
 #include <cstdint>
 #include "actor/actor.h"
+#include "actor/arrow.h"
 #include "actor/tower.h"
 #include "actor/flag.h"
 #include "actor/king.h"
@@ -210,6 +211,13 @@ public:
 	 * @return     The enemies od the actor
 	 */
 	list_act_id_t GetActorEnemies(PlayerId player_id, act_id_t actor_id);
+	/**
+	 * Gets the list of active arrows
+	 *
+	 * @return     The arrows
+	 */
+	std::vector<std::shared_ptr<Arrow> > GetProjectiles();
+
 	/**
 	 * Gets a player's dead units whose time_to_respawn is 0
 	 *

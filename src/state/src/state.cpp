@@ -124,6 +124,11 @@ std::shared_ptr<Base> State::GetEnemyBase(PlayerId player_id) {
 	return bases[(player_id + 1) % (LAST_PLAYER + 1)];
 }
 
+std::vector<std::shared_ptr<Arrow> > State::GetProjectiles() {
+	return projectile_handler.GetProjectiles();
+}
+
+
 list_act_id_t State::GetRespawnables(PlayerId player_id) {
 	list_act_id_t respawnables;
 

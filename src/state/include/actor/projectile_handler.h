@@ -63,6 +63,12 @@ public:
 	 */
 	ProjectileHandler(int64_t first_arrow_id);
 	/**
+	 * Getter for the arrows
+	 *
+	 * @return     The arrows
+	 */
+	std::vector<std::shared_ptr<Arrow> > GetProjectiles();
+	/**
 	 * Creates an arrow to be fired
 	 *
 	 * @param[in]  player_id      The ID of the player who fires
