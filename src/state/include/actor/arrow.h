@@ -26,17 +26,27 @@ const std::vector<std::vector<float>> DamageMultiplier({
 });
 
 class STATE_EXPORT Arrow: public Actor {
+private:
+	/**
+	 * True if hit target(done attacking), false if still in motion
+	 */
+	bool is_done;
 public:
 	Arrow();
 	/**
-	 * Sets the arrow in motion toward a destination
+	 * To check if arrow has hit target
+	 * Gets is_done
 	 *
-	 * @param[in]  destination  The destination of the arrow
+	 * @return     True if done, False otherwise
 	 */
-	void FireArrow(
-		std::vector<physics::Vector2D> start,
-		std::vector<physics::Vector2D> destination
-		);
+	bool IsDone();
+	/**
+	 * The arrow's attack function
+	 *
+	 * Sets the is_done bool to true
+	 * Inflicts damage on attack_target
+	 */
+	void Attack() override;
 	/**
 	 * Update function to be called every tick
 	 */
