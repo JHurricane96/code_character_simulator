@@ -57,7 +57,7 @@ protected:
 	 */
 	int64_t attack;
 	/**
-	 * The number of helath points the actor currently has
+	 * The number of health points the actor currently has
 	 */
 	int64_t hp;
 	/**
