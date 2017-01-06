@@ -40,7 +40,7 @@ std::unique_ptr<ActorState> ActorAttackState::Update(
 	time_to_attack -= delta_time;
 	if (time_to_attack <= 0) {
 		time_to_attack = actor->GetAttackSpeed();
-		target->Damage(actor->GetAttack());
+		actor->Attack();
 	}
 
 	return nullptr;
