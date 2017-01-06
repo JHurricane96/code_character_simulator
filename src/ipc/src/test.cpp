@@ -184,7 +184,22 @@ int main(int argc, char const* argv[])
 		vector<TerrainElement> temp;
 		for (int j = 0; j < 20; j++)
 			if (j <= 10)
+			{
 				temp.push_back(TerrainElement(PLAIN, Vector2D(i * te_size, j * te_size), te_size));
+				cout<<"i: "<<i*te_size<<" j: "<<j*te_size<<endl;
+				state::TERRAIN_TYPE terrain_type = temp[j].GetTerrainType();
+				switch(terrain_type){
+				case PLAIN :
+					cout<<"PLAIN\n";
+					break;
+				case FOREST :
+					cout<<"FOREST\n";
+					break;
+				case MOUNTAIN :
+					cout<<"MOUNTAIN\n";
+					break;
+			}
+							}
 			else
 				temp.push_back(TerrainElement(MOUNTAIN, Vector2D(i * te_size, j * te_size), te_size));
 		grid.push_back(temp);
@@ -213,7 +228,7 @@ int main(int argc, char const* argv[])
 		
 		//auto arrows = S->GetProjectiles();
 		//std::thread RendererInput(ipc::IncomingInterrupts);
-		if( ipc::TerrainTransfer(TT) < 0 ) {
+		if( ipc::IncomingInterrupts() < 0 ) {
 			return -1;
 		}
 		if( ipc::StateTransfer(S) < 0 ) {
