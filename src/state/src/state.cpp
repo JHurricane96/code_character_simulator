@@ -345,6 +345,28 @@ void State::Update(int64_t delta_time) {
 				actor->StopAttack();
 			}
 		}
+
+		if (actor->GetActorType() == ActorType::TOWER) {
+			std::shared_ptr<Tower> tower = std::static_pointer_cast<Tower>(actor);
+			if (tower->IsDead()) {
+				auto pid = tower->GetTowerOwner();
+				if (pid != TowerOwner::UNOWNED) {
+					towers[(int)pid].erase( std::find(
+										towers[(int)pid].begin(),
+										towers[(int)pid].end(),
+										tower) );
+					sorted_actors[(int)pid].erase( std::find(
+										sorted_actors[(int)pid].begin(),
+										sorted_actors[(int)pid].end(),
+										actor) );
+				}
+				if (tower->Contend(delta_time, sorted_actors)) {
+					auto id = actor->GetPlayerId();
+					sorted_actors[id].push_back(actor);
+					towers[id].push_back(tower);
+				}
+			}
+		}
 		actor->Update(delta_time);
 	}
 
