@@ -265,6 +265,10 @@ public:
 	 */
 	physics::Vector2D GetPosition();
 	/**
+	 * A virtual method for units to override based on their attack style
+	 */
+	virtual void Attack();
+	/**
 	 * Determines if the Actor is dead
 	 *
 	 * @return     true if dead, false otherwises
