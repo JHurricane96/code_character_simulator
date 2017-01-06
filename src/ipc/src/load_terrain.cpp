@@ -92,14 +92,16 @@ int PopulateTerrain(state::Terrain TerrainVar, IPC::Terrain* TerrainMessage) {
 			/**
 			 * Set type in message
 			 */
-			ElementMessage->set_size(ElementSize);
 			switch(terrain_type){
 				case PLAIN :
 					ElementMessage->set_type(IPC::Terrain::TerrainElement::PLAIN);
+					break;
 				case FOREST :
 					ElementMessage->set_type(IPC::Terrain::TerrainElement::FOREST);
+					break;
 				case MOUNTAIN :
 					ElementMessage->set_type(IPC::Terrain::TerrainElement::MOUNTAIN);
+					break;
 			}
 		}
 	}
