@@ -31,7 +31,7 @@ std::unique_ptr<ActorState> ActorPursuitState::Update(
 		return std::unique_ptr<ActorState>(new ActorIdleState());
 	}
 	else if (actor->GetPosition().distance(target->GetPosition())
-		<= actor->GetSize() + target->GetSize()
+		<= actor->GetAttackRange() + target->GetSize()
 	) {
 		actor->SetVelocity(physics::Vector2D(0, 0));
 		return std::unique_ptr<ActorState>(new ActorAttackState());
