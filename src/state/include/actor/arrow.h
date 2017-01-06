@@ -64,7 +64,7 @@ public:
 	/**
 	 * Update function to be called every tick
 	 */
-	void Update();
+	void Update(int64_t delta_time);
 };
 
 }
