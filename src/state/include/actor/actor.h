@@ -330,10 +330,11 @@ public:
 	void AttackUnit(Actor * target);
 	/**
 	 * Stops the Actor from attacking if he was attacking
+	 * Actors can inherit to define how to stop attack
 	 *
-	 * Sets attack_target to nullptr
+	 * Default behaviour is to set attack_target to nullptr
 	 */
-	void StopAttack();
+	virtual void StopAttack();
 	/**
 	 * Sets Actor's hp to hp - damage_amount
 	 *
