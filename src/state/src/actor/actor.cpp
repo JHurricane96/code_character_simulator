@@ -155,6 +155,8 @@ void Actor::AttackUnit(Actor * target) {
 	attack_target = target;
 }
 
+void Actor::Attack() {}
+
 void Actor::StopAttack() {
 	attack_target = nullptr;
 }
