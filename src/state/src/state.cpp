@@ -9,7 +9,10 @@ void SetIfValid(int * a, int value) {
 	}
 }
 
-State::State() : terrain(1), path_planner(1) {}
+State::State()
+	: terrain(1)
+	, path_planner(1)
+	, projectile_handler(actors.size()) {}
 
 State::State(
 		Terrain terrain,
@@ -17,7 +20,8 @@ State::State(
 	):
 	terrain(terrain),
 	path_planner(terrain.GetRows()),
-	actors(actors) {}
+	actors(actors),
+	projectile_handler(actors.size()) {}
 
 State::State(
 		Terrain terrain,
@@ -31,6 +35,7 @@ State::State(
 	path_planner(terrain.GetRows()),
 	kings(kings),
 	bases(bases),
+	projectile_handler(actors.size()),
 	flags(flags) {
 		for (int64_t i = 0; i <= LAST_PLAYER; i++) {
 			list_act_id_t l;
@@ -59,7 +64,8 @@ State::State(
 	actors(actors),
 	kings(kings),
 	bases(bases),
-	flags(flags) {}
+	flags(flags),
+	projectile_handler(actors.size()) {}
 
 void State::MoveUnits(
 	list_act_id_t unit_ids,
@@ -343,6 +349,8 @@ void State::Update(int64_t delta_time) {
 	}
 
 	terrain.Update(sorted_actors);
+
+	projectile_handler.Update(delta_time, towers, &terrain);
 }
 
 }
