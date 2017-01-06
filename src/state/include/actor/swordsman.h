@@ -33,6 +33,12 @@ public:
 		int64_t attack_range
 	);
 	/**
+	 * The swordsman's attack function
+	 *
+	 * Inflicts damage on the attack_target equal to its attack value
+	 */
+	void Attack() override;
+	/**
 	 * Update function to be called every tick
 	 *
 	 * @param[in]  delta_time  The difference in time between the
