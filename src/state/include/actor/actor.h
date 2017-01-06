@@ -279,6 +279,7 @@ public:
 	 *
 	 * Dead Actors can't do anything
 	 *
+	 * Default behaviour:
 	 * Sets is_dead to true
 	 * Sets time_to_respawn to total_respawn_time
 	 * Sets hp to 0
@@ -287,7 +288,7 @@ public:
 	 * Sets respawn_location to (-1, -1)
 	 * Sets attack_target to nullptr
 	 */
-	void Die();
+	virtual void Die();
 	/**
 	 * Respawns the Actor
 	 *
