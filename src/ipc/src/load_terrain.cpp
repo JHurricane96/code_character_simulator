@@ -1,125 +1,73 @@
 /**
  * @file load_terrain.cpp
- * Function definitions for retrieving and loading terrain
+ * Function definitions for loading terrain from file
 */
 #include <iostream>
 #include <string>
 #include <fstream>
 #include <thread>
-#include "state.h"
-#include "terrain/terrain.h"
-#include "utilities.h"
-#include "actor/actor.h"
 #include "ipc.h"
+#include "terrain/terrain.h"
+#include "terrain/terrain_element.h"
+#include "state.pb.h"
 #include "terrain.pb.h"
 
 using namespace std;
-using namespace state;
-using namespace physics;
 
-/**
- * Populates the terrain
- *
- * Terrain is a grid where each unit (terrain element) consists of position
- * size, terrain type, line of sight for a given player and timestamp denoting
- * last visit by the players
- *
- * @param[in]  TerrainVar      the terrain object
- * @param[in]  TerrainMessage  the terrain message object
- *
- * @return     Exit status
- */
-int PopulateTerrain(state::Terrain TerrainVar, IPC::Terrain* TerrainMessage) {
+const int te_size = 20;
 
-	int64_t size = TerrainVar.GetRows();
+state::Terrain DepopulateTerrain(const IPC::Terrain& RetrievedMessage) {
 
-	/**
-	 * Loop through the terrain to fill the terrain element unit by unit
-	 */
+	vector<vector<state::TerrainElement> > Grid;
 
-	for (double row = 0; row < size; ++row) {
-
-		/**
-		 * Add a terrain row in terrain
-		 */
-		IPC::Terrain::TerrainRow* RowMessage = TerrainMessage->add_row();
-		for (double col = 0; col < size; ++col) {
-
-			/**
-			 * Add a terrain element in row
-			 */
-			IPC::Terrain::TerrainElement* ElementMessage = RowMessage->add_element();
-
-			/**
-			 * Vector2D to store and map offset to terrain element
-			 */
-			physics::Vector2D offset;
-
-			offset.x = row;
-			offset.y = col;
-
-			state::TerrainElement ElementObject = TerrainVar.OffsetToTerrainElement(offset);
-
-			/**
-			 * Get position of terrain element
-			 */
-			physics::Vector2D position = ElementObject.GetPosition();
-
-			IPC::Terrain::Vector2D* ElementPosition(new IPC::Terrain::Vector2D);
-
-			/**
-			 * Set position in message
-			 */
-			ElementPosition->set_x(position.x);
-			ElementPosition->set_y(position.y);
-			ElementMessage->set_allocated_position(ElementPosition);
-
-			/**
-			 * Get size of terrain element
-			 */
-			int64_t ElementSize = ElementObject.GetSize();
-
-			/**
-			 * Set size in message
-			 */
-			ElementMessage->set_size(ElementSize);
-
-			/**
-			 * Get type of terrain element
-			 */
-			state::TERRAIN_TYPE terrain_type = ElementObject.GetTerrainType();
-
-			/**
-			 * Set type in message
-			 */
-			switch(terrain_type){
-				case PLAIN :
-					ElementMessage->set_type(IPC::Terrain::TerrainElement::PLAIN);
+	//cout<<"This is the terrain speaking\n";
+	for (int i = 0; i < RetrievedMessage.row_size(); i++)
+	{
+		const IPC::Terrain::TerrainRow& RowMessage = RetrievedMessage.row(i);
+		vector<state::TerrainElement> Row;
+		for(int j = 0; j < RowMessage.element_size(); j++)
+		{
+			//std::this_thread::sleep_for(std::chrono::seconds(1));
+			const IPC::Terrain::TerrainElement& ElementMessage = RowMessage.element(j);
+			IPC::Terrain::Vector2D Position(ElementMessage.position());
+			//cout<<"Position: ("<<Position.x()<<","<<Position.y()<<") ";
+			//cout<<"Size: "<<ElementMessage.size()<<" ";
+			state::TERRAIN_TYPE terrain_type;
+			switch(ElementMessage.type())
+			{
+				case IPC::Terrain::TerrainElement::PLAIN : 
+					//cout<<"type: PLAIN\n";
+					terrain_type = state::PLAIN;
 					break;
-				case FOREST :
-					ElementMessage->set_type(IPC::Terrain::TerrainElement::FOREST);
+				case IPC::Terrain::TerrainElement::FOREST : 
+					//cout<<"type: FOREST\n";
+					terrain_type = state::FOREST;
 					break;
-				case MOUNTAIN :
-					ElementMessage->set_type(IPC::Terrain::TerrainElement::MOUNTAIN);
+				case IPC::Terrain::TerrainElement::MOUNTAIN : 
+					//cout<<"type: MOUNTAIN\n";
+					terrain_type = state::MOUNTAIN;
 					break;
 			}
+			Row.push_back(state::TerrainElement(terrain_type, physics::Vector2D(i * te_size, j * te_size), te_size));
 		}
+		Grid.push_back(Row);
 	}
+	state::Terrain TerrainObject(Grid);
 
-	return 0;
+	return TerrainObject;
 }
 
 namespace ipc {
 
 	/**
-	 * Loads/Stores the terrain from/to the file
+	 * Loads the terrain from a file
 	 *
 	 * @param[in]  Terrain  the terrain object
 	 *
 	 * @return     Exit status
 	 */
 
-	int TerrainTransfer(state::Terrain TerrainVar) {
+	state::Terrain LoadTerrain() {
 
 		/**
 		 * Verify that the version of the library that we linked against is
@@ -127,22 +75,15 @@ namespace ipc {
 		 */
 		GOOGLE_PROTOBUF_VERIFY_VERSION;
 
-		IPC::Terrain TerrainMessage;
+		IPC::Terrain RetrievedMessage;
 
-		fstream output("terrain_level1.txt", ios::out | ios::trunc | ios::binary);
+		fstream input("terrain_level1.txt", ios::in | ios::binary);
 
-
-		if (PopulateTerrain(TerrainVar, &TerrainMessage) < 0) {
-			cerr << "Failed to convert terrain into message" << endl;
+		if (!RetrievedMessage.ParseFromIstream(&input)) {
+			cerr << "Failed to retrieve state message" << endl;
 			return -1;
 		}
 
-		if (!TerrainMessage.SerializeToOstream(&output)) {
-			cerr << "Failed to transfer terrain message to file" << endl;
-			return -1;
-		}
-
-		return 0;
+		return ( DepopulateTerrain(RetrievedMessage) );
 	}
 }
-

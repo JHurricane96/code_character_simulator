@@ -186,17 +186,17 @@ int main(int argc, char const* argv[])
 			if (j <= 10)
 			{
 				temp.push_back(TerrainElement(PLAIN, Vector2D(i * te_size, j * te_size), te_size));
-				cout<<"i: "<<i*te_size<<" j: "<<j*te_size<<endl;
+				//cout<<"i: "<<i*te_size<<" j: "<<j*te_size<<endl;
 				state::TERRAIN_TYPE terrain_type = temp[j].GetTerrainType();
 				switch(terrain_type){
 				case PLAIN :
-					cout<<"PLAIN\n";
+					//cout<<"PLAIN\n";
 					break;
 				case FOREST :
-					cout<<"FOREST\n";
+					//cout<<"FOREST\n";
 					break;
 				case MOUNTAIN :
-					cout<<"MOUNTAIN\n";
+					//cout<<"MOUNTAIN\n";
 					break;
 			}
 							}
@@ -228,12 +228,44 @@ int main(int argc, char const* argv[])
 		
 		//auto arrows = S->GetProjectiles();
 		//std::thread RendererInput(ipc::IncomingInterrupts);
-		if( ipc::IncomingInterrupts() < 0 ) {
-			return -1;
+		Terrain ter = ipc::LoadTerrain();
+		int64_t ter_size = ter.GetRows();
+
+		for (double ii = 0; ii < ter_size; ii++) {
+			for (double jj = 0; jj < ter_size; jj++){
+
+				physics::Vector2D ele_pos;
+				ele_pos.x=ii;
+				ele_pos.y=jj;
+
+				state::TerrainElement ele = ter.OffsetToTerrainElement(ele_pos);
+				physics::Vector2D ele_position = ele.GetPosition();
+				int64_t ele_size = ele.GetSize();
+				state::TERRAIN_TYPE ele_type = ele.GetTerrainType();
+
+				cout<<"Position: ("<<ele_position.x<<","<<ele_position.y<<") ";
+				cout<<"Size: "<<ele_size<<" ";
+				switch(ele_type) {
+
+					case state::PLAIN : 
+						cout<<"type: PLAIN\n";
+						break;
+					case state::FOREST : 
+						cout<<"type: FOREST\n";
+						break;
+					case state::MOUNTAIN : 
+						cout<<"type: MOUNTAIN\n";
+						break;
+				}
+			}
 		}
-		if( ipc::StateTransfer(S) < 0 ) {
+		//ipc::StoreTerrain(TT);
+		//while(true){
+			if( ipc::StateTransfer(S) < 0 ) {
 			return -1;
-		}
+			}
+			//std::cout.flush();
+		//}
 
 		//RendererInput.join();
 
