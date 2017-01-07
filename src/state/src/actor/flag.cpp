@@ -34,6 +34,7 @@ Flag::Flag(
 		velocity,
 		los_radius,
 		attack_speed,
+		0,
 		ActorType::FLAG
 	), king(nullptr) {}
 

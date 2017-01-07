@@ -112,6 +112,10 @@ protected:
 	 */
 	int64_t attack_speed;
 	/**
+	 * The range within which the actor can attack
+	 */
+	int64_t attack_range;
+	/**
 	 * If true, actor is dead, false otherwise
 	 */
 	bool is_dead;
@@ -147,6 +151,7 @@ public:
 		physics::Vector2D velocity,
 		int64_t los_radius,
 		int64_t attack_speed,
+		int64_t attack_range,
 		ActorType actor_type
 	);
 	void AddPathPlanner(PathPlannerHelper p);
@@ -241,6 +246,12 @@ public:
 	 * @return     The attack_speed
 	 */
 	int64_t GetAttackSpeed();
+	/**
+	 * Gets the Actor's attack range
+	 *
+	 * @return     The attack_range
+	 */
+	int64_t GetAttackRange();
 	/**
 	 * Sets the Actor's velocity
 	 *

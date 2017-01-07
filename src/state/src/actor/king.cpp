@@ -34,6 +34,7 @@ King::King(
 		velocity,
 		los_radius,
 		attack_speed,
+		0,
 		ActorType::KING
 	), flag(nullptr) {}
 
