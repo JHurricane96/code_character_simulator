@@ -33,6 +33,7 @@ Base::Base(
 		velocity,
 		los_radius,
 		attack_speed,
+		0,
 		ActorType::BASE
 	) {};
 

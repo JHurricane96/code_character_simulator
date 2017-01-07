@@ -17,7 +17,8 @@ Swordsman::Swordsman(
 		physics::Vector2D position,
 		physics::Vector2D velocity,
 		int64_t los_radius,
-		int64_t attack_speed
+		int64_t attack_speed,
+		int64_t attack_range
 	):
 	Actor(
 		id,
@@ -34,6 +35,7 @@ Swordsman::Swordsman(
 		velocity,
 		los_radius,
 		attack_speed,
+		attack_range,
 		ActorType::SWORDSMAN
 	) {}
 

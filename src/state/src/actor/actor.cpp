@@ -24,6 +24,7 @@ Actor::Actor(
 		physics::Vector2D velocity,
 		int64_t los_radius,
 		int64_t attack_speed,
+		int64_t attack_range,
 		ActorType actor_type
 	):
 	id(id),
@@ -44,6 +45,7 @@ Actor::Actor(
 	is_dead(false),
 	attack_speed(attack_speed),
 	actor_type(actor_type),
+	attack_range(attack_range),
 	path_planner_helper() {}
 
 void Actor::AddPathPlanner(PathPlannerHelper p) {
@@ -92,6 +94,10 @@ Actor * Actor::GetAttackTarget() {
 
 int64_t Actor::GetAttackSpeed() {
 	return attack_speed;
+}
+
+int64_t Actor::GetAttackRange() {
+	return attack_range;
 }
 
 physics::Vector2D Actor::GetVelocity() {
