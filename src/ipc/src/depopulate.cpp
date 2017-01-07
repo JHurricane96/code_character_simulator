@@ -38,36 +38,6 @@ int DepopulateActors(const IPC::State& RetrievedMessage) {
 
 	return 0;
 }
-int DepopulateTerrain(const IPC::Terrain& RetrievedMessage) {
-
-	cout<<"This is the terrain speaking\n";
-	for (int i = 0; i < RetrievedMessage.row_size(); i++)
-	{
-		const IPC::Terrain::TerrainRow& RowMessage = RetrievedMessage.row(i);
-		for(int j = 0; j < RowMessage.element_size(); j++)
-		{
-			std::this_thread::sleep_for(std::chrono::seconds(1));
-			const IPC::Terrain::TerrainElement& ElementMessage = RowMessage.element(j);
-			IPC::Terrain::Vector2D Position(ElementMessage.position());
-			cout<<"Position: ("<<Position.x()<<","<<Position.y()<<") ";
-			cout<<"Size: "<<ElementMessage.size()<<" ";
-			switch(ElementMessage.type())
-			{
-				case IPC::Terrain::TerrainElement::PLAIN : 
-					cout<<"type: PLAIN\n";
-					break;
-				case IPC::Terrain::TerrainElement::FOREST : 
-					cout<<"type: FOREST\n";
-					break;
-				case IPC::Terrain::TerrainElement::MOUNTAIN : 
-					cout<<"type: MOUNTAIN\n";
-					break;
-			}
-		}
-	}
-
-	return 0;
-}
 
 namespace ipc {
 
@@ -89,7 +59,7 @@ namespace ipc {
 
 		IPC::Terrain RetrievedMessage;
 
-		fstream input("terrain_level1.txt", ios::in | ios::binary);
+		fstream input("file.txt", ios::in | ios::binary);
 		istream *in = &cin;
 
 		if (!RetrievedMessage.ParseFromIstream(&input)) {
@@ -97,10 +67,10 @@ namespace ipc {
 			return -1;
 		}
 
-		if (DepopulateTerrain(RetrievedMessage) < 0) {
+		/*if (DepopulateActors(RetrievedMessage) < 0) {
 			cerr << "Failed to load actors from file" << endl;
 			return -1;
-		}
+		}*/
 
 		return 0;
 	}

@@ -15,7 +15,8 @@ namespace ipc {
  * Utilises Protocol Buffers for serializing structured data
  */
 	int StateTransfer (std::shared_ptr<state::State> StateVar);
-	int TerrainTransfer(state::Terrain TerrainVar);
+	int StoreTerrain(state::Terrain TerrainVar);
+	state::Terrain LoadTerrain();
 	int IncomingInterrupts();
 }
 #endif // IPC_IPC_H
