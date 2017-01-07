@@ -81,6 +81,15 @@ void Tower::Die() {
 	contention_score = 0;
 }
 
+void Tower::Attack() {
+	ready_to_attack = true;
+}
+
+void Tower::StopAttack() {
+	ready_to_attack = false;
+	attack_target = nullptr;
+}
+
 bool Tower::IsReadyToAttack() {
 	return ready_to_attack;
 }

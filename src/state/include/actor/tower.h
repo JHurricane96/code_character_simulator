@@ -87,6 +87,18 @@ public:
 	    int64_t arrow_size
 	);
 	/**
+	 * The tower's attack function
+	 * Sets the ready_to_attack bool to true
+	 */
+	void Attack() override;
+	/**
+	 * The Tower's StopAttack function
+	 *
+	 * Is called when target is dead
+	 * Sets ready_to_attack bool to false
+	 */
+	void StopAttack() override;
+	/**
 	 * The Tower's death method
 	 *
 	 * Similar to Actor's death method except
