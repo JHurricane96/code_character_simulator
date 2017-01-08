@@ -69,6 +69,25 @@ State::State(
 	flags(flags),
 	projectile_handler(actors.size()) {}
 
+std::shared_ptr<Actor> State::GetActorFromId(
+		PlayerId player_id,
+		act_id_t actor_id,
+		int * success
+) {
+	if (actor_id < 0 || actor_id >= actors.size()) {
+		SetIfValid(success, 0);
+		return nullptr;
+	}
+
+	if (actors[actor_id]->GetPlayerId() != player_id) {
+		SetIfValid(success, -1);
+		return nullptr;
+	}
+
+	SetIfValid(success, 1);
+	return actors[actor_id];
+}
+
 void State::MoveUnits(
 	list_act_id_t unit_ids,
 	physics::Vector2D destination,
