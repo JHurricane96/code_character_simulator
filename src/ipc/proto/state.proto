@@ -72,10 +72,10 @@ message State {
 		 * Message containing rows of LOS
 		 */
 		message LOSRows {
-			repeated LOS_TYPE los_element = 1;
+			repeated LOS_TYPE element = 1;
 		}
 
-		repeated LOSRows grid = 1;
+		repeated LOSRows row = 1;
 	}
 
 	/**
