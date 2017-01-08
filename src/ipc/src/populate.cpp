@@ -84,7 +84,63 @@ int PopulateActors(shared_ptr<state::State> StateVar, IPC::State* StateMessage) 
 
 int PopulateLOS(shared_ptr<state::State> StateVar, IPC::State* StateMessage) {
 
+	PlayerId P1 = PLAYER1;
+	PlayerId P2 = PLAYER2;
 
+	state::Terrain TerrainVar = StateVar->GetTerrain();
+
+	IPC::State::LOS* LOSP1(new IPC::State::LOS);
+	IPC::State::LOS* LOSP2(new IPC::State::LOS);
+
+	/**
+	 * Loop through the terrain to get LOS for each terrain element for each player
+	 */
+	int64_t size = TerrainVar.GetRows();
+
+	for (double row = 0; row < size; ++row) {
+
+		IPC::State::LOS::LOSRows* LOSRowsP1 = LOSP1->add_row();
+		IPC::State::LOS::LOSRows* LOSRowsP2 = LOSP2->add_row();
+		for (double col = 0; col < size; ++col) {
+
+			physics::Vector2D offset;
+
+			offset.x = row;
+			offset.y = col;
+
+			state::TerrainElement ElementVar = TerrainVar.OffsetToTerrainElement(offset);
+
+			state::LOS_TYPE Player1LOS = ElementVar.GetLos(P1);
+			state::LOS_TYPE Player2LOS = ElementVar.GetLos(P2);
+
+			switch(Player1LOS){
+				case state::UNEXPLORED :
+					LOSRowsP1->add_element(IPC::State::LOS::UNEXPLORED);
+					break;
+				case state::EXPLORED :
+					LOSRowsP1->add_element(IPC::State::LOS::EXPLORED);
+					break;
+				case state::DIRECT_LOS :
+					LOSRowsP1->add_element(IPC::State::LOS::DIRECT_LOS);
+					break;
+			}
+			switch(Player2LOS){
+				case state::UNEXPLORED :
+					LOSRowsP2->add_element(IPC::State::LOS::UNEXPLORED);
+					break;
+				case state::EXPLORED :
+					LOSRowsP2->add_element(IPC::State::LOS::EXPLORED);
+					break;
+				case state::DIRECT_LOS :
+					LOSRowsP2->add_element(IPC::State::LOS::DIRECT_LOS);
+					break;
+			}
+		}
+	}
+	StateMessage->set_allocated_player1_los(LOSP1);
+	StateMessage->set_allocated_player2_los(LOSP2);
+
+	return 0;
 }
 
 namespace ipc {
@@ -113,6 +169,11 @@ namespace ipc {
 
 
 		if (PopulateActors(StateVar, &StateMessage) < 0) {
+			cerr << "Failed to load actors" << endl;
+			return -1;
+		}
+
+		if (PopulateLOS(StateVar, &StateMessage) < 0) {
 			cerr << "Failed to load actors" << endl;
 			return -1;
 		}
