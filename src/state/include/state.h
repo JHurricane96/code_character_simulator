@@ -217,7 +217,29 @@ public:
 	 * @return     The arrows
 	 */
 	std::vector<std::shared_ptr<Arrow> > GetProjectiles();
-
+	/**
+	 * Gets the actor from identifier.
+	 *
+	 * The parameter success's value indicates the outcome of the call
+	 *
+	 * success is:
+	 * - 0  if actor id is invalid
+	 * - -1 if actor does not belong to player
+	 * - 1  if successful
+	 *
+	 * @param[in]  player_id  The player id who owns the actor
+	 * @param[in]  actor_id   The actor id
+	 * @param      success    If valid pointer, holds success
+	 *                        of the function
+	 *
+	 * @return     If the player_id owns the actor, the actor
+	 *             Else, returns a nullptr
+	 */
+	std::shared_ptr<Actor> GetActorFromId(
+		PlayerId player_id,
+		act_id_t actor_id,
+		int * success
+	);
 	/**
 	 * Gets a player's dead units whose time_to_respawn is 0
 	 *
