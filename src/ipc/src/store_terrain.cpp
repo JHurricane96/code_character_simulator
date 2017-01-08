@@ -24,13 +24,12 @@ using namespace physics;
  * size, terrain type, line of sight for a given player and timestamp denoting
  * last visit by the players
  *
- * @param[in]  TerrainVar      the terrain object
- * @param[in]  TerrainMessage  the terrain message object
+ * @param[in]  TerrainVar      the state::Terrain object
+ * @param[in]  TerrainMessage  the ipc::Terrain message object
  */
 void PopulateTerrain(state::Terrain TerrainVar, IPC::Terrain* TerrainMessage) {
 
 	int64_t size = TerrainVar.GetRows();
-	cout<<"Sizing: "<<size<<endl;
 
 	/**
 	 * Loop through the terrain to fill the terrain element unit by unit
@@ -38,20 +37,11 @@ void PopulateTerrain(state::Terrain TerrainVar, IPC::Terrain* TerrainMessage) {
 
 	for (double row = 0; row < size; ++row) {
 
-		/**
-		 * Add a terrain row in terrain
-		 */
 		IPC::Terrain::TerrainRow* RowMessage = TerrainMessage->add_row();
 		for (double col = 0; col < size; ++col) {
 
-			/**
-			 * Add a terrain element in row
-			 */
 			IPC::Terrain::TerrainElement* ElementMessage = RowMessage->add_element();
 
-			/**
-			 * Vector2D to store and map offset to terrain element
-			 */
 			physics::Vector2D offset;
 
 			offset.x = row;
@@ -59,38 +49,20 @@ void PopulateTerrain(state::Terrain TerrainVar, IPC::Terrain* TerrainMessage) {
 
 			state::TerrainElement ElementObject = TerrainVar.OffsetToTerrainElement(offset);
 
-			/**
-			 * Get position of terrain element
-			 */
 			physics::Vector2D position = ElementObject.GetPosition();
 
 			IPC::Terrain::Vector2D* ElementPosition(new IPC::Terrain::Vector2D);
 
-			/**
-			 * Set position in message
-			 */
 			ElementPosition->set_x(position.x);
 			ElementPosition->set_y(position.y);
 			ElementMessage->set_allocated_position(ElementPosition);
 
-			/**
-			 * Get size of terrain element
-			 */
 			int64_t ElementSize = ElementObject.GetSize();
 
-			/**
-			 * Set size in message
-			 */
 			ElementMessage->set_size(ElementSize);
 
-			/**
-			 * Get type of terrain element
-			 */
 			state::TERRAIN_TYPE terrain_type = ElementObject.GetTerrainType();
 
-			/**
-			 * Set type in message
-			 */
 			switch(terrain_type){
 				case PLAIN :
 					ElementMessage->set_type(IPC::Terrain::TerrainElement::PLAIN);

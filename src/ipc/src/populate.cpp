@@ -82,6 +82,11 @@ int PopulateActors(shared_ptr<state::State> StateVar, IPC::State* StateMessage) 
 	return 0;
 }
 
+int PopulateLOS(shared_ptr<state::State> StateVar, IPC::State* StateMessage) {
+
+
+}
+
 namespace ipc {
 
 	/**
@@ -116,11 +121,6 @@ namespace ipc {
 			cerr << "Failed to transfer state message" << endl;
 			return -1;
 		}
-		/*while(true)
-		{
-			std::this_thread::sleep_for(std::chrono::seconds(1));
-			cout<<endl;
-		}*/
 
 		return 0;
 	}
