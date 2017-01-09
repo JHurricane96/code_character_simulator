@@ -5,9 +5,9 @@ namespace state {
 
 FormationMaker::FormationMaker(): formation_id(0) {};
 
-PathPlannerHelper::PathPlannerHelper(){}
+PathPlannerHelper::PathPlannerHelper() : leader(NULL) {}
 PathPlannerHelper::PathPlannerHelper(std::shared_ptr<Actor> self) :
-	self(self), is_path_planning(false) {}
+	self(self), leader(NULL), is_path_planning(false) {}
 
 void PathPlannerHelper::SetPath(
 	int64_t formation_id,
