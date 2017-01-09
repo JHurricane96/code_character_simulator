@@ -138,6 +138,12 @@ public:
 	 */
 	int64_t GetArrowSize();
 	/**
+	 * Gets the contention radius of the tower
+	 *
+	 * @return     The contention_radius
+	 */
+	int64_t GetContentionRadius();
+	/**
 	 * Respawns Tower
 	 *
 	 * @param[in]  pid   The tower owner id

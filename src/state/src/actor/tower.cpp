@@ -110,6 +110,10 @@ int64_t Tower::GetArrowSpeed() {
 	return arrow_speed;
 }
 
+int64_t Tower::GetContentionRadius() {
+	return contention_radius;
+}
+
 void Tower::Respawn(TowerOwner pid) {
 	is_dead = false;
 	hp = max_hp;
