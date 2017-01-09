@@ -270,17 +270,33 @@ public:
 	/**
 	 * Sets units into motion
 	 *
+	 * The parameter success's value indicates the outcome of the call
+	 *
+	 * success is:
+	 * - 0  if unit_ids is empty
+	 * - -1 if any unit's Actor ID is invalid
+	 * - -2 if any unit doesn't belong to the player who's attacking
+	 * - -3 if any unit is dead
+	 * - -4 if destination is not on the map
+	 * - -5 if formation is not valid
+	 * - 1  if successful
+	 *
+	 * @param[in]  player_id        Units' player's ID
 	 * @param[in]  unit_ids         Actor IDs of units to be moved
 	 * @param[in]  destination      The destination
 	 * @param[in]  formation_maker  The formation maker
 	 * @param[in]  terrain_weights  The weights to be assigned to the
 	 *                              terrain elements <Plain, Mountain, Forest>
+	 * @param      success          If valid pointer, holds success
+	 *                              of the function
 	 */
 	void MoveUnits(
+		PlayerId player_id,
 		list_act_id_t unit_ids,
 		physics::Vector2D destination,
 		std::shared_ptr<FormationMaker> formation_maker,
-		std::vector<int64_t> terrain_weights
+		std::vector<int64_t> terrain_weights,
+		int * success
 	);
 	/**
 	 * Gives a player's units an attack target
