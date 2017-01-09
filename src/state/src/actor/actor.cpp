@@ -48,6 +48,30 @@ Actor::Actor(
 	attack_range(attack_range),
 	path_planner_helper() {}
 
+Actor::Actor(const Actor& other) {
+	id = other.id;
+	player_id = other.player_id;
+	actor_type = other.actor_type;
+	state = std::move(other.state->Clone());
+	attack = other.attack;
+	hp = other.hp;
+	max_hp = other.max_hp;
+	max_speed = other.max_speed;
+	size = other.size;
+	total_respawn_time = other.total_respawn_time;
+	time_to_respawn = other.time_to_respawn;
+	time_spent_near_base = other.time_spent_near_base;
+	position = other.position;
+	velocity = other.velocity;
+	attack_target = other.attack_target;
+	los_radius = other.los_radius;
+	attack_speed = other.attack_speed;
+	attack_range = other.attack_range;
+	is_dead = other.is_dead;
+	respawn_location = other.respawn_location;
+	path_planner_helper = other.path_planner_helper;
+}
+
 void Actor::AddPathPlanner(PathPlannerHelper p) {
 	path_planner_helper = p;
 }
