@@ -26,4 +26,8 @@ void ActorDeadState::Exit(Actor * actor) {
 	actor->Respawn();
 }
 
+std::unique_ptr<ActorState> ActorDeadState::Clone() {
+	return std::unique_ptr<ActorState>(new ActorDeadState(*this));
+}
+
 }

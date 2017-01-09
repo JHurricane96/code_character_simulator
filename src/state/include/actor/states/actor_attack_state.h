@@ -70,6 +70,13 @@ public:
 	 * @param      actor  The Actor
 	 */
 	virtual void Exit(Actor * actor) override;
+	/**
+	 * Creates a new instance of the object with same properties of
+	 * original
+	 *
+	 * @return     Copy of this object
+	 */
+	virtual std::unique_ptr<ActorState> Clone() override;
 };
 
 }
