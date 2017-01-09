@@ -84,4 +84,21 @@ void PathPlanner::MergeWithBuffer(
 		path_planner.next_formation_id[player_id];
 }
 
+void PathPlanner::MergeWithMain(
+	const PathPlanner& path_planner,
+	std::vector<std::shared_ptr<Actor> > actors
+) {
+	for (
+		int64_t player_id = 0;
+		player_id <= LAST_PLAYER;
+		++player_id
+	) {
+		MergeWithBuffer(
+			path_planner,
+			static_cast<PlayerId>(player_id),
+			actors
+		);
+	}
+}
+
 }

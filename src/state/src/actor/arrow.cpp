@@ -58,4 +58,11 @@ void Arrow::Update(int64_t delta_time) {
 	position = position + velocity * delta_time;
 };
 
+void Arrow::MergeWithMain(
+	const Arrow * arrow,
+	std::vector<std::shared_ptr<Actor> > actors
+) {
+	Actor::MergeWithMain(arrow, actors);
+}
+
 }

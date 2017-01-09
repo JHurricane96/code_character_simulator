@@ -158,4 +158,12 @@ void Terrain::Update(
 	}
 }
 
+void Terrain::MergeWithMain(const Terrain& terrain) {
+	for (int64_t i = 0; i < row_size; ++i) {
+		for (int64_t j = 0; j < row_size; ++j) {
+			grid[i][j].MergeWithMain(terrain.grid[i][j]);
+		}
+	}
+}
+
 }

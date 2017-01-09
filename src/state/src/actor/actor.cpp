@@ -216,4 +216,18 @@ void Actor::MergeWithBuffer(
 	respawn_location = actor->respawn_location;
 }
 
+void Actor::MergeWithMain(
+	const Actor * actor,
+	std::vector<std::shared_ptr<Actor> > actors
+) {
+	player_id = actor->player_id;
+	state = std::move(actor->state->Clone());
+	hp = actor->hp;
+	time_to_respawn = actor->time_to_respawn;
+	time_spent_near_base = actor->time_spent_near_base;
+	position = actor->position;
+	is_dead = actor->is_dead;
+	MergeWithBuffer(actor, actors);
+}
+
 }

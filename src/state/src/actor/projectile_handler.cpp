@@ -90,4 +90,16 @@ void ProjectileHandler::Update(
 	HandleArrows(delta_time);
 }
 
+void ProjectileHandler::MergeWithMain(
+	const ProjectileHandler& proj_handler,
+	std::vector<std::shared_ptr<Actor> > actors
+) {
+	arrows.clear();
+	for (auto arrow : proj_handler.arrows) {
+		arrows.push_back(std::shared_ptr<Arrow>(new Arrow(*arrow)));
+		arrows.back()->MergeWithMain(arrow.get(), actors);
+	}
+	next_arrow_id = proj_handler.next_arrow_id;
+}
+
 }

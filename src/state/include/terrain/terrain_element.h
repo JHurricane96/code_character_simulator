@@ -111,6 +111,13 @@ public:
 	 * @param[in]  player_id  The id of the player
 	 */
 	void SetLos(LOS_TYPE los, PlayerId player_id);
+	/**
+	 * Merges this, a TerrainElement in the player's state, with the
+	 * corresponding TerrainElement in the main state
+	 *
+	 * @param[in]  terrain_elt  The main state's TerrainElement
+	 */
+	void MergeWithMain(const TerrainElement& terrain_elt);
 };
 
 }

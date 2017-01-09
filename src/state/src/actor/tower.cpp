@@ -122,4 +122,10 @@ void Tower::Update(int64_t delta_time) {
 	DecideState(delta_time);
 };
 
+void Tower::MergeWithMain(const Tower * tower) {
+	tower_owner = tower->tower_owner;
+	contention_score = tower->contention_score;
+	ready_to_attack = tower->ready_to_attack;
+}
+
 }

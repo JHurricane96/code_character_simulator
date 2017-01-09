@@ -73,5 +73,11 @@ void King::MergeWithBuffer(
 	}
 }
 
+void King::MergeWithMain(
+	const King * king,
+	std::vector<std::shared_ptr<Actor> > actors
+) {
+	MergeWithBuffer(king, actors);
+}
 
 }

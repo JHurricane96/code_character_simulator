@@ -429,4 +429,33 @@ void State::MergeWithBuffer(const State& state, PlayerId player_id) {
 	);
 }
 
+void State::MergeWithMain(const State& state) {
+	for (int64_t i = 0; i < actors.size(); ++i) {
+		actors[i]->MergeWithMain(state.actors[i].get(), actors);
+	}
+
+	for (int64_t i = 0; i <= LAST_PLAYER; ++i) {
+		kings[i]->MergeWithMain(state.kings[i].get(), actors);
+		flags[i]->MergeWithMain(state.flags[i].get(), actors);
+
+		towers[i].clear();
+		for (auto tower : state.towers[i]) {
+			towers[i].push_back(
+				std::static_pointer_cast<Tower>(actors[tower->GetId()])
+			);
+			towers[i].back()->MergeWithMain(tower.get());
+		}
+
+		sorted_actors[i].clear();
+		for (auto actor : state.sorted_actors[i]) {
+			sorted_actors[i].push_back(actors[actor->GetId()]);
+		}
+	}
+
+	path_planner.MergeWithMain(state.path_planner, actors);
+	terrain.MergeWithMain(state.terrain);
+	projectile_handler.MergeWithMain(state.projectile_handler, actors);
+
+}
+
 }
