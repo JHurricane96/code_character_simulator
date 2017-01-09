@@ -128,6 +128,16 @@ public:
 	 */
 	list_act_id_t GetPlayerUnitIds(PlayerId player_id);
 	/**
+	 * Gets a player's Actors
+	 *
+	 * @param[in]  player_id  The player's ID
+	 *
+	 * @return     The player's Actors
+	 */
+	std::vector<std::shared_ptr<Actor> > GetPlayerActors(
+		PlayerId player_id
+	);
+	/**
 	 * Gets Actor IDs for enemy units visible to a particular player
 	 *
 	 * @param[in]  player_id  ID of the player whose enemies are to be
