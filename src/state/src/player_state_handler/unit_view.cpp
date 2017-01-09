@@ -62,4 +62,30 @@ PathPlannerHelperView UnitView::GetPathPlannerHelper() {
 	return PathPlannerHelperView(unit->GetPathPlannerHelper());
 }
 
+TowerView::TowerView(Tower * tower):
+	UnitView(tower),
+	arrow_speed(tower->GetArrowSpeed()),
+	arrow_ttl(tower->GetArrowTtl()),
+	contention_radius(tower->GetContentionRadius()) {}
+
+int64_t TowerView::GetArrowSpeed() {
+	return arrow_speed;
+}
+
+int64_t TowerView::GetArrowTtl() {
+	return arrow_ttl;
+}
+
+int64_t TowerView::GetContentionRadius() {
+	return contention_radius;
+}
+
+EnemyTowerView::EnemyTowerView(Tower * tower):
+	EnemyUnitView(tower),
+	contention_radius(tower->GetContentionRadius()) {}
+
+int64_t EnemyTowerView::GetContentionRadius() {
+	return contention_radius;
+}
+
 }
