@@ -387,7 +387,7 @@ public:
 	 *
 	 * @return     The terrain
 	 */
-	const Terrain& GetTerrain() const;
+	Terrain GetTerrain();
 	/**
 	 * Updates the internal state of the game.
 	 *
