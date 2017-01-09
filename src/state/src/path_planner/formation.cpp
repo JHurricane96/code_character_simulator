@@ -136,4 +136,14 @@ void Formation::Update(
 	}
 }
 
+void Formation::MergeWithBuffer(
+	const Formation& formation,
+	std::vector<std::shared_ptr<Actor> > actors
+) {
+	for (int64_t i = 0; i < units.size(); ++i) {
+		units[i] = actors[units[i]->GetId()];
+	}
+	leader = actors[leader->GetId()];
+}
+
 }

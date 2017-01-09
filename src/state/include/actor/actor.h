@@ -355,6 +355,19 @@ public:
 	 * @param[in]  respawn_location  The new respawn location
 	 */
 	void SetRespawnLocation(physics::Vector2D respawn_location);
+	/**
+	 * Merges this, an Actor in the main state, with the corresponding
+	 * Actor in a player's state
+	 *
+	 * @param[in]  actor   The player's Actor
+	 * @param[in]  actors  The main state's Actors. Any references
+	 *                     to the other state's Actors are replaced
+	 *                     by this state's Actors
+	 */
+	void MergeWithBuffer(
+		const Actor * actor,
+		std::vector<std::shared_ptr<Actor> > actors
+	);
 };
 
 }

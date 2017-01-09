@@ -66,6 +66,19 @@ public:
 	 *                         previous and current Update calls
 	 */
 	void Update(int64_t delta_time);
+	/**
+	 * Merges this, a King in the main state, with the corresponding
+	 * King in a player's state
+	 *
+	 * @param[in]  king    The player's King
+	 * @param[in]  actors  The player's state's Actors. Any
+	 *                     references to the other state's Actors
+	 *                     are replaced by this state's Actors
+	 */
+	void MergeWithBuffer(
+		const King * king,
+		std::vector<std::shared_ptr<Actor> > actors
+	);
 };
 
 }

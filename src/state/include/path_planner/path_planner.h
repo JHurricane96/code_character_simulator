@@ -108,6 +108,21 @@ public:
 	void Update(
 		std::vector<std::vector<std::shared_ptr<Actor> > > &sorted_units
 	);
+	/**
+	 * Merges this, a PathPlanner in the main State, with the
+	 * PathPlanner in a player's state
+	 *
+	 * @param[in]  path_planner  The player's PathPlanner
+	 * @param[in]  player_id     The ID of the PathPlanner's player
+	 * @param[in]  actors        The main state's Actors. Any references
+	 *                           to the other state's Actors are replaced
+	 *                           by this state's Actors
+	 */
+	void MergeWithBuffer(
+		const PathPlanner& path_planner,
+		PlayerId player_id,
+		std::vector<std::shared_ptr<Actor> > actors
+	);
 };
 
 }

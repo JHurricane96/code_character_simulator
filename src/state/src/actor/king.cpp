@@ -1,4 +1,6 @@
 #include "actor/king.h"
+#include <vector>
+#include <memory>
 #include "actor/flag.h"
 
 namespace state {
@@ -57,6 +59,18 @@ void King::Update(int64_t delta_time) {
 		DropFlag();
 	}
 	position = position + velocity * delta_time;
+}
+
+void King::MergeWithBuffer(
+	const King * king,
+	std::vector<std::shared_ptr<Actor> > actors
+) {
+	if (king->flag != nullptr) {
+		flag = static_cast<Flag *>(actors[king->flag->GetId()].get());
+	}
+	else {
+		flag = nullptr;
+	}
 }
 
 

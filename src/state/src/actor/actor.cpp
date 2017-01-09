@@ -197,4 +197,23 @@ void Actor::SetRespawnLocation(physics::Vector2D respawn_location) {
 	this->respawn_location = respawn_location;
 }
 
+void Actor::MergeWithBuffer(
+	const Actor * actor,
+	std::vector<std::shared_ptr<Actor> > actors
+) {
+	velocity = actor->velocity;
+	path_planner_helper = actor->path_planner_helper;
+	path_planner_helper.MergeWithBuffer(
+		actor->path_planner_helper,
+		actors
+	);
+	if (actor->attack_target != nullptr) {
+		attack_target = actors[actor->attack_target->id].get();
+	}
+	else {
+		attack_target = nullptr;
+	}
+	respawn_location = actor->respawn_location;
+}
+
 }

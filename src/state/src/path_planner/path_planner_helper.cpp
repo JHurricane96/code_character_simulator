@@ -100,4 +100,16 @@ void PathPlannerHelper::Update(
 	self->SetVelocity(to_dest * self->GetMaxSpeed() / 2);
 }
 
+void PathPlannerHelper::MergeWithBuffer(
+	const PathPlannerHelper& path_planner_helper,
+	std::vector<std::shared_ptr<Actor> > actors
+) {
+	if (!self.expired()) {
+		self = actors[self.lock()->GetId()];
+	}
+	if (leader) {
+		leader = actors[leader->GetId()];
+	}
+}
+
 }

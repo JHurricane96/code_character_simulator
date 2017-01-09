@@ -70,4 +70,18 @@ void PathPlanner::Update(
 	}
 }
 
+void PathPlanner::MergeWithBuffer(
+	const PathPlanner& path_planner,
+	PlayerId player_id,
+	std::vector<std::shared_ptr<Actor> > actors
+) {
+	formations[player_id].clear();
+	for (auto formation : path_planner.formations[player_id]) {
+		formations[player_id].push_back(formation);
+		formations[player_id].back().MergeWithBuffer(formation, actors);
+	}
+	next_formation_id[player_id] =
+		path_planner.next_formation_id[player_id];
+}
+
 }

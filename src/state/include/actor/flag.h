@@ -64,6 +64,19 @@ public:
 	 *                         previous and current Update calls
 	 */
 	void Update(int64_t delta_time);
+	/**
+	 * Merges this, a Flag in the main state, with the corresponding
+	 * Flag in a player's state
+	 *
+	 * @param[in]  flag    The player's Flag
+	 * @param[in]  actors  The player's state's Actors. Any
+	 *                     references to the other state's Actors
+	 *                     are replaced by this state's Actors
+	 */
+	void MergeWithBuffer(
+		const Flag * flag,
+		std::vector<std::shared_ptr<Actor> > actors
+	);
 };
 
 }
