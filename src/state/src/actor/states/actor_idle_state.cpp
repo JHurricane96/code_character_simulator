@@ -30,4 +30,8 @@ std::unique_ptr<ActorState> ActorIdleState::Update(
 
 void ActorIdleState::Exit(Actor * actor) {}
 
+std::unique_ptr<ActorState> ActorIdleState::Clone() {
+	return std::unique_ptr<ActorState>(new ActorIdleState(*this));
+}
+
 }

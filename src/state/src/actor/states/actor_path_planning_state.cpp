@@ -30,4 +30,10 @@ void ActorPathPlanningState::Exit(Actor * actor) {
 	actor->GetPathPlannerHelper()->FinishPath();
 }
 
+std::unique_ptr<ActorState> ActorPathPlanningState::Clone() {
+	return std::unique_ptr<ActorState>(
+		new ActorPathPlanningState(*this)
+	);
+}
+
 }

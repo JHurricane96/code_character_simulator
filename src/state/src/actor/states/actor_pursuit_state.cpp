@@ -46,4 +46,8 @@ std::unique_ptr<ActorState> ActorPursuitState::Update(
 
 void ActorPursuitState::Exit(Actor * actor) {}
 
+std::unique_ptr<ActorState> ActorPursuitState::Clone() {
+	return std::unique_ptr<ActorState>(new ActorPursuitState(*this));
+}
+
 }

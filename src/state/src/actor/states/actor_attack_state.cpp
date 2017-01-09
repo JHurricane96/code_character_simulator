@@ -48,4 +48,8 @@ std::unique_ptr<ActorState> ActorAttackState::Update(
 
 void ActorAttackState::Exit(Actor * actor) {}
 
+std::unique_ptr<ActorState> ActorAttackState::Clone() {
+	return std::unique_ptr<ActorState>(new ActorAttackState(*this));
+}
+
 }
