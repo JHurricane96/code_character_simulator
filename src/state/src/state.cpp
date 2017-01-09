@@ -115,6 +115,10 @@ void State::MoveUnits(
 	);
 }
 
+list_act_id_t State::GetPlayerUnitIds(PlayerId player_id) {
+	return player_unit_ids[(int)player_id];
+}
+
 std::vector<std::shared_ptr<Tower> > State::GetTowers(
 	PlayerId player_id
 ) {
@@ -124,6 +128,14 @@ std::vector<std::shared_ptr<Tower> > State::GetTowers(
 std::vector<std::shared_ptr<Tower> > State::GetEnemyTowers(
 	PlayerId player_id
 ) {
+	auto enemy_towers = towers[(player_id + 1) % (LAST_PLAYER + 1)];
+	std::vector<std::shared_ptr<Tower> > visible_enemy_towers;
+	for (auto tower : enemy_towers) {
+		if (terrain.CoordinateToTerrainElement(tower->GetPosition())
+		   .GetLos(player_id) == DIRECT_LOS)
+			visible_enemy_towers.push_back(tower);
+	}
+	return visible_enemy_towers;
 }
 
 std::shared_ptr<Flag> State::GetFlag(PlayerId player_id) {
@@ -138,7 +150,18 @@ std::shared_ptr<King> State::GetKing(PlayerId player_id) {
 	return kings[player_id];
 }
 
-std::shared_ptr<King> State::GetEnemyKing(PlayerId player_id) {
+std::shared_ptr<King> State::GetEnemyKing(
+	PlayerId player_id,
+	int * success
+) {
+	auto enemy_king = kings[(player_id + 1) % (LAST_PLAYER + 1)];
+	if (terrain.CoordinateToTerrainElement(enemy_king->GetPosition())
+			   .GetLos(player_id) == DIRECT_LOS) {
+		SetIfValid(success, 1);
+		return enemy_king;
+	}
+	SetIfValid(success, 0);
+	return nullptr;
 }
 
 std::shared_ptr<Base> State::GetBase(PlayerId player_id) {

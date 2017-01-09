@@ -191,11 +191,20 @@ public:
 	/**
 	 * Gets an enemy's King, taking into account LOS
 	 *
-	 * @param[in]  player_id  Player ID
+	 * The parameter success's value indicates the outcome of the call
 	 *
-	 * @return     The enemy's King
+	 * success is:
+	 * - 0  if the enemy king is not in the LOS of the player
+	 * - 1  if the king is retrieved
+	 *
+	 * @param[in]  player_id  Player ID
+	 * @param      success    If valid pointer, holds success
+	 *                        of the function
+	 *
+	 * @return     if in LOS of player, the enemy's king
+	 *             else, nullptr
 	 */
-	std::shared_ptr<King> GetEnemyKing(PlayerId player_id);
+	std::shared_ptr<King> GetEnemyKing(PlayerId player_id, int * success);
 	/**
 	 * Gets a player's Base
 	 *
