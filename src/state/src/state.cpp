@@ -88,6 +88,12 @@ std::shared_ptr<Actor> State::GetActorFromId(
 	return actors[actor_id];
 }
 
+std::vector<std::shared_ptr<Actor> > State::GetPlayerActors(
+	PlayerId player_id
+) {
+	return sorted_actors[player_id];
+}
+
 void State::MoveUnits(
 	list_act_id_t unit_ids,
 	physics::Vector2D destination,
