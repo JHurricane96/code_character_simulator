@@ -22,6 +22,8 @@ set(SOURCE_FILES
 	src/path_planner/graph.cpp
 	src/path_planner/path_planner.cpp
 	src/path_planner/path_planner_helper.cpp
+	src/player_state_handler/player_state_handler.cpp
+	src/player_state_handler/unit_view.cpp
 )
 set(INCLUDE_PATH include)
 set(EXPORTS_DIR ${CMAKE_BINARY_DIR}/exports)
