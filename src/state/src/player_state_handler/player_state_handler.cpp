@@ -31,7 +31,7 @@ std::vector<TowerView> PlayerStateHandler::GetTowers() {
 	auto towers = state->GetTowers(player_id);
 	std::vector<TowerView> tower_views;
 	for (auto tower : towers)
-		tower_views.push_back(UnitView(tower.get()));
+		tower_views.push_back(TowerView(tower.get()));
 	return tower_views;
 }
 
@@ -39,7 +39,7 @@ std::vector<EnemyTowerView> PlayerStateHandler::GetEnemyTowers() {
 	auto towers = state->GetEnemyTowers(player_id);
 	std::vector<EnemyTowerView> tower_views;
 	for (auto tower : towers)
-		tower_views.push_back(EnemyUnitView(tower.get()));
+		tower_views.push_back(EnemyTowerView(tower.get()));
 	return tower_views;
 }
 

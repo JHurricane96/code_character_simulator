@@ -82,17 +82,17 @@ public:
 	 */
 	list_act_id_t GetPlayerEnemyIds();
 	/**
-	 * Gets Tower IDs the player has explored
+	 * Gets the player's Towers
 	 *
-	 * @return     The tower IDs
+	 * @return     The player's towers
 	 */
-	std::vector<UnitView> GetTowers();
+	std::vector<TowerView> GetTowers();
 	/**
-	 * Gets Tower IDs the player has explored
+	 * Gets the enemy's Towers
 	 *
-	 * @return     The tower IDs
+	 * @return     The enemy's towers
 	 */
-	std::vector<EnemyUnitView> GetEnemyTowers();
+	std::vector<EnemyTowerView> GetEnemyTowers();
 	/**
 	 * Gets player's King
 	 *

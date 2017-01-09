@@ -8,6 +8,7 @@
 #define STATE_PLAYER_STATE_HANDLER_UNIT_VIEWS_H
 
 #include "actor/actor.h"
+#include "actor/tower.h"
 #include "vector2d.h"
 #include "path_planner/path_planner_helper.h"
 #include "state_export.h"
@@ -136,6 +137,63 @@ public:
 	 */
 	PathPlannerHelperView GetPathPlannerHelper();
 };
+
+class EnemyTowerView: public EnemyUnitView {
+private:
+	/**
+	 * Radius around tower that units need to be present to contend for
+	 * tower ownership
+	 * Measured in coordinates
+	 */
+	int64_t contention_radius;
+public:
+	EnemyTowerView(Tower * tower);
+	/**
+	 * Gets the contention radius of the tower
+	 *
+	 * @return     The contention_radius
+	 */
+	int64_t GetContentionRadius();
+};
+
+class TowerView: public UnitView {
+private:
+	/**
+	 * Speed of an arrow fired from the tower
+	 */
+	int64_t arrow_speed;
+	/**
+	 * Time to live for the arrows fired
+	 */
+	int64_t arrow_ttl;
+	/**
+	 * Radius around tower that units need to be present to contend for
+	 * tower ownership
+	 * Measured in coordinates
+	 */
+	int64_t contention_radius;
+public:
+	TowerView(Tower * tower);
+	/**
+	 * Gets an arrow's lifetime
+	 *
+	 * @return     The time to live for the arrow
+	 */
+	int64_t GetArrowTtl();
+	/**
+	 * Gets the speed of an arrow fired from the tower
+	 *
+	 * @return     The arrow speed
+	 */
+	int64_t GetArrowSpeed();
+	/**
+	 * Gets the contention radius of the tower
+	 *
+	 * @return     The contention_radius
+	 */
+	int64_t GetContentionRadius();
+};
+
 
 }
 
