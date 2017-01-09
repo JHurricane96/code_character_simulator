@@ -154,6 +154,7 @@ public:
 		int64_t attack_range,
 		ActorType actor_type
 	);
+	Actor(const Actor& other);
 	void AddPathPlanner(PathPlannerHelper p);
 	/**
 	 * Gets the path planner helper
