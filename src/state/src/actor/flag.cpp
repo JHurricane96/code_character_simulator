@@ -1,4 +1,6 @@
 #include "actor/flag.h"
+#include <vector>
+#include <memory>
 #include "actor/king.h"
 
 namespace state {
@@ -53,6 +55,19 @@ bool Flag::IsCaptured() {
 void Flag::Update(int64_t delta_time) {
 	if (IsCaptured()) {
 		position = king->GetPosition();
+	}
+}
+
+void Flag::MergeWithBuffer(
+	const Flag * flag,
+	std::vector<std::shared_ptr<Actor> > actors
+) {
+	if (flag->king != nullptr) {
+		king = static_cast<King *>(actors[flag->king->GetId()].get());
+
+	}
+	else {
+		king = nullptr;
 	}
 }
 

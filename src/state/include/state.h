@@ -395,6 +395,19 @@ public:
 	 *                       the previous and current Update calls.
 	 */
 	void Update(int64_t delta_time);
+	/**
+	 * Merges this, the main state, with a player's copy of the state
+	 *
+	 * Calls MergeWithBuffer on the necessary components recursively
+	 *
+	 * Called right before the main state updates, if the player state
+	 * is done issuing commands
+	 *
+	 * @param[in]  state      The player's state
+	 * @param[in]  player_id  ID of the player whose state we're
+	 *                        merging
+	 */
+	void MergeWithBuffer(const State& state, PlayerId player_id);
 };
 
 }

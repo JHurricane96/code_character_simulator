@@ -178,6 +178,19 @@ public:
 		std::vector<std::shared_ptr<Actor> > &sorted_enemies,
 		physics::Vector2D destination
 	);
+	/**
+	 * Merge this, a PathPlannerHelper in the main state, with the
+	 * corresponding one in a player's state
+	 *
+	 * @param[in]  path_planner_helper  The player's PathPlannerHelper
+	 * @param[in]  actors               The main state's Actors. Any references
+	 *                                  to the other state's Actors are replaced
+	 *                                  by this state's Actors
+	 */
+	void MergeWithBuffer(
+		const PathPlannerHelper& path_planner_helper,
+		std::vector<std::shared_ptr<Actor> > actors
+	);
 };
 
 }

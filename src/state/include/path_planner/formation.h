@@ -95,6 +95,19 @@ public:
 		std::vector<std::shared_ptr<Actor> > &sorted_allies,
 		std::vector<std::shared_ptr<Actor> > &sorted_enemies
 	);
+	/**
+	 * Merges this, a Formation in the main state, with the
+	 * corresponding one in the player's state
+	 *
+	 * @param[in]  formation  The player's formation
+	 * @param[in]  actors     The main state's Actors. Any references
+	 *                        to the other state's Actors are replaced
+	 *                        by this state's Actors
+	 */
+	void MergeWithBuffer(
+		const Formation& formation,
+		std::vector<std::shared_ptr<Actor> > actors
+	);
 };
 
 }

@@ -407,4 +407,26 @@ void State::Update(int64_t delta_time) {
 	projectile_handler.Update(delta_time, towers, &terrain);
 }
 
+void State::MergeWithBuffer(const State& state, PlayerId player_id) {
+	for (int64_t i = 0; i < actors.size(); ++i) {
+		if (actors[i]->GetPlayerId() == player_id) {
+			actors[i]->MergeWithBuffer(state.actors[i].get(), actors);
+		}
+	}
+
+	path_planner.MergeWithBuffer(
+		state.path_planner,
+		player_id,
+		actors
+	);
+
+	kings[player_id]->MergeWithBuffer(
+		state.kings[player_id].get(), actors
+	);
+
+	flags[(player_id + 1) % (LAST_PLAYER + 1)]->MergeWithBuffer(
+		state.flags[(player_id + 1) % (LAST_PLAYER + 1)].get(), actors
+	);
+}
+
 }
