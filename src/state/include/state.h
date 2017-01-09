@@ -408,6 +408,17 @@ public:
 	 *                        merging
 	 */
 	void MergeWithBuffer(const State& state, PlayerId player_id);
+	/**
+	 * Merges this, a player's state, with the main state
+	 *
+	 * Calls MergeWithMain on the necessary components recursively
+	 *
+	 * Called right after the main state updates, if the player state
+	 * was done issuing commands
+	 *
+	 * @param[in]  state  The main state
+	 */
+	void MergeWithMain(const State& state);
 };
 
 }

@@ -79,6 +79,19 @@ public:
 		const King * king,
 		std::vector<std::shared_ptr<Actor> > actors
 	);
+	/**
+	 * Merges this, a King in a player's state, with the corresponding
+	 * King in the main state
+	 *
+	 * @param[in]  king    The main state's King
+	 * @param[in]  actors  The player's state's Actors. Any
+	 *                     references to the other state's Actors
+	 *                     are replaced by this state's Actors
+	 */
+	void MergeWithMain(
+		const King * king,
+		std::vector<std::shared_ptr<Actor> > actors
+	);
 };
 
 }

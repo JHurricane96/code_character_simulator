@@ -65,6 +65,19 @@ public:
 	 * Update function to be called every tick
 	 */
 	void Update(int64_t delta_time);
+	/**
+	 * Merges this, an Arrow in the player's state, with the
+	 * corresponding Arrow in the main state
+	 *
+	 * @param[in]  arrow   The player's Arrow
+	 * @param[in]  actors  The player's state's Actors. Any
+	 *                     references to the other state's Actors
+	 *                     are replaced by this state's Actors
+	 */
+	void MergeWithMain(
+		const Arrow * arrow,
+		std::vector<std::shared_ptr<Actor> > actors
+	);
 };
 
 }

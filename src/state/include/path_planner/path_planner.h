@@ -123,6 +123,19 @@ public:
 		PlayerId player_id,
 		std::vector<std::shared_ptr<Actor> > actors
 	);
+	/**
+	 * Merges this, a PathPlanner in a player's state, the PathPlanner
+	 * in the main state
+	 *
+	 * @param[in]  path_planner  The main state's PathPlanner
+	 * @param[in]  actors        The player's state's Actors. Any
+	 *                           references to the other state's Actors
+	 *                           are replaced by this state's Actors
+	 */
+	void MergeWithMain(
+		const PathPlanner& path_planner,
+		std::vector<std::shared_ptr<Actor> > actors
+	);
 };
 
 }

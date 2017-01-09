@@ -163,6 +163,13 @@ public:
 	 * @param[in]  actors  The actors in the game
 	 */
 	void Update(std::vector<std::vector<std::shared_ptr<Actor> > > actors);
+	/**
+	 * Merges this, a player state's Terrain, with the main state's
+	 * Terrain
+	 *
+	 * @param[in]  terrain  The main state's Terrain
+	 */
+	void MergeWithMain(const Terrain& terrain);
 };
 
 }

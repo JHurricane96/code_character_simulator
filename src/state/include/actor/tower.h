@@ -165,6 +165,13 @@ public:
 	 *                         previous and current Update calls
 	 */
 	void Update(int64_t delta_time);
+	/**
+	 * Merges this, a Tower in a player's state, with the corresponding
+	 * Tower in the main state
+	 *
+	 * @param[in]  tower   The main state's Tower
+	 */
+	void MergeWithMain(const Tower * tower);
 };
 
 }

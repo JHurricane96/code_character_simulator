@@ -77,6 +77,19 @@ public:
 		const Flag * flag,
 		std::vector<std::shared_ptr<Actor> > actors
 	);
+	/**
+	 * Merges this, a Flag in a player's state, with the corresponding
+	 * Flag in the main state
+	 *
+	 * @param[in]  flag    The main state's Flag
+	 * @param[in]  actors  The player's state's Actors. Any
+	 *                     references to the other state's Actors
+	 *                     are replaced by this state's Actors
+	 */
+	void MergeWithMain(
+		const Flag * flag,
+		std::vector<std::shared_ptr<Actor> > actors
+	);
 };
 
 }

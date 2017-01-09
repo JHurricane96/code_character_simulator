@@ -368,6 +368,19 @@ public:
 		const Actor * actor,
 		std::vector<std::shared_ptr<Actor> > actors
 	);
+	/**
+	 * Merges this, an Actor in a player's state, with the
+	 * corresponding Actor in the main state
+	 *
+	 * @param[in]  actor   The player's Actor
+	 * @param[in]  actors  The player's state's Actors. Any
+	 *                     references to the other state's Actors
+	 *                     are replaced by this state's Actors
+	 */
+	void MergeWithMain(
+		const Actor * actor,
+		std::vector<std::shared_ptr<Actor> > actors
+	);
 };
 
 }

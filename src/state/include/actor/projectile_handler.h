@@ -106,6 +106,19 @@ public:
 		std::vector<std::vector<std::shared_ptr<Tower> > >& towers,
 		Terrain* terrain
 	);
+	/**
+	 * Merges this, a player state's ProjectileHandler, with the main
+	 * state's ProjectileHandler
+	 *
+	 * @param[in]  proj_handler  The player's ProjectileHandler
+	 * @param[in]  actors        The player's state's Actors. Any
+	 *                           references to the other state's Actors
+	 *                           are replaced by this state's Actors
+	 */
+	void MergeWithMain(
+		const ProjectileHandler& proj_handler,
+		std::vector<std::shared_ptr<Actor> > actors
+	);
 };
 }
 

@@ -71,4 +71,11 @@ void Flag::MergeWithBuffer(
 	}
 }
 
+void Flag::MergeWithMain(
+	const Flag * flag,
+	std::vector<std::shared_ptr<Actor> > actors
+) {
+	MergeWithBuffer(flag, actors);
+}
+
 }

@@ -35,4 +35,10 @@ LOS_TYPE TerrainElement::GetLos(PlayerId player_id) {
 void TerrainElement::SetLos(LOS_TYPE los, PlayerId player_id) {
 	los_type_player[player_id] = los;
 }
+
+void TerrainElement::MergeWithMain(const TerrainElement& terrain_elt) {
+	los_type_player = terrain_elt.los_type_player;
+	last_seen_player = terrain_elt.last_seen_player;
+}
+
 }
