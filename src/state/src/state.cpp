@@ -325,7 +325,7 @@ bool CompareActorsByXCoordinate(
 	return (a->GetPosition().x < b->GetPosition().x);
 }
 
-const Terrain& State::GetTerrain() const {
+Terrain State::GetTerrain() {
 	return terrain;
 }
 
