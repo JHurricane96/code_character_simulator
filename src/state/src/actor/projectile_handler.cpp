@@ -40,32 +40,33 @@ ProjectileHandler::GetProjectiles() {
 	return arrows;
 }
 
+template <typename ActorType>
 void ProjectileHandler::HandleActors(
-	std::vector<std::vector<std::shared_ptr<Tower> > >& towers,
+	std::vector<std::vector<std::shared_ptr<ActorType> > >& actors,
 	Terrain* terrain
 ) {
 	for (int pid = 0; pid <= LAST_PLAYER; pid++) {
-		for (auto tower : towers[pid]) {
-			if (tower->IsReadyToAttack()) {
-				auto target = tower->GetAttackTarget();
-				auto damage = tower->GetAttack();
-				auto tower_pos = tower->GetPosition();
+		for (auto actor : actors[pid]) {
+			if (actor->IsReadyToAttack()) {
+				auto target = actor->GetAttackTarget();
+				auto damage = actor->GetAttack();
+				auto actor_pos = actor->GetPosition();
 				auto arrow_dest = target->GetPosition();
-				terrain->CoordinateToTerrainElement(tower_pos).GetTerrainType();
+				terrain->CoordinateToTerrainElement(actor_pos).GetTerrainType();
 				auto tot_damage = damage *
-				  DamageMultiplier [terrain->CoordinateToTerrainElement(tower_pos)
+				  DamageMultiplier [terrain->CoordinateToTerrainElement(actor_pos)
 										.GetTerrainType()]
 								   [terrain->CoordinateToTerrainElement(arrow_dest)
 								   		.GetTerrainType()];
 				CreateArrow(
-					tower->GetPlayerId(),
-					tower_pos,
+					actor->GetPlayerId(),
+					actor_pos,
 					target,
-					tower->GetArrowSpeed(),
-					tower->GetArrowTtl(),
-					tower->GetArrowSize(),
+					actor->GetArrowSpeed(),
+					actor->GetArrowTtl(),
+					actor->GetArrowSize(),
 					tot_damage);
-				tower->SetReadyToAttackToFalse();
+				actor->SetReadyToAttackToFalse();
 			}
 		}
 	}
@@ -87,9 +88,11 @@ void ProjectileHandler::HandleArrows(
 void ProjectileHandler::Update(
 	int64_t delta_time,
 	std::vector<std::vector<std::shared_ptr<Tower> > >& towers,
+	std::vector<std::vector<std::shared_ptr<Archer> > >& archers,
 	Terrain* terrain
 ) {
-	HandleActors(towers, terrain);
+	HandleActors<Tower>(towers, terrain);
+	HandleActors<Archer>(archers, terrain);
 	HandleArrows(delta_time);
 }
 
