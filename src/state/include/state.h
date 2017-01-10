@@ -14,6 +14,7 @@
 #include "actor/actor.h"
 #include "actor/arrow.h"
 #include "actor/tower.h"
+#include "actor/archer.h"
 #include "actor/flag.h"
 #include "actor/king.h"
 #include "actor/base.h"
@@ -74,6 +75,10 @@ private:
 	 */
 	std::vector<std::vector<std::shared_ptr<Tower> > > towers;
 	/**
+	 * List of archers for each player
+	 */
+	std::vector<std::vector<std::shared_ptr<Archer> > > archers;
+	/**
 	 * Flags for each player
 	 */
 	std::vector<std::shared_ptr<Flag> > flags;
@@ -109,7 +114,8 @@ public:
 		std::vector<std::shared_ptr<King> > kings,
 		std::vector<std::shared_ptr<Base> > bases,
 		std::vector<std::shared_ptr<Flag> > flags,
-		std::vector<std::vector<std::shared_ptr<Tower> > > towers
+		std::vector<std::vector<std::shared_ptr<Tower> > > towers,
+		std::vector<std::vector<std::shared_ptr<Archer> > > archers
 	);
 	State(
 		Terrain terrain,
@@ -146,6 +152,24 @@ public:
 	 * @return     List of required Actor IDs.
 	 */
 	list_act_id_t GetPlayerEnemyIds(PlayerId player_id);
+	/**
+	 * Gets a player's Archers
+	 *
+	 * @param[in]  player_id  Player ID
+	 *
+	 * @return     The Archers
+	 */
+	std::vector<std::shared_ptr<Archer> > GetArchers(PlayerId player_id);
+	/**
+	 * Gets an enemy's Archers, taking into account LOS
+	 *
+	 * @param[in]  player_id  Player ID
+	 *
+	 * @return     The enemy's Archers
+	 */
+	std::vector<std::shared_ptr<Archer> > GetEnemyArchers(
+		PlayerId player_id
+	);
 	/**
 	 * Gets a player's Towers
 	 *

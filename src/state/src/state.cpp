@@ -29,7 +29,8 @@ State::State(
 		std::vector<std::shared_ptr<King> > kings,
 		std::vector<std::shared_ptr<Base> > bases,
 		std::vector<std::shared_ptr<Flag> > flags,
-		std::vector<std::vector<std::shared_ptr<Tower> > > towers
+		std::vector<std::vector<std::shared_ptr<Tower> > > towers,
+		std::vector<std::vector<std::shared_ptr<Archer> > > archers
 	):
 	terrain(terrain),
 	sorted_actors(sorted_actors),
@@ -38,6 +39,7 @@ State::State(
 	bases(bases),
 	towers(towers),
 	projectile_handler(),
+	archers(archers),
 	flags(flags) {
 		for (int64_t i = 0; i <= LAST_PLAYER; i++) {
 			list_act_id_t l;
@@ -154,6 +156,25 @@ void State::MoveUnits(
 
 list_act_id_t State::GetPlayerUnitIds(PlayerId player_id) {
 	return player_unit_ids[(int)player_id];
+}
+
+std::vector<std::shared_ptr<Archer> > State::GetArchers(
+	PlayerId player_id
+) {
+	return archers[player_id];
+}
+
+std::vector<std::shared_ptr<Archer> > State::GetEnemyArchers(
+	PlayerId player_id
+) {
+	auto enemy_archers = archers[(player_id + 1) % (LAST_PLAYER + 1)];
+	std::vector<std::shared_ptr<Archer> > visible_enemy_archers;
+	for (auto archer : enemy_archers) {
+		if (terrain.CoordinateToTerrainElement(archer->GetPosition())
+		   .GetLos(player_id) == DIRECT_LOS)
+			visible_enemy_archers.push_back(archer);
+	}
+	return visible_enemy_archers;
 }
 
 std::vector<std::shared_ptr<Tower> > State::GetTowers(
