@@ -9,6 +9,7 @@
 
 #include "actor/actor.h"
 #include "actor/tower.h"
+#include "actor/archer.h"
 #include "vector2d.h"
 #include "path_planner/path_planner_helper.h"
 #include "state_export.h"
@@ -194,6 +195,31 @@ public:
 	int64_t GetContentionRadius();
 };
 
+class ArcherView: public UnitView {
+private:
+	/**
+	 * Speed of an arrow fired from the tower
+	 */
+	int64_t arrow_speed;
+	/**
+	 * Time to live for the arrows fired
+	 */
+	int64_t arrow_ttl;
+public:
+	ArcherView(Archer * archer);
+	/**
+	 * Gets an arrow's lifetime
+	 *
+	 * @return     The time to live for the arrow
+	 */
+	int64_t GetArrowTtl();
+	/**
+	 * Gets the speed of an arrow fired from the tower
+	 *
+	 * @return     The arrow speed
+	 */
+	int64_t GetArrowSpeed();
+};
 
 }
 

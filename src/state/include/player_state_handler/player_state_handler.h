@@ -82,6 +82,18 @@ public:
 	 */
 	list_act_id_t GetPlayerEnemyIds();
 	/**
+	 * Gets the player's Archers
+	 *
+	 * @return     The player's Archers
+	 */
+	std::vector<ArcherView> GetArchers();
+	/**
+	 * Gets the enemy's Archers that are in LOS
+	 *
+	 * @return     The enemy's Archers
+	 */
+	std::vector<EnemyUnitView> GetEnemyArchers();
+	/**
 	 * Gets the player's Towers
 	 *
 	 * @return     The player's towers

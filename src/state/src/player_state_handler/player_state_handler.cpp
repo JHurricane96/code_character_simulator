@@ -27,6 +27,22 @@ list_act_id_t PlayerStateHandler::GetPlayerEnemyIds() {
 	return state->GetPlayerEnemyIds(player_id);
 }
 
+std::vector<ArcherView> PlayerStateHandler::GetArchers() {
+	auto archers = state->GetArchers(player_id);
+	std::vector<ArcherView> archer_views;
+	for (auto archer : archers)
+		archer_views.push_back(ArcherView(archer.get()));
+	return archer_views;
+}
+
+std::vector<EnemyUnitView> PlayerStateHandler::GetEnemyArchers() {
+	auto archers = state->GetEnemyArchers(player_id);
+	std::vector<EnemyUnitView> archer_views;
+	for (auto archer : archers)
+		archer_views.push_back(EnemyUnitView(archer.get()));
+	return archer_views;
+}
+
 std::vector<TowerView> PlayerStateHandler::GetTowers() {
 	auto towers = state->GetTowers(player_id);
 	std::vector<TowerView> tower_views;

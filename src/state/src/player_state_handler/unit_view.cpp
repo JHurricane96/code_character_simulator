@@ -88,4 +88,17 @@ int64_t EnemyTowerView::GetContentionRadius() {
 	return contention_radius;
 }
 
+ArcherView::ArcherView(Archer * archer):
+	UnitView(archer),
+	arrow_speed(archer->GetArrowSpeed()),
+	arrow_ttl(archer->GetArrowTtl()) {}
+
+int64_t ArcherView::GetArrowSpeed() {
+	return arrow_speed;
+}
+
+int64_t ArcherView::GetArrowTtl() {
+	return arrow_ttl;
+}
+
 }
