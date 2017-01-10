@@ -21,8 +21,8 @@ using namespace physics;
  *
  * State actors are stored as repeated Actor messages as part of the State message
  *
- * @param[in]  StateVar        the state object
- * @param[in]  ActorMessage    the actor message object
+ * @param[in]  StateVar        the state::State object
+ * @param[in]  StateMessage    the IPC::State message object
  *
  * @return     Exit status
  */
@@ -55,6 +55,37 @@ int PopulateActors(shared_ptr<state::State> StateVar, IPC::State* StateMessage) 
 		ActorMessageP1->set_hp(actor1->GetHp());
 		ActorMessageP1->set_max_hp(actor1->GetMaxHp());
 
+		state::ActorType typevar = actor1->GetActorType();
+
+		switch(typevar){
+
+			/*case state::MAGICIAN	:
+				ActorMessageP1->set_actor_type(IPC::State::Actor::MAGICIAN);
+				break;
+			case state::FIREBALL	:
+				ActorMessageP1->set_actor_type(IPC::State::Actor::FIREBALL);
+				break;*/
+			case state::ActorType::BASE		:
+				ActorMessageP1->set_actor_type(IPC::State::Actor::BASE);
+				break;
+			case state::ActorType::FLAG		:
+				ActorMessageP1->set_actor_type(IPC::State::Actor::FLAG);
+				break;
+			case state::ActorType::KING 		:
+				ActorMessageP1->set_actor_type(IPC::State::Actor::KING);
+				break;
+			case state::ActorType::SCOUT		:
+				ActorMessageP1->set_actor_type(IPC::State::Actor::SCOUT);
+				break;
+			case state::ActorType::SWORDSMAN	:
+				ActorMessageP1->set_actor_type(IPC::State::Actor::SWORDSMAN);
+				break;
+			case state::ActorType::TOWER		:
+				ActorMessageP1->set_actor_type(IPC::State::Actor::TOWER);
+				break;
+
+		}
+
 	}
 
 	for (auto actor2 : P2_Actors)
@@ -77,11 +108,53 @@ int PopulateActors(shared_ptr<state::State> StateVar, IPC::State* StateMessage) 
 		ActorMessageP2->set_hp(actor2->GetHp());
 		ActorMessageP2->set_max_hp(actor2->GetMaxHp());
 
+		state::ActorType typevar2 = actor2->GetActorType();
+
+		switch(typevar2){
+
+			/*case state::MAGICIAN	:
+				ActorMessageP2->set_actor_type(IPC::State::Actor::MAGICIAN);
+				break;
+			case state::FIREBALL	:
+				ActorMessageP2->set_actor_type(IPC::State::Actor::FIREBALL);
+				break;*/
+			case state::ActorType::BASE		:
+				ActorMessageP2->set_actor_type(IPC::State::Actor::BASE);
+				break;
+			case state::ActorType::FLAG		:
+				ActorMessageP2->set_actor_type(IPC::State::Actor::FLAG);
+				break;
+			case state::ActorType::KING 		:
+				ActorMessageP2->set_actor_type(IPC::State::Actor::KING);
+				break;
+			case state::ActorType::SCOUT		:
+				ActorMessageP2->set_actor_type(IPC::State::Actor::SCOUT);
+				break;
+			case state::ActorType::SWORDSMAN	:
+				ActorMessageP2->set_actor_type(IPC::State::Actor::SWORDSMAN);
+				break;
+			case state::ActorType::TOWER		:
+				ActorMessageP2->set_actor_type(IPC::State::Actor::TOWER);
+				break;
+
+		}
+
 	}
 
 	return 0;
 }
 
+/**
+ * Populates the LOS for player 1 and player 2
+ *
+ * State LOS for player 1 and 2 are stored as embedded LOS messages which
+ * are 2D arrays of enum LOS_TYPE
+ *
+ * @param[in]  StateVar        the state::State object
+ * @param[in]  StateMessage    the IPC::State message object
+ *
+ * @return     Exit status
+ */
 int PopulateLOS(shared_ptr<state::State> StateVar, IPC::State* StateMessage) {
 
 	PlayerId P1 = PLAYER1;
@@ -89,6 +162,9 @@ int PopulateLOS(shared_ptr<state::State> StateVar, IPC::State* StateMessage) {
 
 	state::Terrain TerrainVar = StateVar->GetTerrain();
 
+	/**
+	 * Create constructed instances of LOS to pass to StateMessage
+	 */
 	IPC::State::LOS* LOSP1(new IPC::State::LOS);
 	IPC::State::LOS* LOSP2(new IPC::State::LOS);
 
@@ -137,6 +213,9 @@ int PopulateLOS(shared_ptr<state::State> StateVar, IPC::State* StateMessage) {
 			}
 		}
 	}
+	/**
+	 * Pass instances of LOS to StateMessage for player 1 and 2
+	 */
 	StateMessage->set_allocated_player1_los(LOSP1);
 	StateMessage->set_allocated_player2_los(LOSP2);
 
