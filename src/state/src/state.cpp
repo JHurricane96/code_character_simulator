@@ -485,7 +485,8 @@ void State::Update(int64_t delta_time) {
 
 	terrain.Update(sorted_actors);
 
-	projectile_handler.Update(delta_time, towers, &terrain);
+	projectile_handler.Update(delta_time, towers, archers, &terrain);
+
 }
 
 void State::MergeWithBuffer(const State& state, PlayerId player_id) {

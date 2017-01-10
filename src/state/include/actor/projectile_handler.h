@@ -8,6 +8,7 @@
 #define STATE_ACTOR_PROJECTILE_HANDLER_H
 
 #include "actor/actor.h"
+#include "actor/archer.h"
 #include "actor/arrow.h"
 #include "actor/tower.h"
 #include "state_export.h"
@@ -40,9 +41,12 @@ private:
 	 *
 	 * @param      towers   The towers
 	 * @param      terrain  The terrain
+	 *
+	 * @tparam     ActorType  Either Tower or Archer
 	 */
+	template <typename ActorType>
 	void HandleActors(
-		std::vector<std::vector<std::shared_ptr<Tower> > >& towers,
+		std::vector<std::vector<std::shared_ptr<ActorType> > >& actors,
 		Terrain* terrain);
 	/**
 	 * A helper function to handle Arrow updates
@@ -99,12 +103,14 @@ public:
 	 * yet; and if it has reached, inflicts damage on the target
 	 *
 	 * @param[in]  delta_time  The delta time
-	 * @param      actors      vector of actors
+	 * @param      towers      vector of towers
+	 * @param      archers     vector of archers
 	 * @param      terrain     The terrain
 	 */
 	void Update(
 		int64_t delta_time,
 		std::vector<std::vector<std::shared_ptr<Tower> > >& towers,
+		std::vector<std::vector<std::shared_ptr<Archer> > >& archers,
 		Terrain* terrain
 	);
 	/**
