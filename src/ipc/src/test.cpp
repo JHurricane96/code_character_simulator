@@ -229,10 +229,11 @@ int main(int argc, char const* argv[])
 		//auto arrows = S->GetProjectiles();
 		//std::thread RendererInput(ipc::IncomingInterrupts);
 		Terrain ter = ipc::LoadTerrain();
-		int64_t ter_size = ter.GetRows();
+		/*int64_t ter_size = ter.GetRows();
 
 		for (double ii = 0; ii < ter_size; ii++) {
 			for (double jj = 0; jj < ter_size; jj++){
+				std::this_thread::sleep_for(std::chrono::milliseconds(30));
 
 				physics::Vector2D ele_pos;
 				ele_pos.x=ii;
@@ -258,7 +259,7 @@ int main(int argc, char const* argv[])
 						break;
 				}
 			}
-		}
+		}*/
 		//ipc::StoreTerrain(TT);
 		//while(true){
 			if( ipc::StateTransfer(S) < 0 ) {
