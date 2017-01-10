@@ -540,4 +540,10 @@ void State::MergeWithMain(const State& state) {
 
 }
 
+int64_t State::PlanPath(
+		physics::Vector2D start,
+		physics::Vector2D destination,
+		std::vector<int64_t> weights
+		) {}
+
 }
