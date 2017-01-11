@@ -45,6 +45,21 @@ public:
 };
 
 /**
+ * Determines if a formation described by the FormationMaker class
+ * is valid
+ *
+ * @param[in]  formation_maker  The formation maker instance
+ * @param[in]  formation_size   The formation size
+ *
+ * @return     True if formation is valid, False otherwise
+ */
+bool IsValidFormation(
+	FormationMaker * formation_maker,
+	int64_t formation_size
+);
+
+
+/**
  * Helps with path planning
  *
  * Attach this component to an Actor to allow path planning
