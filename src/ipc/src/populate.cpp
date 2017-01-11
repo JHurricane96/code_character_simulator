@@ -59,12 +59,12 @@ int PopulateActors(shared_ptr<state::State> StateVar, IPC::State* StateMessage) 
 
 		switch(typevar){
 
-			/*case state::MAGICIAN	:
-				ActorMessageP1->set_actor_type(IPC::State::Actor::MAGICIAN);
+			case state::ActorType::ARCHER	:
+				ActorMessageP1->set_actor_type(IPC::State::Actor::ARCHER);
 				break;
-			case state::FIREBALL	:
-				ActorMessageP1->set_actor_type(IPC::State::Actor::FIREBALL);
-				break;*/
+			case state::ActorType::ARROW	:
+				ActorMessageP1->set_actor_type(IPC::State::Actor::ARROW);
+				break;
 			case state::ActorType::BASE		:
 				ActorMessageP1->set_actor_type(IPC::State::Actor::BASE);
 				break;
@@ -112,12 +112,12 @@ int PopulateActors(shared_ptr<state::State> StateVar, IPC::State* StateMessage) 
 
 		switch(typevar2){
 
-			/*case state::MAGICIAN	:
-				ActorMessageP2->set_actor_type(IPC::State::Actor::MAGICIAN);
+			case state::ActorType::ARCHER	:
+				ActorMessageP2->set_actor_type(IPC::State::Actor::ARCHER);
 				break;
-			case state::FIREBALL	:
-				ActorMessageP2->set_actor_type(IPC::State::Actor::FIREBALL);
-				break;*/
+			case state::ActorType::ARROW	:
+				ActorMessageP2->set_actor_type(IPC::State::Actor::ARROW);
+				break;
 			case state::ActorType::BASE		:
 				ActorMessageP2->set_actor_type(IPC::State::Actor::BASE);
 				break;
