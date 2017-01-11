@@ -5,6 +5,15 @@ namespace state {
 
 FormationMaker::FormationMaker(): formation_id(0) {};
 
+bool IsValidFormation(
+	FormationMaker * formation_maker,
+	int64_t formation_size
+) {
+	auto formation = formation_maker->ReturnFormation(formation_size);
+	return (formation.size() == formation_size
+		&& formation[0] == physics::Vector2D(0,0));
+}
+
 PathPlannerHelper::PathPlannerHelper() : leader(NULL) {}
 PathPlannerHelper::PathPlannerHelper(std::shared_ptr<Actor> self) :
 	self(self), leader(NULL), is_path_planning(false) {}
