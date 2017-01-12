@@ -65,7 +65,7 @@ public:
 	 * @param[in]  delta_time  The difference in time between the
 	 *                         previous and current Update calls
 	 */
-	void Update(int64_t delta_time);
+	void Update(float delta_time);
 	/**
 	 * Merges this, a King in the main state, with the corresponding
 	 * King in a player's state

@@ -438,7 +438,7 @@ list_act_id_t State::GetPlayerEnemyIds(PlayerId player_id) {
 	return all_enemies;
 }
 
-void State::Update(int64_t delta_time) {
+void State::Update(float delta_time) {
 	for (auto units : sorted_actors) {
 		std::sort(
 			units.begin(),

@@ -56,7 +56,7 @@ private:
 	 *
 	 * @param[in]  delta_time  The delta time
 	 */
-	void HandleArrows(int64_t delta_time);
+	void HandleArrows(float delta_time);
 
 public:
 	ProjectileHandler();
@@ -108,7 +108,7 @@ public:
 	 * @param      terrain     The terrain
 	 */
 	void Update(
-		int64_t delta_time,
+		float delta_time,
 		std::vector<std::vector<std::shared_ptr<Tower> > >& towers,
 		std::vector<std::vector<std::shared_ptr<Archer> > >& archers,
 		Terrain* terrain

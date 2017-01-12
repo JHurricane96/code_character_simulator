@@ -52,7 +52,7 @@ bool King::HasFlag() {
 	return (flag != nullptr);
 }
 
-void King::Update(int64_t delta_time) {
+void King::Update(float delta_time) {
 	DecideState(delta_time);
 	if (IsDead() && HasFlag()) {
 		flag->Drop();

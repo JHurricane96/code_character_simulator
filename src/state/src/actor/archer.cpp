@@ -75,7 +75,7 @@ void Archer::SetReadyToAttackToFalse() {
 	ready_to_attack = false;
 }
 
-void Archer::Update(int64_t delta_time) {
+void Archer::Update(float delta_time) {
 	DecideState(delta_time);
 	position = position + velocity * delta_time;
 };

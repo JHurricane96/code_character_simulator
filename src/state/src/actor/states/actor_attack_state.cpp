@@ -14,7 +14,7 @@ void ActorAttackState::Enter(Actor * actor) {
 
 std::unique_ptr<ActorState> ActorAttackState::Update(
 	Actor * actor,
-	int64_t delta_time
+	float delta_time
 ) {
 	auto target = actor->GetAttackTarget();
 	if (actor->GetHp() <= 0) {

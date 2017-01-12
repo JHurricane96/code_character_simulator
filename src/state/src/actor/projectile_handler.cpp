@@ -73,7 +73,7 @@ void ProjectileHandler::HandleActors(
 }
 
 void ProjectileHandler::HandleArrows(
-	int64_t delta_time
+	float delta_time
 ) {
 	std::vector<std::shared_ptr<Arrow> > new_arrows;
 	for (int64_t i = 0; i < arrows.size(); i++) {
@@ -86,7 +86,7 @@ void ProjectileHandler::HandleArrows(
 }
 
 void ProjectileHandler::Update(
-	int64_t delta_time,
+	float delta_time,
 	std::vector<std::vector<std::shared_ptr<Tower> > >& towers,
 	std::vector<std::vector<std::shared_ptr<Archer> > >& archers,
 	Terrain* terrain

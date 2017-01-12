@@ -10,7 +10,7 @@ void ActorDeadState::Enter(Actor * actor) {
 
 std::unique_ptr<ActorState> ActorDeadState::Update(
 	Actor * actor,
-	int64_t delta_time
+	float delta_time
 ) {
 	if (actor->GetTimeToRespawn() <= 0 &&
 		!(actor->GetRespawnLocation() == physics::Vector2D(-1, -1))) {

@@ -44,7 +44,7 @@ public:
 	 * @param[in]  delta_time  The difference in time between the
 	 *                         previous and current Update calls
 	 */
-	void Update(int64_t delta_time);
+	void Update(float delta_time);
 };
 
 }

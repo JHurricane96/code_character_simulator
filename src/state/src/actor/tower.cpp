@@ -53,7 +53,7 @@ Tower::Tower(
 	) {}
 
 bool Tower::Contend(
-	int64_t delta_time,
+	float delta_time,
 	std::vector<std::vector<std::shared_ptr<Actor> > > actors
 ) {
 	std::vector<int64_t> count(LAST_PLAYER + 1, 0);
@@ -126,7 +126,7 @@ void Tower::Respawn(TowerOwner pid) {
 	contention_score = 0;
 }
 
-void Tower::Update(int64_t delta_time) {
+void Tower::Update(float delta_time) {
 	DecideState(delta_time);
 };
 
