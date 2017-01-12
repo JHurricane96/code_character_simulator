@@ -46,8 +46,10 @@ void Arrow::Attack() {
 
 void Arrow::Update(int64_t delta_time) {
 	time_to_live -= delta_time;
-	if (time_to_live < 0 || attack_target->IsDead())
+	if (time_to_live < 0 || attack_target->IsDead()) {
 		is_done = true;
+		return;
+	}
 
 	if (position.distance(attack_target->GetPosition())
 		< size + attack_target->GetSize())
