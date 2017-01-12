@@ -53,11 +53,22 @@ class GroupState
 {
 public:
 	virtual void update() {};
-}
+}	
 
 class Attack : public GroupState
 {
 public:
+	GroupState* SelectState() {
+		float MaxUtility = MaxScore(AttackUtility(),RetreatUtility(),ExploreUtility(),GuardUtility());
+		if(AttackUtility == MaxUtility)
+			return null;
+		else if(RetreatUtility == MaxUtility)
+			return new Retreat();
+		else if(ExploreUtility == MaxUtility)
+			return new Explore();
+		else if(GuardUtility == MaxUtility)
+			return new Guard();
+	}
 	void AttackStrategy() {};
 	void AttackUtility() {};
 	void RetreatUtility() {};
@@ -68,16 +79,38 @@ public:
 class Explore : public GroupState
 {
 public:
+	GroupState* SelectState() {
+		float MaxUtility = MaxScore(AttackUtility(),RetreatUtility(),ExploreUtility(),GuardUtility());
+		if(AttackUtility == MaxUtility)
+			return new Attack();
+		else if(RetreatUtility == MaxUtility)
+			return new Retreat();
+		else if(ExploreUtility == MaxUtility)
+			return null;
+		else if(GuardUtility == MaxUtility)
+			return new Guard();
+	}
 	void ExploreStrategy() {};
-	void AttackUtility() {};
-	void RetreatUtility() {};
-	void ExploreUtility() {};
-	void GuardUtility() {};
+	float AttackUtility() {};
+	float RetreatUtility() {};
+	float ExploreUtility() {};
+	float GuardUtility() {};
 };
 
 class Retreat : public GroupState
 {
 public:
+	GroupState* SelectState() {
+		float MaxUtility = MaxScore(AttackUtility(),RetreatUtility(),ExploreUtility(),GuardUtility());
+		if(AttackUtility == MaxUtility)
+			return new Attack();
+		else if(RetreatUtility == MaxUtility)
+			return null;
+		else if(ExploreUtility == MaxUtility)
+			return null;
+		else if(GuardUtility == MaxUtility)
+			return new Guard();
+	}
 	void RetreatStrategy() {};
 	void AttackUtility() {};
 	void RetreatUtility() {};
@@ -88,6 +121,17 @@ public:
 class Guard : public GroupState
 {
 public:
+	GroupState* SelectState() {
+		float MaxUtility = MaxScore(AttackUtility(),RetreatUtility(),ExploreUtility(),GuardUtility());
+		if(AttackUtility == MaxUtility)
+			return new Attack();
+		else if(RetreatUtility == MaxUtility)
+			return new Retreat();
+		else if(ExploreUtility == MaxUtility)
+			return Explore();
+		else if(GuardUtility == MaxUtility)
+			return null;
+	}
 	void GuardStrategy() {};
 	void AttackUtility() {};
 	void RetreatUtility() {};
