@@ -52,7 +52,7 @@ bool Flag::IsCaptured() {
 	return (king != nullptr);
 }
 
-void Flag::Update(int64_t delta_time) {
+void Flag::Update(float delta_time) {
 	if (IsCaptured()) {
 		position = king->GetPosition();
 	}

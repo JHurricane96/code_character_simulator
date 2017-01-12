@@ -43,7 +43,7 @@ void Swordsman::Attack() {
 	attack_target->Damage(attack);
 }
 
-void Swordsman::Update(int64_t delta_time) {
+void Swordsman::Update(float delta_time) {
 	DecideState(delta_time);
 	position = position + velocity * delta_time;
 }

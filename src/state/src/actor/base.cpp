@@ -37,6 +37,6 @@ Base::Base(
 		ActorType::BASE
 	) {};
 
-void Base::Update(int64_t delta_time) {};
+void Base::Update(float delta_time) {};
 
 }

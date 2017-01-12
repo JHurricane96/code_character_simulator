@@ -44,7 +44,7 @@ void Arrow::Attack() {
 	attack_target->Damage(attack);
 }
 
-void Arrow::Update(int64_t delta_time) {
+void Arrow::Update(float delta_time) {
 	time_to_live -= delta_time;
 	if (time_to_live < 0 || attack_target->IsDead()) {
 		is_done = true;

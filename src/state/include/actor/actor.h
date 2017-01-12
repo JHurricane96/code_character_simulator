@@ -168,7 +168,7 @@ public:
 	 * @param[in]  delta_time  The difference in time between the
 	 *                         previous and current Update calls
 	 */
-	virtual void Update(int64_t delta_time) = 0;
+	virtual void Update(float delta_time) = 0;
 	/**
 	 * Gets the Actor ID
 	 *
@@ -306,9 +306,9 @@ public:
 	 *
 	 * Used when the Actor is dead and is called every tick
 	 *
-	 * @param[in]  decrease_amount  The decrease amount
+	 * @param[in]  delta_time  The amount to decrease by
 	 */
-	void DecreaseRespawnTime(int64_t decrease_amount);
+	void DecreaseRespawnTime(float delta_time);
 	/**
 	 * Executes the Actor's state machine
 	 *
@@ -321,7 +321,7 @@ public:
 	 * @param[in]  delta_time  The difference in time between the
 	 *                         previous and current Update calls
 	 */
-	void DecideState(int64_t delta_time);
+	void DecideState(float delta_time);
 	/**
 	 * Start attacking a target
 	 *

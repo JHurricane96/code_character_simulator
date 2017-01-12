@@ -165,7 +165,7 @@ public:
 	 * @return     True if new owner is settled, else false
 	 */
 	bool Contend(
-		int64_t delta_time,
+		float delta_time,
 		std::vector<std::vector<std::shared_ptr<Actor> > > actors
 	);
 	/**
@@ -174,7 +174,7 @@ public:
 	 * @param[in]  delta_time  The difference in time between the
 	 *                         previous and current Update calls
 	 */
-	void Update(int64_t delta_time);
+	void Update(float delta_time);
 	/**
 	 * Merges this, a Tower in a player's state, with the corresponding
 	 * Tower in the main state

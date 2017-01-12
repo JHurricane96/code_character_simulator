@@ -160,11 +160,11 @@ void Actor::Respawn() {
 	position = respawn_location;
 }
 
-void Actor::DecreaseRespawnTime(int64_t delta_time) {
-	time_to_respawn = std::max((int64_t) 0, time_to_respawn - delta_time);
+void Actor::DecreaseRespawnTime(float delta_time) {
+	time_to_respawn = std::max((int64_t) 0, (int64_t) (time_to_respawn - delta_time));
 }
 
-void Actor::DecideState(int64_t delta_time) {
+void Actor::DecideState(float delta_time) {
 	auto new_state = state->Update(this, delta_time);
 
 	while (new_state != nullptr) {

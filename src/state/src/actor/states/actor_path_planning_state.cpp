@@ -11,7 +11,7 @@ void ActorPathPlanningState::Enter(Actor * actor) {}
 
 std::unique_ptr<ActorState> ActorPathPlanningState::Update(
 	Actor * actor,
-	int64_t delta_time
+	float delta_time
 ) {
 	if (actor->GetHp() <= 0) {
 		return std::unique_ptr<ActorState>(new ActorDeadState());

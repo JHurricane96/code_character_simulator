@@ -47,7 +47,7 @@ public:
 	 */
 	virtual std::unique_ptr<ActorState> Update(
 		Actor * actor,
-		int64_t delta_time
+		float delta_time
 	) override;
 	/**
 	 * Called right before the Actor switches to another state
