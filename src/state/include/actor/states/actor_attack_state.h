@@ -28,7 +28,7 @@ private:
 	 * When it goes below zero, an attack is executed,
 	 * upon which it is reset to attack_speed
 	 */
-	int64_t time_to_attack;
+	float time_to_attack;
 public:
 	/**
 	 * Called right after the Actor switches to this state
