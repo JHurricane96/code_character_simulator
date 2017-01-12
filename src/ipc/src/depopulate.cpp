@@ -34,6 +34,35 @@ int DepopulateActors(const IPC::State& RetrievedMessage) {
 		
 		cout<<"Actor HP: "<<ActorMessage.hp()<<endl;
 		cout<<"Actor Max HP: "<<ActorMessage.max_hp()<<endl;
+
+		switch(ActorMessage.actor_type()){
+
+			case IPC::State::Actor::ARCHER	:
+				cout<<"Actor Type: ARCHER\n";
+				break;
+			case IPC::State::Actor::ARROW	:
+				cout<<"Actor Type: ARROW\n";
+				break;
+			case IPC::State::Actor::BASE		:
+				cout<<"Actor Type: BASE\n";
+				break;
+			case IPC::State::Actor::FLAG		:
+				cout<<"Actor Type: FLAG\n";
+				break;
+			case IPC::State::Actor::KING 		:
+				cout<<"Actor Type: KING\n";
+				break;
+			case IPC::State::Actor::SCOUT		:
+				cout<<"Actor Type: SCOUT\n";
+				break;
+			case IPC::State::Actor::SWORDSMAN	:
+				cout<<"Actor Type: SWORDSMAN\n";
+				break;
+			case IPC::State::Actor::TOWER		:
+				cout<<"Actor Type: TOWER\n";
+				break;
+
+		}
 	}
 
 	return 0;
@@ -57,7 +86,7 @@ namespace ipc {
 		 */
 		GOOGLE_PROTOBUF_VERIFY_VERSION;
 
-		IPC::Terrain RetrievedMessage;
+		IPC::State RetrievedMessage;
 
 		fstream input("file.txt", ios::in | ios::binary);
 		istream *in = &cin;
@@ -67,10 +96,10 @@ namespace ipc {
 			return -1;
 		}
 
-		/*if (DepopulateActors(RetrievedMessage) < 0) {
+		if (DepopulateActors(RetrievedMessage) < 0) {
 			cerr << "Failed to load actors from file" << endl;
 			return -1;
-		}*/
+		}
 
 		return 0;
 	}

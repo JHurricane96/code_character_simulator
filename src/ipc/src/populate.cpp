@@ -1,5 +1,5 @@
 /**
- * @file populate.cc
+ * @file populate.cpp
  * Function definitions for data transfer class functions
 */
 #include <iostream>
@@ -244,7 +244,7 @@ namespace ipc {
 
 		IPC::State StateMessage;
 
-		fstream output("file2.txt", ios::out | ios::trunc | ios::binary);
+		fstream output("file.txt", ios::out | ios::trunc | ios::binary);
 
 
 		if (PopulateActors(StateVar, &StateMessage) < 0) {
