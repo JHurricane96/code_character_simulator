@@ -37,7 +37,7 @@ State::State(
 	kings(kings),
 	bases(bases),
 	towers(towers),
-	projectile_handler(actors.size()),
+	projectile_handler(),
 	flags(flags) {
 		for (int64_t i = 0; i <= LAST_PLAYER; i++) {
 			list_act_id_t l;
@@ -46,6 +46,7 @@ State::State(
 			player_unit_ids.push_back(l);
 		}
 		actors = flatten(sorted_actors);
+		projectile_handler = ProjectileHandler(actors.size());
 		std::sort(actors.begin(), actors.end(),
 			[]( const std::shared_ptr<Actor>& a1,
 				const std::shared_ptr<Actor>& a2) {
