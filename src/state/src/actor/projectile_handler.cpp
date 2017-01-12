@@ -65,6 +65,7 @@ void ProjectileHandler::HandleActors(
 					tower->GetArrowTtl(),
 					tower->GetArrowSize(),
 					tot_damage);
+				tower->SetReadyToAttackToFalse();
 			}
 		}
 	}

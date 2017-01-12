@@ -144,6 +144,10 @@ public:
 	 */
 	int64_t GetContentionRadius();
 	/**
+	 * Sets ready_to_attack to false
+	 */
+	void SetReadyToAttackToFalse();
+	/**
 	 * Respawns Tower
 	 *
 	 * @param[in]  pid   The tower owner id
