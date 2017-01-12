@@ -7,7 +7,7 @@ Arrow::Arrow(
 	PlayerId player_id,
 	int64_t attack,
 	int64_t max_speed,
-	int64_t time_to_live,
+	float time_to_live,
 	int64_t size,
 	physics::Vector2D start,
 	Actor* target
