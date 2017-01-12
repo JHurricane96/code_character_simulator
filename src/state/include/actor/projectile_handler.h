@@ -55,6 +55,7 @@ private:
 	void HandleArrows(int64_t delta_time);
 
 public:
+	ProjectileHandler();
 	/**
 	 * Constructor for the Projectile Handler
 	 *
