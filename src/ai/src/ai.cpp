@@ -44,7 +44,12 @@ public:
 
 	virtual void update() 
 	{
-		state->update(*this);
+		GroupState* NewState = state->update(*this);
+		if(NewState != null)
+		{
+			delete state;
+			state = NewState;
+		}
 	};
 
 	void split(vector <int> hps)
