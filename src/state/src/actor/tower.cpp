@@ -114,6 +114,10 @@ int64_t Tower::GetContentionRadius() {
 	return contention_radius;
 }
 
+void Tower::SetReadyToAttackToFalse() {
+	ready_to_attack = false;
+}
+
 void Tower::Respawn(TowerOwner pid) {
 	is_dead = false;
 	hp = max_hp;
