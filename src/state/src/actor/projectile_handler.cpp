@@ -3,6 +3,8 @@
 
 namespace state {
 
+ProjectileHandler::ProjectileHandler() {}
+
 ProjectileHandler::ProjectileHandler(
 	int64_t next_arrow_id
 	) :
