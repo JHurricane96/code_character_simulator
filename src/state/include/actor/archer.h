@@ -44,7 +44,7 @@ public:
 	    int64_t max_speed,
 	    int64_t size,
 	    int64_t total_respawn_time,
-	    int64_t time_to_respawn,
+	    float time_to_respawn,
 	    int64_t time_spent_near_base,
 	    physics::Vector2D position,
 	    physics::Vector2D velocity,
