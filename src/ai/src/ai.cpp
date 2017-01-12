@@ -1,9 +1,9 @@
-class Unit {
+class Group {
 
 private:
-	UnitState* state;
+	GroupState* state;
 public:
-	virtual void update(Unit& unit) 
+	virtual void update(Group& unit) 
 	{
 		state->update(*this);
 	};
@@ -13,13 +13,13 @@ public:
 	virtual void GuardUtility() {};
 };
 
-class UnitState
+class GroupState
 {
 public:
 	virtual void update() {};
 }
 
-class Attack : public UnitState
+class Attack : public GroupState
 {
 public:
 	void AttackStrategy() {};
@@ -29,7 +29,7 @@ public:
 	void GuardUtility() {};
 };
 
-class Explore : public UnitState
+class Explore : public GroupState
 {
 public:
 	void ExploreStrategy() {};
@@ -39,7 +39,7 @@ public:
 	void GuardUtility() {};
 };
 
-class Retreat : public UnitState
+class Retreat : public GroupState
 {
 public:
 	void RetreatStrategy() {};
@@ -49,7 +49,7 @@ public:
 	void GuardUtility() {};
 };
 
-class Guard : public UnitState
+class Guard : public GroupState
 {
 public:
 	void GuardStrategy() {};
