@@ -1,5 +1,10 @@
 #include <vector>
+#include <map>
+#include <cstdlib>
+#include <functional>
+#include <set>
 
+#define mod 1000000000
 typedef int64_t act_id_t;
 typedef std::vector<int64_t> list_act_id_t;
 
@@ -10,7 +15,7 @@ class AI
 {
 public:
 	list_act_id_t all_actors;
-	vector <Group*> groups;
+	map <int, Group*> groups;
 	AI() 
 	{
 		// todo: initialise list of actor ids before passing
@@ -19,19 +24,22 @@ public:
 
 	void update() 
 	{
-		for (auto &group : groups) group -> update();
+		for (auto &group : groups) (group.second) -> update();
 	}
 }
 
 class Group : AI
 {
 private:
+	int group_id;
 	GroupState* state;
 	list_act_id_t group_actors;	// actors in this group
 public:
 	Group(list_act_id_t actors) 
 	{
-		this->group_actors = actors;
+		group_actors = actors;
+		group_id = rand() % mod;
+		groups[group_id] = *this;	
 	}
 
 	virtual void update() 
@@ -39,10 +47,19 @@ public:
 		state->update(*this);
 	};
 
-	void split()
+	void split(vector <int> hps)
 	{
-		
+		sort(hps.begin(), hps.end(), std::greater<int>());
+		set < pair <int, act_id_t> > group_hps;
+		for (auto &id: group_actors) 
+		{
+			int hp = // get actor hp
+			group_hps.insert(make_pair(hp, id));
+		}
+
+		for ()
 	}
+
 	virtual void AttackUtility() {};
 	virtual void RetreatUtility() {};
 	virtual void ExploreUtility() {};
