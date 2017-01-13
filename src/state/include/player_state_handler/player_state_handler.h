@@ -94,6 +94,18 @@ public:
 	 */
 	std::vector<EnemyUnitView> GetEnemyArchers();
 	/**
+	 * Gets a player's Scouts
+	 *
+	 * @return     The player's Scouts
+	 */
+	std::vector<UnitView> GetScouts();
+	/**
+	 * Gets the enemy's Scouts that are in LOS
+	 *
+	 * @return     The enemy's Scouts
+	 */
+	std::vector<EnemyUnitView> GetEnemyScouts();
+	/**
 	 * Gets the player's Towers
 	 *
 	 * @return     The player's towers
