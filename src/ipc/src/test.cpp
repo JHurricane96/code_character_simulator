@@ -261,12 +261,14 @@ int main(int argc, char const* argv[])
 			}
 		}*/
 		//ipc::StoreTerrain(TT);
-		//while(true){
-			if( ipc::StateTransfer(S) < 0 ) {
+		double i=0.0001;
+		while(true){
+			if( ipc::StateTransfer(S, i) < 0 ) {
 			return -1;
 			}
-			//std::cout.flush();
-		//}
+			std::cout.flush();
+			i+=0.0001;
+		}
 
 		//RendererInput.join();
 
