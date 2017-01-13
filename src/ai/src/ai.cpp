@@ -26,7 +26,8 @@ public:
 
 	void update() 
 	{
-		for (auto &group : groups) (group.second) -> update();
+		// see how state object is passed to this function and pass it down
+		for (auto &group : groups) (group.second) -> update(); 	
 	}
 }
 
@@ -136,23 +137,23 @@ public:
 		}
 		return it -> first;
 	}
-
-	virtual void AttackUtility() {};
-	virtual void RetreatUtility() {};
-	virtual void ExploreUtility() {};
-	virtual void GuardUtility() {};
 };
 
 class GroupState
 {
 public:
 	GroupState() {}; // this constructor should set the default starting state
-	virtual void update() {};
+	virtual GroupState* update(Group *group) {};
+	GroupState* DefaultActionUtility() {}; // utility to decide what to set as default state
 }	
 
 class Attack : public GroupState
 {
-public:
+	GroupState* update(Group *group)
+	{
+		return SelectState();
+	}
+
 	GroupState* SelectState() {
 		float MaxUtility = MaxScore(AttackUtility(),RetreatUtility(),ExploreUtility(),GuardUtility());
 		if(AttackUtility == MaxUtility)
@@ -173,7 +174,11 @@ public:
 
 class Explore : public GroupState
 {
-public:
+	GroupState* update(Group *group)
+	{
+		return SelectState();
+	}
+
 	GroupState* SelectState() {
 		float MaxUtility = MaxScore(AttackUtility(),RetreatUtility(),ExploreUtility(),GuardUtility());
 		if(AttackUtility == MaxUtility)
@@ -194,7 +199,11 @@ public:
 
 class Retreat : public GroupState
 {
-public:
+	GroupState* update(Group *group)
+	{
+		return SelectState();
+	}
+
 	GroupState* SelectState() {
 		float MaxUtility = MaxScore(AttackUtility(),RetreatUtility(),ExploreUtility(),GuardUtility());
 		if(AttackUtility == MaxUtility)
@@ -202,7 +211,7 @@ public:
 		else if(RetreatUtility == MaxUtility)
 			return NULL;
 		else if(ExploreUtility == MaxUtility)
-			return NULL;
+			return new Explore();
 		else if(GuardUtility == MaxUtility)
 			return new Guard();
 	}
@@ -215,7 +224,11 @@ public:
 
 class Guard : public GroupState
 {
-public:
+	GroupState* update(Group *group)
+	{
+		return SelectState();
+	}
+
 	GroupState* SelectState() {
 		float MaxUtility = MaxScore(AttackUtility(),RetreatUtility(),ExploreUtility(),GuardUtility());
 		if(AttackUtility == MaxUtility)
@@ -223,7 +236,7 @@ public:
 		else if(RetreatUtility == MaxUtility)
 			return new Retreat();
 		else if(ExploreUtility == MaxUtility)
-			return Explore();
+			return new Explore();
 		else if(GuardUtility == MaxUtility)
 			return NULL;
 	}
