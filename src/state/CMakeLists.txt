@@ -16,6 +16,7 @@ set(SOURCE_FILES
 	src/actor/tower.cpp
 	src/actor/arrow.cpp
 	src/actor/archer.cpp
+	src/actor/scout.cpp
 	src/actor/projectile_handler.cpp
 	src/terrain/terrain.cpp
 	src/terrain/terrain_element.cpp
