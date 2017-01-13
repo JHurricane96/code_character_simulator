@@ -13,6 +13,7 @@
 #include <cstdint>
 #include "actor/actor.h"
 #include "actor/arrow.h"
+#include "actor/scout.h"
 #include "actor/tower.h"
 #include "actor/archer.h"
 #include "actor/flag.h"
@@ -79,6 +80,10 @@ private:
 	 */
 	std::vector<std::vector<std::shared_ptr<Archer> > > archers;
 	/**
+	 * List of scouts for each player
+	 */
+	std::vector<std::vector<std::shared_ptr<Scout> > > scouts;
+	/**
 	 * Flags for each player
 	 */
 	std::vector<std::shared_ptr<Flag> > flags;
@@ -115,6 +120,7 @@ public:
 		std::vector<std::shared_ptr<Base> > bases,
 		std::vector<std::shared_ptr<Flag> > flags,
 		std::vector<std::vector<std::shared_ptr<Tower> > > towers,
+		std::vector<std::vector<std::shared_ptr<Scout> > > scouts,
 		std::vector<std::vector<std::shared_ptr<Archer> > > archers
 	);
 	State(

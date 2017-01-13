@@ -30,6 +30,7 @@ State::State(
 		std::vector<std::shared_ptr<Base> > bases,
 		std::vector<std::shared_ptr<Flag> > flags,
 		std::vector<std::vector<std::shared_ptr<Tower> > > towers,
+		std::vector<std::vector<std::shared_ptr<Scout> > > scouts,
 		std::vector<std::vector<std::shared_ptr<Archer> > > archers
 	):
 	terrain(terrain),
@@ -40,6 +41,7 @@ State::State(
 	towers(towers),
 	projectile_handler(),
 	archers(archers),
+	scouts(scouts),
 	flags(flags) {
 		for (int64_t i = 0; i <= LAST_PLAYER; i++) {
 			list_act_id_t l;
