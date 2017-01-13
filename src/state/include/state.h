@@ -177,6 +177,24 @@ public:
 		PlayerId player_id
 	);
 	/**
+	 * Gets a player's Scouts
+	 *
+	 * @param[in]  player_id  Player ID
+	 *
+	 * @return     The Scouts
+	 */
+	std::vector<std::shared_ptr<Scout> > GetScouts(PlayerId player_id);
+	/**
+	 * Gets an enemy's Scouts, taking into account LOS
+	 *
+	 * @param[in]  player_id  Player ID
+	 *
+	 * @return     The enemy's Scouts
+	 */
+	std::vector<std::shared_ptr<Scout> > GetEnemyScouts(
+		PlayerId player_id
+	);
+	/**
 	 * Gets a player's Towers
 	 *
 	 * @param[in]  player_id  Player ID
