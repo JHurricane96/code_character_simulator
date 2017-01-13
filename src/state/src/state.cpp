@@ -166,6 +166,38 @@ std::vector<std::shared_ptr<Archer> > State::GetArchers(
 	return archers[player_id];
 }
 
+std::vector<std::shared_ptr<Scout> > State::GetScouts(PlayerId player_id) {
+	return scouts[player_id];
+}
+
+std::vector<std::shared_ptr<Scout> > State::GetEnemyScouts(
+	PlayerId player_id
+) {
+	auto grid_element_size =
+		terrain.CoordinateToTerrainElement(physics::Vector2D(0,0)).GetSize();
+	auto enemy_scouts = scouts[(player_id + 1) % (LAST_PLAYER + 1)];
+	std::vector<std::shared_ptr<Scout> > visible_enemy_scouts;
+	for (auto scout : enemy_scouts) {
+		if (terrain.CoordinateToTerrainElement(scout->GetPosition())
+			       .GetLos(player_id) == DIRECT_LOS ) {
+			if (scout->GetPosition().distance(bases[player_id]->GetPosition())
+				<= bases[player_id]->GetLosRadius() * grid_element_size) {
+				visible_enemy_scouts.push_back(scout);
+			}
+			else {
+				for (auto tower : towers[player_id]) {
+					if (scout->GetPosition().distance(tower->GetPosition())
+						<= tower->GetLosRadius() * grid_element_size) {
+						visible_enemy_scouts.push_back(scout);
+						break;
+					}
+				}
+			}
+		}
+	}
+	return visible_enemy_scouts;
+}
+
 std::vector<std::shared_ptr<Archer> > State::GetEnemyArchers(
 	PlayerId player_id
 ) {
@@ -419,7 +451,10 @@ list_act_id_t State::GetActorEnemies(PlayerId player_id, act_id_t actor_id) {
 	for (int pid = 0; pid <= LAST_PLAYER; pid++) {
 		if (pid != player_id)
 			for (auto id: player_unit_ids[pid]) {
-				if (actors[id]->GetPosition().distance(actors[actor_id]->GetPosition())
+				if(actors[actor_id]->GetActorType() != ActorType::TOWER &&
+					actors[actor_id]->GetActorType() != ActorType::BASE &&
+					actors[id]->GetActorType() == ActorType::SCOUT) {}
+				else if (actors[id]->GetPosition().distance(actors[actor_id]->GetPosition())
 					 < actors[actor_id]->GetLosRadius()*size)
 					enemies.push_back(id);
 			}
@@ -429,14 +464,19 @@ list_act_id_t State::GetActorEnemies(PlayerId player_id, act_id_t actor_id) {
 
 list_act_id_t State::GetPlayerEnemyIds(PlayerId player_id) {
 	list_act_id_t all_enemies;
+	auto grid_size = terrain.CoordinateToTerrainElement(physics::Vector2D(0,0))
+	                        .GetSize();
 	for (int pid = 0; pid <= LAST_PLAYER; pid++)
-			if (pid != player_id) {
-				for (auto actor: sorted_actors[pid]) {
-					auto te = terrain.CoordinateToTerrainElement(actor->GetPosition());
-					if (te.GetLos(player_id) == DIRECT_LOS)
+		if (pid != player_id) {
+			for (auto actor : sorted_actors[pid]) {
+				auto te = terrain.CoordinateToTerrainElement(actor->GetPosition());
+				if (te.GetLos(player_id) == DIRECT_LOS &&
+					actor->GetActorType() != ActorType::SCOUT)
 						all_enemies.push_back(actor->GetId());
 				}
 			}
+	for (auto scout : GetEnemyScouts(player_id))
+		all_enemies.push_back(scout->GetId());
 	return all_enemies;
 }
 
