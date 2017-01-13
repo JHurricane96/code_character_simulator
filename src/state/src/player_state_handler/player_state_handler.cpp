@@ -43,6 +43,22 @@ std::vector<EnemyUnitView> PlayerStateHandler::GetEnemyArchers() {
 	return archer_views;
 }
 
+std::vector<UnitView> PlayerStateHandler::GetScouts() {
+	auto scouts = state->GetScouts(player_id);
+	std::vector<UnitView> scout_views;
+	for (auto scout : scouts)
+		scout_views.push_back(UnitView(scout.get()));
+	return scout_views;
+}
+
+std::vector<EnemyUnitView> PlayerStateHandler::GetEnemyScouts() {
+	auto scouts = state->GetEnemyScouts(player_id);
+	std::vector<EnemyUnitView> scout_views;
+	for (auto scout : scouts)
+		scout_views.push_back(EnemyUnitView(scout.get()));
+	return scout_views;
+}
+
 std::vector<TowerView> PlayerStateHandler::GetTowers() {
 	auto towers = state->GetTowers(player_id);
 	std::vector<TowerView> tower_views;
