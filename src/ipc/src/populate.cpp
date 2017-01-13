@@ -26,7 +26,7 @@ using namespace physics;
  *
  * @return     Exit status
  */
-int PopulateActors(shared_ptr<state::State> StateVar, IPC::State* StateMessage) {
+int PopulateActors(shared_ptr<state::State> StateVar, IPC::State* StateMessage, double i) {
 
 	PlayerId P1 = PLAYER1;
 	PlayerId P2 = PLAYER2;
@@ -44,8 +44,8 @@ int PopulateActors(shared_ptr<state::State> StateVar, IPC::State* StateMessage) 
 	
 		auto pos = actor1->GetPosition();
 
-		ActorMessageP1->set_pos_x(pos.x);
-		ActorMessageP1->set_pos_y(pos.y);
+		ActorMessageP1->set_pos_x(pos.x + i);
+		ActorMessageP1->set_pos_y(pos.y + i);
 
 		if(actor1->GetAttackTarget() == NULL)
 			ActorMessageP1->set_attack(false);
@@ -234,7 +234,7 @@ namespace ipc {
 	 * @return     Exit status
 	 */
 
-	int StateTransfer(std::shared_ptr<state::State> StateVar) {
+	int StateTransfer(std::shared_ptr<state::State> StateVar, double i) {
 
 		/**
 		 * Verify that the version of the library that we linked against is
@@ -247,7 +247,7 @@ namespace ipc {
 		fstream output("file.txt", ios::out | ios::trunc | ios::binary);
 
 
-		if (PopulateActors(StateVar, &StateMessage) < 0) {
+		if (PopulateActors(StateVar, &StateMessage, i) < 0) {
 			cerr << "Failed to load actors" << endl;
 			return -1;
 		}
