@@ -1,0 +1,44 @@
+/**
+ * @file interrupts.proto
+ * Define message format for passing renderer status to simulator
+ */
+
+/**
+ * Version: Proto3 explicit declaration
+ */
+syntax = "proto3";
+
+/**
+ * Package specifier to prevent name clashes
+ * between protocol message types
+ */
+package IPC;
+
+/**
+ * Message describes the IPC::Interrupts object
+ *
+ * play_pause_status: Set the play/pause state of simulation
+ * level_number: Pass level number between renderer & simulator
+ */
+message Interrupts {
+
+	/**
+	 * Message with utility fields where at most one field will
+	 * be set at the same time to save memory by using the oneof feature
+	 */
+	oneof interrupt {
+
+		/**
+		 * Describe simulation status
+		 * True: Play, False: Pause
+		 * Default to false
+		 */
+		bool play_pause_status = 1;
+
+		/**
+		 * Describe level number
+		 * Default to zero
+		 */
+		int64 level_number = 2;
+	}
+}
