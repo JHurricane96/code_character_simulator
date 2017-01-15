@@ -191,6 +191,10 @@ void PlayerStateHandler::FlagCapture(int * success) {
 	state->FlagCapture(player_id, success);
 }
 
+void PlayerStateHandler::FlagDrop(int * success) {
+	state->FlagDrop(player_id, success);
+}
+
 int64_t PlayerStateHandler::PlanPath(
 	physics::Vector2D start,
 	physics::Vector2D destination,
