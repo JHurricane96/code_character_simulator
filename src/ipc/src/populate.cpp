@@ -34,6 +34,8 @@ int PopulateActors(shared_ptr<state::State> StateVar, IPC::State* StateMessage, 
 	std::vector<std::shared_ptr<Actor> > P1_Actors = StateVar->GetPlayerActors(P1);
 	std::vector<std::shared_ptr<Actor> > P2_Actors = StateVar->GetPlayerActors(P2);
 
+	int ActorLength = P1_Actors.size() + P2_Actors.size();
+
 	for (auto actor1 : P1_Actors)
 	{
 
@@ -140,6 +142,7 @@ int PopulateActors(shared_ptr<state::State> StateVar, IPC::State* StateMessage, 
 		}
 
 	}
+	StateMessage->set_no_of_actors(ActorLength);
 
 	return 0;
 }
