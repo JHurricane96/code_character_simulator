@@ -305,6 +305,21 @@ public:
 	 */
 	void FlagCapture(int * success);
 	/**
+	 * Instructs a player's King to drop the enemy's Flag
+	 *
+	 * The parameter success's value indicates the outcome of the call
+	 *
+	 * success is:
+	 * - 0 if the King is dead
+	 * - -1 if the King isn't near enough to his Base
+	 * - -2 if the King doesn't have a Flag
+	 * - 1 if successful
+	 *
+	 * @param      success    If valid pointer, holds success of the
+	 *                        function call
+	 */
+	void FlagDrop(int * success);
+	/**
 	 * Calculates the total weight of the best path between the given points
 	 *
 	 * @param[in]  start            The start
