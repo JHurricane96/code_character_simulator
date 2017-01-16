@@ -1,6 +1,11 @@
 /**
  * @file interrupts.proto
- * Define message format for passing renderer status to simulator
+ * Define message format for miscellaneous information passing between
+ * renderer and simulator
+ * play_pause_status	: Pause the simulator on true
+ * level_number			: Pass level number between renderer & simulator
+ * exit_status			: Kill the simulator on true
+ * restart_status		: Restart the simulator on true
  */
 
 /**
@@ -9,17 +14,11 @@
 syntax = "proto3";
 
 /**
- * Package specifier to prevent name clashes
+ * Package specifier to prevent name clashes 
  * between protocol message types
  */
 package IPC;
 
-/**
- * Message describes the IPC::Interrupts object
- *
- * play_pause_status: Set the play/pause state of simulation
- * level_number: Pass level number between renderer & simulator
- */
 message Interrupts {
 
 	/**
@@ -27,10 +26,10 @@ message Interrupts {
 	 * be set at the same time to save memory by using the oneof feature
 	 */
 	oneof interrupt {
-
+		
 		/**
 		 * Describe simulation status
-		 * True: Play, False: Pause
+ 		 * True: Play, False: Pause
 		 * Default to false
 		 */
 		bool play_pause_status = 1;
@@ -40,5 +39,15 @@ message Interrupts {
 		 * Default to zero
 		 */
 		int64 level_number = 2;
+
+		/**
+		 * Describe the exit status
+		 */
+		bool exit_status = 3;
+
+		/**
+		 * Describe the restart status 
+		 */
+		bool restart_status = 4;
 	}
 }
