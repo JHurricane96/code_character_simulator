@@ -78,7 +78,7 @@ namespace ipc {
 	 * @return     Exit status
 	 */
 
-	int IncomingInterrupts() {
+	int DepopulateStuff() {
 
 		/**
 		 * Verify that the version of the library that we linked against is
