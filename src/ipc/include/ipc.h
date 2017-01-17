@@ -18,5 +18,6 @@ namespace ipc {
 	int StoreTerrain(state::Terrain TerrainVar);
 	state::Terrain LoadTerrain();
 	int IncomingInterrupts();
+	int DepopulateStuff();
 }
 #endif // IPC_IPC_H

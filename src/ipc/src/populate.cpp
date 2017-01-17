@@ -1,6 +1,6 @@
 /**
  * @file populate.cpp
- * Function definitions for data transfer class functions
+ * Function definitions for state transfer
 */
 #include <iostream>
 #include <string>
