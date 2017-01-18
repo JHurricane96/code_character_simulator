@@ -6,19 +6,6 @@
 
 namespace drivers {
 
-state::State * MakeState() {
-	state::State * state = new state::State(
-		state::Terrain(std::vector<std::vector<state::TerrainElement> >()),
-		std::vector<std::vector<std::shared_ptr<state::Actor> > >(2, std::vector<std::shared_ptr<state::Actor> >()),
-		std::vector<std::shared_ptr<state::King> >(2, std::shared_ptr<state::King>()),
-		std::vector<std::shared_ptr<state::Base> >(2, std::shared_ptr<state::Base>()),
-		std::vector<std::shared_ptr<state::Flag> >(2, std::shared_ptr<state::Flag>()),
-		std::vector<std::vector<std::shared_ptr<state::Tower> > >(2, std::vector<std::shared_ptr<state::Tower> >()),
-		std::vector<std::vector<std::shared_ptr<state::Archer> > >(2, std::vector<std::shared_ptr<state::Archer> >())
-	);
-	return state;
-}
-
 MainDriver::MainDriver(
 	player::PlayerAi p1_code,
 	player::PlayerAi p2_code,
