@@ -139,6 +139,9 @@ public:
 	PathPlannerHelperView GetPathPlannerHelper();
 };
 
+typedef UnitView SwordsmanView;
+typedef EnemyUnitView EnemySwordsmanView;
+
 class EnemyTowerView: public EnemyUnitView {
 private:
 	/**
