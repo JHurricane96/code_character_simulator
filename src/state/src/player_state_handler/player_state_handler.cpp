@@ -59,6 +59,25 @@ std::vector<EnemyUnitView> PlayerStateHandler::GetEnemyScouts() {
 	return scout_views;
 }
 
+std::vector<SwordsmanView> PlayerStateHandler::GetSwordsmen() {
+	auto swordsmen = state->GetSwordsmen(player_id);
+	std::vector<SwordsmanView> swordsman_views;
+	for (auto swordsman : swordsmen) {
+		swordsman_views.push_back(SwordsmanView(swordsman.get()));
+	}
+	return swordsman_views;
+}
+
+std::vector<EnemySwordsmanView>
+PlayerStateHandler::GetEnemySwordsmen() {
+	auto swordsmen = state->GetEnemySwordsmen(player_id);
+	std::vector<EnemySwordsmanView> swordsman_views;
+	for (auto swordsman : swordsmen) {
+		swordsman_views.push_back(EnemySwordsmanView(swordsman.get()));
+	}
+	return swordsman_views;
+}
+
 std::vector<TowerView> PlayerStateHandler::GetTowers() {
 	auto towers = state->GetTowers(player_id);
 	std::vector<TowerView> tower_views;

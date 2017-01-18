@@ -106,6 +106,18 @@ public:
 	 */
 	std::vector<EnemyUnitView> GetEnemyScouts();
 	/**
+	 * Gets a player's Swordsmen
+	 *
+	 * @return     The Swordsmen
+	 */
+	std::vector<SwordsmanView> GetSwordsmen();
+	/**
+	 * Gets an enemy's Swordsmen, taking into account LOS
+	 *
+	 * @return     The enemy Swordsmen
+	 */
+	std::vector<EnemySwordsmanView> GetEnemySwordsmen();
+	/**
 	 * Gets the player's Towers
 	 *
 	 * @return     The player's towers
