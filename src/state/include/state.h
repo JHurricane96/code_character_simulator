@@ -126,7 +126,8 @@ public:
 		std::vector<std::shared_ptr<Flag> > flags,
 		std::vector<std::vector<std::shared_ptr<Tower> > > towers,
 		std::vector<std::vector<std::shared_ptr<Scout> > > scouts,
-		std::vector<std::vector<std::shared_ptr<Archer> > > archers
+		std::vector<std::vector<std::shared_ptr<Archer> > > archers,
+		std::vector<std::vector<std::shared_ptr<Swordsman> > > swordsmen
 	);
 	State(
 		Terrain terrain,
