@@ -84,6 +84,14 @@ void Formation::Update(
 	}
 
 	if (old_no_units != units.size()) {
+		if (!IsValidFormation(formation_maker.get(), units.size())) {
+			for (auto unit : units) {
+				unit->GetPathPlannerHelper()->FinishPath();
+			}
+			Finish();
+			return;
+		}
+
 		auto formation_positions =
 			formation_maker->ReturnFormation(units.size());
 
