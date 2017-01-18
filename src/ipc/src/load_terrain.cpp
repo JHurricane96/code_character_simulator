@@ -9,7 +9,6 @@
 #include "ipc.h"
 #include "terrain/terrain.h"
 #include "terrain/terrain_element.h"
-#include "state.pb.h"
 #include "terrain.pb.h"
 
 using namespace std;
