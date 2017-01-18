@@ -10,11 +10,28 @@
 #include "utilities.h"
 #include "actor/actor.h"
 #include "ipc.h"
-#include "state.pb.h"
+#include "interrupts.pb.h"
 
 using namespace std;
 using namespace state;
 using namespace physics;
+
+int DepopulateInterrupt(IPC::Interrupts& InterruptMessage) {
+
+	switch(InterruptMessage.interrupt_case()) {
+
+		case IPC::Interrupts::kPlayPauseStatus	:
+			return 1;
+		case IPC::Interrupts::kLevelNumber		:
+			return InterruptMessage.level_number();
+		case IPC::Interrupts::kExitStatus		:
+			return 3;
+		case IPC::Interrupts::kRestartStatus	:
+			return 4;
+		case IPC::Interrupts::INTERRUPT_NOT_SET	:
+			return 0;
+	}
+}
 
 namespace ipc {
 
