@@ -12,6 +12,7 @@
 #include <memory>
 #include <cstdint>
 #include "actor/actor.h"
+#include "actor/swordsman.h"
 #include "actor/arrow.h"
 #include "actor/scout.h"
 #include "actor/tower.h"
@@ -79,6 +80,10 @@ private:
 	 * List of archers for each player
 	 */
 	std::vector<std::vector<std::shared_ptr<Archer> > > archers;
+	/**
+	 * List of swordsmen for each player
+	 */
+	std::vector<std::vector<std::shared_ptr<Swordsman> > > swordsmen;
 	/**
 	 * List of scouts for each player
 	 */
@@ -192,6 +197,26 @@ public:
 	 * @return     The enemy's Scouts
 	 */
 	std::vector<std::shared_ptr<Scout> > GetEnemyScouts(
+		PlayerId player_id
+	);
+	/**
+	 * Gets a player's Swordsmen
+	 *
+	 * @param[in]  player_id  Player ID
+	 *
+	 * @return     The Swordsmen
+	 */
+	std::vector<std::shared_ptr<Swordsman> > GetSwordsmen(
+		PlayerId player_id
+	);
+	/**
+	 * Gets an enemy's Swordsmen, taking into account LOS
+	 *
+	 * @param[in]  player_id  Player ID
+	 *
+	 * @return     The enemy Swordsmen
+	 */
+	std::vector<std::shared_ptr<Swordsman> > GetEnemySwordsmen(
 		PlayerId player_id
 	);
 	/**
