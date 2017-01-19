@@ -10,6 +10,61 @@
 
 namespace ipc {
 
+class Interrupts {
+
+private:
+		/**
+		 * Describe simulation status
+		 * True: Play, False: Pause
+		 */
+		bool play;
+
+		/**
+		 * Describe level number
+		 */
+		int level;
+
+		/**
+		 * Describe the exit status
+		 */
+		bool exit;
+
+		/**
+		 * Describe the restart status
+		 */
+		bool restart;
+
+public:
+		/**
+		 * Gets the state of the simulation
+		 *
+		 * @return     play status
+		 */
+		bool GetPlayStatus();
+
+		/**
+		 * Gets the level number of currently loaded level
+		 *
+		 * @return     The level number
+		 */
+		int GetLevelNumber();
+
+		/**
+		 * Gets the exit status of the simulator
+		 *
+		 * @return     The exit status
+		 */
+		bool GetExitStatus();
+
+		/**
+		 * Gets the restart status of the simulator
+		 *
+		 * @return     The restart status
+		 */
+		bool GetRestartStatus();
+
+};
+
 /**
  * Inter process communication methods between renderer and simulator
  * Utilises Protocol Buffers for serializing structured data

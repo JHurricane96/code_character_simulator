@@ -2,7 +2,7 @@
  * @file interrupts.proto
  * Define message format for miscellaneous information passing between
  * renderer and simulator
- * play_pause_status	: Pause the simulator on true
+ * play_status	: Pause the simulator on true
  * level_number			: Pass level number between renderer & simulator
  * exit_status			: Kill the simulator on true
  * restart_status		: Restart the simulator on true
@@ -32,7 +32,7 @@ message Interrupts {
  		 * True: Play, False: Pause
 		 * Default to false
 		 */
-		bool play_pause_status = 1;
+		bool play_status = 1;
 
 		/**
 		 * Describe level number
