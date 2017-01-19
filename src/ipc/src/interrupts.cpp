@@ -20,7 +20,7 @@ int DepopulateInterrupt(IPC::Interrupts& InterruptMessage) {
 
 	switch(InterruptMessage.interrupt_case()) {
 
-		case IPC::Interrupts::kPlayPauseStatus	:
+		case IPC::Interrupts::kPlayStatus	:
 			return 1;
 		case IPC::Interrupts::kLevelNumber		:
 			return InterruptMessage.level_number();
