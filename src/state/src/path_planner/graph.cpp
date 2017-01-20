@@ -55,7 +55,9 @@ void Graph::SetNodeCost(
 	physics::Vector2D adj_node
 ) {
 	int64_t new_weight = g[node.x][node.y] +
-		FindNodeDistance(node, adj_node);
+		terrain_weights[
+			terrain->OffsetToTerrainElement(adj_node).GetTerrainType()
+		];
 	if (new_weight < g[adj_node.x][adj_node.y]) {
 		parents[adj_node.x][adj_node.y] = node;
 		g[adj_node.x][adj_node.y] = new_weight;
