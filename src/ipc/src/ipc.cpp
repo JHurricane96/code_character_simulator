@@ -24,4 +24,20 @@ bool Interrupts::GetRestartStatus() {
 	return restart;
 }
 
+void Interrupts::SetPlayStatus(bool play_status) {
+	play = play_status;
+}
+
+void Interrupts::SetLevelNumber(int current_level) {
+	level = current_level;
+}
+
+void Interrupts::SetExitStatus(bool exit_status) {
+	exit = exit_status;
+}
+
+void Interrupts::SetRestartStatus(bool restart_status) {
+	restart = restart_status;
+}
+
 }
