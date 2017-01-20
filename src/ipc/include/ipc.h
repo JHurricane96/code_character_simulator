@@ -63,6 +63,26 @@ public:
 		 */
 		bool GetRestartStatus();
 
+		/**
+		 * Sets the state of the simulation
+		 */
+		void SetPlayStatus();
+
+		/**
+		 * Sets the level number of currently loaded level
+		 */
+		void SetLevelNumber();
+
+		/**
+		 * Sets the exit status of the simulator
+		 */
+		void SetExitStatus();
+
+		/**
+		 * Sets the restart status of the simulator
+		 */
+		void SetRestartStatus();
+
 };
 
 /**
