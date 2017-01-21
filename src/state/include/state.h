@@ -112,6 +112,14 @@ private:
 	 * Contains terrain and LOS details
 	 */
 	Terrain terrain;
+	/**
+	 * Flag capture scores for each player
+	 */
+	std::vector<int64_t> flag_capture_score;
+	/**
+	 * The number of points each player has lost as a result of base poisoning
+	 */
+	std::vector<int64_t> base_poisoning_penalty;
 public:
 	State();
 	State(
