@@ -425,6 +425,50 @@ void State::FlagDrop(PlayerId player_id, int * success) {
 	SetIfValid(success, 1);
 }
 
+float State::PlanPath(
+	physics::Vector2D start,
+	physics::Vector2D destination,
+	std::vector<int64_t> weights,
+	int * success
+) {
+	auto bounds = terrain.GetSize();
+
+	if (start.x < 0 || start.y < 0 ||
+		start.x >= bounds.x || start.y >= bounds.y ) {
+		SetIfValid(success, 0);
+		return -1;
+	}
+
+	if (destination.x < 0 || destination.y < 0 ||
+		destination.x >= bounds.x || destination.y >= bounds.y ) {
+		SetIfValid(success, -1);
+		return -1;
+	}
+
+	if (weights.size() != 3) {
+		SetIfValid(success, -2);
+		return -1;
+	}
+
+	for (auto weight : weights) {
+		if (weight <= 0) {
+			SetIfValid(success, -3);
+			return -1;
+		}
+	}
+
+	SetIfValid(success, 1);
+
+	std::vector<physics::Vector2D> destinations;
+	return path_planner.PlanPath(
+		start,
+		destination,
+		terrain,
+		destinations,
+		weights
+	);
+}
+
 void State::RespawnUnit(
 	PlayerId player_id,
 	act_id_t actor_id,

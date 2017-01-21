@@ -446,20 +446,32 @@ public:
 	void FlagDrop(PlayerId player_id, int * successs);
 	/**
 	 * Calculates the total weight of the best path between
-	 *             the given points
+	 * the given points
+	 *
+	 * The parameter success's value indicates the outcome of the call
+	 *
+	 * success is:
+	 * - 0 if start is not on the map
+	 * - -1 if destination is not on the map
+	 * - -2 if terrain_weights isn't of size 3
+	 * - -3 if terrain_weights has non-positive weights
+	 * - 1  if successful
 	 *
 	 * @param[in]  start        The start
 	 * @param[in]  destination  The destination
 	 * @param[in]  weights      The weights to be assigned to the
 	 *                          terrain elements <Plain, Mountain, Forest>
+	 * @param      success      If valid pointer, holds success of the
+	 *                          function call
 	 *
 	 * @return     The total weight of the path
 	 */
 	float PlanPath(
 		physics::Vector2D start,
 		physics::Vector2D destination,
-		std::vector<int64_t> weights
-		);
+		std::vector<int64_t> weights,
+		int * success
+	);
 	/**
 	 * Sets an Actor's respawn_location if it's dead and its
 	 * time_to_respawn is 0
