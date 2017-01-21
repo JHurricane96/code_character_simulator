@@ -94,6 +94,10 @@ private:
 	 * Always true for leaders
 	 */
 	bool is_in_formation;
+	/**
+	 * The formation leader's destination
+	 */
+	physics::Vector2D leader_destination;
 public:
 	/**
 	 * Constructor for PathPlannerHelper
@@ -161,6 +165,15 @@ public:
 	 * @param[in]  relative_position  The new relative position
 	 */
 	void UpdateRelativePosition(physics::Vector2D relative_position);
+	/**
+	 * Gets the unit's current destination
+	 *
+	 * If leader, returns leader_destination.
+	 * Else, returns leader's position + relative_position
+	 *
+	 * @return     The destination
+	 */
+	physics::Vector2D GetDestination();
 	/**
 	 * Determines if unit is moving
 	 *
