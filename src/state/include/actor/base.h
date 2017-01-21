@@ -49,6 +49,14 @@ public:
 		int64_t base_poisoning_threshold
 	);
 	/**
+	 * Calculates the base poison penalty
+	 *
+	 * @param[in]  actors  The actors
+	 *
+	 * @return     The base poison penalty
+	 */
+	int64_t GetBasePoisonPenalty(std::vector<std::shared_ptr<Actor> > actors);
+	/**
 	 * Update function to be called every tick
 	 *
 	 * @param[in]  delta_time  The difference in time between the

@@ -41,6 +41,22 @@ Base::Base(
 	base_poisoning_radius(base_poisoning_radius),
 	base_poisoning_threshold(base_poisoning_threshold) {};
 
+int64_t Base::GetBasePoisonPenalty(
+	std::vector<std::shared_ptr<Actor> > actors
+) {
+	int64_t count_actors_near_base = 0;
+	for (auto actor : actors) {
+			if (actor->GetActorType() != ActorType::TOWER &&
+			actor->GetActorType() != ActorType::BASE &&
+			actor->GetActorType() != ActorType::FLAG &&
+			actor->GetPosition().distance(position) <
+			base_poisoning_radius) {
+			count_actors_near_base++;
+		}
+	}
+	int64_t penalty = count_actors_near_base - base_poisoning_threshold;
+	return penalty;
+}
 
 void Base::Update(float delta_time) {};
 
