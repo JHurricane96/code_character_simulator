@@ -174,7 +174,7 @@ public:
 	 * @param[in]  delta_time  The difference in time between the
 	 *                         previous and current Update calls
 	 */
-	void Update(float delta_time);
+	void Update(float delta_time) override;
 	/**
 	 * Merges this, a Tower in a player's state, with the corresponding
 	 * Tower in the main state

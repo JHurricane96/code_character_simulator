@@ -100,7 +100,7 @@ public:
 	/**
 	 * Update function to be called every tick
 	 */
-	void Update(float delta_time);
+	void Update(float delta_time) override;
 };
 
 }
