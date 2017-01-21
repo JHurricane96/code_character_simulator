@@ -23,7 +23,7 @@ include_directories(${CMAKE_CURRENT_BINARY_DIR})
 file(GLOB ProtoFiles "${CMAKE_CURRENT_SOURCE_DIR}/proto/*.proto")
 protobuf_generate_cpp(PROTO_SRCS PROTO_HDRS ${ProtoFiles})
 
-add_executable(ipc src/test.cpp src/load_terrain.cpp src/interrupts.cpp src/store_terrain.cpp src/depopulate.cpp src/populate.cpp ${PROTO_SRCS} ${PROTO_HDRS})
+add_executable(ipc src/test.cpp src/ipc.cpp src/load_terrain.cpp src/interrupts.cpp src/store_terrain.cpp src/depopulate.cpp src/populate.cpp ${PROTO_SRCS} ${PROTO_HDRS})
 set_property(TARGET ipc PROPERTY CXX_STANDARD 11)
 target_link_libraries(ipc ${Protobuf_LIBRARIES} physics state)
 
