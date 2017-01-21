@@ -7,6 +7,7 @@
 #define IPC_IPC_H
 
 #include "state.h"
+#include <atomic>
 
 namespace ipc {
 
@@ -17,24 +18,29 @@ private:
 		 * Describe simulation status
 		 * True: Play, False: Pause
 		 */
-		bool play;
+		std::atomic<bool> play;
 
 		/**
 		 * Describe level number
 		 */
-		int level;
+		std::atomic<int> level;
 
 		/**
 		 * Describe the exit status
 		 */
-		bool exit;
+		std::atomic<bool> exit;
 
 		/**
 		 * Describe the restart status
 		 */
-		bool restart;
+		std::atomic<bool> restart;
 
 public:
+		/**
+		 * Constructor for Interrupts
+		 */
+		Interrupts();
+
 		/**
 		 * Gets the state of the simulation
 		 *
@@ -66,22 +72,22 @@ public:
 		/**
 		 * Sets the state of the simulation
 		 */
-		void SetPlayStatus();
+		void SetPlayStatus(bool play_status);
 
 		/**
 		 * Sets the level number of currently loaded level
 		 */
-		void SetLevelNumber();
+		void SetLevelNumber(int current_level);
 
 		/**
 		 * Sets the exit status of the simulator
 		 */
-		void SetExitStatus();
+		void SetExitStatus(bool exit_status);
 
 		/**
 		 * Sets the restart status of the simulator
 		 */
-		void SetRestartStatus();
+		void SetRestartStatus(bool restart_status);
 
 };
 
@@ -92,7 +98,7 @@ public:
 	int StateTransfer (std::shared_ptr<state::State> StateVar, double i);
 	int StoreTerrain(state::Terrain TerrainVar);
 	state::Terrain LoadTerrain();
-	int IncomingInterrupts();
+	void IncomingInterrupts(Interrupts* InterruptVar);
 	int DepopulateStuff();
 }
 #endif // IPC_IPC_H
