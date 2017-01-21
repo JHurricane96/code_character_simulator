@@ -66,6 +66,18 @@ void PathPlannerHelper::UpdateRelativePosition(
 	this->relative_position = relative_position;
 }
 
+physics::Vector2D PathPlannerHelper::GetDestination() {
+	auto self = this->self.lock();
+	physics::Vector2D to_dest;
+	if (IsLeader()) {
+		to_dest = leader_destination;
+	}
+	else {
+		to_dest = leader->GetPosition() + relative_position;
+	}
+	return to_dest;
+}
+
 bool PathPlannerHelper::IsPathPlanning() {
 	return is_path_planning;
 }
@@ -97,15 +109,11 @@ void PathPlannerHelper::Update(
 	physics::Vector2D destination
 ) {
 	auto self = this->self.lock();
-	physics::Vector2D to_dest;
-	if (IsLeader()) {
-		to_dest = destination - self->GetPosition();
+	this->leader_destination = destination;
+	auto to_dest = GetDestination() - self->GetPosition();
+	if (to_dest.magnitude() != 0) {
+		to_dest = to_dest / to_dest.magnitude();
 	}
-	else {
-		to_dest = leader->GetPosition() + relative_position -
-			self->GetPosition();
-	}
-	to_dest = to_dest / to_dest.magnitude();
 	self->SetVelocity(to_dest * self->GetMaxSpeed() / 2);
 }
 
