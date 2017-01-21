@@ -21,7 +21,9 @@ State::State(
 	terrain(terrain),
 	path_planner(terrain.GetRows()),
 	actors(actors),
-	projectile_handler(actors.size()) {}
+	projectile_handler(actors.size()),
+	flag_capture_score(std::vector<int64_t>(LAST_PLAYER+1, 0)),
+	base_poisoning_penalty(std::vector<int64_t>(LAST_PLAYER+1, 0)) {}
 
 State::State(
 		Terrain terrain,
@@ -44,7 +46,9 @@ State::State(
 	archers(archers),
 	scouts(scouts),
 	swordsmen(swordsmen),
-	flags(flags) {
+	flags(flags),
+	flag_capture_score(std::vector<int64_t>(LAST_PLAYER+1, 0)),
+	base_poisoning_penalty(std::vector<int64_t>(LAST_PLAYER+1, 0)) {
 		for (int64_t i = 0; i <= LAST_PLAYER; i++) {
 			list_act_id_t l;
 			for (auto actor: sorted_actors[i])
@@ -61,6 +65,7 @@ State::State(
 			);
 	}
 
+
 State::State(
 		Terrain terrain,
 		std::vector<std::shared_ptr<Actor> > actors,
@@ -71,10 +76,12 @@ State::State(
 	terrain(terrain),
 	path_planner(terrain.GetRows()),
 	actors(actors),
+	flags(flags),
 	kings(kings),
 	bases(bases),
-	flags(flags),
-	projectile_handler(actors.size()) {}
+	projectile_handler(actors.size()),
+	flag_capture_score(std::vector<int64_t>(LAST_PLAYER+1, 0)),
+	base_poisoning_penalty(std::vector<int64_t>(LAST_PLAYER+1, 0)) {}
 
 std::shared_ptr<Actor> State::GetActorFromId(
 		PlayerId player_id,
