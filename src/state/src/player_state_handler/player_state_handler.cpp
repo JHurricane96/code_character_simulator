@@ -181,6 +181,7 @@ void PlayerStateHandler::MoveUnits(
 	physics::Vector2D destination,
 	std::shared_ptr<FormationMaker> formation_maker,
 	std::vector<int64_t> terrain_weights,
+	std::vector<physics::Vector2D> &path,
 	int * success
 ) {
 	state->MoveUnits(
@@ -189,6 +190,7 @@ void PlayerStateHandler::MoveUnits(
 		destination,
 		formation_maker,
 		terrain_weights,
+		path,
 		success
 	);
 }
@@ -218,12 +220,14 @@ float PlayerStateHandler::PlanPath(
 	physics::Vector2D start,
 	physics::Vector2D destination,
 	std::vector<int64_t> terrain_weights,
+	std::vector<physics::Vector2D> &path,
 	int * success
 ) {
 	return state->PlanPath(
 		start,
 		destination,
 		terrain_weights,
+		path,
 		success
 	);
 }

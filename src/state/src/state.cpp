@@ -114,6 +114,7 @@ void State::MoveUnits(
 	physics::Vector2D destination,
 	std::shared_ptr<FormationMaker> formation_maker,
 	std::vector<int64_t> terrain_weights,
+	std::vector<physics::Vector2D> &path,
 	int * success
 ) {
 	if (unit_ids.empty()) {
@@ -167,13 +168,15 @@ void State::MoveUnits(
 		units.push_back(actors[unit_id]);
 	}
 
+	path.clear();
 	path_planner.MakeFormation(
 		units[0]->GetPlayerId(),
 		units,
 		terrain,
 		formation_maker,
 		destination,
-		terrain_weights
+		terrain_weights,
+		path
 	);
 }
 
@@ -429,6 +432,7 @@ float State::PlanPath(
 	physics::Vector2D start,
 	physics::Vector2D destination,
 	std::vector<int64_t> weights,
+	std::vector<physics::Vector2D> &path,
 	int * success
 ) {
 	auto bounds = terrain.GetSize();
@@ -459,12 +463,12 @@ float State::PlanPath(
 
 	SetIfValid(success, 1);
 
-	std::vector<physics::Vector2D> destinations;
+	path.clear();
 	return path_planner.PlanPath(
 		start,
 		destination,
 		terrain,
-		destinations,
+		path,
 		weights
 	);
 }

@@ -371,6 +371,7 @@ public:
 	 * @param[in]  formation_maker  The formation maker
 	 * @param[in]  terrain_weights  The weights to be assigned to the
 	 *                              terrain elements <Plain, Mountain, Forest>
+	 * @param      path             The path the leader will move along
 	 * @param      success          If valid pointer, holds success
 	 *                              of the function
 	 */
@@ -380,6 +381,7 @@ public:
 		physics::Vector2D destination,
 		std::shared_ptr<FormationMaker> formation_maker,
 		std::vector<int64_t> terrain_weights,
+		std::vector<physics::Vector2D> &path,
 		int * success
 	);
 	/**
@@ -461,6 +463,7 @@ public:
 	 * @param[in]  destination  The destination
 	 * @param[in]  weights      The weights to be assigned to the
 	 *                          terrain elements <Plain, Mountain, Forest>
+	 * @param      path         The path the leader will move along
 	 * @param      success      If valid pointer, holds success of the
 	 *                          function call
 	 *
@@ -470,6 +473,7 @@ public:
 		physics::Vector2D start,
 		physics::Vector2D destination,
 		std::vector<int64_t> weights,
+		std::vector<physics::Vector2D> &path,
 		int * success
 	);
 	/**
