@@ -353,6 +353,8 @@ public:
 	 * - -3 if any unit is dead
 	 * - -4 if destination is not on the map
 	 * - -5 if formation is not valid
+	 * - -6 if terrain_weights isn't of size 3
+	 * - -7 if terrain_weights has non-positive weights
 	 * - 1  if successful
 	 *
 	 * @param[in]  player_id        Units' player's ID
