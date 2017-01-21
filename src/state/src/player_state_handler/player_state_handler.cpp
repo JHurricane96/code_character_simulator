@@ -214,7 +214,7 @@ void PlayerStateHandler::FlagDrop(int * success) {
 	state->FlagDrop(player_id, success);
 }
 
-int64_t PlayerStateHandler::PlanPath(
+float PlayerStateHandler::PlanPath(
 	physics::Vector2D start,
 	physics::Vector2D destination,
 	std::vector<int64_t> terrain_weights
