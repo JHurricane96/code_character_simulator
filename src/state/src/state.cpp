@@ -141,6 +141,18 @@ void State::MoveUnits(
 		return;
 	}
 
+	if (terrain_weights.size() != 3) {
+		SetIfValid(success, -6);
+		return;
+	}
+
+	for (auto weight : terrain_weights) {
+		if (weight <= 0) {
+			SetIfValid(success, -7);
+			return;
+		}
+	}
+
 	SetIfValid(success, 1);
 
 	std::vector<std::shared_ptr<Actor> > units;
