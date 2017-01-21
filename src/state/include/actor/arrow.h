@@ -64,7 +64,7 @@ public:
 	/**
 	 * Update function to be called every tick
 	 */
-	void Update(float delta_time);
+	void Update(float delta_time) override;
 	/**
 	 * Merges this, an Arrow in the player's state, with the
 	 * corresponding Arrow in the main state
