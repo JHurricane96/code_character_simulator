@@ -217,13 +217,15 @@ void PlayerStateHandler::FlagDrop(int * success) {
 float PlayerStateHandler::PlanPath(
 	physics::Vector2D start,
 	physics::Vector2D destination,
-	std::vector<int64_t> terrain_weights
+	std::vector<int64_t> terrain_weights,
+	int * success
 ) {
 	return state->PlanPath(
-			   start,
-			   destination,
-			   terrain_weights
-		   );
+		start,
+		destination,
+		terrain_weights,
+		success
+	);
 }
 
 void PlayerStateHandler::RespawnUnit(
