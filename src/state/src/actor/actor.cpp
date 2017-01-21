@@ -197,6 +197,21 @@ void Actor::SetRespawnLocation(physics::Vector2D respawn_location) {
 	this->respawn_location = respawn_location;
 }
 
+void Actor::CheckBounds(physics::Vector2D bounds) {
+	if (position.x <= 0) {
+		position.x = 0;
+	}
+	if (position.y <= 0) {
+		position.y = 0;
+	}
+	if (position.x >= bounds.x) {
+		position.x = bounds.x - 1;
+	}
+	if (position.y >= bounds.y) {
+		position.y = bounds.y - 1;
+	}
+}
+
 void Actor::MergeWithBuffer(
 	const Actor * actor,
 	std::vector<std::shared_ptr<Actor> > actors

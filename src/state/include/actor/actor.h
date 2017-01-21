@@ -369,6 +369,16 @@ public:
 		std::vector<std::shared_ptr<Actor> > actors
 	);
 	/**
+	 * Checks if this Actor is within the given bounds
+	 *
+	 * The bounds are x from 0 to bounds.x and y from 0 to bounds.y.
+	 * If not within bounds, sets the Actor's position to be within
+	 * them
+	 *
+	 * @param[in]  bounds  The bounds
+	 */
+	void CheckBounds(physics::Vector2D bounds);
+	/**
 	 * Merges this, an Actor in a player's state, with the
 	 * corresponding Actor in the main state
 	 *
