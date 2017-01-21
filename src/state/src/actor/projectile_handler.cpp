@@ -8,8 +8,8 @@ ProjectileHandler::ProjectileHandler() {}
 ProjectileHandler::ProjectileHandler(
 	int64_t next_arrow_id
 	) :
-	next_arrow_id(next_arrow_id),
-	arrows() {}
+	arrows(),
+	next_arrow_id(next_arrow_id) {}
 
 void ProjectileHandler::CreateArrow(
 	PlayerId player_id,

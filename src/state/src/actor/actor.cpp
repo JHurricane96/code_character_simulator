@@ -29,6 +29,7 @@ Actor::Actor(
 	):
 	id(id),
 	player_id(player_id),
+	actor_type(actor_type),
 	state(new ActorIdleState()),
 	attack(attack),
 	hp(hp),
@@ -42,10 +43,9 @@ Actor::Actor(
 	velocity(velocity),
 	attack_target(nullptr),
 	los_radius(los_radius),
-	is_dead(false),
 	attack_speed(attack_speed),
-	actor_type(actor_type),
 	attack_range(attack_range),
+	is_dead(false),
 	path_planner_helper() {}
 
 Actor::Actor(const Actor& other) {

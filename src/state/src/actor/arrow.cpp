@@ -12,8 +12,6 @@ Arrow::Arrow(
 	physics::Vector2D start,
 	Actor* target
 	) :
-	is_done(false),
-	time_to_live(time_to_live),
 	Actor(
 		id,
 		player_id,
@@ -30,8 +28,9 @@ Arrow::Arrow(
 		0,
 		0,
 		size,
-		ActorType::ARROW
-	) {
+		ActorType::ARROW),
+	is_done(false),
+	time_to_live(time_to_live) {
 		attack_target = target;
 	}
 

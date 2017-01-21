@@ -12,7 +12,7 @@ bool LosListEntry::operator<(const LosListEntry& rhs) {
 }
 
 Terrain::Terrain(std::vector<std::vector<TerrainElement> > grid)
-	: grid(grid), row_size(grid.size()) {
+	: row_size(grid.size()), grid(grid) {
 	adjacent_neighbours = std::vector<physics::Vector2D>({
 		physics::Vector2D(0,1),
 		physics::Vector2D(1,0),
