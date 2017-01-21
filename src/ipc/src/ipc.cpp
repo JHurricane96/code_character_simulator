@@ -2,26 +2,26 @@
 
 namespace ipc {
 
-Interrupts::Interrupts(bool play, int level, bool exit, bool restart) :
+Interrupts::Interrupts() :
 	play(true),
 	level(1),
 	exit(false),
 	restart(false) {}
 
 bool Interrupts::GetPlayStatus() {
-	return play;
+	return play.load();
 }
 
 int Interrupts::GetLevelNumber() {
-	return level;
+	return level.load();
 }
 
 bool Interrupts::GetExitStatus() {
-	return exit;
+	return exit.load();
 }
 
 bool Interrupts::GetRestartStatus() {
-	return restart;
+	return restart.load();
 }
 
 void Interrupts::SetPlayStatus(bool play_status) {

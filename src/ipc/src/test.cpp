@@ -229,6 +229,20 @@ int main(int argc, char const* argv[])
 		//auto arrows = S->GetProjectiles();
 		//std::thread RendererInput(ipc::IncomingInterrupts);
 		Terrain ter = ipc::LoadTerrain();
+		Interrupts* Lol(new Interrupts);
+		while(true)
+		{
+			ipc::IncomingInterrupts(Lol);
+			bool p = Lol->GetPlayStatus();
+			cout<<p<<endl;
+			int l = Lol->GetLevelNumber();
+			cout<<l<<endl;
+			bool e = Lol->GetExitStatus();
+			cout<<e<<endl;
+			bool r = Lol->GetRestartStatus();
+			cout<<r<<endl;
+
+		}
 		/*int64_t ter_size = ter.GetRows();
 
 		for (double ii = 0; ii < ter_size; ii++) {
@@ -262,13 +276,13 @@ int main(int argc, char const* argv[])
 		}*/
 		//ipc::StoreTerrain(TT);
 		double i=0.0001;
-		while(true){
+		//while(true){
 			if( ipc::StateTransfer(S, i) < 0 ) {
 			return -1;
 			}
-			std::cout.flush();
-			i+=0.0001;
-		}
+			//std::cout.flush();
+			//i+=0.0001;
+		//}
 
 		//RendererInput.join();
 

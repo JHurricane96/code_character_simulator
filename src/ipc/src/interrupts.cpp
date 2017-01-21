@@ -13,24 +13,27 @@
 #include "interrupts.pb.h"
 
 using namespace std;
-using namespace state;
-using namespace physics;
 
-int DepopulateInterrupt(IPC::Interrupts& InterruptMessage) {
+void DepopulateInterrupt(IPC::Interrupts& InterruptMessage, ipc::Interrupts* InterruptVar) {
 
 	switch(InterruptMessage.interrupt_case()) {
 
-		case IPC::Interrupts::kPlayStatus	:
-			return 1;
+		case IPC::Interrupts::kPlayStatus		:
+			InterruptVar->SetPlayStatus(InterruptMessage.play_status());
+			break;
 		case IPC::Interrupts::kLevelNumber		:
-			return InterruptMessage.level_number();
+			InterruptVar->SetLevelNumber(InterruptMessage.level_number());
+			break;
 		case IPC::Interrupts::kExitStatus		:
-			return 3;
+			InterruptVar->SetExitStatus(InterruptMessage.exit_status());
+			break;
 		case IPC::Interrupts::kRestartStatus	:
-			return 4;
+			InterruptVar->SetRestartStatus(InterruptMessage.restart_status());
+			break;
 		case IPC::Interrupts::INTERRUPT_NOT_SET	:
-			return 0;
+			break;
 	}
+	return;
 }
 
 namespace ipc {
@@ -41,7 +44,7 @@ namespace ipc {
 	 * @return     Exit status
 	 */
 
-	int IncomingInterrupts() {
+	void IncomingInterrupts(ipc::Interrupts* InterruptVar) {
 
 		/**
 		 * Verify that the version of the library that we linked against is
@@ -53,12 +56,8 @@ namespace ipc {
 
 		if (!InterruptMessage.ParseFromIstream(&std::cin)) {
 			cerr << "Failed to retrieve interrupt" << endl;
-			return -1;
 		}
 
-		if (DepopulateInterrupt(InterruptMessage) < 0) {
-			cerr << "Failed to depopulate interrupt" << endl;
-			return -1;
-		}
+		DepopulateInterrupt(InterruptMessage, InterruptVar);
 	}
 }
