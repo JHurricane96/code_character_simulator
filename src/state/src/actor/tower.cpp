@@ -25,14 +25,6 @@ Tower::Tower(
 	int64_t arrow_ttl,
 	int64_t arrow_size
 	) :
-	contention_radius(contention_radius),
-	ready_to_attack(false),
-	arrow_speed(arrow_speed),
-	arrow_ttl(arrow_ttl),
-	arrow_size(arrow_size),
-	tower_owner(TowerOwner::UNOWNED),
-	max_contention_score(max_contention_score),
-	contention_score(0),
 	Actor(
 		id,
 		player_id,
@@ -49,8 +41,15 @@ Tower::Tower(
 		los_radius,
 		attack_speed,
 		range,
-		ActorType::TOWER
-	) {}
+		ActorType::TOWER),
+	tower_owner(TowerOwner::UNOWNED),
+	contention_radius(contention_radius),
+	max_contention_score(max_contention_score),
+	contention_score(0),
+	arrow_speed(arrow_speed),
+	arrow_ttl(arrow_ttl),
+	arrow_size(arrow_size),
+	ready_to_attack(false) {}
 
 bool Tower::Contend(
 	float delta_time,

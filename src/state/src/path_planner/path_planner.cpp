@@ -3,9 +3,9 @@
 namespace state {
 
 PathPlanner::PathPlanner(int64_t map_size)
-	: graph(map_size),
+	: formations(std::vector<std::vector<Formation> >(2)),
 	  next_formation_id(std::vector<int64_t>(LAST_PLAYER + 1, 1)),
-      formations(std::vector<std::vector<Formation> >(2)) {}
+	  graph(map_size) {}
 
 void PathPlanner::MakeFormation(
 	PlayerId player_id,

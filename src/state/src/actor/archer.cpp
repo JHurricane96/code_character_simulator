@@ -23,10 +23,6 @@ Archer::Archer(
 	int64_t arrow_ttl,
 	int64_t arrow_size
 	) :
-	ready_to_attack(false),
-	arrow_speed(arrow_speed),
-	arrow_ttl(arrow_ttl),
-	arrow_size(arrow_size),
 	Actor(
 		id,
 		player_id,
@@ -43,8 +39,11 @@ Archer::Archer(
 		los_radius,
 		attack_speed,
 		range,
-		ActorType::ARCHER
-	) {}
+		ActorType::ARCHER),
+	arrow_speed(arrow_speed),
+	arrow_ttl(arrow_ttl),
+	arrow_size(arrow_size),
+	ready_to_attack(false) {}
 
 void Archer::Attack() {
 	ready_to_attack = true;

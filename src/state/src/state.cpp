@@ -10,18 +10,18 @@ void SetIfValid(int * a, int value) {
 }
 
 State::State()
-	: terrain(1)
-	, path_planner(1)
-	, projectile_handler(actors.size()) {}
+	: projectile_handler(actors.size()),
+	path_planner(1),
+	terrain(1) {}
 
 State::State(
 		Terrain terrain,
 		std::vector<std::shared_ptr<Actor> > actors
 	):
-	terrain(terrain),
-	path_planner(terrain.GetRows()),
 	actors(actors),
 	projectile_handler(actors.size()),
+	path_planner(terrain.GetRows()),
+	terrain(terrain),
 	flag_capture_score(std::vector<int64_t>(LAST_PLAYER+1, 0)),
 	base_poisoning_penalty(std::vector<int64_t>(LAST_PLAYER+1, 0)) {}
 
@@ -36,17 +36,17 @@ State::State(
 		std::vector<std::vector<std::shared_ptr<Archer> > > archers,
 		std::vector<std::vector<std::shared_ptr<Swordsman> > > swordsmen
 	):
-	terrain(terrain),
 	sorted_actors(sorted_actors),
-	path_planner(terrain.GetRows()),
+	towers(towers),
+	archers(archers),
+	swordsmen(swordsmen),
+	scouts(scouts),
+	flags(flags),
 	kings(kings),
 	bases(bases),
-	towers(towers),
 	projectile_handler(),
-	archers(archers),
-	scouts(scouts),
-	swordsmen(swordsmen),
-	flags(flags),
+	path_planner(terrain.GetRows()),
+	terrain(terrain),
 	flag_capture_score(std::vector<int64_t>(LAST_PLAYER+1, 0)),
 	base_poisoning_penalty(std::vector<int64_t>(LAST_PLAYER+1, 0)) {
 		for (int64_t i = 0; i <= LAST_PLAYER; i++) {
@@ -73,13 +73,13 @@ State::State(
 		std::vector<std::shared_ptr<Base> > bases,
 		std::vector<std::shared_ptr<Flag> > flags
 	):
-	terrain(terrain),
-	path_planner(terrain.GetRows()),
 	actors(actors),
 	flags(flags),
 	kings(kings),
 	bases(bases),
 	projectile_handler(actors.size()),
+	path_planner(terrain.GetRows()),
+	terrain(terrain),
 	flag_capture_score(std::vector<int64_t>(LAST_PLAYER+1, 0)),
 	base_poisoning_penalty(std::vector<int64_t>(LAST_PLAYER+1, 0)) {}
 
@@ -141,7 +141,7 @@ void State::MoveUnits(
 		destination.x >= bounds.x || destination.y >= bounds.y ) {
 		SetIfValid(success, -4);
 		return;
-	}
+		}
 
 	if (!IsValidFormation(formation_maker.get(), unit_ids.size())) {
 		SetIfValid(success, -5);
