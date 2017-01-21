@@ -23,6 +23,12 @@ std::unique_ptr<ActorState> ActorPathPlanningState::Update(
 		return std::unique_ptr<ActorState>(new ActorIdleState());
 	}
 
+	auto to_dest = actor->GetPathPlannerHelper()->GetDestination() -
+		actor->GetPosition();
+	if (to_dest.magnitude() <
+		(actor->GetVelocity() * delta_time).magnitude()) {
+		actor->SetVelocity(to_dest / delta_time);
+	}
 	return nullptr;
 }
 
