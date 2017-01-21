@@ -32,7 +32,7 @@ void PathPlanner::MakeFormation(
 	));
 }
 
-int64_t PathPlanner::PlanPath(
+float PathPlanner::PlanPath(
 	physics::Vector2D start_point,
 	physics::Vector2D destination,
 	Terrain &terrain,

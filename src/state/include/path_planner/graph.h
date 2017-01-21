@@ -73,7 +73,7 @@ struct OpenListEntry {
 	 * g = distance from source
 	 * h = estimated distance to destination
 	 */
-	int64_t weight;
+	float weight;
 	/**
 	 * The time that this entry was added to the queue
 	 * 
@@ -124,7 +124,7 @@ private:
 	/**
 	 * Distances of nodes from the source
 	 */
-	matrix<int64_t> g;
+	matrix<float> g;
 	/**
 	 * Parents of nodes
 	 */
@@ -161,7 +161,7 @@ private:
 	 * @param[in]  node_a  A node
 	 * @param[in]  node_b  Another node
 	 */
-	int64_t FindNodeDistance(
+	float FindNodeDistance(
 		physics::Vector2D node_a,
 		physics::Vector2D node_b
 	);
@@ -223,7 +223,7 @@ public:
 	 *
 	 * @return     Weight of the path
 	 */
-	int64_t FindPath(
+	float FindPath(
 		physics::Vector2D start_point,
 		physics::Vector2D destination,
 		Terrain &terrain,

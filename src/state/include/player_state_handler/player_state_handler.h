@@ -355,7 +355,7 @@ public:
 	 *
 	 * @return     The total weight of the path
 	 */
-	int64_t PlanPath(
+	float PlanPath(
 		physics::Vector2D start,
 		physics::Vector2D destination,
 		std::vector<int64_t> terrain_weights

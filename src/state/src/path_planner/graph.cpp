@@ -17,7 +17,7 @@ bool OpenListEntry::operator<(const OpenListEntry& rhs) const {
 Graph::Graph(int64_t map_size) : map_size(map_size) {
 	in_open_list = init_matrix(false, map_size);
 	in_closed_list = init_matrix(false, map_size);
-	g = init_matrix((int64_t)-1, map_size);
+	g = init_matrix((float)-1.0, map_size);
 	parents = init_matrix(physics::Vector2D(-1, -1), map_size);
 	last_added = init_matrix((int64_t)-1, map_size);
 }
@@ -29,7 +29,8 @@ void Graph::InitGraph(
 	for (int64_t i = 0; i < map_size; ++i) {
 		for (int64_t j = 0; j < map_size; ++j) {
 			in_open_list[i][j] = in_closed_list[i][j] = false;
-			g[i][j] = last_added[i][j] = -1;
+			g[i][j] = -1.0;
+			last_added[i][j] = -1;
 			parents[i][j] = physics::Vector2D(-1, -1);
 		}
 	}
@@ -39,12 +40,12 @@ void Graph::InitGraph(
 	this->terrain_weights = terrain_weights;
 }
 
-int64_t Graph::FindNodeDistance(
+float Graph::FindNodeDistance(
 	physics::Vector2D node_a,
 	physics::Vector2D node_b
 ) {
-	return (int) (node_a.distance(node_b) *
-		* std::min_element(
+	return (node_a.distance(node_b) *
+		*std::min_element(
 			terrain_weights.begin(),
 			terrain_weights.end()
 		));
@@ -54,7 +55,7 @@ void Graph::SetNodeCost(
 	physics::Vector2D node,
 	physics::Vector2D adj_node
 ) {
-	int64_t new_weight = g[node.x][node.y] +
+	float new_weight = g[node.x][node.y] +
 		terrain_weights[
 			terrain->OffsetToTerrainElement(adj_node).GetTerrainType()
 		];
@@ -69,7 +70,7 @@ void Graph::UpdateNode(
 	physics::Vector2D adj_node,
 	physics::Vector2D destination
 ){
-	int64_t g_old = g[adj_node.x][adj_node.y];
+	float g_old = g[adj_node.x][adj_node.y];
 	SetNodeCost(node, adj_node);
 	if (g[adj_node.x][adj_node.y] < g_old) {
 		OpenListEntry new_entry(
@@ -83,7 +84,7 @@ void Graph::UpdateNode(
 	}
 }
 
-int64_t Graph::FindPath(
+float Graph::FindPath(
 	physics::Vector2D start_point,
 	physics::Vector2D destination,
 	Terrain &terrain,

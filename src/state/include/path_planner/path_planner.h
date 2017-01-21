@@ -91,7 +91,7 @@ public:
 	 *
 	 * @return     The weight of the path
 	 */
-	int64_t PlanPath(
+	float PlanPath(
 		physics::Vector2D start_point,
 		physics::Vector2D destination,
 		Terrain &terrain,
