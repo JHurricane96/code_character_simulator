@@ -544,6 +544,7 @@ void State::Update(float delta_time) {
 			}
 		}
 		actor->Update(delta_time);
+		actor->CheckBounds(terrain.GetSize());
 	}
 
 	terrain.Update(sorted_actors);
