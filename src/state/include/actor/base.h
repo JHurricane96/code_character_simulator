@@ -16,6 +16,19 @@ namespace state {
  * present and troops spawn
  */
 class STATE_EXPORT Base: public Actor {
+private:
+	/**
+	 * The radius around the base for which base poisoning is applicable
+	 *
+	 * Base poisoning is when players are docked points for camping near their
+	 * base. Done to discourage negative tactics.
+	 */
+	int64_t base_poisoning_radius;
+	/**
+	 * The maximum number of troops that can be positioned near the base for
+	 * which base poisoning doesn't apply
+	 */
+	int64_t base_poisoning_threshold;
 public:
 	Base(
 		act_id_t id,
@@ -31,7 +44,9 @@ public:
 		physics::Vector2D position,
 		physics::Vector2D velocity,
 		int64_t los_radius,
-		int64_t attack_speed
+		int64_t attack_speed,
+		int64_t base_poisoning_radius,
+		int64_t base_poisoning_threshold
 	);
 	/**
 	 * Update function to be called every tick

@@ -16,7 +16,9 @@ Base::Base(
 		physics::Vector2D position,
 		physics::Vector2D velocity,
 		int64_t los_radius,
-		int64_t attack_speed
+		int64_t attack_speed,
+		int64_t base_poisoning_radius,
+		int64_t base_poisoning_threshold
 	):
 	Actor(
 		id,
@@ -35,7 +37,10 @@ Base::Base(
 		attack_speed,
 		0,
 		ActorType::BASE
-	) {};
+	),
+	base_poisoning_radius(base_poisoning_radius),
+	base_poisoning_threshold(base_poisoning_threshold) {};
+
 
 void Base::Update(float delta_time) {};
 
