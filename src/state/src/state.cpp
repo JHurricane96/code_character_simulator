@@ -554,6 +554,10 @@ void State::Update(float delta_time) {
 		actor->CheckBounds(terrain.GetSize());
 	}
 
+	for (int64_t i = 0; i <= LAST_PLAYER; i++) {
+		base_poisoning_penalty[i] += bases[i]->GetBasePoisonPenalty(sorted_actors[i]);
+	}
+
 	terrain.Update(sorted_actors);
 
 	projectile_handler.Update(delta_time, towers, archers, &terrain);
