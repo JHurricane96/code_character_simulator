@@ -94,6 +94,8 @@ int64_t Graph::FindPath(
 		.OffsetToTerrainElement(physics::Vector2D(0, 0))
 		.GetSize();
 	start_point = start_point / terrain_elt_size;
+	start_point.x = floor(start_point.x);
+	start_point.y = floor(start_point.y);
 	next_points.push_back(destination);
 	destination = destination / terrain_elt_size;
 	InitGraph(terrain, terrain_weights);
