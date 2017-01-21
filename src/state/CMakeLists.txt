@@ -42,7 +42,8 @@ target_link_libraries(state physics)
 set_property(TARGET state PROPERTY CXX_STANDARD 11)
 generate_export_header(state EXPORT_FILE_NAME ${EXPORTS_FILE_PATH})
 target_include_directories(state PUBLIC
-	$<BUILD_INTERFACE:;${EXPORTS_DIR} ${INCLUDE_PATH}>
+	$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/${INCLUDE_PATH}>
+	$<BUILD_INTERFACE:${EXPORTS_DIR}>
 	$<INSTALL_INTERFACE:$<INSTALL_PREFIX>/include>
 )
 #export(TARGETS state FILE state_config.cmake)

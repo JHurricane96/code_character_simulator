@@ -13,7 +13,8 @@ set(INCLUDE_INSTALL_PATH ${CMAKE_INSTALL_PREFIX}/include)
 add_library(physics SHARED ${SOURCE_FILES})
 generate_export_header(physics EXPORT_FILE_NAME ${EXPORTS_FILE_PATH})
 target_include_directories(physics PUBLIC
-	$<BUILD_INTERFACE:;${EXPORTS_DIR} ${INCLUDE_PATH}>
+	$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/${INCLUDE_PATH}>
+	$<BUILD_INTERFACE:${EXPORTS_DIR}>
 	$<INSTALL_INTERFACE:$<INSTALL_PREFIX>/include>
 )
 #export(TARGETS physics FILE physics_config.cmake)

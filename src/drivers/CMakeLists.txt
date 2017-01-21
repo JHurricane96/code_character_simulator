@@ -24,7 +24,8 @@ target_link_libraries(drivers state physics player Threads::Threads)
 set_property(TARGET drivers PROPERTY CXX_STANDARD 11)
 generate_export_header(drivers EXPORT_FILE_NAME ${EXPORTS_FILE_PATH})
 target_include_directories(drivers PUBLIC
-	$<BUILD_INTERFACE:;${EXPORTS_DIR} ${INCLUDE_PATH}>
+	$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/${INCLUDE_PATH}>
+	$<BUILD_INTERFACE:${EXPORTS_DIR}>
 	$<INSTALL_INTERFACE:$<INSTALL_PREFIX>/include>
 )
 #export(TARGETS drivers FILE drivers_config.cmake)

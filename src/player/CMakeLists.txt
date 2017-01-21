@@ -20,7 +20,8 @@ target_link_libraries(player state physics)
 set_property(TARGET player PROPERTY CXX_STANDARD 11)
 generate_export_header(player EXPORT_FILE_NAME ${EXPORTS_FILE_PATH})
 target_include_directories(player PUBLIC
-	$<BUILD_INTERFACE:;${EXPORTS_DIR} ${INCLUDE_PATH}>
+	$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/${INCLUDE_PATH}>
+	$<BUILD_INTERFACE:${EXPORTS_DIR}>
 	$<INSTALL_INTERFACE:$<INSTALL_PREFIX>/include>
 )
 #export(TARGETS player FILE player_config.cmake)
