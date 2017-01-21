@@ -13,14 +13,14 @@ void PathPlanner::MakeFormation(
 	Terrain &terrain,
 	std::shared_ptr<FormationMaker> formation_maker,
 	physics::Vector2D destination,
-	std::vector<int64_t> terrain_weights
+	std::vector<int64_t> terrain_weights,
+	std::vector<physics::Vector2D> &path
 ) {
-	std::vector<physics::Vector2D> destinations;
 	PlanPath(
 		units[0]->GetPosition(),
 		destination,
 		terrain,
-		destinations,
+		path,
 		terrain_weights
 	);
 	formations[player_id].push_back(Formation(
@@ -28,7 +28,7 @@ void PathPlanner::MakeFormation(
 		next_formation_id[player_id]++,
 		units,
 		formation_maker,
-		destinations
+		path
 	));
 }
 

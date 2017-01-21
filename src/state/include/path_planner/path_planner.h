@@ -69,6 +69,7 @@ public:
 	 * @param[in]  destination      The destination
 	 * @param[in]  terrain_weights  Weights determining terrain
 	 *                              preference while path finding
+	 * @param      path             The path the leader will move along
 	 */
 	void MakeFormation(
 		PlayerId player_id,
@@ -76,7 +77,8 @@ public:
 		Terrain &terrain,
 		std::shared_ptr<FormationMaker> formation_maker,
 		physics::Vector2D destination,
-		std::vector<int64_t> terrain_weights
+		std::vector<int64_t> terrain_weights,
+		std::vector<physics::Vector2D> &path
 	);
 	/**
 	 * Plans a path
