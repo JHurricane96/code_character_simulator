@@ -104,7 +104,7 @@ void Formation::Update(
 	for (auto unit : units) {
 		int64_t unit_size = unit->GetSize();
 		if (unit->GetPosition().distance(destinations.back()) <=
-			unit_size * 3) {
+			unit_size) {
 			destinations.pop_back();
 			break;
 		}
