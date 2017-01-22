@@ -46,7 +46,7 @@ public:
 	 * ActorPathPlanningState.
 	 * Else if Actor's attack_target is dead, returns ActorIdleState.
 	 * Else if the Actor is too far from the target, returns
-	 * ActorPursuitState.
+	 * ActorIdleState.
 	 * Else returns nullptr.
 	 * 
 	 * Damages Actor's attack_target when time_to_attack falls below
@@ -66,6 +66,8 @@ public:
 	) override;
 	/**
 	 * Called right before the Actor switches to another state
+	 *
+	 * Calls Actor's StopAttack method
 	 *
 	 * @param      actor  The Actor
 	 */

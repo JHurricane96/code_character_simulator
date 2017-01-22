@@ -7,7 +7,6 @@ set(SOURCE_FILES
 	src/actor/states/actor_idle_state.cpp
 	src/actor/states/actor_dead_state.cpp
 	src/actor/states/actor_path_planning_state.cpp
-	src/actor/states/actor_pursuit_state.cpp
 	src/actor/states/actor_attack_state.cpp
 	src/actor/swordsman.cpp
 	src/actor/base.cpp
