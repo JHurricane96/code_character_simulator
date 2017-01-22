@@ -11,6 +11,7 @@
 #include "actor/actor.h"
 #include "ipc.h"
 #include "state.pb.h"
+#include "interrupts.pb.h"
 
 using namespace std;
 using namespace state;
@@ -225,6 +226,12 @@ int PopulateLOS(shared_ptr<state::State> StateVar, IPC::State* StateMessage) {
 	return 0;
 }
 
+int PopulateInterrupts(ipc::Interrupts* InterruptVar, IPC::Interrupts* InterruptMessage) {
+
+	InterruptMessage->set_play_status(InterruptVar->GetPlayStatus());
+	return 0;
+}
+
 namespace ipc {
 
 	/**
@@ -266,5 +273,30 @@ namespace ipc {
 		}
 
 		return 0;
+	}
+
+	void InterruptTransfer(ipc::Interrupts* InterruptVar) {
+
+		/**
+		 * Verify that the version of the library that we linked against is
+		 * compatible with the version of the headers we compiled against
+		 */
+		GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+		fstream output("interrupt.txt", ios::out | ios::trunc | ios::binary);
+
+		IPC::Interrupts InterruptMessage;
+
+		if (PopulateInterrupts(InterruptVar, &InterruptMessage) < 0) {
+			cerr << "Failed to load interrupts" << endl;
+			return;
+		}
+
+		if (!InterruptMessage.SerializeToOstream(&output)) {
+			cerr << "Failed to transfer interrupt message" << endl;
+			return;
+		}
+
+		return;
 	}
 }
