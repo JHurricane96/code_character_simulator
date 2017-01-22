@@ -81,6 +81,27 @@ public:
 		std::vector<physics::Vector2D> &path
 	);
 	/**
+	 * Makes a formation
+	 *
+	 * The formation is a list of actors that need to move around the
+	 * map in formation. Called when a bunch of units needs to be moved
+	 *
+	 * The path is given by the player, no path planning is done in
+	 * this method
+	 *
+	 * @param[in]  player_id        The player identifier
+	 * @param      units            The units
+	 * @param[in]  formation_maker  The formation maker
+	 * @param[in]  destinations     The path along which the units
+	 *                              should move
+	 */
+	void MakeFormation(
+		PlayerId player_id,
+		std::vector<std::shared_ptr<Actor> > &units,
+		std::shared_ptr<FormationMaker> formation_maker,
+		std::vector<physics::Vector2D> destinations
+	);
+	/**
 	 * Plans a path
 	 *
 	 * @param[in]  start_point      The start point

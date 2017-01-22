@@ -195,6 +195,21 @@ void PlayerStateHandler::MoveUnits(
 	);
 }
 
+void PlayerStateHandler::MoveUnits(
+	list_act_id_t unit_ids,
+	std::vector<physics::Vector2D> destinations,
+	std::shared_ptr<FormationMaker> formation_maker,
+	int * success
+) {
+	state->MoveUnits(
+		player_id,
+		unit_ids,
+		destinations,
+		formation_maker,
+		success
+	);
+}
+
 void PlayerStateHandler::AttackUnit(
 	list_act_id_t attacker_ids,
 	act_id_t attack_target_id,

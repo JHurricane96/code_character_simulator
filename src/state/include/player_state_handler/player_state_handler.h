@@ -290,6 +290,37 @@ public:
 		int * success
 	);
 	/**
+	 * Sets units into motion
+	 *
+	 * The path is given by the player, no path planning is done in
+	 * this method
+	 *
+	 * The parameter success's value indicates the outcome of the call
+	 *
+	 * success is:
+	 *
+	 * - 0 if unit_ids is empty
+	 * - -1 if any unit's Actor ID is invalid
+	 * - -2 if any unit doesn't belong to the player who's attacking
+	 * - -3 if any unit is dead
+	 * - -4 if destinations is empty
+	 * - -5 if any member of destinations is not on the map
+	 * - -6 if formation is not valid
+	 * - 1 if successful
+	 *
+	 * @param[in]  unit_ids         The unit identifiers
+	 * @param[in]  destinations     The path along which the units
+	 *                              should move
+	 * @param[in]  formation_maker  The formation maker
+	 * @param      success          The success
+	 */
+	void MoveUnits(
+		list_act_id_t unit_ids,
+		std::vector<physics::Vector2D> destinations,
+		std::shared_ptr<FormationMaker> formation_maker,
+		int * success
+	);
+	/**
 	 * Gives a player's units an attack target
 	 *
 	 * The parameter success's value indicates the outcome of the call

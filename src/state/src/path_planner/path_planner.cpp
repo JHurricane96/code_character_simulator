@@ -32,6 +32,21 @@ void PathPlanner::MakeFormation(
 	));
 }
 
+void PathPlanner::MakeFormation(
+	PlayerId player_id,
+	std::vector<std::shared_ptr<Actor> > &units,
+	std::shared_ptr<FormationMaker> formation_maker,
+	std::vector<physics::Vector2D> destinations
+) {
+	formations[player_id].push_back(Formation(
+		player_id,
+		next_formation_id[player_id]++,
+		units,
+		formation_maker,
+		destinations
+	));
+}
+
 float PathPlanner::PlanPath(
 	physics::Vector2D start_point,
 	physics::Vector2D destination,
