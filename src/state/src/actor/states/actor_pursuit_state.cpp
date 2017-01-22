@@ -39,7 +39,7 @@ std::unique_ptr<ActorState> ActorPursuitState::Update(
 
 	auto to_target = target->GetPosition() - actor->GetPosition();
 	actor->SetVelocity(
-		to_target * actor->GetMaxSpeed() / to_target.magnitude()
+		to_target * actor->GetSpeed() / to_target.magnitude()
 	);
 	return nullptr;
 }

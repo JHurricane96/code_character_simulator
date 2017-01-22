@@ -117,7 +117,7 @@ void PathPlannerHelper::Update(
 	if (to_dest.magnitude() != 0) {
 		to_dest = to_dest / to_dest.magnitude();
 	}
-	self->SetVelocity(to_dest * self->GetMaxSpeed() / 2);
+	self->SetVelocity(to_dest * self->GetSpeed() / 2);
 }
 
 void PathPlannerHelper::MergeWithBuffer(
