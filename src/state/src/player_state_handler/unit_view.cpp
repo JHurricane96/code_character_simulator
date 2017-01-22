@@ -38,6 +38,10 @@ int64_t UnitView::GetHp() {
 	return unit->GetHp();
 }
 
+int64_t UnitView::GetMaxHp() {
+	return unit->GetMaxHp();
+}
+
 int64_t UnitView::GetMaxSpeed() {
 	return unit->GetMaxSpeed();
 }

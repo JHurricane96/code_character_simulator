@@ -102,6 +102,12 @@ public:
 	 */
 	int64_t GetHp();
 	/**
+	 * Gets the maximum health of the actor
+	 *
+	 * @return     The maximum health
+	 */
+	int64_t GetMaxHp();
+	/**
 	 * Gets the maximum speed possible for the actor
 	 *
 	 * @return     The maximum speed
