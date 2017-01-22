@@ -180,6 +180,67 @@ void State::MoveUnits(
 	);
 }
 
+void State::MoveUnits(
+	PlayerId player_id,
+	list_act_id_t unit_ids,
+	std::vector<physics::Vector2D> destinations,
+	std::shared_ptr<FormationMaker> formation_maker,
+	int * success
+) {
+	if (unit_ids.empty()) {
+		SetIfValid(success, 0);
+		return;
+	}
+
+	for (auto act_id : unit_ids) {
+		if (act_id >= actors.size() || act_id < 0) {
+			SetIfValid(success, -1);
+			return;
+		}
+		if (actors[act_id]->GetPlayerId() != player_id) {
+			SetIfValid(success, -2);
+			return;
+		}
+		if (actors[act_id]->IsDead()) {
+			SetIfValid(success, -3);
+			return;
+		}
+	}
+
+	if (destinations.empty()) {
+		SetIfValid(success, -4);
+		return;
+	}
+
+	auto bounds = terrain.GetSize();
+	for (auto destination : destinations) {
+		if (destination.x < 0 || destination.y < 0 ||
+			destination.x >= bounds.x || destination.y >= bounds.y ) {
+			SetIfValid(success, -5);
+			return;
+		}
+	}
+
+	if (!IsValidFormation(formation_maker.get(), unit_ids.size())) {
+		SetIfValid(success, -6);
+		return;
+	}
+
+	SetIfValid(success, 1);
+
+	std::vector<std::shared_ptr<Actor> > units;
+	for (auto unit_id : unit_ids) {
+		units.push_back(actors[unit_id]);
+	}
+
+	path_planner.MakeFormation(
+		units[0]->GetPlayerId(),
+		units,
+		formation_maker,
+		destinations
+	);
+}
+
 list_act_id_t State::GetPlayerUnitIds(PlayerId player_id) {
 	return player_unit_ids[(int)player_id];
 }
