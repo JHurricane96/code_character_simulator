@@ -230,19 +230,30 @@ int main(int argc, char const* argv[])
 		//std::thread RendererInput(ipc::IncomingInterrupts);
 		Terrain ter = ipc::LoadTerrain();
 		Interrupts* Lol(new Interrupts);
-		while(true)
-		{
+		//Lol->SetPlayStatus(false);
+		//InterruptTransfer(Lol);
+		//while(true)
+		//{
 			ipc::IncomingInterrupts(Lol);
 			bool p = Lol->GetPlayStatus();
-			cout<<p<<endl;
-			int l = Lol->GetLevelNumber();
-			cout<<l<<endl;
+			if(p==false)
+				cout<<"false"<<endl;
+			else
+				cout<<"true"<<endl;
+			int level = Lol->GetLevelNumber();
+			cout<<level<<endl;
 			bool e = Lol->GetExitStatus();
-			cout<<e<<endl;
+			if(e==false)
+				cout<<"false"<<endl;
+			else
+				cout<<"true"<<endl;
 			bool r = Lol->GetRestartStatus();
-			cout<<r<<endl;
+			if(r==false)
+				cout<<"false"<<endl;
+			else
+				cout<<"true"<<endl;
 
-		}
+		//}*/
 		/*int64_t ter_size = ter.GetRows();
 
 		for (double ii = 0; ii < ter_size; ii++) {
@@ -277,9 +288,9 @@ int main(int argc, char const* argv[])
 		//ipc::StoreTerrain(TT);
 		double i=0.0001;
 		//while(true){
-			if( ipc::StateTransfer(S, i) < 0 ) {
+			/*if( ipc::StateTransfer(S, i) < 0 ) {
 			return -1;
-			}
+			}*/
 			//std::cout.flush();
 			//i+=0.0001;
 		//}

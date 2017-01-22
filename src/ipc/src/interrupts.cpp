@@ -52,6 +52,8 @@ namespace ipc {
 		 */
 		GOOGLE_PROTOBUF_VERIFY_VERSION;
 
+		fstream input("interrupt.txt", ios::in | ios::binary);
+
 		IPC::Interrupts InterruptMessage;
 
 		if (!InterruptMessage.ParseFromIstream(&std::cin)) {
