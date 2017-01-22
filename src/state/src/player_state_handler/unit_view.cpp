@@ -64,16 +64,16 @@ PathPlannerHelperView UnitView::GetPathPlannerHelper() {
 
 TowerView::TowerView(Tower * tower):
 	UnitView(tower),
-	arrow_speed(tower->GetArrowSpeed()),
-	arrow_ttl(tower->GetArrowTtl()),
+	fire_ball_speed(tower->GetFireBallSpeed()),
+	fire_ball_ttl(tower->GetFireBallTtl()),
 	contention_radius(tower->GetContentionRadius()) {}
 
-int64_t TowerView::GetArrowSpeed() {
-	return arrow_speed;
+int64_t TowerView::GetFireBallSpeed() {
+	return fire_ball_speed;
 }
 
-int64_t TowerView::GetArrowTtl() {
-	return arrow_ttl;
+int64_t TowerView::GetFireBallTtl() {
+	return fire_ball_ttl;
 }
 
 int64_t TowerView::GetContentionRadius() {
@@ -88,17 +88,17 @@ int64_t EnemyTowerView::GetContentionRadius() {
 	return contention_radius;
 }
 
-ArcherView::ArcherView(Archer * archer):
-	UnitView(archer),
-	arrow_speed(archer->GetArrowSpeed()),
-	arrow_ttl(archer->GetArrowTtl()) {}
+MagicianView::MagicianView(Magician * magician):
+	UnitView(magician),
+	fire_ball_speed(magician->GetFireBallSpeed()),
+	fire_ball_ttl(magician->GetFireBallTtl()) {}
 
-int64_t ArcherView::GetArrowSpeed() {
-	return arrow_speed;
+int64_t MagicianView::GetFireBallSpeed() {
+	return fire_ball_speed;
 }
 
-int64_t ArcherView::GetArrowTtl() {
-	return arrow_ttl;
+int64_t MagicianView::GetFireBallTtl() {
+	return fire_ball_ttl;
 }
 
 }

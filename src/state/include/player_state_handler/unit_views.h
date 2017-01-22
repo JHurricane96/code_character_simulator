@@ -9,7 +9,7 @@
 
 #include "actor/actor.h"
 #include "actor/tower.h"
-#include "actor/archer.h"
+#include "actor/magician.h"
 #include "vector2d.h"
 #include "path_planner/path_planner_helper.h"
 #include "state_export.h"
@@ -163,13 +163,13 @@ public:
 class TowerView: public UnitView {
 private:
 	/**
-	 * Speed of an arrow fired from the tower
+	 * Speed of a fire_ball fired from the tower
 	 */
-	int64_t arrow_speed;
+	int64_t fire_ball_speed;
 	/**
-	 * Time to live for the arrows fired
+	 * Time to live for the fire_balls fired
 	 */
-	int64_t arrow_ttl;
+	int64_t fire_ball_ttl;
 	/**
 	 * Radius around tower that units need to be present to contend for
 	 * tower ownership
@@ -179,17 +179,17 @@ private:
 public:
 	TowerView(Tower * tower);
 	/**
-	 * Gets an arrow's lifetime
+	 * Gets a fire_ball's lifetime
 	 *
-	 * @return     The time to live for the arrow
+	 * @return     The time to live for the fire_ball
 	 */
-	int64_t GetArrowTtl();
+	int64_t GetFireBallTtl();
 	/**
-	 * Gets the speed of an arrow fired from the tower
+	 * Gets the speed of a fire_ball fired from the tower
 	 *
-	 * @return     The arrow speed
+	 * @return     The fire_ball speed
 	 */
-	int64_t GetArrowSpeed();
+	int64_t GetFireBallSpeed();
 	/**
 	 * Gets the contention radius of the tower
 	 *
@@ -198,30 +198,30 @@ public:
 	int64_t GetContentionRadius();
 };
 
-class ArcherView: public UnitView {
+class MagicianView: public UnitView {
 private:
 	/**
-	 * Speed of an arrow fired from the tower
+	 * Speed of a fire_ball fired from the tower
 	 */
-	int64_t arrow_speed;
+	int64_t fire_ball_speed;
 	/**
-	 * Time to live for the arrows fired
+	 * Time to live for the fire_balls fired
 	 */
-	int64_t arrow_ttl;
+	int64_t fire_ball_ttl;
 public:
-	ArcherView(Archer * archer);
+	MagicianView(Magician * magician);
 	/**
-	 * Gets an arrow's lifetime
+	 * Gets a fire_ball's lifetime
 	 *
-	 * @return     The time to live for the arrow
+	 * @return     The time to live for the fire_ball
 	 */
-	int64_t GetArrowTtl();
+	int64_t GetFireBallTtl();
 	/**
-	 * Gets the speed of an arrow fired from the tower
+	 * Gets the speed of a fire_ball fired from the tower
 	 *
-	 * @return     The arrow speed
+	 * @return     The fire_ball speed
 	 */
-	int64_t GetArrowSpeed();
+	int64_t GetFireBallSpeed();
 };
 
 }

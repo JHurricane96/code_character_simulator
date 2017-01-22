@@ -27,20 +27,20 @@ list_act_id_t PlayerStateHandler::GetPlayerEnemyIds() {
 	return state->GetPlayerEnemyIds(player_id);
 }
 
-std::vector<ArcherView> PlayerStateHandler::GetArchers() {
-	auto archers = state->GetArchers(player_id);
-	std::vector<ArcherView> archer_views;
-	for (auto archer : archers)
-		archer_views.push_back(ArcherView(archer.get()));
-	return archer_views;
+std::vector<MagicianView> PlayerStateHandler::GetMagicians() {
+	auto magicians = state->GetMagicians(player_id);
+	std::vector<MagicianView> magician_views;
+	for (auto magician : magicians)
+		magician_views.push_back(MagicianView(magician.get()));
+	return magician_views;
 }
 
-std::vector<EnemyUnitView> PlayerStateHandler::GetEnemyArchers() {
-	auto archers = state->GetEnemyArchers(player_id);
-	std::vector<EnemyUnitView> archer_views;
-	for (auto archer : archers)
-		archer_views.push_back(EnemyUnitView(archer.get()));
-	return archer_views;
+std::vector<EnemyUnitView> PlayerStateHandler::GetEnemyMagicians() {
+	auto magicians = state->GetEnemyMagicians(player_id);
+	std::vector<EnemyUnitView> magician_views;
+	for (auto magician : magicians)
+		magician_views.push_back(EnemyUnitView(magician.get()));
+	return magician_views;
 }
 
 std::vector<UnitView> PlayerStateHandler::GetScouts() {

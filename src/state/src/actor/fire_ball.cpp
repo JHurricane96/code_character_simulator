@@ -1,8 +1,8 @@
-#include "actor/arrow.h"
+#include "actor/fire_ball.h"
 
 namespace state {
 
-Arrow::Arrow(
+FireBall::FireBall(
 	act_id_t id,
 	PlayerId player_id,
 	int64_t attack,
@@ -28,22 +28,22 @@ Arrow::Arrow(
 		0,
 		0,
 		size,
-		ActorType::ARROW),
+		ActorType::FIREBALL),
 	is_done(false),
 	time_to_live(time_to_live) {
 		attack_target = target;
 	}
 
-bool Arrow::IsDone() {
+bool FireBall::IsDone() {
 	return is_done;
 }
 
-void Arrow::Attack() {
+void FireBall::Attack() {
 	is_done = true;
 	attack_target->Damage(attack);
 }
 
-void Arrow::Update(float delta_time) {
+void FireBall::Update(float delta_time) {
 	time_to_live -= delta_time;
 	if (time_to_live < 0 || attack_target->IsDead()) {
 		is_done = true;
@@ -59,11 +59,11 @@ void Arrow::Update(float delta_time) {
 	position = position + velocity * delta_time;
 };
 
-void Arrow::MergeWithMain(
-	const Arrow * arrow,
+void FireBall::MergeWithMain(
+	const FireBall * fire_ball,
 	std::vector<std::shared_ptr<Actor> > actors
 ) {
-	Actor::MergeWithMain(arrow, actors);
+	Actor::MergeWithMain(fire_ball, actors);
 }
 
 }

@@ -8,7 +8,7 @@
 
 #include <cstdint>
 #include "actor/actor.h"
-#include "actor/arrow.h"
+#include "actor/fire_ball.h"
 #include "state_export.h"
 
 namespace state {
@@ -48,19 +48,19 @@ private:
 	 */
 	int64_t contention_score;
 	/**
-	 * Speed of an arrow fired from the tower
+	 * Speed of a fire_ball fired from the tower
 	 */
-	int64_t arrow_speed;
+	int64_t fire_ball_speed;
 	/**
-	 * Time to live for the arrows fired
+	 * Time to live for the fire_balls fired
 	 */
-	int64_t arrow_ttl;
+	int64_t fire_ball_ttl;
 	/**
-	 * Size of the arrows fired
+	 * Size of the fire_balls fired
 	 */
-	int64_t arrow_size;
+	int64_t fire_ball_size;
 	/**
-	 * True if ready to fire arrow, false otherwise
+	 * True if ready to fire fire_ball, false otherwise
 	 */
 	bool ready_to_attack;
 public:
@@ -82,9 +82,9 @@ public:
 	    int64_t contention_radius,
 	    int64_t max_contention_score,
 	    int64_t range,
-	    int64_t arrow_speed,
-	    int64_t arrow_ttl,
-	    int64_t arrow_size
+	    int64_t fire_ball_speed,
+	    int64_t fire_ball_ttl,
+	    int64_t fire_ball_size
 	);
 	/**
 	 * The tower's attack function
@@ -114,11 +114,11 @@ public:
 	 */
 	bool IsReadyToAttack();
 	/**
-	 * Gets an arrow's lifetime
+	 * Gets a fire_ball's lifetime
 	 *
-	 * @return     The timt to live for the arrow
+	 * @return     The time to live for the fire_ball
 	 */
-	int64_t GetArrowTtl();
+	int64_t GetFireBallTtl();
 	/**
 	 * Gets the tower's owner
 	 *
@@ -126,17 +126,17 @@ public:
 	 */
 	TowerOwner GetTowerOwner();
 	/**
-	 * Gets the speed of an arrow fired from the tower
+	 * Gets the speed of a fire_ball fired from the tower
 	 *
-	 * @return     The arrow speed
+	 * @return     The fire_ball speed
 	 */
-	int64_t GetArrowSpeed();
+	int64_t GetFireBallSpeed();
 	/**
-	 * Gets the size of an arrow fired from the tower
+	 * Gets the size of a fire_ball fired from the tower
 	 *
-	 * @return     The arrow size
+	 * @return     The fire_ball size
 	 */
-	int64_t GetArrowSize();
+	int64_t GetFireBallSize();
 	/**
 	 * Gets the contention radius of the tower
 	 *

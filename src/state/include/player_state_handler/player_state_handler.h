@@ -82,17 +82,17 @@ public:
 	 */
 	list_act_id_t GetPlayerEnemyIds();
 	/**
-	 * Gets the player's Archers
+	 * Gets the player's Magicians
 	 *
-	 * @return     The player's Archers
+	 * @return     The player's Magicians
 	 */
-	std::vector<ArcherView> GetArchers();
+	std::vector<MagicianView> GetMagicians();
 	/**
-	 * Gets the enemy's Archers that are in LOS
+	 * Gets the enemy's Magicians that are in LOS
 	 *
-	 * @return     The enemy's Archers
+	 * @return     The enemy's Magicians
 	 */
-	std::vector<EnemyUnitView> GetEnemyArchers();
+	std::vector<EnemyUnitView> GetEnemyMagicians();
 	/**
 	 * Gets a player's Scouts
 	 *
