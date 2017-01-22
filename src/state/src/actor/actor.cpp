@@ -52,7 +52,7 @@ Actor::Actor(const Actor& other) {
 	id = other.id;
 	player_id = other.player_id;
 	actor_type = other.actor_type;
-	state = std::move(other.state->Clone());
+	state = other.state->Clone();
 	attack = other.attack;
 	hp = other.hp;
 	max_hp = other.max_hp;
@@ -236,7 +236,7 @@ void Actor::MergeWithMain(
 	std::vector<std::shared_ptr<Actor> > actors
 ) {
 	player_id = actor->player_id;
-	state = std::move(actor->state->Clone());
+	state = actor->state->Clone();
 	hp = actor->hp;
 	time_to_respawn = actor->time_to_respawn;
 	time_spent_near_base = actor->time_spent_near_base;
