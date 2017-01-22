@@ -1,5 +1,5 @@
 #include "actor/states/actor_path_planning_state.h"
-#include "actor/states/actor_pursuit_state.h"
+#include "actor/states/actor_attack_state.h"
 #include "actor/states/actor_dead_state.h"
 #include "actor/states/actor_idle_state.h"
 #include "actor/actor.h"
@@ -17,7 +17,7 @@ std::unique_ptr<ActorState> ActorPathPlanningState::Update(
 		return std::unique_ptr<ActorState>(new ActorDeadState());
 	}
 	else if (actor->GetAttackTarget() != nullptr) {
-		return std::unique_ptr<ActorState>(new ActorPursuitState());
+		return std::unique_ptr<ActorState>(new ActorAttackState());
 	}
 	else if (!actor->GetPathPlannerHelper()->IsPathPlanning()) {
 		return std::unique_ptr<ActorState>(new ActorIdleState());

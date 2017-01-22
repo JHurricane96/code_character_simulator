@@ -31,7 +31,7 @@ public:
 	 * 
 	 * If the Actor is dead, returns ActorDeadState.
 	 * Else if the Actor has an attack_target, returns
-	 * AttackPursuitState.
+	 * AttackAttackState.
 	 * Else if the Actor is done path planning, returns ActorIdleState.
 	 * Else return nullptr.
 	 *

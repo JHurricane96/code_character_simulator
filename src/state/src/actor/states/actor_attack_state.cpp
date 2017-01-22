@@ -1,5 +1,4 @@
 #include "actor/states/actor_attack_state.h"
-#include "actor/states/actor_pursuit_state.h"
 #include "actor/states/actor_path_planning_state.h"
 #include "actor/states/actor_dead_state.h"
 #include "actor/states/actor_idle_state.h"
@@ -18,23 +17,20 @@ std::unique_ptr<ActorState> ActorAttackState::Update(
 ) {
 	auto target = actor->GetAttackTarget();
 	if (actor->GetHp() <= 0) {
-		actor->StopAttack();
 		return std::unique_ptr<ActorState>(new ActorDeadState());
 	}
 	else if (actor->GetPathPlannerHelper()->IsPathPlanning()) {
-		actor->StopAttack();
 		return std::unique_ptr<ActorState>(
 			new ActorPathPlanningState()
 		);
 	}
 	else if (target == nullptr || target->IsDead()) {
-		actor->StopAttack();
 		return std::unique_ptr<ActorState>(new ActorIdleState());
 	}
 	else if (actor->GetPosition().distance(target->GetPosition())
 		> actor->GetAttackRange() + target->GetSize()
 	) {
-		return std::unique_ptr<ActorState>(new ActorPursuitState());
+		return std::unique_ptr<ActorState>(new ActorIdleState());
 	}
 
 	time_to_attack -= delta_time;
@@ -46,7 +42,9 @@ std::unique_ptr<ActorState> ActorAttackState::Update(
 	return nullptr;
 }
 
-void ActorAttackState::Exit(Actor * actor) {}
+void ActorAttackState::Exit(Actor * actor) {
+	actor->StopAttack();
+}
 
 std::unique_ptr<ActorState> ActorAttackState::Clone() {
 	return std::unique_ptr<ActorState>(new ActorAttackState(*this));
