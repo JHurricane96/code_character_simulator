@@ -17,12 +17,22 @@ destinations(destinations),
 is_finished(false) {
 	auto formation_positions =
 		formation_maker->ReturnFormation(units.size());
-    leader = units[0];
+	leader = units[0];
+
+	float min_speed = units[0]->GetMaxSpeed();
+
+	for (auto unit : units) {
+		if (min_speed > unit->GetMaxSpeed()) {
+			min_speed = unit->GetMaxSpeed();
+		}
+	}
+
 	units[0]->GetPathPlannerHelper()->SetPath(
 		formation_id,
 		formation_positions[0],
 		true,
-		NULL
+		NULL,
+		min_speed
 	);
 
 	for (int64_t i = 1; i < units.size(); ++i) {
@@ -30,7 +40,8 @@ is_finished(false) {
 			formation_id,
 			formation_positions[i],
 			false,
-			units[0]
+			units[0],
+			min_speed
 		);
 	}
 }

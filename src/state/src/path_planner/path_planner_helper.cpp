@@ -22,7 +22,8 @@ void PathPlannerHelper::SetPath(
 	int64_t formation_id,
 	physics::Vector2D relative_position,
 	bool is_leader,
-	std::shared_ptr<Actor> leader
+	std::shared_ptr<Actor> leader,
+	float speed
 ) {
 	this->formation_id = formation_id;
 	this->relative_position = relative_position;
@@ -30,6 +31,8 @@ void PathPlannerHelper::SetPath(
 		this->leader = leader;
 	}
 	else { this->leader = NULL; }
+	auto self = this->self.lock();
+	self->SetSpeed(speed);
 	is_path_planning = true;
 }
 

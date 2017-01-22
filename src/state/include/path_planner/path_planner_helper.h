@@ -118,12 +118,15 @@ public:
 	 * @param[in]  is_leader          Indicates if leader of formation
 	 * @param[in]  leader             The leader of the formation.
 	 *                                Valid only if is_leader is set
+	 * @param[in]  speed              The speed with which this unit
+	 *                                moves
 	 */
 	void SetPath(
 		int64_t formation_id,
 		physics::Vector2D relative_position,
 		bool is_leader,
-		std::shared_ptr<Actor> leader
+		std::shared_ptr<Actor> leader,
+		float speed
 	);
 	/**
 	 * Sets is_path_planning to false
