@@ -6,12 +6,12 @@ namespace state {
 ProjectileHandler::ProjectileHandler() {}
 
 ProjectileHandler::ProjectileHandler(
-	int64_t next_arrow_id
+	int64_t first_fire_ball_id
 	) :
-	arrows(),
-	next_arrow_id(next_arrow_id) {}
+	fire_balls(),
+	next_fire_ball_id(first_fire_ball_id) {}
 
-void ProjectileHandler::CreateArrow(
+void ProjectileHandler::CreateFireBall(
 	PlayerId player_id,
 	physics::Vector2D start,
 	Actor* attack_target,
@@ -20,9 +20,9 @@ void ProjectileHandler::CreateArrow(
 	int64_t size,
 	int64_t damage
 ) {
-	std::shared_ptr<Arrow> arrow(
-		new Arrow(
-			next_arrow_id,
+	std::shared_ptr<FireBall> fire_ball(
+		new FireBall(
+			next_fire_ball_id,
 			player_id,
 			damage,
 			max_speed,
@@ -30,14 +30,14 @@ void ProjectileHandler::CreateArrow(
 			size,
 			start,
 			attack_target));
-	arrows.push_back(arrow);
-	next_arrow_id++;
+	fire_balls.push_back(fire_ball);
+	next_fire_ball_id++;
 }
 
 
-std::vector<std::shared_ptr<Arrow> >
+std::vector<std::shared_ptr<FireBall> >
 ProjectileHandler::GetProjectiles() {
-	return arrows;
+	return fire_balls;
 }
 
 template <typename ActorType>
@@ -51,20 +51,20 @@ void ProjectileHandler::HandleActors(
 				auto target = actor->GetAttackTarget();
 				auto damage = actor->GetAttack();
 				auto actor_pos = actor->GetPosition();
-				auto arrow_dest = target->GetPosition();
+				auto fire_ball_dest = target->GetPosition();
 				terrain->CoordinateToTerrainElement(actor_pos).GetTerrainType();
 				auto tot_damage = damage *
 				  DamageMultiplier [terrain->CoordinateToTerrainElement(actor_pos)
 										.GetTerrainType()]
-								   [terrain->CoordinateToTerrainElement(arrow_dest)
+								   [terrain->CoordinateToTerrainElement(fire_ball_dest)
 								   		.GetTerrainType()];
-				CreateArrow(
+				CreateFireBall(
 					actor->GetPlayerId(),
 					actor_pos,
 					target,
-					actor->GetArrowSpeed(),
-					actor->GetArrowTtl(),
-					actor->GetArrowSize(),
+					actor->GetFireBallSpeed(),
+					actor->GetFireBallTtl(),
+					actor->GetFireBallSize(),
 					tot_damage);
 				actor->SetReadyToAttackToFalse();
 			}
@@ -72,40 +72,42 @@ void ProjectileHandler::HandleActors(
 	}
 }
 
-void ProjectileHandler::HandleArrows(
+void ProjectileHandler::HandleFireBalls(
 	float delta_time
 ) {
-	std::vector<std::shared_ptr<Arrow> > new_arrows;
-	for (int64_t i = 0; i < arrows.size(); i++) {
-		arrows[i]->Update(delta_time);
-		if (!arrows[i]->IsDone()) {
-			new_arrows.push_back(arrows[i]);
+	std::vector<std::shared_ptr<FireBall> > new_fire_balls;
+	for (int64_t i = 0; i < fire_balls.size(); i++) {
+		fire_balls[i]->Update(delta_time);
+		if (!fire_balls[i]->IsDone()) {
+			new_fire_balls.push_back(fire_balls[i]);
 		}
 	}
-	arrows = new_arrows;
+	fire_balls = new_fire_balls;
 }
 
 void ProjectileHandler::Update(
 	float delta_time,
 	std::vector<std::vector<std::shared_ptr<Tower> > >& towers,
-	std::vector<std::vector<std::shared_ptr<Archer> > >& archers,
+	std::vector<std::vector<std::shared_ptr<Magician> > >& magicians,
 	Terrain* terrain
 ) {
 	HandleActors<Tower>(towers, terrain);
-	HandleActors<Archer>(archers, terrain);
-	HandleArrows(delta_time);
+	HandleActors<Magician>(magicians, terrain);
+	HandleFireBalls(delta_time);
 }
 
 void ProjectileHandler::MergeWithMain(
 	const ProjectileHandler& proj_handler,
 	std::vector<std::shared_ptr<Actor> > actors
 ) {
-	arrows.clear();
-	for (auto arrow : proj_handler.arrows) {
-		arrows.push_back(std::shared_ptr<Arrow>(new Arrow(*arrow)));
-		arrows.back()->MergeWithMain(arrow.get(), actors);
+	fire_balls.clear();
+	for (auto fire_ball : proj_handler.fire_balls) {
+		fire_balls.push_back(
+			std::shared_ptr<FireBall>(new FireBall(*fire_ball))
+		);
+		fire_balls.back()->MergeWithMain(fire_ball.get(), actors);
 	}
-	next_arrow_id = proj_handler.next_arrow_id;
+	next_fire_ball_id = proj_handler.next_fire_ball_id;
 }
 
 }

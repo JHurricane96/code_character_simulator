@@ -21,8 +21,8 @@ namespace state {
  * The various types of Actors that exist
  */
 enum class ActorType {
-	ARCHER,
-	ARROW,
+	MAGICIAN,
+	FIREBALL,
 	BASE,
 	FLAG,
 	KING,

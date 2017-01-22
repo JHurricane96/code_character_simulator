@@ -13,10 +13,10 @@
 #include <cstdint>
 #include "actor/actor.h"
 #include "actor/swordsman.h"
-#include "actor/arrow.h"
+#include "actor/fire_ball.h"
 #include "actor/scout.h"
 #include "actor/tower.h"
-#include "actor/archer.h"
+#include "actor/magician.h"
 #include "actor/flag.h"
 #include "actor/king.h"
 #include "actor/base.h"
@@ -77,9 +77,9 @@ private:
 	 */
 	std::vector<std::vector<std::shared_ptr<Tower> > > towers;
 	/**
-	 * List of archers for each player
+	 * List of magicians for each player
 	 */
-	std::vector<std::vector<std::shared_ptr<Archer> > > archers;
+	std::vector<std::vector<std::shared_ptr<Magician> > > magicians;
 	/**
 	 * List of swordsmen for each player
 	 */
@@ -134,7 +134,7 @@ public:
 		std::vector<std::shared_ptr<Flag> > flags,
 		std::vector<std::vector<std::shared_ptr<Tower> > > towers,
 		std::vector<std::vector<std::shared_ptr<Scout> > > scouts,
-		std::vector<std::vector<std::shared_ptr<Archer> > > archers,
+		std::vector<std::vector<std::shared_ptr<Magician> > > magicians,
 		std::vector<std::vector<std::shared_ptr<Swordsman> > > swordsmen
 	);
 	State(
@@ -173,21 +173,21 @@ public:
 	 */
 	list_act_id_t GetPlayerEnemyIds(PlayerId player_id);
 	/**
-	 * Gets a player's Archers
+	 * Gets a player's Magicians
 	 *
 	 * @param[in]  player_id  Player ID
 	 *
-	 * @return     The Archers
+	 * @return     The Magicians
 	 */
-	std::vector<std::shared_ptr<Archer> > GetArchers(PlayerId player_id);
+	std::vector<std::shared_ptr<Magician> > GetMagicians(PlayerId player_id);
 	/**
-	 * Gets an enemy's Archers, taking into account LOS
+	 * Gets an enemy's Magicians, taking into account LOS
 	 *
 	 * @param[in]  player_id  Player ID
 	 *
-	 * @return     The enemy's Archers
+	 * @return     The enemy's Magicians
 	 */
-	std::vector<std::shared_ptr<Archer> > GetEnemyArchers(
+	std::vector<std::shared_ptr<Magician> > GetEnemyMagicians(
 		PlayerId player_id
 	);
 	/**
@@ -313,11 +313,11 @@ public:
 	 */
 	list_act_id_t GetActorEnemies(PlayerId player_id, act_id_t actor_id);
 	/**
-	 * Gets the list of active arrows
+	 * Gets the list of active fire_balls
 	 *
-	 * @return     The arrows
+	 * @return     The fire_balls
 	 */
-	std::vector<std::shared_ptr<Arrow> > GetProjectiles();
+	std::vector<std::shared_ptr<FireBall> > GetProjectiles();
 	/**
 	 * Gets the actor from identifier.
 	 *

@@ -14,8 +14,8 @@ set(SOURCE_FILES
 	src/actor/flag.cpp
 	src/actor/king.cpp
 	src/actor/tower.cpp
-	src/actor/arrow.cpp
-	src/actor/archer.cpp
+	src/actor/fire_ball.cpp
+	src/actor/magician.cpp
 	src/actor/scout.cpp
 	src/actor/projectile_handler.cpp
 	src/terrain/terrain.cpp

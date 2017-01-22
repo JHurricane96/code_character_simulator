@@ -21,9 +21,9 @@ Tower::Tower(
 	int64_t contention_radius,
 	int64_t max_contention_score,
 	int64_t range,
-	int64_t arrow_speed,
-	int64_t arrow_ttl,
-	int64_t arrow_size
+	int64_t fire_ball_speed,
+	int64_t fire_ball_ttl,
+	int64_t fire_ball_size
 	) :
 	Actor(
 		id,
@@ -46,9 +46,9 @@ Tower::Tower(
 	contention_radius(contention_radius),
 	max_contention_score(max_contention_score),
 	contention_score(0),
-	arrow_speed(arrow_speed),
-	arrow_ttl(arrow_ttl),
-	arrow_size(arrow_size),
+	fire_ball_speed(fire_ball_speed),
+	fire_ball_ttl(fire_ball_ttl),
+	fire_ball_size(fire_ball_size),
 	ready_to_attack(false) {}
 
 bool Tower::Contend(
@@ -93,20 +93,20 @@ bool Tower::IsReadyToAttack() {
 	return ready_to_attack;
 }
 
-int64_t Tower::GetArrowTtl() {
-	return arrow_ttl;
+int64_t Tower::GetFireBallTtl() {
+	return fire_ball_ttl;
 }
 
 TowerOwner Tower::GetTowerOwner() {
 	return tower_owner;
 }
 
-int64_t Tower::GetArrowSize() {
-	return arrow_size;
+int64_t Tower::GetFireBallSize() {
+	return fire_ball_size;
 }
 
-int64_t Tower::GetArrowSpeed() {
-	return arrow_speed;
+int64_t Tower::GetFireBallSpeed() {
+	return fire_ball_speed;
 }
 
 int64_t Tower::GetContentionRadius() {

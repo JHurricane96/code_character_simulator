@@ -33,12 +33,12 @@ State::State(
 		std::vector<std::shared_ptr<Flag> > flags,
 		std::vector<std::vector<std::shared_ptr<Tower> > > towers,
 		std::vector<std::vector<std::shared_ptr<Scout> > > scouts,
-		std::vector<std::vector<std::shared_ptr<Archer> > > archers,
+		std::vector<std::vector<std::shared_ptr<Magician> > > magicians,
 		std::vector<std::vector<std::shared_ptr<Swordsman> > > swordsmen
 	):
 	sorted_actors(sorted_actors),
 	towers(towers),
-	archers(archers),
+	magicians(magicians),
 	swordsmen(swordsmen),
 	scouts(scouts),
 	flags(flags),
@@ -245,10 +245,10 @@ list_act_id_t State::GetPlayerUnitIds(PlayerId player_id) {
 	return player_unit_ids[(int)player_id];
 }
 
-std::vector<std::shared_ptr<Archer> > State::GetArchers(
+std::vector<std::shared_ptr<Magician> > State::GetMagicians(
 	PlayerId player_id
 ) {
-	return archers[player_id];
+	return magicians[player_id];
 }
 
 std::vector<std::shared_ptr<Scout> > State::GetScouts(PlayerId player_id) {
@@ -283,17 +283,17 @@ std::vector<std::shared_ptr<Scout> > State::GetEnemyScouts(
 	return visible_enemy_scouts;
 }
 
-std::vector<std::shared_ptr<Archer> > State::GetEnemyArchers(
+std::vector<std::shared_ptr<Magician> > State::GetEnemyMagicians(
 	PlayerId player_id
 ) {
-	auto enemy_archers = archers[(player_id + 1) % (LAST_PLAYER + 1)];
-	std::vector<std::shared_ptr<Archer> > visible_enemy_archers;
-	for (auto archer : enemy_archers) {
-		if (terrain.CoordinateToTerrainElement(archer->GetPosition())
+	auto enemy_magicians = magicians[(player_id + 1) % (LAST_PLAYER + 1)];
+	std::vector<std::shared_ptr<Magician> > visible_enemy_magicians;
+	for (auto magician : enemy_magicians) {
+		if (terrain.CoordinateToTerrainElement(magician->GetPosition())
 		   .GetLos(player_id) == DIRECT_LOS)
-			visible_enemy_archers.push_back(archer);
+			visible_enemy_magicians.push_back(magician);
 	}
-	return visible_enemy_archers;
+	return visible_enemy_magicians;
 }
 
 std::vector<std::shared_ptr<Swordsman> > State::GetSwordsmen(
@@ -368,7 +368,7 @@ std::shared_ptr<Base> State::GetEnemyBase(PlayerId player_id) {
 	return bases[(player_id + 1) % (LAST_PLAYER + 1)];
 }
 
-std::vector<std::shared_ptr<Arrow> > State::GetProjectiles() {
+std::vector<std::shared_ptr<FireBall> > State::GetProjectiles() {
 	return projectile_handler.GetProjectiles();
 }
 
@@ -681,7 +681,7 @@ void State::Update(float delta_time) {
 
 	terrain.Update(sorted_actors);
 
-	projectile_handler.Update(delta_time, towers, archers, &terrain);
+	projectile_handler.Update(delta_time, towers, magicians, &terrain);
 
 }
 

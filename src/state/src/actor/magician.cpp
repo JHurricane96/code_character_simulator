@@ -1,9 +1,9 @@
-#include "actor/archer.h"
+#include "actor/magician.h"
 #include <algorithm>
 
 namespace state {
 
-Archer::Archer(
+Magician::Magician(
 	act_id_t id,
 	PlayerId player_id,
 	int64_t attack,
@@ -19,9 +19,9 @@ Archer::Archer(
 	int64_t los_radius,
 	int64_t attack_speed,
 	int64_t range,
-	int64_t arrow_speed,
-	int64_t arrow_ttl,
-	int64_t arrow_size
+	int64_t fire_ball_speed,
+	int64_t fire_ball_ttl,
+	int64_t fire_ball_size
 	) :
 	Actor(
 		id,
@@ -39,42 +39,42 @@ Archer::Archer(
 		los_radius,
 		attack_speed,
 		range,
-		ActorType::ARCHER),
-	arrow_speed(arrow_speed),
-	arrow_ttl(arrow_ttl),
-	arrow_size(arrow_size),
+		ActorType::MAGICIAN),
+	fire_ball_speed(fire_ball_speed),
+	fire_ball_ttl(fire_ball_ttl),
+	fire_ball_size(fire_ball_size),
 	ready_to_attack(false) {}
 
-void Archer::Attack() {
+void Magician::Attack() {
 	ready_to_attack = true;
 }
 
-void Archer::StopAttack() {
+void Magician::StopAttack() {
 	ready_to_attack = false;
 	attack_target = nullptr;
 }
 
-bool Archer::IsReadyToAttack() {
+bool Magician::IsReadyToAttack() {
 	return ready_to_attack;
 }
 
-int64_t Archer::GetArrowTtl() {
-	return arrow_ttl;
+int64_t Magician::GetFireBallTtl() {
+	return fire_ball_ttl;
 }
 
-int64_t Archer::GetArrowSize() {
-	return arrow_size;
+int64_t Magician::GetFireBallSize() {
+	return fire_ball_size;
 }
 
-int64_t Archer::GetArrowSpeed() {
-	return arrow_speed;
+int64_t Magician::GetFireBallSpeed() {
+	return fire_ball_speed;
 }
 
-void Archer::SetReadyToAttackToFalse() {
+void Magician::SetReadyToAttackToFalse() {
 	ready_to_attack = false;
 }
 
-void Archer::Update(float delta_time) {
+void Magician::Update(float delta_time) {
 	DecideState(delta_time);
 	position = position + velocity * delta_time;
 };
