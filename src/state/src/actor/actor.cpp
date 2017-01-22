@@ -35,6 +35,7 @@ Actor::Actor(
 	hp(hp),
 	max_hp(max_hp),
 	max_speed(max_speed),
+	speed(max_speed),
 	size(size),
 	total_respawn_time(total_respawn_time),
 	time_to_respawn(time_to_respawn),
@@ -104,6 +105,10 @@ int64_t Actor::GetMaxSpeed() {
 	return max_speed;
 }
 
+float Actor::GetSpeed() {
+	return speed;
+}
+
 int64_t Actor::GetSize() {
 	return size;
 }
@@ -142,6 +147,10 @@ physics::Vector2D Actor::GetPosition() {
 
 bool Actor::IsDead() {
 	return is_dead;
+}
+
+void Actor::SetSpeed(float speed) {
+	this->speed = speed;
 }
 
 void Actor::Die() {
@@ -216,6 +225,7 @@ void Actor::MergeWithBuffer(
 	const Actor * actor,
 	std::vector<std::shared_ptr<Actor> > actors
 ) {
+	speed = actor->speed;
 	velocity = actor->velocity;
 	path_planner_helper = actor->path_planner_helper;
 	path_planner_helper.MergeWithBuffer(

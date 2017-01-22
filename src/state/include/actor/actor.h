@@ -69,6 +69,10 @@ protected:
 	 */
 	int64_t max_speed;
 	/**
+	 * The current speed the actor is travelling at
+	 */
+	float speed;
+	/**
 	 * Radius of the actor
 	 *
 	 * Assumes actors are circles
@@ -212,6 +216,12 @@ public:
 	 */
 	int64_t GetMaxSpeed();
 	/**
+	 * Gets the Actor's current speed
+	 *
+	 * @return     The Actor's speed
+	 */
+	float GetSpeed();
+	/**
 	 * Gets the Actor's size
 	 *
 	 * @return     The size
@@ -265,6 +275,12 @@ public:
 	 * @return     The Actor's position vector
 	 */
 	physics::Vector2D GetPosition();
+	/**
+	 * Sets the Actor's speed
+	 *
+	 * @param[in]  speed  The new speed
+	 */
+	void SetSpeed(float speed);
 	/**
 	 * A virtual method for units to override based on their attack style
 	 */
