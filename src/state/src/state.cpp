@@ -135,28 +135,32 @@ void State::MoveUnits(
 			SetIfValid(success, -3);
 			return;
 		}
+		if (!actors[act_id]->CanPathPlan()) {
+			SetIfValid(success, -4);
+			return;
+		}
 	}
 
 	auto bounds = terrain.GetSize();
 	if (destination.x < 0 || destination.y < 0 ||
 		destination.x >= bounds.x || destination.y >= bounds.y ) {
-		SetIfValid(success, -4);
+		SetIfValid(success, -5);
 		return;
 		}
 
 	if (!IsValidFormation(formation_maker, unit_ids.size())) {
-		SetIfValid(success, -5);
+		SetIfValid(success, -6);
 		return;
 	}
 
 	if (terrain_weights.size() != 3) {
-		SetIfValid(success, -6);
+		SetIfValid(success, -7);
 		return;
 	}
 
 	for (auto weight : terrain_weights) {
 		if (weight <= 0) {
-			SetIfValid(success, -7);
+			SetIfValid(success, -8);
 			return;
 		}
 	}
@@ -205,10 +209,14 @@ void State::MoveUnits(
 			SetIfValid(success, -3);
 			return;
 		}
+		if (!actors[act_id]->CanPathPlan()) {
+			SetIfValid(success, -4);
+			return;
+		}
 	}
 
 	if (destinations.empty()) {
-		SetIfValid(success, -4);
+		SetIfValid(success, -5);
 		return;
 	}
 
@@ -216,13 +224,13 @@ void State::MoveUnits(
 	for (auto destination : destinations) {
 		if (destination.x < 0 || destination.y < 0 ||
 			destination.x >= bounds.x || destination.y >= bounds.y ) {
-			SetIfValid(success, -5);
+			SetIfValid(success, -6);
 			return;
 		}
 	}
 
 	if (!IsValidFormation(formation_maker, unit_ids.size())) {
-		SetIfValid(success, -6);
+		SetIfValid(success, -7);
 		return;
 	}
 
@@ -407,28 +415,33 @@ void State::AttackUnit(
 		}
 		if (actors[act_id]->IsDead()) {
 			SetIfValid(success, -3);
+			return;
+		}
+		if (!actors[act_id]->CanAttack()) {
+			SetIfValid(success, -4);
+			return;
 		}
 	}
 
 	if (attack_target_id >= actors.size() || attack_target_id < 0) {
-		SetIfValid(success, -4);
+		SetIfValid(success, -5);
 		return;
 	}
 
 	auto target = actors[attack_target_id];
 
 	if (target->GetPlayerId() == player_id) {
-		SetIfValid(success, -5);
+		SetIfValid(success, -6);
 		return;
 	}
 	if (target->IsDead()) {
-		SetIfValid(success, -6);
+		SetIfValid(success, -7);
 		return;
 	}
 	if (terrain
 		.CoordinateToTerrainElement(target->GetPosition())
 		.GetLos(player_id) != DIRECT_LOS) {
-		SetIfValid(success, -7);
+		SetIfValid(success, -8);
 		return;
 	}
 

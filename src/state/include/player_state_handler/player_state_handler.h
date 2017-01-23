@@ -266,10 +266,11 @@ public:
 	 * - -1 if any unit's Actor ID is invalid
 	 * - -2 if any unit doesn't belong to the player who's attacking
 	 * - -3 if any unit is dead
-	 * - -4 if destination is not on the map
-	 * - -5 if formation is not valid
-	 * - -6 if terrain_weights isn't of size 3
-	 * - -7 if terrain_weights has non-positive weights
+	 * - -4 if any of the units isn't capable of moving
+	 * - -5 if destination is not on the map
+	 * - -6 if formation is not valid
+	 * - -7 if terrain_weights isn't of size 3
+	 * - -8 if terrain_weights has non-positive weights
 	 * - 1  if successful
 	 *
 	 * @param[in]  unit_ids          Actor IDs of units to be moved
@@ -303,9 +304,10 @@ public:
 	 * - -1 if any unit's Actor ID is invalid
 	 * - -2 if any unit doesn't belong to the player who's attacking
 	 * - -3 if any unit is dead
-	 * - -4 if destinations is empty
-	 * - -5 if any member of destinations is not on the map
-	 * - -6 if formation is not valid
+	 * - -4 if any of the units isn't capable of moving
+	 * - -5 if destinations is empty
+	 * - -6 if any member of destinations is not on the map
+	 * - -7 if formation is not valid
 	 * - 1 if successful
 	 *
 	 * @param[in]  unit_ids         The unit identifiers
@@ -331,10 +333,11 @@ public:
 	 * - -2 if any attacking unit doesn't belong to the player who's
 	 * attacking
 	 * - -3 if any attacking unit is dead
-	 * - -4 if the target's Actor ID is invalid
-	 * - -5 if the target is in the attacking team
-	 * - -6 if the target is dead
-	 * - -7 if the target isn't in LOS of the attacking team
+	 * - -4 if any of the units isn't capable of attacking
+	 * - -5 if the target's Actor ID is invalid
+	 * - -6 if the target is in the attacking team
+	 * - -7 if the target is dead
+	 * - -8 if the target isn't in LOS of the attacking team
 	 * - 1 if successful
 	 *
 	 *
