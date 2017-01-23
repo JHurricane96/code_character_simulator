@@ -75,7 +75,7 @@ public:
 		PlayerId player_id,
 		std::vector<std::shared_ptr<Actor> > &units,
 		Terrain &terrain,
-		std::shared_ptr<FormationMaker> formation_maker,
+		FormationMaker * formation_maker,
 		physics::Vector2D destination,
 		std::vector<int64_t> terrain_weights,
 		std::vector<physics::Vector2D> &path
@@ -98,7 +98,7 @@ public:
 	void MakeFormation(
 		PlayerId player_id,
 		std::vector<std::shared_ptr<Actor> > &units,
-		std::shared_ptr<FormationMaker> formation_maker,
+		FormationMaker * formation_maker,
 		std::vector<physics::Vector2D> destinations
 	);
 	/**

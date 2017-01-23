@@ -6,7 +6,7 @@ Formation::Formation(
 	PlayerId player_id,
 	int64_t formation_id,
 	std::vector<std::shared_ptr<Actor> > units,
-	std::shared_ptr<FormationMaker> formation_maker,
+	FormationMaker * formation_maker,
 	std::vector<physics::Vector2D> destinations
 ) :
 player_id(player_id),
@@ -95,7 +95,7 @@ void Formation::Update(
 	}
 
 	if (old_no_units != units.size()) {
-		if (!IsValidFormation(formation_maker.get(), units.size())) {
+		if (!IsValidFormation(formation_maker, units.size())) {
 			for (auto unit : units) {
 				unit->GetPathPlannerHelper()->FinishPath();
 			}

@@ -379,7 +379,7 @@ public:
 		PlayerId player_id,
 		list_act_id_t unit_ids,
 		physics::Vector2D destination,
-		std::shared_ptr<FormationMaker> formation_maker,
+		FormationMaker * formation_maker,
 		std::vector<int64_t> terrain_weights,
 		std::vector<physics::Vector2D> &path,
 		int * success
@@ -414,7 +414,7 @@ public:
 		PlayerId player_id,
 		list_act_id_t unit_ids,
 		std::vector<physics::Vector2D> destinations,
-		std::shared_ptr<FormationMaker> formation_maker,
+		FormationMaker * formation_maker,
 		int * success
 	);
 	/**
