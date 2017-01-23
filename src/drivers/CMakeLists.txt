@@ -7,11 +7,13 @@ set(SOURCE_FILES
 )
 set(INCLUDE_PATH include)
 set(EXPORTS_DIR ${CMAKE_BINARY_DIR}/exports)
-set(EXPORTS_FILE_PATH ${EXPORTS_DIR}/drives_export.h)
+set(EXPORTS_FILE_PATH ${EXPORTS_DIR}/drivers_export.h)
 
-include(${CMAKE_INSTALL_PREFIX}/physics_config.cmake)
-include(${CMAKE_INSTALL_PREFIX}/state_config.cmake)
-include(${CMAKE_INSTALL_PREFIX}/player_config.cmake)
+if (NOT BUILD_ALL)
+	include(${CMAKE_INSTALL_PREFIX}/physics_config.cmake)
+	include(${CMAKE_INSTALL_PREFIX}/state_config.cmake)
+	include(${CMAKE_INSTALL_PREFIX}/player_config.cmake)
+endif()
 
 find_package(Threads REQUIRED)
 
