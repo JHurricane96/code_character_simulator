@@ -79,7 +79,7 @@ private:
  *
  * @see Actor
  */
-class UnitView {
+class STATE_EXPORT UnitView {
 private:
 	/**
 	 * Pointer to underlying Actor instance which the view provides an

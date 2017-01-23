@@ -15,6 +15,7 @@
 #include "player_driver.h"
 #include "player_ai.h"
 #include "utilities.h"
+#include "drivers_export.h"
 
 namespace drivers {
 
@@ -23,7 +24,7 @@ namespace drivers {
  * 
  * Controls 2 PlayerDriver classes running concurrently
  */
-class MainDriver {
+class DRIVERS_EXPORT MainDriver {
 private:
 	/**
 	 * Main game State object
