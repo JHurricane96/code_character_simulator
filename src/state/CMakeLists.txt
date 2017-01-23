@@ -30,7 +30,9 @@ set(INCLUDE_PATH include)
 set(EXPORTS_DIR ${CMAKE_BINARY_DIR}/exports)
 set(EXPORTS_FILE_PATH ${EXPORTS_DIR}/state_export.h)
 
-include(${CMAKE_INSTALL_PREFIX}/physics_config.cmake)
+if (NOT BUILD_ALL)
+	include(${CMAKE_INSTALL_PREFIX}/physics_config.cmake)
+endif()
 
 set(LIBRARY_INSTALL_PATH ${CMAKE_INSTALL_PREFIX}/lib)
 set(RUNTIME_INSTALL_PATH ${CMAKE_INSTALL_PREFIX}/bin)
