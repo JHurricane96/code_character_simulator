@@ -53,6 +53,14 @@ protected:
 	 */
 	std::unique_ptr<ActorState> state;
 	/**
+	 * If true, actor can attack, else cannot
+	 */
+	bool can_attack;
+	/**
+	 * If true, actor can path plan, else cannot
+	 */
+	bool can_plan_path;
+	/**
 	 * The damage the actor can deal
 	 */
 	int64_t attack;
@@ -156,7 +164,9 @@ public:
 		int64_t los_radius,
 		int64_t attack_speed,
 		int64_t attack_range,
-		ActorType actor_type
+		ActorType actor_type,
+		bool can_attack,
+		bool can_plan_path
 	);
 	Actor(const Actor& other);
 	void AddPathPlanner(PathPlannerHelper p);

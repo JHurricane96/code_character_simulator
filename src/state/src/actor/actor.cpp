@@ -26,12 +26,16 @@ Actor::Actor(
 		int64_t los_radius,
 		int64_t attack_speed,
 		int64_t attack_range,
-		ActorType actor_type
+		ActorType actor_type,
+		bool can_attack,
+		bool can_plan_path
 	):
 	id(id),
 	player_id(player_id),
 	actor_type(actor_type),
 	state(new ActorIdleState()),
+	can_attack(can_attack),
+	can_plan_path(can_plan_path),
 	attack(attack),
 	hp(hp),
 	max_hp(max_hp),
