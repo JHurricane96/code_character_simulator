@@ -43,7 +43,7 @@ private:
 	 * Formation maker that returns list of points that define the
 	 * formation
 	 */
-	std::shared_ptr<FormationMaker> formation_maker;
+	FormationMaker * formation_maker;
 	/**
 	 * List of destinations to visit in order
 	 */
@@ -67,7 +67,7 @@ public:
 		PlayerId player_id,
 		int64_t formation_id,
 		std::vector<std::shared_ptr<Actor> > units,
-		std::shared_ptr<FormationMaker> formation_maker,
+		FormationMaker * formation_maker,
 		std::vector<physics::Vector2D> destinations
 	);
 	/**
