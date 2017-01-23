@@ -35,6 +35,14 @@ Vector2D Vector2D::operator/(double scalar) {
 	return Vector2D(x / scalar, y / scalar);
 }
 
+std::ostream& operator<<(
+	std::ostream& ostream,
+	const Vector2D& vector
+) {
+	ostream << "(" << vector.x << ", " << vector.y << ")";
+	return ostream;
+}
+
 double Vector2D::dot(Vector2D rhs) {
 	return (x * rhs.x + y * rhs.y);
 }

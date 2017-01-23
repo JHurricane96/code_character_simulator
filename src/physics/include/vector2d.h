@@ -6,6 +6,7 @@
 #ifndef PHYSICS_VECTOR2D_H
 #define PHYSICS_VECTOR2D_H
 
+#include <iostream>
 #include "physics_export.h"
 
 namespace physics {
@@ -84,6 +85,10 @@ public:
 	 */
 	Vector2D operator/(double scalar);
 
+	friend std::ostream& operator<<(
+		std::ostream& ostream,
+		const Vector2D& vector
+	);
 	/**
 	 * Dot product of vectors
 	 *
