@@ -94,6 +94,14 @@ ActorType Actor::GetActorType() {
 	return actor_type;
 }
 
+int64_t Actor::CanAttack() {
+	return can_attack;
+}
+
+int64_t Actor::CanPathPlan() {
+	return can_plan_path;
+}
+
 int64_t Actor::GetAttack() {
 	return attack;
 }

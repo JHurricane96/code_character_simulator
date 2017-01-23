@@ -208,6 +208,18 @@ public:
 	 */
 	int64_t GetAttack();
 	/**
+	 * Determines ability to attack
+	 *
+	 * @return     True if able to attack, False otherwise
+	 */
+	int64_t CanAttack();
+	/**
+	 * Determines ability to path plan
+	 *
+	 * @return     True if able to path plan, False otherwise
+	 */
+	int64_t CanPathPlan();
+	/**
 	 * Gets the Actor's HP
 	 *
 	 * @return     The Actor's HP
