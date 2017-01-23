@@ -23,6 +23,14 @@ package IPC;
 message State {
 
 	/**
+	* Message describing Vector2D Class
+	*/
+	message Vector2D {
+	double x = 1;
+	double y = 2;
+	}
+
+	/**
 	 * Message describes base class actor
 	 */
 	message Actor {
@@ -34,6 +42,13 @@ message State {
 		bool attack = 5;
 		int64 hp = 6;
 		int64 max_hp = 7;
+		bool is_attacking = 8;
+		Vector2D attack_target_position = 9;
+		bool is_moving = 10;
+		Vector2D destination = 11;
+		bool is_carry_flag = 12;
+		bool is_being_carried = 13;
+		bool is_visible_to_enemy = 14;
 
 		/**
 		 * Set type of actor
@@ -49,7 +64,7 @@ message State {
 			SWORDSMAN = 6;
 			TOWER = 7;
 		}
-		Actor_type actor_type = 8;
+		Actor_type actor_type = 15;
 	}
 
 	/**
@@ -91,5 +106,5 @@ message State {
 	/**
 	 * Numbers of actors
 	 */
-	 int64 no_of_actors = 4;
+	int64 no_of_actors = 4;
 }
