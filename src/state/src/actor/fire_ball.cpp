@@ -28,7 +28,10 @@ FireBall::FireBall(
 		0,
 		0,
 		size,
-		ActorType::FIREBALL),
+		ActorType::FIREBALL,
+		false,
+		false
+	),
 	is_done(false),
 	time_to_live(time_to_live) {
 		attack_target = target;

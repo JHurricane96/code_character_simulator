@@ -36,7 +36,9 @@ Base::Base(
 		los_radius,
 		attack_speed,
 		0,
-		ActorType::BASE
+		ActorType::BASE,
+		false,
+		false
 	),
 	base_poisoning_radius(base_poisoning_radius),
 	base_poisoning_threshold(base_poisoning_threshold) {};

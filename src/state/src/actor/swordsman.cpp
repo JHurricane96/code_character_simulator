@@ -36,7 +36,9 @@ Swordsman::Swordsman(
 		los_radius,
 		attack_speed,
 		attack_range,
-		ActorType::SWORDSMAN
+		ActorType::SWORDSMAN,
+		true,
+		true
 	) {}
 
 void Swordsman::Attack() {
