@@ -6,13 +6,14 @@
 #include "state.h"
 #include "player_ai_helper.h"
 #include "player_state_handler/player_state_handler.h"
+#include "player_export.h"
 
 namespace player {
 
 /**
  * Class for Player AI
  */
-class PlayerAi {
+class PLAYER_EXPORT PlayerAi {
 	/**
 	 * Helper object defined by the Player
 	 */
