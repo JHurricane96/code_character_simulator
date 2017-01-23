@@ -41,7 +41,10 @@ Tower::Tower(
 		los_radius,
 		attack_speed,
 		range,
-		ActorType::TOWER),
+		ActorType::TOWER,
+		true,
+		false
+	),
 	tower_owner(TowerOwner::UNOWNED),
 	contention_radius(contention_radius),
 	max_contention_score(max_contention_score),

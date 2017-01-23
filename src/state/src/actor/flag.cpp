@@ -37,7 +37,9 @@ Flag::Flag(
 		los_radius,
 		attack_speed,
 		0,
-		ActorType::FLAG
+		ActorType::FLAG,
+		false,
+		false
 	), king(nullptr) {}
 
 void Flag::Capture(King * king) {

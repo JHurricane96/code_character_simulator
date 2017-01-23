@@ -39,7 +39,10 @@ Magician::Magician(
 		los_radius,
 		attack_speed,
 		range,
-		ActorType::MAGICIAN),
+		ActorType::MAGICIAN,
+		true,
+		true
+	),
 	fire_ball_speed(fire_ball_speed),
 	fire_ball_ttl(fire_ball_ttl),
 	fire_ball_size(fire_ball_size),

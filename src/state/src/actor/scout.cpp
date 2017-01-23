@@ -35,7 +35,9 @@ Scout::Scout(
 		los_radius,
 		attack_speed,
 		attack_range,
-		ActorType::SCOUT
+		ActorType::SCOUT,
+		false,
+		true
 	) {}
 
 void Scout::Update(float delta_time) {
