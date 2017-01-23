@@ -22,9 +22,9 @@ namespace state {
  * Multiplier for mountain to plain would be multiplier[MOUNTAIN][PLAIN]
  */
 const std::vector<std::vector<float>> Multiplier({
-	{ 1, 0.7, 1.3 },
-	{ 0.7, 0.7, 0.7 },
-	{ 1.3, 1, 1 }
+	{(float) 1, (float) 0.7, (float) 1.3 },
+	{(float) 0.7, (float) 0.7, (float) 0.7 },
+	{(float) 1.3, (float) 1, (float) 1 }
 });
 
 /**
