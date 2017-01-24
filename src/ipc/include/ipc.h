@@ -96,7 +96,6 @@ public:
  * Utilises Protocol Buffers for serializing structured data
  */
 	int StateTransfer (std::shared_ptr<state::State> StateVar, double i);
-	void InterruptTransfer(ipc::Interrupts* InterruptVar);
 	int StoreTerrain(state::Terrain TerrainVar);
 	state::Terrain LoadTerrain();
 	void IncomingInterrupts(Interrupts* InterruptVar);

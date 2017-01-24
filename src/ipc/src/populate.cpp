@@ -11,7 +11,6 @@
 #include "actor/actor.h"
 #include "ipc.h"
 #include "state.pb.h"
-#include "interrupts.pb.h"
 
 using namespace std;
 using namespace state;
@@ -51,9 +50,9 @@ int PopulateActors(shared_ptr<state::State> StateVar, IPC::State* StateMessage, 
 		ActorMessageP1->set_pos_y(pos.y + i);
 
 		if(actor1->GetAttackTarget() == NULL)
-			ActorMessageP1->set_attack(false);
+			ActorMessageP1->set_is_attacking(false);
 		else
-			ActorMessageP1->set_attack(true);
+			ActorMessageP1->set_is_attacking(true);
 
 		ActorMessageP1->set_hp(actor1->GetHp());
 		ActorMessageP1->set_max_hp(actor1->GetMaxHp());
@@ -104,9 +103,9 @@ int PopulateActors(shared_ptr<state::State> StateVar, IPC::State* StateMessage, 
 		ActorMessageP2->set_pos_y(pos.y);
 
 		if(actor2->GetAttackTarget() == NULL)
-			ActorMessageP2->set_attack(false);
+			ActorMessageP2->set_is_attacking(false);
 		else
-			ActorMessageP2->set_attack(true);
+			ActorMessageP2->set_is_attacking(true);
 
 		ActorMessageP2->set_hp(actor2->GetHp());
 		ActorMessageP2->set_max_hp(actor2->GetMaxHp());
@@ -226,12 +225,6 @@ int PopulateLOS(shared_ptr<state::State> StateVar, IPC::State* StateMessage) {
 	return 0;
 }
 
-int PopulateInterrupts(ipc::Interrupts* InterruptVar, IPC::Interrupts* InterruptMessage) {
-
-	InterruptMessage->set_play_status(InterruptVar->GetPlayStatus());
-	return 0;
-}
-
 namespace ipc {
 
 	/**
@@ -273,30 +266,5 @@ namespace ipc {
 		}
 
 		return 0;
-	}
-
-	void InterruptTransfer(ipc::Interrupts* InterruptVar) {
-
-		/**
-		 * Verify that the version of the library that we linked against is
-		 * compatible with the version of the headers we compiled against
-		 */
-		GOOGLE_PROTOBUF_VERIFY_VERSION;
-
-		fstream output("interrupt.txt", ios::out | ios::trunc | ios::binary);
-
-		IPC::Interrupts InterruptMessage;
-
-		if (PopulateInterrupts(InterruptVar, &InterruptMessage) < 0) {
-			cerr << "Failed to load interrupts" << endl;
-			return;
-		}
-
-		if (!InterruptMessage.SerializeToOstream(&output)) {
-			cerr << "Failed to transfer interrupt message" << endl;
-			return;
-		}
-
-		return;
 	}
 }

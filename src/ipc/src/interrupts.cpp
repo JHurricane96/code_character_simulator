@@ -12,7 +12,7 @@ using namespace std;
 
 void DepopulateInterrupt(string InterruptMessage, ipc::Interrupts* InterruptVar) {
 
-	int Interrupt = atoi (InterruptMessage);
+	int Interrupt = atoi (InterruptMessage.c_str());
 	int Status = 0;
 	int Count = 0;
 
@@ -64,10 +64,14 @@ namespace ipc {
 
 	void IncomingInterrupts(ipc::Interrupts* InterruptVar) {
 
-		string InterruptMessage;
+		while(true) {
 
-		std::cin >> InterruptMessage;
+			string InterruptMessage;
 
-		DepopulateInterrupt(InterruptMessage, InterruptVar);
+			std::cin >> InterruptMessage;
+
+			DepopulateInterrupt(InterruptMessage, InterruptVar);
+		}
+		return;
 	}
 }

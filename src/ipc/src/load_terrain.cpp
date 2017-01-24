@@ -3,7 +3,6 @@
  * Function definitions for loading terrain from file
 */
 #include <iostream>
-#include <string>
 #include <fstream>
 #include <thread>
 #include "ipc.h"
@@ -12,8 +11,6 @@
 #include "terrain.pb.h"
 
 using namespace std;
-
-const int TerrainSize = 20;
 
 /**
  * Depopulates the terrain
@@ -29,6 +26,8 @@ state::Terrain DepopulateTerrain(const IPC::Terrain& TerrainMessage) {
 
 	vector<vector<state::TerrainElement> > Grid;
 
+	const int TerrainSize = TerrainMessage.size();
+
 	/**
 	 * Iterates through the TerrainMessage object and fills in the Grid with
 	 * position, size and type of terrain
@@ -41,8 +40,6 @@ state::Terrain DepopulateTerrain(const IPC::Terrain& TerrainMessage) {
 		{
 
 			const IPC::Terrain::TerrainElement& ElementMessage = RowMessage.element(j);
-
-			IPC::Terrain::Vector2D Position(ElementMessage.position());
 			
 			state::TERRAIN_TYPE terrain_type;
 			switch(ElementMessage.type())
@@ -86,7 +83,7 @@ namespace ipc {
 
 		IPC::Terrain TerrainMessage;
 
-		fstream input("terrain_level1.txt", ios::in | ios::binary);
+		fstream input("terrain_level2.txt", ios::in | ios::binary);
 
 		if (!TerrainMessage.ParseFromIstream(&input)) {
 			cerr << "Failed to retrieve state message" << endl;
