@@ -49,18 +49,6 @@ void PopulateTerrain(state::Terrain TerrainVar, IPC::Terrain* TerrainMessage) {
 
 			state::TerrainElement ElementObject = TerrainVar.OffsetToTerrainElement(offset);
 
-			physics::Vector2D position = ElementObject.GetPosition();
-
-			IPC::Terrain::Vector2D* ElementPosition(new IPC::Terrain::Vector2D);
-
-			ElementPosition->set_x(position.x);
-			ElementPosition->set_y(position.y);
-			ElementMessage->set_allocated_position(ElementPosition);
-
-			int64_t ElementSize = ElementObject.GetSize();
-
-			ElementMessage->set_size(ElementSize);
-
 			state::TERRAIN_TYPE terrain_type = ElementObject.GetTerrainType();
 
 			switch(terrain_type){
@@ -76,6 +64,9 @@ void PopulateTerrain(state::Terrain TerrainVar, IPC::Terrain* TerrainMessage) {
 			}
 		}
 	}
+	TerrainMessage->set_size(size);
+
+	return;
 }
 
 namespace ipc {
@@ -98,7 +89,7 @@ namespace ipc {
 
 		IPC::Terrain TerrainMessage;
 
-		fstream output("terrain_level1.txt", ios::out | ios::trunc | ios::binary);
+		fstream output("terrain_level2.txt", ios::out | ios::trunc | ios::binary);
 
 		PopulateTerrain(TerrainVar, &TerrainMessage);
 

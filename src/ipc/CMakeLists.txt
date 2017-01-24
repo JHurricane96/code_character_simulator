@@ -15,11 +15,6 @@ include_directories(${Protobuf_INCLUDE_DIRS})
 include_directories(include)
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
-#set(ProtoFiles
-#	state.proto
-#	terrain.proto
-#	interrupts.proto
-#)
 file(GLOB ProtoFiles "${CMAKE_CURRENT_SOURCE_DIR}/proto/*.proto")
 protobuf_generate_cpp(PROTO_SRCS PROTO_HDRS ${ProtoFiles})
 

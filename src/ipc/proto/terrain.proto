@@ -27,27 +27,16 @@ package IPC;
 message Terrain {
 
 	/**
-	* Message describing Vector2D Class
-	*/
-	message Vector2D {
-	double x = 1;
-	double y = 2;
-	}
-
-	/**
 	* Message describing TerrainElement Class
 	*/
 	message TerrainElement {
 
-	Vector2D position = 1;
-	int64 size = 2;
-	enum TERRAIN_TYPE {
-		PLAIN = 0;
-		FOREST = 1;
-		MOUNTAIN = 2;
-		UNDEFINED = 3;
-	}
-	TERRAIN_TYPE type = 3;
+		enum TERRAIN_TYPE {
+			PLAIN = 0;
+			FOREST = 1;
+			MOUNTAIN = 2;
+		}
+		TERRAIN_TYPE type = 1;
 	}
 
 	/**
@@ -58,4 +47,6 @@ message Terrain {
 	}
 
 	repeated TerrainRow row = 1;
+
+	int64 size = 2;
 }
