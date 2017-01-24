@@ -4,34 +4,52 @@
 */
 #include <iostream>
 #include <string>
-#include <fstream>
 #include <thread>
-#include "state.h"
-#include "utilities.h"
-#include "actor/actor.h"
+#include <stdlib.h>
 #include "ipc.h"
-#include "interrupts.pb.h"
 
 using namespace std;
 
-void DepopulateInterrupt(IPC::Interrupts& InterruptMessage, ipc::Interrupts* InterruptVar) {
+void DepopulateInterrupt(string InterruptMessage, ipc::Interrupts* InterruptVar) {
 
-	switch(InterruptMessage.interrupt_case()) {
+	int Interrupt = atoi (InterruptMessage);
+	int Status = 0;
+	int Count = 0;
 
-		case IPC::Interrupts::kPlayStatus		:
-			InterruptVar->SetPlayStatus(InterruptMessage.play_status());
-			break;
-		case IPC::Interrupts::kLevelNumber		:
-			InterruptVar->SetLevelNumber(InterruptMessage.level_number());
-			break;
-		case IPC::Interrupts::kExitStatus		:
-			InterruptVar->SetExitStatus(InterruptMessage.exit_status());
-			break;
-		case IPC::Interrupts::kRestartStatus	:
-			InterruptVar->SetRestartStatus(InterruptMessage.restart_status());
-			break;
-		case IPC::Interrupts::INTERRUPT_NOT_SET	:
-			break;
+	while(Interrupt > 0) {
+
+		switch(Count) {
+			case 0:
+				Status = Interrupt % 10;
+				if(Status == 1)
+					InterruptVar->SetRestartStatus(false);
+				else if(Status == 2)
+					InterruptVar->SetRestartStatus(true);
+				Interrupt/=10;
+				break;
+			case 1:
+				Status = Interrupt % 10;
+				if(Status == 1)
+					InterruptVar->SetExitStatus(false);
+				else if(Status == 2)
+					InterruptVar->SetExitStatus(true);
+				Interrupt/=10;
+				break;
+			case 2:
+				Status = Interrupt % 100;
+				InterruptVar->SetLevelNumber(Status);
+				Interrupt/=100;
+				break;
+			case 3:
+				Status = Interrupt % 10;
+				if(Status == 1)
+					InterruptVar->SetPlayStatus(false);
+				else if(Status == 2)
+					InterruptVar->SetPlayStatus(true);
+				Interrupt/=10;
+				break;
+		}
+		Count++;
 	}
 	return;
 }
@@ -46,19 +64,9 @@ namespace ipc {
 
 	void IncomingInterrupts(ipc::Interrupts* InterruptVar) {
 
-		/**
-		 * Verify that the version of the library that we linked against is
-		 * compatible with the version of the headers we compiled against
-		 */
-		GOOGLE_PROTOBUF_VERIFY_VERSION;
+		string InterruptMessage;
 
-		fstream input("interrupt.txt", ios::in | ios::binary);
-
-		IPC::Interrupts InterruptMessage;
-
-		if (!InterruptMessage.ParseFromIstream(&std::cin)) {
-			cerr << "Failed to retrieve interrupt" << endl;
-		}
+		std::cin >> InterruptMessage;
 
 		DepopulateInterrupt(InterruptMessage, InterruptVar);
 	}
