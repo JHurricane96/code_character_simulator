@@ -25,8 +25,9 @@ private:
 	 */
 	int64_t base_poisoning_radius;
 	/**
-	 * The maximum number of troops that can be positioned near the base for
-	 * which base poisoning doesn't apply
+	 * The maximum numerical advantage that a player can have over his opponent
+	 * in terms of number of troops positioned near his base for which base
+	 * poisoning doesn't apply
 	 */
 	int64_t base_poisoning_threshold;
 public:
@@ -55,7 +56,9 @@ public:
 	 *
 	 * @return     The base poison penalty
 	 */
-	int64_t GetBasePoisonPenalty(std::vector<std::shared_ptr<Actor> > actors);
+	int64_t GetBasePoisonPenalty(
+		std::vector<std::vector<std::shared_ptr<Actor> > > actors
+	);
 	/**
 	 * Update function to be called every tick
 	 *
