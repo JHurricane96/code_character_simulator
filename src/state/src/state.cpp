@@ -689,7 +689,7 @@ void State::Update(float delta_time) {
 	}
 
 	for (int64_t i = 0; i <= LAST_PLAYER; i++) {
-		base_poisoning_penalty[i] += bases[i]->GetBasePoisonPenalty(sorted_actors[i]);
+		base_poisoning_penalty[i] += bases[i]->GetBasePoisonPenalty(sorted_actors);
 	}
 
 	terrain.Update(sorted_actors);
