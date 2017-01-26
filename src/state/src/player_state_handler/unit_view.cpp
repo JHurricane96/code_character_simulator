@@ -54,6 +54,10 @@ physics::Vector2D UnitView::GetVelocity() {
 	return unit->GetVelocity();
 }
 
+int64_t UnitView::GetAttackRange() {
+	return unit->GetAttackRange();
+}
+
 physics::Vector2D UnitView::GetPosition() {
 	return unit->GetPosition();
 }
