@@ -132,6 +132,12 @@ public:
 	 */
 	physics::Vector2D GetVelocity();
 	/**
+	 * Gets the Actor's attack range
+	 *
+	 * @return     The attack range
+	 */
+	int64_t GetAttackRange();
+	/**
 	 * Gets the position vector of the actor
 	 *
 	 * @return     The position vector
