@@ -92,19 +92,19 @@ public:
 	 *
 	 * @return     The enemy's Magicians
 	 */
-	std::vector<EnemyUnitView> GetEnemyMagicians();
+	std::vector<EnemyMagicianView> GetEnemyMagicians();
 	/**
 	 * Gets a player's Scouts
 	 *
 	 * @return     The player's Scouts
 	 */
-	std::vector<UnitView> GetScouts();
+	std::vector<ScoutView> GetScouts();
 	/**
 	 * Gets the enemy's Scouts that are in LOS
 	 *
 	 * @return     The enemy's Scouts
 	 */
-	std::vector<EnemyUnitView> GetEnemyScouts();
+	std::vector<EnemyScoutView> GetEnemyScouts();
 	/**
 	 * Gets a player's Swordsmen
 	 *
@@ -134,7 +134,7 @@ public:
 	 *
 	 * @return     The King
 	 */
-	UnitView GetKing();
+	KingView GetKing();
 	/**
 	 * Gets the enemy's King, taking into account LOS
 	 *
@@ -150,31 +150,31 @@ public:
 	 * @return     if in LOS of player, the enemy's king
 	 *             else, nullptr
 	 */
-	EnemyUnitView GetEnemyKing(int * success);
+	EnemyKingView GetEnemyKing(int * success);
 	/**
 	 * Gets player's Flag
 	 *
 	 * @return     The Flag
 	 */
-	UnitView GetFlag();
+	FlagView GetFlag();
 	/**
 	 * Gets enemy's Flag
 	 *
 	 * @return     The Enemy's Flag
 	 */
-	EnemyUnitView GetEnemyFlag();
+	EnemyFlagView GetEnemyFlag();
 	/**
 	 * Gets the player's Base
 	 *
 	 * @return     The player's Base
 	 */
-	UnitView GetBase();
+	BaseView GetBase();
 	/**
 	 * Gets the enemy's Base
 	 *
 	 * @return     The enemy's Base
 	 */
-	EnemyUnitView GetEnemyBase();
+	EnemyBaseView GetEnemyBase();
 	/**
 	 * Gets TerrainElement corresponding to position vector
 	 *

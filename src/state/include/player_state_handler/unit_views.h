@@ -146,7 +146,16 @@ public:
 };
 
 typedef UnitView SwordsmanView;
+typedef UnitView ScoutView;
+typedef UnitView KingView;
+typedef UnitView FlagView;
+typedef UnitView BaseView;
 typedef EnemyUnitView EnemySwordsmanView;
+typedef EnemyUnitView EnemyMagicianView;
+typedef EnemyUnitView EnemyScoutView;
+typedef EnemyUnitView EnemyKingView;
+typedef EnemyUnitView EnemyFlagView;
+typedef EnemyUnitView EnemyBaseView;
 
 class EnemyTowerView: public EnemyUnitView {
 private:
