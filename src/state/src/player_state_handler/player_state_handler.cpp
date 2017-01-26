@@ -35,25 +35,25 @@ std::vector<MagicianView> PlayerStateHandler::GetMagicians() {
 	return magician_views;
 }
 
-std::vector<EnemyUnitView> PlayerStateHandler::GetEnemyMagicians() {
+std::vector<EnemyMagicianView> PlayerStateHandler::GetEnemyMagicians() {
 	auto magicians = state->GetEnemyMagicians(player_id);
-	std::vector<EnemyUnitView> magician_views;
+	std::vector<EnemyMagicianView> magician_views;
 	for (auto magician : magicians)
 		magician_views.push_back(EnemyUnitView(magician.get()));
 	return magician_views;
 }
 
-std::vector<UnitView> PlayerStateHandler::GetScouts() {
+std::vector<ScoutView> PlayerStateHandler::GetScouts() {
 	auto scouts = state->GetScouts(player_id);
-	std::vector<UnitView> scout_views;
+	std::vector<ScoutView> scout_views;
 	for (auto scout : scouts)
 		scout_views.push_back(UnitView(scout.get()));
 	return scout_views;
 }
 
-std::vector<EnemyUnitView> PlayerStateHandler::GetEnemyScouts() {
+std::vector<EnemyScoutView> PlayerStateHandler::GetEnemyScouts() {
 	auto scouts = state->GetEnemyScouts(player_id);
-	std::vector<EnemyUnitView> scout_views;
+	std::vector<EnemyScoutView> scout_views;
 	for (auto scout : scouts)
 		scout_views.push_back(EnemyUnitView(scout.get()));
 	return scout_views;
@@ -94,31 +94,31 @@ std::vector<EnemyTowerView> PlayerStateHandler::GetEnemyTowers() {
 	return tower_views;
 }
 
-UnitView PlayerStateHandler::GetFlag() {
-	return UnitView(state->GetFlag(player_id).get());
+FlagView PlayerStateHandler::GetFlag() {
+	return FlagView(state->GetFlag(player_id).get());
 }
 
-EnemyUnitView PlayerStateHandler::GetEnemyFlag() {
-	return EnemyUnitView(state->GetEnemyFlag(player_id).get());
+EnemyFlagView PlayerStateHandler::GetEnemyFlag() {
+	return EnemyFlagView(state->GetEnemyFlag(player_id).get());
 }
 
-UnitView PlayerStateHandler::GetBase() {
-	return UnitView(state->GetBase(player_id).get());
+BaseView PlayerStateHandler::GetBase() {
+	return BaseView(state->GetBase(player_id).get());
 }
 
-EnemyUnitView PlayerStateHandler::GetEnemyBase() {
-	return EnemyUnitView(state->GetEnemyBase(player_id).get());
+EnemyBaseView PlayerStateHandler::GetEnemyBase() {
+	return EnemyBaseView(state->GetEnemyBase(player_id).get());
 }
 
-UnitView PlayerStateHandler::GetKing() {
-	return UnitView(state->GetKing(player_id).get());
+KingView PlayerStateHandler::GetKing() {
+	return KingView(state->GetKing(player_id).get());
 }
 
-EnemyUnitView PlayerStateHandler::GetEnemyKing(int * success) {
+EnemyKingView PlayerStateHandler::GetEnemyKing(int * success) {
 	auto enemy_king = state->GetEnemyKing(player_id, success);
 	if (enemy_king != nullptr)
-		return EnemyUnitView(enemy_king.get());
-	return EnemyUnitView();
+		return EnemyKingView(enemy_king.get());
+	return EnemyKingView();
 }
 
 TerrainElementView PlayerStateHandler::CoordinateToTerrainElement(
