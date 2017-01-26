@@ -3,6 +3,7 @@
  * Function definitions for loading terrain from file
 */
 #include <iostream>
+#include <string>
 #include <fstream>
 #include <thread>
 #include "ipc.h"
@@ -73,7 +74,7 @@ namespace ipc {
 	 * @return     Exit status
 	 */
 
-	state::Terrain LoadTerrain() {
+	state::Terrain LoadTerrain(std::string filename) {
 
 		/**
 		 * Verify that the version of the library that we linked against is
@@ -83,7 +84,7 @@ namespace ipc {
 
 		IPC::Terrain TerrainMessage;
 
-		fstream input("terrain_level2.txt", ios::in | ios::binary);
+		fstream input(filename, ios::in | ios::binary);
 
 		if (!TerrainMessage.ParseFromIstream(&input)) {
 			cerr << "Failed to retrieve state message" << endl;
