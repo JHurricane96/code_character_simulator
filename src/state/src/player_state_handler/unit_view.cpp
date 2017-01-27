@@ -46,8 +46,13 @@ int64_t UnitView::GetMaxSpeed() {
 	return unit->GetMaxSpeed();
 }
 
-EnemyUnitView UnitView::GetAttackTarget() {
-	return EnemyUnitView(unit->GetAttackTarget());
+EnemyUnitView UnitView::GetAttackTarget(int * success) {
+	auto target =  unit->GetAttackTarget();
+	if (success) {
+		if (target != nullptr) *success = 1;
+		else *success = 0;
+	}
+	return EnemyUnitView(target);
 }
 
 physics::Vector2D UnitView::GetVelocity() {
