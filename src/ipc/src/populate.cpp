@@ -36,6 +36,9 @@ int PopulateActors(shared_ptr<state::State> StateVar, IPC::State* StateMessage, 
 
 	int ActorLength = P1_Actors.size() + P2_Actors.size();
 
+	bool ScoutVisibleP1 = !StateVar->GetEnemyScouts(P2).empty();
+	bool ScoutVisibleP2 = !StateVar->GetEnemyScouts(P1).empty();
+
 	for (auto actor1 : P1_Actors)
 	{
 
@@ -49,13 +52,32 @@ int PopulateActors(shared_ptr<state::State> StateVar, IPC::State* StateMessage, 
 		ActorMessageP1->set_pos_x(pos.x + i);
 		ActorMessageP1->set_pos_y(pos.y + i);
 
-		if(actor1->GetAttackTarget() == NULL)
+		if(actor1->GetAttackTarget() == nullptr)
 			ActorMessageP1->set_is_attacking(false);
-		else
+		else {
 			ActorMessageP1->set_is_attacking(true);
+
+			IPC::State::Vector2D AttackTargetPosition;
+			physics::Vector2D pos = actor1->GetAttackTarget()->GetPosition();
+
+			AttackTargetPosition.set_x(pos.x);
+			AttackTargetPosition.set_y(pos.y);
+
+			ActorMessageP1->set_allocated_attack_target_position(&AttackTargetPosition);
+		}
 
 		ActorMessageP1->set_hp(actor1->GetHp());
 		ActorMessageP1->set_max_hp(actor1->GetMaxHp());
+		ActorMessageP1->set_is_moving(actor1->GetVelocity().magnitude() != 0);
+
+		IPC::State::Vector2D* Dest = (new IPC::State::Vector2D);
+
+		auto Destination = actor1->GetPathPlannerHelper()->GetDestination();
+
+		Dest->set_x(Destination.x);
+		Dest->set_y(Destination.y);
+
+		ActorMessageP1->set_allocated_destination(Dest);
 
 		state::ActorType typevar = actor1->GetActorType();
 
@@ -72,12 +94,15 @@ int PopulateActors(shared_ptr<state::State> StateVar, IPC::State* StateMessage, 
 				break;
 			case state::ActorType::FLAG		:
 				ActorMessageP1->set_actor_type(IPC::State::Actor::FLAG);
+				ActorMessageP1->set_is_being_carried(static_pointer_cast<Flag>(actor1)->IsCaptured());
 				break;
 			case state::ActorType::KING 		:
 				ActorMessageP1->set_actor_type(IPC::State::Actor::KING);
+				ActorMessageP1->set_is_carrying_flag(static_pointer_cast<King>(actor1)->HasFlag());
 				break;
 			case state::ActorType::SCOUT		:
 				ActorMessageP1->set_actor_type(IPC::State::Actor::SCOUT);
+				ActorMessageP1->set_is_visible_to_enemy(ScoutVisibleP1);
 				break;
 			case state::ActorType::SWORDSMAN	:
 				ActorMessageP1->set_actor_type(IPC::State::Actor::SWORDSMAN);
@@ -102,13 +127,32 @@ int PopulateActors(shared_ptr<state::State> StateVar, IPC::State* StateMessage, 
 		ActorMessageP2->set_pos_x(pos.x);
 		ActorMessageP2->set_pos_y(pos.y);
 
-		if(actor2->GetAttackTarget() == NULL)
+		if(actor2->GetAttackTarget() == nullptr)
 			ActorMessageP2->set_is_attacking(false);
-		else
+		else {
 			ActorMessageP2->set_is_attacking(true);
+
+			IPC::State::Vector2D AttackTargetPosition;
+			physics::Vector2D pos = actor2->GetAttackTarget()->GetPosition();
+
+			AttackTargetPosition.set_x(pos.x);
+			AttackTargetPosition.set_y(pos.y);
+
+			ActorMessageP2->set_allocated_attack_target_position(&AttackTargetPosition);
+		}
 
 		ActorMessageP2->set_hp(actor2->GetHp());
 		ActorMessageP2->set_max_hp(actor2->GetMaxHp());
+		ActorMessageP2->set_is_moving(actor2->GetVelocity().magnitude() != 0);
+
+		IPC::State::Vector2D Dest;
+
+		auto Destination = actor2->GetPathPlannerHelper()->GetDestination();
+
+		Dest.set_x(Destination.x);
+		Dest.set_y(Destination.y);
+
+		ActorMessageP2->set_allocated_destination(&Dest);
 
 		state::ActorType typevar2 = actor2->GetActorType();
 
@@ -125,12 +169,15 @@ int PopulateActors(shared_ptr<state::State> StateVar, IPC::State* StateMessage, 
 				break;
 			case state::ActorType::FLAG		:
 				ActorMessageP2->set_actor_type(IPC::State::Actor::FLAG);
+				ActorMessageP2->set_is_being_carried(static_pointer_cast<Flag>(actor2)->IsCaptured());
 				break;
 			case state::ActorType::KING 		:
 				ActorMessageP2->set_actor_type(IPC::State::Actor::KING);
+				ActorMessageP2->set_is_carrying_flag(static_pointer_cast<King>(actor2)->HasFlag());
 				break;
 			case state::ActorType::SCOUT		:
 				ActorMessageP2->set_actor_type(IPC::State::Actor::SCOUT);
+				ActorMessageP2->set_is_visible_to_enemy(ScoutVisibleP2);
 				break;
 			case state::ActorType::SWORDSMAN	:
 				ActorMessageP2->set_actor_type(IPC::State::Actor::SWORDSMAN);
