@@ -335,8 +335,8 @@ std::vector<std::shared_ptr<Tower> > State::GetEnemyTowers(
 	auto enemy_towers = towers[(player_id + 1) % (LAST_PLAYER + 1)];
 	std::vector<std::shared_ptr<Tower> > visible_enemy_towers;
 	for (auto tower : enemy_towers) {
-		if (terrain.CoordinateToTerrainElement(tower->GetPosition())
-		   .GetLos(player_id) == DIRECT_LOS)
+		auto los = terrain.CoordinateToTerrainElement(tower->GetPosition()).GetLos(player_id);
+		if (los == DIRECT_LOS || los == EXPLORED)
 			visible_enemy_towers.push_back(tower);
 	}
 	return visible_enemy_towers;
@@ -626,19 +626,20 @@ list_act_id_t State::GetActorEnemies(PlayerId player_id, act_id_t actor_id) {
 
 list_act_id_t State::GetPlayerEnemyIds(PlayerId player_id) {
 	list_act_id_t all_enemies;
-	auto grid_size = terrain.CoordinateToTerrainElement(physics::Vector2D(0,0))
-	                        .GetSize();
 	for (int pid = 0; pid <= LAST_PLAYER; pid++)
 		if (pid != player_id) {
 			for (auto actor : sorted_actors[pid]) {
 				auto te = terrain.CoordinateToTerrainElement(actor->GetPosition());
 				if (te.GetLos(player_id) == DIRECT_LOS &&
-					actor->GetActorType() != ActorType::SCOUT)
+					actor->GetActorType() != ActorType::SCOUT &&
+					actor->GetActorType() != ActorType::TOWER)
 						all_enemies.push_back(actor->GetId());
 				}
 			}
 	for (auto scout : GetEnemyScouts(player_id))
 		all_enemies.push_back(scout->GetId());
+	for (auto tower : GetEnemyTowers(player_id))
+		all_enemies.push_back(tower->GetId());
 	return all_enemies;
 }
 
