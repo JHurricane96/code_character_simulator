@@ -122,9 +122,16 @@ public:
 	/**
 	 * Gets the actor's target
 	 *
+	 * success is:
+	 * - 0  if the actor isn't attccking
+	 * - 1  if the actor is attacking
+	 *
+	 * @param      success    If valid pointer, holds success
+	 *                        of the function
+	 *
 	 * @return     The restricted view of the enemy
 	 */
-	EnemyUnitView GetAttackTarget();
+	EnemyUnitView GetAttackTarget(int * success);
 	/**
 	 * Gets the velocity vector of the actor
 	 *
