@@ -1,6 +1,6 @@
 /**
- * @file guard_rules.h
- * Implementation file of the Guard Strategies and Utilities for a Single Actor Unit per tick
+ * @file attack_rules.h
+ * Implementation file of the Attack Strategies and Utilities for a Single Actor Unit per tick
  */
 
 #ifndef ATTACK_RULES_H
