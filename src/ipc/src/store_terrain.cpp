@@ -29,7 +29,7 @@ using namespace physics;
  */
 void PopulateTerrain(state::Terrain TerrainVar, IPC::Terrain* TerrainMessage) {
 
-	int64_t size = TerrainVar.GetRows();
+	int64_t no_of_rows = TerrainVar.GetRows();
 
 	/**
 	 * Loop through the terrain to fill the terrain element unit by unit
@@ -49,6 +49,11 @@ void PopulateTerrain(state::Terrain TerrainVar, IPC::Terrain* TerrainMessage) {
 
 			state::TerrainElement ElementObject = TerrainVar.OffsetToTerrainElement(offset);
 
+			if(row == 0 && col == 0) {
+
+				TerrainMessage->set_size_of_element(ElementObject.GetSize());
+			}
+
 			state::TERRAIN_TYPE terrain_type = ElementObject.GetTerrainType();
 
 			switch(terrain_type){
@@ -64,7 +69,7 @@ void PopulateTerrain(state::Terrain TerrainVar, IPC::Terrain* TerrainMessage) {
 			}
 		}
 	}
-	TerrainMessage->set_size(size);
+	TerrainMessage->set_no_of_rows(no_of_rows);
 
 	return;
 }
