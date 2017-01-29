@@ -27,7 +27,8 @@ state::Terrain DepopulateTerrain(const IPC::Terrain& TerrainMessage) {
 
 	vector<vector<state::TerrainElement> > Grid;
 
-	const int TerrainSize = TerrainMessage.size();
+	const int NoOfRows = TerrainMessage.no_of_rows();
+	const int SideLength = TerrainMessage.size_of_element();
 
 	/**
 	 * Iterates through the TerrainMessage object and fills in the Grid with
@@ -55,7 +56,7 @@ state::Terrain DepopulateTerrain(const IPC::Terrain& TerrainMessage) {
 					terrain_type = state::MOUNTAIN;
 					break;
 			}
-			Row.push_back(state::TerrainElement(terrain_type, physics::Vector2D(i * TerrainSize, j * TerrainSize), TerrainSize));
+			Row.push_back(state::TerrainElement(terrain_type, physics::Vector2D(i * NoOfRows, j * NoOfRows), SideLength));
 		}
 		Grid.push_back(Row);
 	}

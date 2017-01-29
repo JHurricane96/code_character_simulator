@@ -48,5 +48,13 @@ message Terrain {
 
 	repeated TerrainRow row = 1;
 
-	int64 size = 2;
+	/**
+	 * Contains no. of rows/columns in the terrain
+	 */
+	int64 no_of_rows = 2;
+
+	/**
+	 * Contains side length of the element
+	 */
+	int64 size_of_element = 3;
 }

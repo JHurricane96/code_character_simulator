@@ -26,7 +26,7 @@ using namespace physics;
  *
  * @return     Exit status
  */
-int PopulateActors(shared_ptr<state::State> StateVar, IPC::State* StateMessage, double i) {
+int PopulateActors(shared_ptr<state::State> StateVar, IPC::State* StateMessage) {
 
 	PlayerId P1 = PLAYER1;
 	PlayerId P2 = PLAYER2;
@@ -47,10 +47,10 @@ int PopulateActors(shared_ptr<state::State> StateVar, IPC::State* StateMessage, 
 		ActorMessageP1->set_id(actor1->GetId());
 		ActorMessageP1->set_player_id(actor1->GetPlayerId());
 	
-		auto pos = actor1->GetPosition();
+		physics::Vector2D pos = actor1->GetPosition();
 
-		ActorMessageP1->set_pos_x(pos.x + i);
-		ActorMessageP1->set_pos_y(pos.y + i);
+		ActorMessageP1->set_x(pos.x);
+		ActorMessageP1->set_y(pos.y);
 
 		if(actor1->GetAttackTarget() == nullptr)
 			ActorMessageP1->set_is_attacking(false);
@@ -58,10 +58,10 @@ int PopulateActors(shared_ptr<state::State> StateVar, IPC::State* StateMessage, 
 			ActorMessageP1->set_is_attacking(true);
 
 			IPC::State::Vector2D AttackTargetPosition;
-			physics::Vector2D pos = actor1->GetAttackTarget()->GetPosition();
+			physics::Vector2D attack_pos = actor1->GetAttackTarget()->GetPosition();
 
-			AttackTargetPosition.set_x(pos.x);
-			AttackTargetPosition.set_y(pos.y);
+			AttackTargetPosition.set_x(attack_pos.x);
+			AttackTargetPosition.set_y(attack_pos.y);
 
 			ActorMessageP1->set_allocated_attack_target_position(&AttackTargetPosition);
 		}
@@ -122,10 +122,10 @@ int PopulateActors(shared_ptr<state::State> StateVar, IPC::State* StateMessage, 
 		ActorMessageP2->set_id(actor2->GetId());
 		ActorMessageP2->set_player_id(actor2->GetPlayerId());
 	
-		auto pos = actor2->GetPosition();
+		physics::Vector2D pos = actor2->GetPosition();
 
-		ActorMessageP2->set_pos_x(pos.x);
-		ActorMessageP2->set_pos_y(pos.y);
+		ActorMessageP2->set_x(pos.x);
+		ActorMessageP2->set_y(pos.y);
 
 		if(actor2->GetAttackTarget() == nullptr)
 			ActorMessageP2->set_is_attacking(false);
@@ -133,10 +133,10 @@ int PopulateActors(shared_ptr<state::State> StateVar, IPC::State* StateMessage, 
 			ActorMessageP2->set_is_attacking(true);
 
 			IPC::State::Vector2D AttackTargetPosition;
-			physics::Vector2D pos = actor2->GetAttackTarget()->GetPosition();
+			physics::Vector2D attack_pos = actor2->GetAttackTarget()->GetPosition();
 
-			AttackTargetPosition.set_x(pos.x);
-			AttackTargetPosition.set_y(pos.y);
+			AttackTargetPosition.set_x(attack_pos.x);
+			AttackTargetPosition.set_y(attack_pos.y);
 
 			ActorMessageP2->set_allocated_attack_target_position(&AttackTargetPosition);
 		}
@@ -284,7 +284,7 @@ namespace ipc {
 	 * @return     Exit status
 	 */
 
-	int StateTransfer(std::shared_ptr<state::State> StateVar, double i) {
+	int StateTransfer(std::shared_ptr<state::State> StateVar) {
 
 		/**
 		 * Verify that the version of the library that we linked against is
@@ -297,7 +297,7 @@ namespace ipc {
 		fstream output("file.txt", ios::out | ios::trunc | ios::binary);
 
 
-		if (PopulateActors(StateVar, &StateMessage, i) < 0) {
+		if (PopulateActors(StateVar, &StateMessage) < 0) {
 			cerr << "Failed to load actors" << endl;
 			return -1;
 		}

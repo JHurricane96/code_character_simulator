@@ -38,8 +38,8 @@ message State {
 
 		int64 id = 1;
 		int64 player_id = 2;
-		int64 pos_x = 3;
-		int64 pos_y = 4;
+		double x = 3;
+		double y = 4;
 		bool is_attacking = 5;
 		int64 hp = 6;
 		int64 max_hp = 7;
