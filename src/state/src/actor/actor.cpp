@@ -52,6 +52,7 @@ Actor::Actor(
 	attack_speed(attack_speed),
 	attack_range(attack_range),
 	is_dead(false),
+	respawn_location(nullptr),
 	path_planner_helper() {}
 
 Actor::Actor(const Actor& other) {
@@ -172,14 +173,14 @@ void Actor::Die() {
 	hp = 0;
 	time_spent_near_base = 0;
 	position.x = position.y = 0;
-	respawn_location.x = respawn_location.y = -1;
+	respawn_location = nullptr;
 	attack_target = nullptr;
 }
 
 void Actor::Respawn() {
 	is_dead = false;
 	hp = max_hp;
-	position = respawn_location;
+	position = respawn_location->GetPosition();
 }
 
 void Actor::DecreaseRespawnTime(float delta_time) {
@@ -211,11 +212,11 @@ void Actor::Damage(int64_t damage_amount) {
 	hp -= damage_amount;
 }
 
-physics::Vector2D Actor::GetRespawnLocation() {
+Actor * Actor::GetRespawnLocation() {
 	return respawn_location;
 }
 
-void Actor::SetRespawnLocation(physics::Vector2D respawn_location) {
+void Actor::SetRespawnLocation(Actor * respawn_location) {
 	this->respawn_location = respawn_location;
 }
 
@@ -251,7 +252,12 @@ void Actor::MergeWithBuffer(
 	else {
 		attack_target = nullptr;
 	}
-	respawn_location = actor->respawn_location;
+	if (actor->respawn_location != nullptr) {
+		respawn_location = actors[actor->respawn_location->id].get();
+	}
+	else {
+		respawn_location = nullptr;
+	}
 }
 
 void Actor::MergeWithMain(

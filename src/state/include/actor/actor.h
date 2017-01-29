@@ -135,9 +135,9 @@ protected:
 	 * A player sets this for a dead Actor to signal that he's ready to
 	 * respawn it, assuming time_to_respawn is 0
 	 *
-	 * Set to (-1, -1) on death
+	 * Set to nullptr on death
 	 */
-	physics::Vector2D respawn_location;
+	Actor * respawn_location;
 	/**
 	 * An instance of the PathPlannerHelper class to help with path planning
 	 */
@@ -386,13 +386,13 @@ public:
 	 *
 	 * @return     The Actor's respawn location
 	 */
-	physics::Vector2D GetRespawnLocation();
+	Actor * GetRespawnLocation();
 	/**
 	 * Sets the Actor's respawn location
 	 *
 	 * @param[in]  respawn_location  The new respawn location
 	 */
-	void SetRespawnLocation(physics::Vector2D respawn_location);
+	void SetRespawnLocation(Actor * respawn_location);
 	/**
 	 * Merges this, an Actor in the main state, with the corresponding
 	 * Actor in a player's state

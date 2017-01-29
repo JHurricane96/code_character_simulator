@@ -78,7 +78,7 @@ void Tower::Die() {
 	time_to_respawn = 0;
 	hp = 0;
 	time_spent_near_base = 0;
-	respawn_location = position;
+	respawn_location = nullptr;
 	attack_target = nullptr;
 	contention_score = 0;
 }
