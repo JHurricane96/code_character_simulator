@@ -591,7 +591,7 @@ void State::RespawnUnit(
 		return;
 	}
 
-	actor->SetRespawnLocation(respawn_actor->GetPosition());
+	actor->SetRespawnLocation(respawn_actor.get());
 	SetIfValid(success, 1);
 }
 
