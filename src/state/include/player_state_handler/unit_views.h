@@ -43,13 +43,20 @@ public:
 class STATE_EXPORT EnemyUnitView {
 private:
 	/**
-	 * Pointer to underlying Actor instance which the view provides an
-	 * interface for.
-	 */
-	Actor * unit;
-	public:
+	* The actor ID
+	*/
+	act_id_t id;
+	/**
+	* The type of this Actor
+	*/
+	ActorType actor_type;
+	/**
+	* Position of the actor
+	*/
+	physics::Vector2D position;
+public:
 	EnemyUnitView();
-	EnemyUnitView(Actor * unit);
+	EnemyUnitView(Actor * actor);
 	/**
 	 * Gets the ID of the enemy
 	 *
@@ -78,13 +85,61 @@ private:
 class STATE_EXPORT UnitView {
 private:
 	/**
-	 * Pointer to underlying Actor instance which the view provides an
-	 * interface for.
+	 * The actor ID
 	 */
-	Actor * unit;
+	act_id_t id;
+	/**
+	 * The type of this Actor
+	 */
+	ActorType actor_type;
+	/**
+	 * The damage the actor can deal
+	 */
+	int64_t attack;
+	/**
+	 * The number of health points the actor currently has
+	 */
+	int64_t hp;
+	/**
+	 * The max HP of the actor
+	 */
+	int64_t max_hp;
+	/**
+	 * The max speed the actor can travel at
+	 */
+	int64_t max_speed;
+	/**
+	 * The current speed the actor is travelling at
+	 */
+	float speed;
+	/**
+	 * The player's attack target
+	 */
+	std::unique_ptr<EnemyUnitView> attack_target;
+	/**
+	 * The actor's position vector
+	 */
+	physics::Vector2D position;
+	/**
+	 * The actor's velocity vector
+	 */
+	physics::Vector2D velocity;
+	/**
+	 * The radius of the actor's LOS
+	 */
+	int64_t los_radius;
+	/**
+	 * The range within which the actor can attack
+	 */
+	int64_t attack_range;
+	/**
+	 * The actor's path planner helper view
+	 */
+	PathPlannerHelperView path_planner_helper;
 public:
 	UnitView();
 	UnitView(Actor * actor);
+	UnitView(const UnitView& other);
 	/**
 	 * Gets the ID of the actor
 	 *
@@ -127,7 +182,7 @@ public:
 	 *
 	 * @return     The restricted view of the enemy
 	 */
-	EnemyUnitView GetAttackTarget(int * success);
+	EnemyUnitView * GetAttackTarget(int * success);
 	/**
 	 * Gets the velocity vector of the actor
 	 *
