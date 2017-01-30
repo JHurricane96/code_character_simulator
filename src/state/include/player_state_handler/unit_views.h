@@ -25,11 +25,7 @@ namespace state {
  */
 class STATE_EXPORT PathPlannerHelperView {
 private:
-	/**
-	 * Pointer to underlying PathPlannerHelper instance which the view
-	 * provides an interface for.
-	 */
-	PathPlannerHelper * path_planner_helper;
+	bool is_path_planning;
 public:
 	PathPlannerHelperView(PathPlannerHelper * path_planner_helper);
 	/**

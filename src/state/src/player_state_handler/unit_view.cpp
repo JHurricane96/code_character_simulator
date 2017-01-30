@@ -3,11 +3,11 @@
 namespace state {
 
 PathPlannerHelperView::PathPlannerHelperView(
-    PathPlannerHelper * path_planner_helper):
-    path_planner_helper(path_planner_helper) {}
+	PathPlannerHelper * path_planner_helper):
+	is_path_planning(path_planner_helper->IsPathPlanning()) {}
 
 bool PathPlannerHelperView::IsPathPlanning(){
-    return path_planner_helper->IsPathPlanning();
+	return is_path_planning;
 }
 
 EnemyUnitView::EnemyUnitView(): unit(nullptr) {}
