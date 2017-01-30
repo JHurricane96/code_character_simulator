@@ -27,7 +27,7 @@ class STATE_EXPORT PathPlannerHelperView {
 private:
 	bool is_path_planning;
 public:
-	PathPlannerHelperView(PathPlannerHelper * path_planner_helper);
+	explicit PathPlannerHelperView(PathPlannerHelper * path_planner_helper);
 	/**
 	 * Determines if the unit is path planning
 	 *
@@ -56,7 +56,7 @@ private:
 	physics::Vector2D position;
 public:
 	EnemyUnitView();
-	EnemyUnitView(Actor * actor);
+	explicit EnemyUnitView(Actor * actor);
 	/**
 	 * Gets the ID of the enemy
 	 *
@@ -138,7 +138,7 @@ private:
 	PathPlannerHelperView path_planner_helper;
 public:
 	UnitView();
-	UnitView(Actor * actor);
+	explicit UnitView(Actor * actor);
 	UnitView(const UnitView& other);
 	/**
 	 * Gets the ID of the actor
@@ -230,7 +230,7 @@ private:
 	 */
 	int64_t contention_radius;
 public:
-	EnemyTowerView(Tower * tower);
+	explicit EnemyTowerView(Tower * tower);
 	/**
 	 * Gets the contention radius of the tower
 	 *
@@ -256,7 +256,7 @@ private:
 	 */
 	int64_t contention_radius;
 public:
-	TowerView(Tower * tower);
+	explicit TowerView(Tower * tower);
 	/**
 	 * Gets a fire_ball's lifetime
 	 *
@@ -288,7 +288,7 @@ private:
 	 */
 	int64_t fire_ball_ttl;
 public:
-	MagicianView(Magician * magician);
+	explicit MagicianView(Magician * magician);
 	/**
 	 * Gets a fire_ball's lifetime
 	 *
