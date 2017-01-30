@@ -8,6 +8,8 @@
 
 #include <vector>
 
+namespace state {
+
 typedef int64_t act_id_t;
 typedef std::vector<int64_t> list_act_id_t;
 
@@ -26,5 +28,7 @@ enum PlayerId
 	PLAYER2 = 1,
 	LAST_PLAYER = PLAYER2,
 };
+
+}
 
 #endif
