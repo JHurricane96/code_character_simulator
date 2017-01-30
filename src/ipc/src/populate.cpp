@@ -39,6 +39,8 @@ int PopulateActors(shared_ptr<state::State> StateVar, IPC::State* StateMessage) 
 	bool ScoutVisibleP1 = !StateVar->GetEnemyScouts(P2).empty();
 	bool ScoutVisibleP2 = !StateVar->GetEnemyScouts(P1).empty();
 
+	bool TowerFlag = false;
+
 	for (auto actor1 : P1_Actors)
 	{
 
@@ -109,6 +111,11 @@ int PopulateActors(shared_ptr<state::State> StateVar, IPC::State* StateMessage) 
 				break;
 			case state::ActorType::TOWER		:
 				ActorMessageP1->set_actor_type(IPC::State::Actor::TOWER);
+				ActorMessageP1->set_contention_meter_score(static_pointer_cast<Tower>(actor1)->GetContentionScore());
+				if(!TowerFlag) {
+					StateMessage->set_contention_meter_limit(static_pointer_cast<Tower>(actor1)->GetMaxContentionScore());
+					TowerFlag=true;
+				}
 				break;
 
 		}
@@ -184,6 +191,7 @@ int PopulateActors(shared_ptr<state::State> StateVar, IPC::State* StateMessage) 
 				break;
 			case state::ActorType::TOWER		:
 				ActorMessageP2->set_actor_type(IPC::State::Actor::TOWER);
+				ActorMessageP2->set_contention_meter_score(static_pointer_cast<Tower>(actor2)->GetContentionScore());
 				break;
 
 		}

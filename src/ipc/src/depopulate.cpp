@@ -24,8 +24,8 @@ int DepopulateActors(const IPC::State& RetrievedMessage) {
 
 		cout<<"Actor ID: "<<ActorMessage.id()<<endl;
 		cout<<"Actor PlayerID: "<<ActorMessage.player_id()<<endl;
-		cout<<"Actor PosX: "<<ActorMessage.pos_x()<<endl;
-		cout<<"Actor PosY: "<<ActorMessage.pos_y()<<endl;
+		cout<<"Actor PosX: "<<ActorMessage.x()<<endl;
+		cout<<"Actor PosY: "<<ActorMessage.y()<<endl;
 		
 		if(ActorMessage.is_attacking() == false)
 			cout<<"Actor attack target: False"<<endl;

@@ -220,40 +220,45 @@ int main(int argc, char const* argv[])
 	auto actors = GetFlatActors(sorted_actors);
 
 	int bleep = 0;
+	double i=0.0001;
 
 	//while (true) {
 
 		//auto start_time = chrono::high_resolution_clock::now();
 		//ofstream file("output.txt");
-		
+		//::StoreTerrain(TT);
 		//auto arrows = S->GetProjectiles();
-		//std::thread RendererInput(ipc::IncomingInterrupts);
-		Terrain ter = ipc::LoadTerrain();
-		Interrupts* Lol(new Interrupts);
+		//Terrain ter = ipc::LoadTerrain("terrain_level2.txt");
+		Interrupts* InterruptVar(new Interrupts);
+		std::thread RendererInput(ipc::IncomingInterrupts, InterruptVar);
 		//Lol->SetPlayStatus(false);
 		//InterruptTransfer(Lol);
-		//while(true)
-		//{
-			ipc::IncomingInterrupts(Lol);
-			bool p = Lol->GetPlayStatus();
-			if(p==false)
+		while(true)
+		{
+			std::this_thread::sleep_for(std::chrono::milliseconds(30));
+			//cout<<"Here"<<endl;
+			//ipc::IncomingInterrupts(Lol);
+			/*bool play = InterruptVar->GetPlayStatus();
+			if(play==false)
 				cout<<"false"<<endl;
 			else
 				cout<<"true"<<endl;
-			int level = Lol->GetLevelNumber();
+			int level = InterruptVar->GetLevelNumber();
 			cout<<level<<endl;
-			bool e = Lol->GetExitStatus();
-			if(e==false)
+			bool exit = InterruptVar->GetExitStatus();
+			if(exit==false)
 				cout<<"false"<<endl;
 			else
 				cout<<"true"<<endl;
-			bool r = Lol->GetRestartStatus();
-			if(r==false)
+			bool restart = InterruptVar->GetRestartStatus();
+			if(restart==false)
 				cout<<"false"<<endl;
 			else
-				cout<<"true"<<endl;
-
-		//}*/
+				cout<<"true"<<endl;*/
+			ipc::StateTransfer(S);
+			i+=0.0001;
+		}
+		RendererInput.join();
 		/*int64_t ter_size = ter.GetRows();
 
 		for (double ii = 0; ii < ter_size; ii++) {
@@ -286,9 +291,9 @@ int main(int argc, char const* argv[])
 			}
 		}*/
 		//ipc::StoreTerrain(TT);
-		double i=0.0001;
+		//double i=0.0001;
 		//while(true){
-			/*if( ipc::StateTransfer(S, i) < 0 ) {
+			/*if( ipc::StateTransfer(S) < 0 ) {
 			return -1;
 			}*/
 			//std::cout.flush();
