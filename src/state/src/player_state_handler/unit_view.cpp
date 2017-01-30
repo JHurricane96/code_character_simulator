@@ -10,69 +10,117 @@ bool PathPlannerHelperView::IsPathPlanning(){
 	return is_path_planning;
 }
 
-EnemyUnitView::EnemyUnitView(): unit(nullptr) {}
+EnemyUnitView::EnemyUnitView() {}
 
-EnemyUnitView::EnemyUnitView(Actor * actor): unit(actor) {}
+EnemyUnitView::EnemyUnitView(Actor * actor)
+	: id(actor->GetId()),
+	actor_type(actor->GetActorType()),
+	position(actor->GetPosition()) {}
 
 act_id_t EnemyUnitView::GetId() {
-	return unit->GetId();
+	return id;
 }
 
 physics::Vector2D EnemyUnitView::GetPosition() {
-	return unit->GetPosition();
+	return position;
 }
 
 ActorType EnemyUnitView::GetActorType() {
-	return unit->GetActorType();
+	return actor_type;
 }
 
-UnitView::UnitView(): unit(nullptr) {}
+UnitView::UnitView()
+	: path_planner_helper(nullptr) {}
 
-UnitView::UnitView(Actor * actor): unit(actor) {}
+UnitView::UnitView(Actor * actor)
+	: id(actor->GetId()),
+	actor_type(actor->GetActorType()),
+	attack(actor->GetAttack()),
+	hp(actor->GetHp()),
+	max_hp(actor->GetMaxHp()),
+	max_speed(actor->GetMaxSpeed()),
+	speed(actor->GetSpeed()),
+	position(actor->GetPosition()),
+	velocity(actor->GetVelocity()),
+	los_radius(actor->GetLosRadius()),
+	attack_range(actor->GetAttackRange()),
+	path_planner_helper(PathPlannerHelperView(actor->GetPathPlannerHelper())
+	) {
+		auto target = actor->GetAttackTarget();
+		if (target == nullptr) {
+			attack_target = nullptr;
+		}
+		else {
+			attack_target =
+				std::unique_ptr<EnemyUnitView>(new EnemyUnitView(target));
+		}
+	}
+
+UnitView::UnitView(const UnitView& other):
+	id(other.id),
+	actor_type(other.actor_type),
+	attack(other.attack),
+	hp(other.hp),
+	max_hp(other.max_hp),
+	max_speed(other.max_speed),
+	speed(other.speed),
+	position(other.position),
+	velocity(other.velocity),
+	los_radius(other.los_radius),
+	attack_range(other.attack_range),
+	path_planner_helper(other.path_planner_helper) {
+		if (other.attack_target == nullptr) {
+			attack_target = nullptr;
+		}
+		else {
+			attack_target = std::unique_ptr<EnemyUnitView>(
+				new EnemyUnitView(*other.attack_target)
+			);
+		}
+	}
 
 act_id_t UnitView::GetId() {
-	return unit->GetId();
+	return id;
 }
 
 int64_t UnitView::GetHp() {
-	return unit->GetHp();
+	return hp;
 }
 
 int64_t UnitView::GetMaxHp() {
-	return unit->GetMaxHp();
+	return max_hp;
 }
 
 int64_t UnitView::GetMaxSpeed() {
-	return unit->GetMaxSpeed();
+	return max_speed;
 }
 
-EnemyUnitView UnitView::GetAttackTarget(int * success) {
-	auto target =  unit->GetAttackTarget();
+EnemyUnitView * UnitView::GetAttackTarget(int * success) {
 	if (success) {
-		if (target != nullptr) *success = 1;
+		if (attack_target != nullptr) *success = 1;
 		else *success = 0;
 	}
-	return EnemyUnitView(target);
+	return attack_target.get();
 }
 
 physics::Vector2D UnitView::GetVelocity() {
-	return unit->GetVelocity();
+	return velocity;
 }
 
 int64_t UnitView::GetAttackRange() {
-	return unit->GetAttackRange();
+	return attack_range;
 }
 
 physics::Vector2D UnitView::GetPosition() {
-	return unit->GetPosition();
+	return position;
 }
 
 ActorType UnitView::GetActorType() {
-	return unit->GetActorType();
+	return actor_type;
 }
 
 PathPlannerHelperView UnitView::GetPathPlannerHelper() {
-	return PathPlannerHelperView(unit->GetPathPlannerHelper());
+	return path_planner_helper;
 }
 
 TowerView::TowerView(Tower * tower):
