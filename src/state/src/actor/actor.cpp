@@ -240,7 +240,6 @@ void Actor::MergeWithBuffer(
 	std::vector<std::shared_ptr<Actor> > actors
 ) {
 	speed = actor->speed;
-	velocity = actor->velocity;
 	path_planner_helper = actor->path_planner_helper;
 	path_planner_helper.MergeWithBuffer(
 		actor->path_planner_helper,
@@ -267,6 +266,7 @@ void Actor::MergeWithMain(
 	player_id = actor->player_id;
 	state = actor->state->Clone();
 	hp = actor->hp;
+	velocity = actor->velocity;
 	time_to_respawn = actor->time_to_respawn;
 	time_spent_near_base = actor->time_spent_near_base;
 	position = actor->position;
