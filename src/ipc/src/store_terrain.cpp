@@ -35,10 +35,10 @@ void PopulateTerrain(state::Terrain TerrainVar, IPC::Terrain* TerrainMessage) {
 	 * Loop through the terrain to fill the terrain element unit by unit
 	 */
 
-	for (double row = 0; row < size; ++row) {
+	for (double row = 0; row < no_of_rows; ++row) {
 
 		IPC::Terrain::TerrainRow* RowMessage = TerrainMessage->add_row();
-		for (double col = 0; col < size; ++col) {
+		for (double col = 0; col < no_of_rows; ++col) {
 
 			IPC::Terrain::TerrainElement* ElementMessage = RowMessage->add_element();
 
