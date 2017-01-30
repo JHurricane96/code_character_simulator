@@ -152,7 +152,7 @@ pair<State, vector<vector<shared_ptr<Actor> > > > MakeState(Terrain terrain) {
 	flags[1] = shared_ptr<Flag>(new Flag(1, PLAYER2, 10, 100, 100, 10, 10, 10, 0, 0, Vector2D(100, 300), Vector2D(0, 0), 5, 10));
 
 	kings[0] = shared_ptr<King>(new King(2, PLAYER1, 10, 100, 100, 10, 10, 10, 0, 0, Vector2D(200, 20), Vector2D(0, 0), 2, 10));
-	kings[1] = shared_ptr<King>(new King(3, PLAYER2, 10, 1000, 1000, 10, 10, 10, 0, 0, Vector2D(399, 10), Vector2D(0, 0), 200, 10));
+	kings[1] = shared_ptr<King>(new King(3, PLAYER2, 10, 1000, 1000, 10, 10, 100, 0, 0, Vector2D(399, 10), Vector2D(0, 0), 200, 10));
 
 	bases[0] = shared_ptr<Base>(new Base(4, PLAYER1, 10, 100, 100, 10, 10, 10, 0, 0, Vector2D(0, 0), Vector2D(0, 0), 2, 10, 10, 10));
 	bases[1] = shared_ptr<Base>(new Base(5, PLAYER2, 10, 100, 100, 10, 10, 10, 0, 0, Vector2D(100, 100), Vector2D(0, 0), 2, 10, 10, 10));
@@ -316,7 +316,7 @@ int main(int argc, char const* argv[])
 		// cout << duration << endl;
 		this_thread::sleep_for(chrono::milliseconds(max<long>((long) 0, 30 - duration)));
 		bleep += 30;
-		if (bleep / 1000 >= 15) {
+		if (bleep / 1000 >= 20) {
 			break;
 		}
 	}
