@@ -56,8 +56,8 @@ message State {
 		 * Default to archer with tag 0
 		 */
 		enum Actor_type {
-			ARCHER = 0;
-			ARROW = 1;
+			MAGICIAN = 0;
+			FIREBALL = 1;
 			BASE = 2;
 			FLAG = 3;
 			KING = 4;

@@ -37,11 +37,11 @@ int DepopulateActors(const IPC::State& RetrievedMessage) {
 
 		switch(ActorMessage.actor_type()){
 
-			case IPC::State::Actor::ARCHER	:
-				cout<<"Actor Type: ARCHER\n";
+			case IPC::State::Actor::MAGICIAN	:
+				cout<<"Actor Type: MAGICIAN\n";
 				break;
-			case IPC::State::Actor::ARROW	:
-				cout<<"Actor Type: ARROW\n";
+			case IPC::State::Actor::FIREBALL	:
+				cout<<"Actor Type: FIREBALL\n";
 				break;
 			case IPC::State::Actor::BASE		:
 				cout<<"Actor Type: BASE\n";
