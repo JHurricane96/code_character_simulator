@@ -86,10 +86,27 @@ pair<State, vector<vector<shared_ptr<Actor> > > > MakeState(Terrain terrain) {
 
 	for (int i = 6; i < 26; i++) {
 		if (i < 10) {
-			Actor* actor = new Tower(i, PLAYER1, 50, 100, 100, 10, 10, 0, 0, 0,
-			                         Vector2D(99 * (10 - i), 99 * (10 - i)),
-			                         Vector2D(0, 0), 1000, 40, 100, 100, 1000,
-			                         20, 300, 10);
+			Actor* actor = new Tower(
+				i,  									// act_id_t id,
+				PLAYER1, 								// PlayerId player_id,
+				300, 									// int64_t attack,
+				600, 									// int64_t hp,
+				600, 									// int64_t max_hp,
+				0, 										// int64_t max_speed,
+				10, 									// int64_t size,
+				100, 									// int64_t total_respawn_time,
+				0, 										// float time_to_respawn,
+				0,										// int64_t time_spent_near_base,
+				Vector2D(99 * (10 - i), 99 * (10 - i)),	// physics::Vector2D position,
+				Vector2D(0, 0), 						// physics::Vector2D velocity,
+				15, 									// int64_t los_radius,
+				40, 									// int64_t attack_speed,
+				10,										// int64_t contention_radius,
+				100,									// int64_t max_contention_score,
+				12,										// int64_t range,
+				5,										// int64_t fire_ball_speed,
+			    300,									// int64_t fire_ball_ttl,
+			    2);										// int64_t fire_ball_size
 			AddActor(actors1, actor);
 		} else if (i < 15) {
 			Actor* actor = new Magician(i, PLAYER2, 50, 100, 100, 10, 10, 0, 0,
@@ -220,12 +237,12 @@ void PrintLos(Terrain terrain, PlayerId player_id) {
 const int64_t ELEMENT_SIZE = 20;
 
 Terrain LoadTerrain(string file_name) {
-	std::string line;
-	std::getline(std::ifstream(file_name), line);
+	string line;
+	getline(ifstream(file_name), line);
 	int rows = (int)sqrt(line.size());
-	std::vector<std::vector<TerrainElement> > grid;
+	vector<vector<TerrainElement> > grid;
 	for (int i = 0; i < rows; i++) {
-		std::vector<TerrainElement> temp;
+		vector<TerrainElement> temp;
 		for (int j = 0; j < rows; j++) {
 			TERRAIN_TYPE t;
 			switch (line[i]) {
