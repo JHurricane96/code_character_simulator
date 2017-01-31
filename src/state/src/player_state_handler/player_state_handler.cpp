@@ -16,8 +16,14 @@ TerrainElementView::TerrainElementView(
 	):
 	position(te->GetPosition()),
 	size(te->GetSize()),
-	terrain_type(te->GetTerrainType()),
-	los_type(te->GetLos(player_id)) {}
+	los_type(te->GetLos(player_id)) {
+		if (los_type == UNEXPLORED) {
+			terrain_type = UNDEFINED;
+		}
+		else {
+			terrain_type = te->GetTerrainType();
+		}
+	}
 
 list_act_id_t PlayerStateHandler::GetPlayerUnitIds() {
 	return state->GetPlayerUnitIds(player_id);
