@@ -15,6 +15,7 @@ EnemyUnitView::EnemyUnitView() {}
 EnemyUnitView::EnemyUnitView(Actor * actor)
 	: id(actor->GetId()),
 	actor_type(actor->GetActorType()),
+	hp(actor->GetHp()),
 	position(actor->GetPosition()) {}
 
 act_id_t EnemyUnitView::GetId() {
@@ -27,6 +28,10 @@ physics::Vector2D EnemyUnitView::GetPosition() {
 
 ActorType EnemyUnitView::GetActorType() {
 	return actor_type;
+}
+
+int64_t EnemyUnitView::GetHp() {
+	return hp;
 }
 
 UnitView::UnitView()

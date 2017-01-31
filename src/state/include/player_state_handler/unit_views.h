@@ -51,6 +51,10 @@ private:
 	*/
 	ActorType actor_type;
 	/**
+	 * The HP of this Actor
+	 */
+	int64_t hp;
+	/**
 	* Position of the actor
 	*/
 	physics::Vector2D position;
@@ -75,6 +79,12 @@ public:
 	 * @return     The Actor's type
 	 */
 	ActorType GetActorType();
+	/**
+	 * Gets the Actor's HP
+	 *
+	 * @return     The Actor's HP
+	 */
+	int64_t GetHp();
 };
 
 /**
