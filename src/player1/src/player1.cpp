@@ -8,7 +8,7 @@
 
 namespace player1 {
 
-list_act_id_t l({ 6, 7 });
+state::list_act_id_t l({ 6, 7 });
 
 class MyFormation : public state::FormationMaker {
 public:
@@ -40,7 +40,7 @@ void Player1::Update(std::shared_ptr<state::PlayerStateHandler> state) {
 	auto king = state->GetKing();
 	std::vector<physics::Vector2D> crap;
 	if (king.GetHp() < king.GetMaxHp()) {
-		state->MoveUnits(list_act_id_t({king.GetId()}), physics::Vector2D(0, 0), f.get(), std::vector<int64_t>(3, 1), crap, NULL);
+      state->MoveUnits(state::list_act_id_t({king.GetId()}), physics::Vector2D(0, 0), f.get(), std::vector<int64_t>(3, 1), crap, NULL);
 	}
 }
 
