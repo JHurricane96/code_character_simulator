@@ -7,11 +7,12 @@
 #define IPC_IPC_H
 
 #include "state.h"
+#include "ipc_export.h"
 #include <atomic>
 
 namespace ipc {
 
-class Interrupts {
+class IPC_EXPORT Interrupts {
 
 private:
 		/**
@@ -91,7 +92,7 @@ public:
 
 };
 
-class Logger {
+class IPC_EXPORT Logger {
 
 	std::vector<std::string> logs;
 	static Logger *static_instance;
@@ -117,10 +118,10 @@ class Logger {
  * Inter process communication methods between renderer and simulator
  * Utilises Protocol Buffers for serializing structured data
  */
-	int StateTransfer (std::shared_ptr<state::State> StateVar);
-	int StoreTerrain(state::Terrain TerrainVar);
-	state::Terrain LoadTerrain(std::string filename);
-	void IncomingInterrupts(Interrupts* InterruptVar);
-	int DepopulateStuff();
+	IPC_EXPORT int StateTransfer (std::shared_ptr<state::State> StateVar);
+	IPC_EXPORT int StoreTerrain(state::Terrain TerrainVar);
+	IPC_EXPORT state::Terrain LoadTerrain(std::string filename);
+	IPC_EXPORT void IncomingInterrupts(Interrupts* InterruptVar);
+	IPC_EXPORT int DepopulateStuff();
 }
 #endif // IPC_IPC_H

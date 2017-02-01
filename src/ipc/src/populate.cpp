@@ -72,14 +72,17 @@ int PopulateActors(shared_ptr<state::State> StateVar, IPC::State* StateMessage) 
 		ActorMessageP1->set_max_hp(actor1->GetMaxHp());
 		ActorMessageP1->set_is_moving(actor1->GetVelocity().magnitude() != 0);
 
-		IPC::State::Vector2D* Dest = (new IPC::State::Vector2D);
+		IPC::State::Vector2D* Dest = new IPC::State::Vector2D;
 
-		auto Destination = actor1->GetPathPlannerHelper()->GetDestination();
+		if (actor1->CanPathPlan() && actor1->GetPathPlannerHelper()->IsPathPlanning()) {
+			auto pph = actor1->GetPathPlannerHelper();
+			auto Destination = pph->GetDestination();
 
-		Dest->set_x(Destination.x);
-		Dest->set_y(Destination.y);
+			Dest->set_x(Destination.x);
+			Dest->set_y(Destination.y);
 
-		ActorMessageP1->set_allocated_destination(Dest);
+			ActorMessageP1->set_allocated_destination(Dest);
+		}
 
 		state::ActorType typevar = actor1->GetActorType();
 
@@ -152,14 +155,17 @@ int PopulateActors(shared_ptr<state::State> StateVar, IPC::State* StateMessage) 
 		ActorMessageP2->set_max_hp(actor2->GetMaxHp());
 		ActorMessageP2->set_is_moving(actor2->GetVelocity().magnitude() != 0);
 
-		IPC::State::Vector2D Dest;
+		IPC::State::Vector2D* Dest = new IPC::State::Vector2D;
 
-		auto Destination = actor2->GetPathPlannerHelper()->GetDestination();
+		if (actor2->CanPathPlan() && actor2->GetPathPlannerHelper()->IsPathPlanning()) {
+			auto pph = actor2->GetPathPlannerHelper();
+			auto Destination = pph->GetDestination();
 
-		Dest.set_x(Destination.x);
-		Dest.set_y(Destination.y);
+			Dest->set_x(Destination.x);
+			Dest->set_y(Destination.y);
 
-		ActorMessageP2->set_allocated_destination(&Dest);
+			ActorMessageP2->set_allocated_destination(Dest);
+		}
 
 		state::ActorType typevar2 = actor2->GetActorType();
 
@@ -320,6 +326,7 @@ namespace ipc {
 			return -1;
 		}
 
+		std::cout << std::flush;
 		return 0;
 	}
 }
