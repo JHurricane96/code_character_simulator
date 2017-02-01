@@ -3,8 +3,7 @@
 #include "actor/swordsman.h"
 #include "actor/tower.h"
 // #include "bits/stdc++.h"
-#include <fstream>
-#include "json.hpp"  //https://github.com/nlohmann/json
+#include "json.hpp" //https://github.com/nlohmann/json
 #include "main_driver.h"
 #include "path_planner/graph.h"
 #include "path_planner/path_planner.h"
@@ -15,6 +14,7 @@
 #include "state.h"
 #include "terrain/terrain.h"
 #include "terrain/terrain_element.h"
+#include <fstream>
 // #include <unistd.h>
 
 using namespace std;
@@ -26,253 +26,239 @@ using namespace player2;
 using namespace drivers;
 
 using json = nlohmann::json;
+const int64_t ELEMENT_SIZE = 50;
 
 class MyFormation : public FormationMaker {
-   public:
+public:
 	MyFormation() : FormationMaker() {}
-	vector<Vector2D> ReturnFormation(int64_t formation_size) {
+	vector<Vector2D> ReturnFormation(int64_t formation_size)
+	{
 		vector<Vector2D> f(formation_size);
-		for (int i = 0; i < formation_size; i++) f[i] = Vector2D(i * 30, i);
+		for (int i = 0; i < formation_size; i++)
+			f[i] = Vector2D(i * 30, i);
 		return f;
 	}
 };
 
-void AddActor(vector<shared_ptr<Actor> >& actors, Actor* actor) {
+void AddActor(vector<shared_ptr<Actor> >& actors, Actor* actor)
+{
 	shared_ptr<Actor> act(actor);
 	act->AddPathPlanner(PathPlannerHelper(act));
 	actors.push_back(act);
 }
 
-void AddActor(vector<shared_ptr<Actor> >& actors, shared_ptr<Actor> actor) {
+void AddActor(vector<shared_ptr<Actor> >& actors, shared_ptr<Actor> actor)
+{
 	actor->AddPathPlanner(PathPlannerHelper(actor));
 	actors.push_back(actor);
 }
 
-string ActorTypeToString(ActorType type) {
+string ActorTypeToString(ActorType type)
+{
 	switch (type) {
-		case ActorType::MAGICIAN:
-			return "magician";
-		case ActorType::FIREBALL:
-			return "fire_ball";
-		case ActorType::BASE:
-			return "base";
-		case ActorType::FLAG:
-			return "flag";
-		case ActorType::KING:
-			return "king";
-		case ActorType::SCOUT:
-			return "scout";
-		case ActorType::SWORDSMAN:
-			return "sword";
-		case ActorType::TOWER:
-			return "tower";
-		default:
-			return "actor";
+	case ActorType::MAGICIAN:
+		return "magician";
+	case ActorType::FIREBALL:
+		return "fire_ball";
+	case ActorType::BASE:
+		return "base";
+	case ActorType::FLAG:
+		return "flag";
+	case ActorType::KING:
+		return "king";
+	case ActorType::SCOUT:
+		return "scout";
+	case ActorType::SWORDSMAN:
+		return "sword";
+	case ActorType::TOWER:
+		return "tower";
+	default:
+		return "actor";
 	}
 }
 
-pair<State, vector<vector<shared_ptr<Actor> > > > MakeState(Terrain terrain) {
-	vector<std::shared_ptr<Actor> > actors1;
-	vector<std::shared_ptr<Actor> > actors2;
-	vector<std::shared_ptr<Actor> > scout_;
-	vector<std::shared_ptr<Actor> > arch;
-	vector<vector<shared_ptr<Actor> > > sorted_actors;
-	vector<vector<shared_ptr<Swordsman> > > swordsmen;
-	vector<shared_ptr<Swordsman> > sw;
-
+pair<State, vector<vector<shared_ptr<Actor> > > > MakeState(Terrain terrain)
+{
 	vector<shared_ptr<Base> > bases(2);
-	vector<shared_ptr<King> > kings(2);
 	vector<shared_ptr<Flag> > flags(2);
+	vector<shared_ptr<King> > kings(2);
+	vector<vector<shared_ptr<Scout> > > scouts(
+		2, vector<shared_ptr<Scout> >(1));
+	vector<vector<shared_ptr<Tower> > > towers(
+		2, vector<shared_ptr<Tower> >(3));
+	vector<vector<shared_ptr<Swordsman> > > swordsmen(
+		2, vector<shared_ptr<Swordsman> >(20));
+	vector<vector<shared_ptr<Magician> > > magicians(
+		2, vector<shared_ptr<Magician> >(10));
+	vector<vector<shared_ptr<Actor> > > sorted_actors(2);
 
-	for (int i = 6; i < 26; i++) {
-		if (i < 10) {
-			Actor* actor = new Tower(
-				i,  									// act_id_t id,
-				PLAYER1, 								// PlayerId player_id,
-				300, 									// int64_t attack,
-				600, 									// int64_t hp,
-				600, 									// int64_t max_hp,
-				0, 										// int64_t max_speed,
-				10, 									// int64_t size,
-				100, 									// int64_t total_respawn_time,
-				0, 										// float time_to_respawn,
-				0,										// int64_t time_spent_near_base,
-				Vector2D(99 * (10 - i), 99 * (10 - i)),	// physics::Vector2D position,
-				Vector2D(0, 0), 						// physics::Vector2D velocity,
-				15, 									// int64_t los_radius,
-				40, 									// int64_t attack_speed,
-				10,										// int64_t contention_radius,
-				100,									// int64_t max_contention_score,
-				12,										// int64_t range,
-				5,										// int64_t fire_ball_speed,
-			    300,									// int64_t fire_ball_ttl,
-			    2);										// int64_t fire_ball_size
-			AddActor(actors1, actor);
-		} else if (i < 15) {
-			Actor* actor = new Magician(i, PLAYER2, 50, 100, 100, 10, 10, 0, 0,
-			                            0, Vector2D(99, 9), Vector2D(0, 0),
-			                            1000, 10, 1000, 10, 300, 10);
-			AddActor(arch, actor);
-		} else if (i < 17) {
-			Actor* actor =
-			    new Scout(i, PLAYER2, 50, 100, 100, 10, 10, 0, 0, 0,
-			              Vector2D(0, 390), Vector2D(0, 0), 1000, 300, 10);
-			AddActor(scout_, actor);
-		} else {
-			Actor* actor =
-			    new Swordsman(i, PLAYER2, 10, 100, 100, 10, 10, 10, 0, 0,
-			                  Vector2D(0, 388), Vector2D(0, 0), 100, 10, 10);
-			AddActor(actors2, actor);
-			sw.push_back(static_pointer_cast<Swordsman>(actors2.back()));
+	flags[0] = shared_ptr<Flag>(new Flag(0, PLAYER1, 0, 0, 0, 0, 10, 0, 0, 0,
+		Vector2D(4 * ELEMENT_SIZE, 4 * ELEMENT_SIZE), Vector2D(0, 0), 0, 0));
+	sorted_actors[0].push_back(static_pointer_cast<Actor>(flags[0]));
+
+	flags[1] = shared_ptr<Flag>(new Flag(1, PLAYER2, 0, 0, 0, 0, 10, 0, 0, 0,
+		Vector2D(27 * ELEMENT_SIZE, 27 * ELEMENT_SIZE), Vector2D(0, 0), 0, 0));
+	sorted_actors[1].push_back(static_pointer_cast<Actor>(flags[1]));
+
+	bases[0] = shared_ptr<Base>(new Base(4, PLAYER1, 0, 0, 0, 0, 10, 0, 0, 0,
+		Vector2D(4 * ELEMENT_SIZE, 4 * ELEMENT_SIZE), Vector2D(0, 0), 5, 0,
+		4 * ELEMENT_SIZE, 10));
+	sorted_actors[0].push_back(static_pointer_cast<Actor>(bases[0]));
+
+	bases[1] = shared_ptr<Base>(new Base(5, PLAYER2, 0, 0, 0, 0, 10, 0, 0, 0,
+		Vector2D(27 * ELEMENT_SIZE, 27 * ELEMENT_SIZE), Vector2D(0, 0), 5, 0,
+		4 * ELEMENT_SIZE, 10));
+	sorted_actors[1].push_back(static_pointer_cast<Actor>(bases[1]));
+
+	kings[0] = shared_ptr<King>(new King(2, PLAYER1, 0, 400, 400, 10, 10, 100,
+		0, 0, Vector2D(4 * ELEMENT_SIZE, 4 * ELEMENT_SIZE), Vector2D(0, 0), 1,
+		0));
+	kings[0]->AddPathPlanner(PathPlannerHelper(kings[0]));
+	sorted_actors[0].push_back(static_pointer_cast<Actor>(kings[0]));
+
+	kings[1] = shared_ptr<King>(new King(3, PLAYER2, 0, 400, 400, 10, 10, 100,
+		0, 0, Vector2D(27 * ELEMENT_SIZE, 27 * ELEMENT_SIZE), Vector2D(0, 0), 1,
+		0));
+	kings[1]->AddPathPlanner(PathPlannerHelper(kings[1]));
+	sorted_actors[1].push_back(static_pointer_cast<Actor>(kings[1]));
+
+	scouts[0][0] = shared_ptr<Scout>(new Scout(6, PLAYER1, 0, 300, 100, 37, 10,
+		55, 0, 0, Vector2D(4 * ELEMENT_SIZE, 4 * ELEMENT_SIZE), Vector2D(0, 0),
+		4, 0, 0));
+	scouts[0][0]->AddPathPlanner(PathPlannerHelper(scouts[0][0]));
+	sorted_actors[0].push_back(static_pointer_cast<Actor>(scouts[0][0]));
+
+	scouts[1][0] = shared_ptr<Scout>(new Scout(7, PLAYER2, 0, 300, 100, 37, 10,
+		55, 0, 0, Vector2D(27 * ELEMENT_SIZE, 27 * ELEMENT_SIZE),
+		Vector2D(0, 0), 4, 0, 0));
+	scouts[1][0]->AddPathPlanner(PathPlannerHelper(scouts[1][0]));
+	sorted_actors[1].push_back(static_pointer_cast<Actor>(scouts[1][0]));
+
+	vector<physics::Vector2D> tower_pos{ Vector2D(11, 5), Vector2D(22, 8),
+		Vector2D(7, 13), Vector2D(20, 26), Vector2D(24, 18), Vector2D(9, 23) };
+
+	act_id_t id_count = 7;
+	for (int64_t i = 0; i < 2; i++) {
+		for (int64_t j = 0; j < 3; j++) {
+			cout << tower_pos[i * 3 + j] * ELEMENT_SIZE << ',';
+			PlayerId p = static_cast<PlayerId>(i);
+			towers[i][j] = shared_ptr<Tower>(new Tower(++id_count, p, 80, 600,
+				600, 0, 10, 0, 0, 0, tower_pos[i * 3 + j] * ELEMENT_SIZE,
+				Vector2D(0, 0), 5, 40, 5 * ELEMENT_SIZE, 100, 7, 10, 300, 2));
+			// towers[i][j]->AddPathPlanner(PathPlannerHelper(towers[i][j]));
+			sorted_actors[i].push_back(
+				static_pointer_cast<Actor>(towers[i][j]));
 		}
 	}
-	vector<std::shared_ptr<Tower> > t;
-	vector<vector<shared_ptr<Tower> > > towers;
+	cout << endl;
 
-	for (auto i : actors1) {
-		shared_ptr<Tower> derived = static_pointer_cast<Tower>(i);
-		// cout << derived->GetId() << endl;
-		t.push_back(derived);
+	for (int64_t i = 0; i < 2; i++) {
+		for (int64_t j = 0; j < 20; j++) {
+			int lol = i == 0 ? 0 : 30;
+			PlayerId p = static_cast<PlayerId>(i);
+			swordsmen[i][j] = shared_ptr<Swordsman>(
+				new Swordsman(++id_count, p, 50, 200, 200, 20, 10, 20, 0, 0,
+					Vector2D(lol * ELEMENT_SIZE, lol * ELEMENT_SIZE),
+					Vector2D(0, 0), 2, 10, 10));
+			swordsmen[i][j]->AddPathPlanner(PathPlannerHelper(swordsmen[i][j]));
+			sorted_actors[i].push_back(
+				static_pointer_cast<Actor>(swordsmen[i][j]));
+		}
 	}
 
-	towers.push_back(t);
-	towers.push_back(vector<std::shared_ptr<Tower> >());
-
-	vector<std::shared_ptr<Magician> > a;
-	vector<vector<shared_ptr<Magician> > > magicians;
-
-	for (auto i : arch) {
-		shared_ptr<Magician> derived = static_pointer_cast<Magician>(i);
-		// cout << derived->GetId() << endl;
-		a.push_back(derived);
+	for (int64_t i = 0; i < 2; i++) {
+		for (int64_t j = 0; j < 10; j++) {
+			int lol = i == 0 ? 0 : 30;
+			PlayerId p = static_cast<PlayerId>(i);
+			magicians[i][j] = shared_ptr<Magician>(
+				new Magician(++id_count, p, 100, 150, 150, 30, 10, 30, 0, 0,
+					Vector2D(lol * ELEMENT_SIZE, lol * ELEMENT_SIZE),
+					Vector2D(0, 0), 3, 25, 3 * ELEMENT_SIZE, 60, 100, 10));
+			magicians[i][j]->AddPathPlanner(PathPlannerHelper(magicians[i][j]));
+			sorted_actors[i].push_back(
+				static_pointer_cast<Actor>(magicians[i][j]));
+		}
 	}
-
-	magicians.push_back(vector<std::shared_ptr<Magician> >());
-	magicians.push_back(a);
-	actors2.insert(actors2.end(), arch.begin(), arch.end());
-
-	vector<std::shared_ptr<Scout> > s;
-	vector<vector<shared_ptr<Scout> > > scouts;
-
-	for (auto i : scout_) {
-		shared_ptr<Scout> derived = static_pointer_cast<Scout>(i);
-		s.push_back(derived);
-	}
-
-	scouts.push_back(vector<std::shared_ptr<Scout> >());
-	scouts.push_back(s);
-	actors2.insert(actors2.end(), scout_.begin(), scout_.end());
-
-	for (int i = 26; i < 36; i++) {
-		Actor* actor =
-		    new Swordsman(i, PLAYER2, 10, 100, 100, 10, 10, 10, 0, 0,
-		                  Vector2D(0, 388), Vector2D(0, 0), 10, 10, 10);
-		AddActor(actors1, actor);
-		sw.push_back(static_pointer_cast<Swordsman>(actors1.back()));
-	}
-
-	swordsmen.push_back(vector<shared_ptr<Swordsman> >());
-	swordsmen.push_back(sw);
-
-	flags[0] =
-	    shared_ptr<Flag>(new Flag(0, PLAYER1, 10, 100, 100, 10, 10, 10, 0, 0,
-	                              Vector2D(0, 0), Vector2D(0, 0), 2, 10));
-	flags[1] =
-	    shared_ptr<Flag>(new Flag(1, PLAYER2, 10, 100, 100, 10, 10, 10, 0, 0,
-	                              Vector2D(100, 300), Vector2D(0, 0), 5, 10));
-
-	kings[0] =
-	    shared_ptr<King>(new King(2, PLAYER1, 10, 100, 100, 10, 10, 10, 0, 0,
-	                              Vector2D(200, 20), Vector2D(0, 0), 2, 10));
-	kings[1] =
-	    shared_ptr<King>(new King(3, PLAYER2, 10, 1000, 1000, 10, 10, 10, 0, 0,
-	                              Vector2D(399, 10), Vector2D(0, 0), 200, 10));
-
-	bases[0] = shared_ptr<Base>(new Base(4, PLAYER1, 10, 100, 100, 10, 10, 10,
-	                                     0, 0, Vector2D(0, 0), Vector2D(0, 0),
-	                                     2, 10, 10, 10));
-	bases[1] = shared_ptr<Base>(new Base(5, PLAYER2, 10, 100, 100, 10, 10, 10,
-	                                     0, 0, Vector2D(100, 100),
-	                                     Vector2D(0, 0), 2, 10, 10, 10));
-
-	AddActor(actors1, flags[0]);
-	AddActor(actors1, kings[0]);
-	AddActor(actors1, bases[0]);
-	AddActor(actors2, flags[1]);
-	AddActor(actors2, kings[1]);
-	AddActor(actors2, bases[1]);
-
-	sorted_actors.push_back(actors1);
-	sorted_actors.push_back(actors2);
-
-	cout << "SIZE: " << magicians[1].size() << "\n";
 
 	State S(terrain, sorted_actors, kings, bases, flags, towers, scouts,
-	        magicians, swordsmen);
+		magicians, swordsmen);
 	return make_pair(S, sorted_actors);
 }
 
-vector<shared_ptr<Actor> > GetFlatActors(
-    vector<vector<shared_ptr<Actor> > > sorted_actors) {
-	auto actors = flatten(sorted_actors);
-	std::sort(
-	    actors.begin(), actors.end(),
-	    [](const std::shared_ptr<Actor>& a1, const std::shared_ptr<Actor>& a2) {
-		    return a1->GetId() < a2->GetId();
-		});
-	return actors;
-}
-
-void PrintLos(Terrain terrain, PlayerId player_id) {
+void PrintTT(Terrain terrain)
+{
 	for (int i = 0; i < terrain.GetRows(); i++) {
 		for (int j = 0; j < terrain.GetRows(); j++) {
 			cout << terrain.OffsetToTerrainElement(Vector2D(i, j))
-			            .GetLos(player_id)
-			     << ' ';
+						.GetTerrainType()
+				 << ' ';
+		}
+		cout << endl;
+	}
+}
+void PrintLos(Terrain terrain, PlayerId player_id)
+{
+	for (int i = 0; i < terrain.GetRows(); i++) {
+		for (int j = 0; j < terrain.GetRows(); j++) {
+			cout << terrain.OffsetToTerrainElement(Vector2D(i, j))
+						.GetLos(player_id)
+				 << ' ';
 		}
 		cout << endl;
 	}
 }
 
-const int64_t ELEMENT_SIZE = 20;
-
-Terrain LoadTerrain(string file_name) {
+Terrain LoadTerrain(string file_name)
+{
 	string line;
 	getline(ifstream(file_name), line);
 	int rows = (int)sqrt(line.size());
+	int total = line.size();
+	cout << "ROWS: " << rows << " TOTAL : " << total << endl;
 	vector<vector<TerrainElement> > grid;
 	for (int i = 0; i < rows; i++) {
 		vector<TerrainElement> temp;
 		for (int j = 0; j < rows; j++) {
 			TERRAIN_TYPE t;
 			switch (line[i]) {
-				case 'F':
-					t = FOREST;
-					break;
-				case 'M':
-					t = MOUNTAIN;
-					break;
-				default:
-					t = PLAIN;
+			case 'F':
+				t = FOREST;
+				break;
+			case 'M':
+				t = MOUNTAIN;
+				break;
+			default:
+				t = PLAIN;
 			}
 			temp.push_back(TerrainElement(
-			    t, Vector2D(i / rows * ELEMENT_SIZE, i % rows * ELEMENT_SIZE),
-			    ELEMENT_SIZE));
+				t, Vector2D(i * ELEMENT_SIZE, j * ELEMENT_SIZE), ELEMENT_SIZE));
 		}
 		grid.push_back(temp);
 	}
 	return Terrain(grid);
 }
 
-int main() {
-	Terrain TT(LoadTerrain("grid.txt"));
+vector<shared_ptr<Actor> > GetFlatActors(
+	vector<vector<shared_ptr<Actor> > > sorted_actors)
+{
+	auto actors = flatten(sorted_actors);
+	std::sort(actors.begin(), actors.end(),
+		[](const std::shared_ptr<Actor>& a1, const std::shared_ptr<Actor>& a2) {
+			return a1->GetId() < a2->GetId();
+		});
+	return actors;
+}
 
+int main()
+{
+	Terrain TT(LoadTerrain("grid.txt"));
+	PrintTT(TT);
 	shared_ptr<FormationMaker> F(new MyFormation());
 
-	vector<int64_t> weights({100, 200, 300});
-	list_act_id_t l({6, 7});
+	vector<int64_t> weights({ 100, 200, 300 });
+	list_act_id_t l({ 6, 7 });
 
-	list_act_id_t s({13, 12});
+	list_act_id_t s({ 13, 12 });
 
 	auto thing = MakeState(TT);
 	auto S = shared_ptr<State>(new State(thing.first));
@@ -292,11 +278,11 @@ int main() {
 	auto actors2 = GetFlatActors(sorted_actors2);
 
 	// S for main, S1 for player 1, S2 for player 2
-	// S.MoveUnits(l, Vector2D(12 * te_size, 9 * te_size), F, weights);
+	// S.MoveUnits(l, Vector2D(12 * ELEMENT_SIZE, 9 * ELEMENT_SIZE), F,
+	// weights);
 
 	MainDriver driver(PlayerAi(shared_ptr<PlayerAiHelper>(new Player1())),
-	                  PlayerAi(shared_ptr<PlayerAiHelper>(new Player2())), S,
-	                  S1, S2);
+		PlayerAi(shared_ptr<PlayerAiHelper>(new Player2())), S, S1, S2);
 
 	driver.Run();
 
@@ -350,12 +336,11 @@ int main() {
 		file << arr.dump() << endl;
 		file.flush();
 		auto end_time = chrono::high_resolution_clock::now();
-		auto duration =
-		    chrono::duration_cast<chrono::milliseconds>(end_time - start_time)
-		        .count();
+		auto duration = chrono::duration_cast<chrono::milliseconds>(end_time
+			- start_time).count();
 		// cout << duration << endl;
 		this_thread::sleep_for(
-		    chrono::milliseconds(max<long>((long)0, 30 - duration)));
+			chrono::milliseconds(max<long>((long)0, 30 - duration)));
 		bleep += 30;
 		if (bleep / 1000 >= 15) {
 			break;
