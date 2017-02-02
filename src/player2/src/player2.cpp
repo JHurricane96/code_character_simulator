@@ -69,11 +69,11 @@ void Player2::Update(std::shared_ptr<state::PlayerStateHandler> state)
 		// state->MoveUnits(ids, physics::Vector2D(300, 300), f.get(),
 		// std::vector<int64_t>(3, 1), path, success.get());
 		state->MoveUnits(ids, path, f.get(), success.get());
-		std::cout << "Success: " << *success << "\n";
+		// std::cout << "Success: " << *success << "\n";
 		for (auto point : path) {
-			std::cout << point.x << " " << point.y << ", ";
+			// std::cout << point.x << " " << point.y << ", ";
 		}
-		std::cout << "\n";
+		// std::cout << "\n";
 		// state->MoveUnits(list_act_id_t(sws.begin(), sws.begin() + 4),
 		// physics::Vector2D(40, 60), f.get(), std::vector<int64_t>(3, 1),
 		// NULL);
@@ -84,7 +84,7 @@ void Player2::Update(std::shared_ptr<state::PlayerStateHandler> state)
 		auto enemies = state->GetPlayerEnemyIds();
 		// state->AttackUnit(sword_ids, *(state->GetPlayerEnemyIds().begin()),
 		// success.get());
-		std::cout << "attack success: " << *success << "\n";
+		// std::cout << "attack success: " << *success << "\n";
 		// std::cout << "success: " << *success << "\n";
 		balls = 1;
 	} else if (balls == 1) {
@@ -93,12 +93,12 @@ void Player2::Update(std::shared_ptr<state::PlayerStateHandler> state)
 		// state->MoveUnits(list_act_id_t(ids.begin(), ids.begin() + 4),
 		// physics::Vector2D(300, 300), f.get(), std::vector<int64_t>({1, 1,
 		// 1000}), success.get());
-		std::cout << "Success of move units 2: " << *success << "\n";
-		std::cout << "success: " << *success << " Plan Path: "
-				  << state->PlanPath(physics::Vector2D(20, 20),
-						 physics::Vector2D(300, 300),
-						 std::vector<int64_t>({ 1, 1, 1 }), crap, success.get())
-				  << "\n";
+		// std::cout << "Success of move units 2: " << *success << "\n";
+		// std::cout << "success: " << *success << " Plan Path: "
+		// 		  << state->PlanPath(physics::Vector2D(20, 20),
+		// 				 physics::Vector2D(300, 300),
+		// 				 std::vector<int64_t>({ 1, 1, 1 }), crap, success.get())
+		// 		  << "\n";
 		balls = 2;
 	} else if (balls == 2) {
 		if (!sw.begin()->GetPathPlannerHelper().IsPathPlanning()) {
@@ -106,7 +106,7 @@ void Player2::Update(std::shared_ptr<state::PlayerStateHandler> state)
 			state->AttackUnit(
 				state::list_act_id_t(sws.begin(), sws.begin() + 4), 2,
 				success.get());
-			std::cout << "LOLOLOL!: " << *success << "\n";
+			// std::cout << "LOLOLOL!: " << *success << "\n";
 			balls = 3;
 		}
 	}
