@@ -140,7 +140,7 @@ pair<State, vector<vector<shared_ptr<Actor> > > > MakeState(Terrain terrain)
 	act_id_t id_count = 7;
 	for (int64_t i = 0; i < 2; i++) {
 		for (int64_t j = 0; j < 3; j++) {
-			cout << tower_pos[i * 3 + j] * ELEMENT_SIZE << ',';
+			// cout << tower_pos[i * 3 + j] * ELEMENT_SIZE << ',';
 			PlayerId p = static_cast<PlayerId>(i);
 			towers[i][j] = shared_ptr<Tower>(new Tower(++id_count, p, 80, 600,
 				600, 0, 10, 0, 0, 0, tower_pos[i * 3 + j] * ELEMENT_SIZE,
@@ -150,7 +150,7 @@ pair<State, vector<vector<shared_ptr<Actor> > > > MakeState(Terrain terrain)
 				static_pointer_cast<Actor>(towers[i][j]));
 		}
 	}
-	cout << endl;
+	// cout << endl;
 
 	for (int64_t i = 0; i < 2; i++) {
 		for (int64_t j = 0; j < 20; j++) {
@@ -214,7 +214,7 @@ Terrain LoadTerrain(string file_name)
 	getline(ifstream(file_name), line);
 	int rows = (int)sqrt(line.size());
 	int total = line.size();
-	cout << "ROWS: " << rows << " TOTAL : " << total << endl;
+	// cout << "ROWS: " << rows << " TOTAL : " << total << endl;
 	vector<vector<TerrainElement> > grid;
 	for (int i = 0; i < rows; i++) {
 		vector<TerrainElement> temp;
@@ -252,7 +252,7 @@ vector<shared_ptr<Actor> > GetFlatActors(
 int main()
 {
 	Terrain TT(LoadTerrain("grid.txt"));
-	PrintTT(TT);
+	// PrintTT(TT);
 	shared_ptr<FormationMaker> F(new MyFormation());
 
 	vector<int64_t> weights({ 100, 200, 300 });
@@ -289,8 +289,9 @@ int main()
 	int bleep = 0;
 
 	while (true) {
+		// cout << "LOL\n";
 		// PrintLos(S2.GetTerrain(), PLAYER2);
-		auto start_time = chrono::high_resolution_clock::now();
+		/*auto start_time = chrono::high_resolution_clock::now();
 		ofstream file("output.txt");
 
 		auto fire_balls = S->GetProjectiles();
@@ -344,7 +345,7 @@ int main()
 		bleep += 30;
 		if (bleep / 1000 >= 15) {
 			break;
-		}
+		}*/
 	}
 
 	driver.Stop();

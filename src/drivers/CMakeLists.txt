@@ -12,6 +12,7 @@ set(EXPORTS_FILE_PATH ${EXPORTS_DIR}/drivers_export.h)
 if (NOT BUILD_ALL)
 	include(${CMAKE_INSTALL_PREFIX}/physics_config.cmake)
 	include(${CMAKE_INSTALL_PREFIX}/state_config.cmake)
+	include(${CMAKE_INSTALL_PREFIX}/ipc_config.cmake)
 	include(${CMAKE_INSTALL_PREFIX}/player_config.cmake)
 endif()
 
@@ -22,7 +23,7 @@ set(RUNTIME_INSTALL_PATH ${CMAKE_INSTALL_PREFIX}/bin)
 set(INCLUDE_INSTALL_PATH ${CMAKE_INSTALL_PREFIX}/include)
 
 add_library(drivers SHARED ${SOURCE_FILES})
-target_link_libraries(drivers state physics player Threads::Threads)
+target_link_libraries(drivers state ipc physics player Threads::Threads)
 set_property(TARGET drivers PROPERTY CXX_STANDARD 11)
 generate_export_header(drivers EXPORT_FILE_NAME ${EXPORTS_FILE_PATH})
 target_include_directories(drivers PUBLIC

@@ -3,6 +3,7 @@
 
 #include <chrono>
 #include "main_driver.h"
+#include "ipc.h"
 
 namespace drivers {
 
@@ -23,6 +24,10 @@ MainDriver::MainDriver(
 
 void MainDriver::GlobalUpdateLoop() {
 	bool modified1, modified2;
+
+	ipc::Interrupts* InterruptVar(new ipc::Interrupts);
+	std::thread RendererInput(ipc::IncomingInterrupts, InterruptVar);
+
 	while(1) {
 		if (game_over) {
 			break;
@@ -49,8 +54,11 @@ void MainDriver::GlobalUpdateLoop() {
 		if (modified2) {
 			p2_driver->SetIsModifyDone(false);
 		}
+
+		ipc::StateTransfer(game_state);
 		std::this_thread::sleep_for(std::chrono::milliseconds(20));
 	}
+	RendererInput.join();
 }
 
 void MainDriver::Run() {
