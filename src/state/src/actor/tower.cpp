@@ -116,6 +116,14 @@ int64_t Tower::GetContentionRadius() {
 	return contention_radius;
 }
 
+int64_t Tower::GetContentionScore() {
+	return contention_score;
+}
+
+int64_t Tower::GetMaxContentionScore() {
+	return max_contention_score;
+}
+
 void Tower::SetReadyToAttackToFalse() {
 	ready_to_attack = false;
 }

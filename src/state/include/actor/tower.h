@@ -138,6 +138,18 @@ public:
 	 */
 	int64_t GetFireBallSize();
 	/**
+	 * Gets the contention score for the tower
+	 *
+	 * @return     The contention_score
+	 */
+	int64_t GetContentionScore();
+	/**
+	 * Gets the maximum contention score for the tower
+	 *
+	 * @return     The max_contention_score
+	 */
+	int64_t GetMaxContentionScore();
+	/**
 	 * Gets the contention radius of the tower
 	 *
 	 * @return     The contention_radius
