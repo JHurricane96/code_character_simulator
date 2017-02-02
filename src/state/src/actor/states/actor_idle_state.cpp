@@ -19,7 +19,7 @@ std::unique_ptr<ActorState> ActorIdleState::Update(
 	else if (actor->GetAttackTarget() != nullptr) {
 		return std::unique_ptr<ActorState>(new ActorAttackState());
 	}
-	else if (actor->GetPathPlannerHelper()->IsPathPlanning()) {
+	else if (actor->CanPathPlan() && actor->GetPathPlannerHelper()->IsPathPlanning()) {
 		return std::unique_ptr<ActorState>(
 			new ActorPathPlanningState()
 		);
