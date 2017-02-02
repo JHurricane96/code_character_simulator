@@ -12,6 +12,9 @@
 
 namespace ipc {
 
+/**
+ * Interrupts from the renderer to handle user interaction
+ */
 class IPC_EXPORT Interrupts {
 
 private:
@@ -118,10 +121,9 @@ class IPC_EXPORT Logger {
  * Inter process communication methods between renderer and simulator
  * Utilises Protocol Buffers for serializing structured data
  */
-	IPC_EXPORT int StateTransfer (std::shared_ptr<state::State> StateVar);
-	IPC_EXPORT int StoreTerrain(state::Terrain TerrainVar);
+	IPC_EXPORT void StateTransfer (std::shared_ptr<state::State> StateVar);
+	IPC_EXPORT void StoreTerrain(state::Terrain TerrainVar, std::string filename);
 	IPC_EXPORT state::Terrain LoadTerrain(std::string filename);
 	IPC_EXPORT void IncomingInterrupts(Interrupts* InterruptVar);
-	IPC_EXPORT int DepopulateStuff();
 }
 #endif // IPC_IPC_H

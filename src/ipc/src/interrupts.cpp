@@ -4,13 +4,10 @@
 */
 #include <iostream>
 #include <string>
-#include <thread>
 #include <stdlib.h>
 #include "ipc.h"
 
-using namespace std;
-
-void DepopulateInterrupt(string InterruptMessage, ipc::Interrupts* InterruptVar) {
+void DepopulateInterrupt(std::string InterruptMessage, ipc::Interrupts* InterruptVar) {
 
 	int Interrupt = atoi (InterruptMessage.c_str());
 	int Status = 0;
@@ -59,14 +56,14 @@ namespace ipc {
 	/**
 	 * Listens to interrupts from the renderer
 	 *
-	 * @return     Exit status
+	 * @param[in]	InterruptVar	the interrupts object
 	 */
 
 	void IncomingInterrupts(ipc::Interrupts* InterruptVar) {
 
 		while(true) {
 
-			string InterruptMessage;
+			std::string InterruptMessage;
 
 			std::cin >> InterruptMessage;
 

@@ -5,17 +5,10 @@
 #include <iostream>
 #include <string>
 #include <fstream>
-#include <thread>
 #include "state.h"
 #include "terrain/terrain.h"
-#include "utilities.h"
-#include "actor/actor.h"
 #include "ipc.h"
 #include "terrain.pb.h"
-
-using namespace std;
-using namespace state;
-using namespace physics;
 
 /**
  * Populates the terrain
@@ -57,13 +50,13 @@ void PopulateTerrain(state::Terrain TerrainVar, IPC::Terrain* TerrainMessage) {
 			state::TERRAIN_TYPE terrain_type = ElementObject.GetTerrainType();
 
 			switch(terrain_type){
-				case PLAIN :
+				case state::PLAIN :
 					ElementMessage->set_type(IPC::Terrain::TerrainElement::PLAIN);
 					break;
-				case FOREST :
+				case state::FOREST :
 					ElementMessage->set_type(IPC::Terrain::TerrainElement::FOREST);
 					break;
-				case MOUNTAIN :
+				case state::MOUNTAIN :
 					ElementMessage->set_type(IPC::Terrain::TerrainElement::MOUNTAIN);
 					break;
 			}
@@ -79,12 +72,11 @@ namespace ipc {
 	/**
 	 * Stores the terrain in a file
 	 *
-	 * @param[in]  Terrain  the terrain object
-	 *
-	 * @return     Exit status
+	 * @param[in]  TerrainVar	the terrain object
+	 * @param[in]  filename		the storage file
 	 */
 
-	int StoreTerrain(state::Terrain TerrainVar) {
+	void StoreTerrain(state::Terrain TerrainVar, std::string filename) {
 
 		/**
 		 * Verify that the version of the library that we linked against is
@@ -94,16 +86,10 @@ namespace ipc {
 
 		IPC::Terrain TerrainMessage;
 
-		fstream output("terrain_level2.txt", ios::out | ios::trunc | ios::binary);
+		std::fstream output(filename, std::ios::out | std::ios::trunc | std::ios::binary);
 
 		PopulateTerrain(TerrainVar, &TerrainMessage);
 
-		if (!TerrainMessage.SerializeToOstream(&output)) {
-			cerr << "Failed to transfer terrain message to file" << endl;
-			return -1;
-		}
-
-		return 0;
+		TerrainMessage.SerializeToOstream(&output);
 	}
 }
-
