@@ -66,16 +66,16 @@ void PopulateActors(std::shared_ptr<state::State> StateVar, IPC::State* StateMes
 		ActorMessageP1->set_max_hp(actor1->GetMaxHp());
 		ActorMessageP1->set_is_moving(actor1->GetVelocity().magnitude() != 0);
 
-		IPC::State::Vector2D Dest;
+		IPC::State::Vector2D* Dest = new IPC::State::Vector2D;
 
 		if (actor1->CanPathPlan() && actor1->GetPathPlannerHelper()->IsPathPlanning()) {
 			auto pph = actor1->GetPathPlannerHelper();
 			auto Destination = pph->GetDestination();
 
-			Dest.set_x(Destination.x);
-			Dest.set_y(Destination.y);
+			Dest->set_x(Destination.x);
+			Dest->set_y(Destination.y);
 
-			ActorMessageP1->set_allocated_destination(&Dest);
+			ActorMessageP1->set_allocated_destination(Dest);
 		}
 
 		state::ActorType typevar = actor1->GetActorType();
@@ -147,16 +147,16 @@ void PopulateActors(std::shared_ptr<state::State> StateVar, IPC::State* StateMes
 		ActorMessageP2->set_max_hp(actor2->GetMaxHp());
 		ActorMessageP2->set_is_moving(actor2->GetVelocity().magnitude() != 0);
 
-		IPC::State::Vector2D Dest;
+		IPC::State::Vector2D* Dest = new IPC::State::Vector2D;
 
 		if (actor2->CanPathPlan() && actor2->GetPathPlannerHelper()->IsPathPlanning()) {
 			auto pph = actor2->GetPathPlannerHelper();
 			auto Destination = pph->GetDestination();
 
-			Dest.set_x(Destination.x);
-			Dest.set_y(Destination.y);
+			Dest->set_x(Destination.x);
+			Dest->set_y(Destination.y);
 
-			ActorMessageP2->set_allocated_destination(&Dest);
+			ActorMessageP2->set_allocated_destination(Dest);
 		}
 
 		state::ActorType typevar2 = actor2->GetActorType();
@@ -218,8 +218,8 @@ void PopulateLOS(std::shared_ptr<state::State> StateVar, IPC::State* StateMessag
 	/**
 	 * Create constructed instances of LOS to pass to StateMessage
 	 */
-	IPC::State::LOS LOSP1;
-	IPC::State::LOS LOSP2;
+	IPC::State::LOS* LOSP1 = new IPC::State::LOS;
+	IPC::State::LOS* LOSP2 = new IPC::State::LOS;
 
 	/**
 	 * Loop through the terrain to get LOS for each terrain element for each player
@@ -228,8 +228,8 @@ void PopulateLOS(std::shared_ptr<state::State> StateVar, IPC::State* StateMessag
 
 	for (double row = 0; row < size; ++row) {
 
-		IPC::State::LOS::LOSRows* LOSRowsP1 = LOSP1.add_row();
-		IPC::State::LOS::LOSRows* LOSRowsP2 = LOSP2.add_row();
+		IPC::State::LOS::LOSRows* LOSRowsP1 = LOSP1->add_row();
+		IPC::State::LOS::LOSRows* LOSRowsP2 = LOSP2->add_row();
 		for (double col = 0; col < size; ++col) {
 
 			physics::Vector2D offset;
@@ -269,8 +269,8 @@ void PopulateLOS(std::shared_ptr<state::State> StateVar, IPC::State* StateMessag
 	/**
 	 * Pass instances of LOS to StateMessage for player 1 and 2
 	 */
-	StateMessage->set_allocated_player1_los(&LOSP1);
-	StateMessage->set_allocated_player2_los(&LOSP2);
+	StateMessage->set_allocated_player1_los(LOSP1);
+	StateMessage->set_allocated_player2_los(LOSP2);
 
 	return;
 }
