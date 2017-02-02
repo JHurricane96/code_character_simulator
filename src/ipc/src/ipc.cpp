@@ -3,7 +3,7 @@
 namespace ipc {
 
 Interrupts::Interrupts() :
-	play(true),
+	play(false),
 	level(1),
 	exit(false),
 	restart(false) {}

@@ -7,13 +7,13 @@ cmake_minimum_required(VERSION 3.6.2)
 project(ipc)
 
 set(SOURCE_FILES
+	src/interrupts.cpp
 	src/ipc.cpp
 	src/load_terrain.cpp
-	src/interrupts.cpp
+	src/state_transfer.cpp
 	src/store_terrain.cpp
-	src/depopulate.cpp
-	src/populate.cpp
 )
+
 set(INCLUDE_PATH include)
 set(EXPORTS_DIR ${CMAKE_BINARY_DIR}/exports)
 set(EXPORTS_FILE_PATH ${EXPORTS_DIR}/ipc_export.h)
@@ -26,8 +26,6 @@ if (NOT BUILD_ALL)
 endif()
 
 include_directories(${Protobuf_INCLUDE_DIRS})
-#include_directories(include)
-#include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
 file(GLOB ProtoFiles "${CMAKE_CURRENT_SOURCE_DIR}/proto/*.proto")
 protobuf_generate_cpp(PROTO_SRCS PROTO_HDRS ${ProtoFiles})
@@ -53,6 +51,3 @@ install(EXPORT ipc_config DESTINATION ${CMAKE_INSTALL_PREFIX})
 install(DIRECTORY ${INCLUDE_PATH} DESTINATION ${CMAKE_INSTALL_PREFIX})
 install(FILES ${EXPORTS_FILE_PATH} DESTINATION ${CMAKE_INSTALL_PREFIX}/include)
 install(FILES ${PROTO_HDRS} DESTINATION ${CMAKE_INSTALL_PREFIX}/include)
-
-
-#install(TARGETS ipc DESTINATION ${CMAKE_INSTALL_PREFIX}/bin)

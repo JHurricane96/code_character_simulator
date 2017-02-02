@@ -5,13 +5,10 @@
 #include <iostream>
 #include <string>
 #include <fstream>
-#include <thread>
 #include "ipc.h"
 #include "terrain/terrain.h"
 #include "terrain/terrain_element.h"
 #include "terrain.pb.h"
-
-using namespace std;
 
 /**
  * Depopulates the terrain
@@ -25,7 +22,7 @@ using namespace std;
  */
 state::Terrain DepopulateTerrain(const IPC::Terrain& TerrainMessage) {
 
-	vector<vector<state::TerrainElement> > Grid;
+	std::vector<std::vector<state::TerrainElement> > Grid;
 
 	const int NoOfRows = TerrainMessage.no_of_rows();
 	const int SideLength = TerrainMessage.size_of_element();
@@ -37,7 +34,7 @@ state::Terrain DepopulateTerrain(const IPC::Terrain& TerrainMessage) {
 	for (int i = 0; i < TerrainMessage.row_size(); i++)
 	{
 		const IPC::Terrain::TerrainRow& RowMessage = TerrainMessage.row(i);
-		vector<state::TerrainElement> Row;
+		std::vector<state::TerrainElement> Row;
 		for(int j = 0; j < RowMessage.element_size(); j++)
 		{
 
@@ -70,9 +67,9 @@ namespace ipc {
 	/**
 	 * Loads the terrain from a file
 	 *
-	 * @param[in]  Terrain  the terrain object
+	 * @param[in]  filename		the storage file
 	 *
-	 * @return     Exit status
+	 * @return     Terrain 		the loaded terrain
 	 */
 
 	state::Terrain LoadTerrain(std::string filename) {
@@ -85,12 +82,9 @@ namespace ipc {
 
 		IPC::Terrain TerrainMessage;
 
-		fstream input(filename, ios::in | ios::binary);
+		std::fstream input(filename, std::ios::in | std::ios::binary);
 
-		if (!TerrainMessage.ParseFromIstream(&input)) {
-			cerr << "Failed to retrieve state message" << endl;
-			return -1;
-		}
+		TerrainMessage.ParseFromIstream(&input);
 
 		return ( DepopulateTerrain(TerrainMessage) );
 	}
