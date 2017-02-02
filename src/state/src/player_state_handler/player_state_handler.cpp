@@ -161,6 +161,10 @@ TerrainElementView PlayerStateHandler::OffsetToTerrainElement(
 	return TerrainElementView(&te, player_id);
 }
 
+int64_t PlayerStateHandler::GetTerrainRows() {
+	return state->GetTerrain().GetRows();
+}
+
 UnitView PlayerStateHandler::GetUnitFromId(act_id_t actor_id, int * success) {
 	auto actor = state->GetActorFromId(player_id, actor_id, success);
 	if (actor != nullptr)

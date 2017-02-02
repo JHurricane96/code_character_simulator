@@ -215,6 +215,12 @@ public:
 		int * success
 	);
 	/**
+	 * Gets the number of rows of TerrainElements in the terrain
+	 *
+	 * @return     The number of rows
+	 */
+	int64_t GetTerrainRows();
+	/**
 	 * Gets the actor from it's id
 	 *
 	 * The parameter success's value indicates the outcome of the call
