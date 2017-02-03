@@ -48,18 +48,18 @@ void PopulateActors(std::shared_ptr<state::State> StateVar, IPC::State* StateMes
 		ActorMessageP1->set_x(pos.x);
 		ActorMessageP1->set_y(pos.y);
 
-		if(actor1->GetAttackTarget() == nullptr)
+		if(!actor1->CanAttack() || actor1->GetAttackTarget() == nullptr)
 			ActorMessageP1->set_is_attacking(false);
 		else {
 			ActorMessageP1->set_is_attacking(true);
 
-			IPC::State::Vector2D AttackTargetPosition;
+			auto AttackTargetPosition = new IPC::State::Vector2D;
 			physics::Vector2D attack_pos = actor1->GetAttackTarget()->GetPosition();
 
-			AttackTargetPosition.set_x(attack_pos.x);
-			AttackTargetPosition.set_y(attack_pos.y);
+			AttackTargetPosition->set_x(attack_pos.x);
+			AttackTargetPosition->set_y(attack_pos.y);
 
-			ActorMessageP1->set_allocated_attack_target_position(&AttackTargetPosition);
+			ActorMessageP1->set_allocated_attack_target_position(AttackTargetPosition);
 		}
 
 		ActorMessageP1->set_hp(actor1->GetHp());
@@ -129,18 +129,18 @@ void PopulateActors(std::shared_ptr<state::State> StateVar, IPC::State* StateMes
 		ActorMessageP2->set_x(pos.x);
 		ActorMessageP2->set_y(pos.y);
 
-		if(actor2->GetAttackTarget() == nullptr)
+		if(!actor2->CanAttack() || actor2->GetAttackTarget() == nullptr)
 			ActorMessageP2->set_is_attacking(false);
 		else {
 			ActorMessageP2->set_is_attacking(true);
 
-			IPC::State::Vector2D AttackTargetPosition;
+			auto AttackTargetPosition = new IPC::State::Vector2D;
 			physics::Vector2D attack_pos = actor2->GetAttackTarget()->GetPosition();
 
-			AttackTargetPosition.set_x(attack_pos.x);
-			AttackTargetPosition.set_y(attack_pos.y);
+			AttackTargetPosition->set_x(attack_pos.x);
+			AttackTargetPosition->set_y(attack_pos.y);
 
-			ActorMessageP2->set_allocated_attack_target_position(&AttackTargetPosition);
+			ActorMessageP2->set_allocated_attack_target_position(AttackTargetPosition);
 		}
 
 		ActorMessageP2->set_hp(actor2->GetHp());
