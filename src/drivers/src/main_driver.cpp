@@ -24,10 +24,6 @@ MainDriver::MainDriver(
 void MainDriver::GlobalUpdateLoop() {
 	bool modified1, modified2;
 
-	game_state->Update(1);
-	p1_state_buffer->MergeWithMain(*game_state);
-	p2_state_buffer->MergeWithMain(*game_state);
-
 	while(1) {
 		if (game_over) {
 			break;
@@ -59,6 +55,10 @@ void MainDriver::GlobalUpdateLoop() {
 }
 
 void MainDriver::Run() {
+	game_state->Update(1);
+	p1_state_buffer->MergeWithMain(*game_state);
+	p2_state_buffer->MergeWithMain(*game_state);
+
 	p1_driver->Run();
 	p2_driver->Run();
 	runner = std::thread(&MainDriver::GlobalUpdateLoop, this);
