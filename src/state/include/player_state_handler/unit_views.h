@@ -135,6 +135,12 @@ private:
 	 */
 	float speed;
 	/**
+	 * Radius of the Actor
+	 *
+	 * Assumes Actors are circles
+	 */
+	int64_t size;
+	/**
 	 * The player's attack target
 	 */
 	std::unique_ptr<EnemyUnitView> attack_target;
@@ -186,6 +192,12 @@ public:
 	 * @return     The maximum speed
 	 */
 	int64_t GetMaxSpeed();
+	/**
+	 * Gets the Actor's size
+	 *
+	 * @return     The Actor's size
+	 */
+	int64_t GetSize();
 	/**
 	 * Gets the Actor's type
 	 *
