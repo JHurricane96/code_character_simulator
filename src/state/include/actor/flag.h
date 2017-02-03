@@ -58,6 +58,13 @@ public:
 	 */
 	bool IsCaptured();
 	/**
+	 * Moves the flag back to its base after it was captured and
+	 * dropped successfully by the enemy King
+	 *
+	 * @param[in]  base_position  The base position
+	 */
+	void MoveToBase(physics::Vector2D base_position);
+	/**
 	 * Update function to be called every tick
 	 *
 	 * @param[in]  delta_time  The difference in time between the

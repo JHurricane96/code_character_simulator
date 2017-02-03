@@ -54,6 +54,10 @@ bool Flag::IsCaptured() {
 	return (king != nullptr);
 }
 
+void Flag::MoveToBase(physics::Vector2D base_position) {
+	position = base_position;
+}
+
 void Flag::Update(float delta_time) {
 	if (IsCaptured()) {
 		position = king->GetPosition();
