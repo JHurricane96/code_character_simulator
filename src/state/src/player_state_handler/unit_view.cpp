@@ -50,6 +50,7 @@ UnitView::UnitView(Actor * actor)
 	max_hp(actor->GetMaxHp()),
 	max_speed(actor->GetMaxSpeed()),
 	speed(actor->GetSpeed()),
+	size(actor->GetSize()),
 	position(actor->GetPosition()),
 	velocity(actor->GetVelocity()),
 	los_radius(actor->GetLosRadius()),
@@ -74,6 +75,7 @@ UnitView::UnitView(const UnitView& other):
 	max_hp(other.max_hp),
 	max_speed(other.max_speed),
 	speed(other.speed),
+	size(other.size),
 	position(other.position),
 	velocity(other.velocity),
 	los_radius(other.los_radius),
@@ -103,6 +105,10 @@ int64_t UnitView::GetMaxHp() {
 
 int64_t UnitView::GetMaxSpeed() {
 	return max_speed;
+}
+
+int64_t UnitView::GetSize() {
+	return size;
 }
 
 EnemyUnitView * UnitView::GetAttackTarget(int * success) {
