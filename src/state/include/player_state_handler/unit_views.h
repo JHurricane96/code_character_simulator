@@ -55,6 +55,12 @@ private:
 	 */
 	int64_t hp;
 	/**
+	 * Radius of the Actor
+	 *
+	 * Assumes Actors are circles
+	 */
+	int64_t size;
+	/**
 	* Position of the actor
 	*/
 	physics::Vector2D position;
@@ -79,6 +85,12 @@ public:
 	 * @return     The Actor's type
 	 */
 	ActorType GetActorType();
+	/**
+	 * Gets the Actor's size
+	 *
+	 * @return     The Actor's size
+	 */
+	int64_t GetSize();
 	/**
 	 * Gets the Actor's HP
 	 *
