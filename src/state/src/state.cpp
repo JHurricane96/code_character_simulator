@@ -318,7 +318,8 @@ std::vector<std::shared_ptr<Swordsman> > State::GetEnemySwordsmen(
 	auto enemy_swordsmen = swordsmen[(player_id + 1) % (LAST_PLAYER + 1)];
 	std::vector<std::shared_ptr<Swordsman> > visible_enemy_swordsmen;
 	for (auto swordsman : enemy_swordsmen) {
-		if (terrain.CoordinateToTerrainElement(swordsman->GetPosition())
+		if (!swordsman->IsDead() &&
+			terrain.CoordinateToTerrainElement(swordsman->GetPosition())
 		   .GetLos(player_id) == DIRECT_LOS)
 			visible_enemy_swordsmen.push_back(swordsman);
 	}
