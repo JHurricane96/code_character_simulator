@@ -298,7 +298,8 @@ std::vector<std::shared_ptr<Magician> > State::GetEnemyMagicians(
 	auto enemy_magicians = magicians[(player_id + 1) % (LAST_PLAYER + 1)];
 	std::vector<std::shared_ptr<Magician> > visible_enemy_magicians;
 	for (auto magician : enemy_magicians) {
-		if (terrain.CoordinateToTerrainElement(magician->GetPosition())
+		if (!magician->IsDead() &&
+			terrain.CoordinateToTerrainElement(magician->GetPosition())
 		   .GetLos(player_id) == DIRECT_LOS)
 			visible_enemy_magicians.push_back(magician);
 	}
