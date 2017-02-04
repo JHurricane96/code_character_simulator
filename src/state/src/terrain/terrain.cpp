@@ -143,7 +143,7 @@ void Terrain::Update(
 
 	for (int64_t i = 0; i <= LAST_PLAYER; i++) {
 		for (auto &actor: actors[i]) {
-			if (actor) {
+			if (!actor->IsDead()) {
 				auto pos = actor->GetPosition();
 				int64_t size = grid[0][0].GetSize();
 				auto offset = physics::Vector2D((int)pos.x/size, (int)pos.y/size);
