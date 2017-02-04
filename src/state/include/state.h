@@ -276,7 +276,7 @@ public:
 	 * The parameter success's value indicates the outcome of the call
 	 *
 	 * success is:
-	 * - 0  if the enemy king is not in the LOS of the player
+	 * - 0  if the enemy king is not in the LOS of the player/is dead
 	 * - 1  if the king is retrieved
 	 *
 	 * @param[in]  player_id  Player ID

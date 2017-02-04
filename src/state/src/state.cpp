@@ -362,6 +362,10 @@ std::shared_ptr<King> State::GetEnemyKing(
 	int * success
 ) {
 	auto enemy_king = kings[(player_id + 1) % (LAST_PLAYER + 1)];
+	if (enemy_king->IsDead()) {
+		SetIfValid(success, 0);
+		return nullptr;
+	}
 	if (terrain.CoordinateToTerrainElement(enemy_king->GetPosition())
 			   .GetLos(player_id) == DIRECT_LOS) {
 		SetIfValid(success, 1);
