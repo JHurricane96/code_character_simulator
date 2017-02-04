@@ -246,6 +246,7 @@ public:
 	 * success is:
 	 * - 0  if actor id is invalid
 	 * - -1 if actor does not belong to the enemy
+	 * - -2 if actor is not in LOS/is dead
 	 * - 1  if successful
 	 *
 	 * @param[in]  actor_id   The actor id

@@ -177,9 +177,19 @@ PlayerStateHandler::GetEnemyUnitFromId(act_id_t actor_id, int * success) {
 	PlayerId enemy_player_id =
 		static_cast<PlayerId>((player_id + 1) % (LAST_PLAYER + 1));
 	auto actor = state->GetActorFromId(enemy_player_id, actor_id, success);
-	if (actor != nullptr)
-		return EnemyUnitView(actor.get());
-	return EnemyUnitView();
+	if (actor == nullptr)
+		return EnemyUnitView();
+
+	auto enemies = state->GetPlayerEnemyIds(player_id);
+
+	if (std::find(enemies.begin(), enemies.end(), actor_id) == enemies.end()) {
+		if (success) {
+			*success = -2;
+		}
+		return EnemyUnitView();
+	}
+
+	return EnemyUnitView(actor.get());
 }
 
 list_act_id_t PlayerStateHandler::GetRespawnables() {
