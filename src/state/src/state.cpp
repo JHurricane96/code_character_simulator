@@ -639,7 +639,8 @@ list_act_id_t State::GetPlayerEnemyIds(PlayerId player_id) {
 		if (pid != player_id) {
 			for (auto actor : sorted_actors[pid]) {
 				auto te = terrain.CoordinateToTerrainElement(actor->GetPosition());
-				if (te.GetLos(player_id) == DIRECT_LOS &&
+				if (!actor->IsDead() &&
+					te.GetLos(player_id) == DIRECT_LOS &&
 					actor->GetActorType() != ActorType::SCOUT &&
 					actor->GetActorType() != ActorType::TOWER)
 						all_enemies.push_back(actor->GetId());
