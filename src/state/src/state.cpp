@@ -499,6 +499,7 @@ void State::FlagDrop(PlayerId player_id, int * success) {
 
 	king->DropFlag();
 	enemy_flag->Drop();
+	enemy_flag->MoveToBase(GetEnemyBase(player_id)->GetPosition());
 	SetIfValid(success, 1);
 }
 
