@@ -73,6 +73,9 @@ void Flag::MergeWithBuffer(
 
 	}
 	else {
+		if (king != nullptr) {
+			position = flag->position;
+		}
 		king = nullptr;
 	}
 }
