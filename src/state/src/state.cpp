@@ -271,7 +271,8 @@ std::vector<std::shared_ptr<Scout> > State::GetEnemyScouts(
 	auto enemy_scouts = scouts[(player_id + 1) % (LAST_PLAYER + 1)];
 	std::vector<std::shared_ptr<Scout> > visible_enemy_scouts;
 	for (auto scout : enemy_scouts) {
-		if (terrain.CoordinateToTerrainElement(scout->GetPosition())
+		if (!scout->IsDead() &&
+			terrain.CoordinateToTerrainElement(scout->GetPosition())
 			       .GetLos(player_id) == DIRECT_LOS ) {
 			if (scout->GetPosition().distance(bases[player_id]->GetPosition())
 				<= bases[player_id]->GetLosRadius() * grid_element_size) {
