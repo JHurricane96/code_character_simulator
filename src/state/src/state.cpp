@@ -624,7 +624,8 @@ list_act_id_t State::GetActorEnemies(PlayerId player_id, act_id_t actor_id) {
 				if(actors[actor_id]->GetActorType() != ActorType::TOWER &&
 					actors[actor_id]->GetActorType() != ActorType::BASE &&
 					actors[id]->GetActorType() == ActorType::SCOUT) {}
-				else if (actors[id]->GetPosition().distance(actors[actor_id]->GetPosition())
+				else if (!actors[id]->IsDead() &&
+					actors[id]->GetPosition().distance(actors[actor_id]->GetPosition())
 					 < actors[actor_id]->GetLosRadius()*size)
 					enemies.push_back(id);
 			}
