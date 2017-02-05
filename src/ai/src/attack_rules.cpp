@@ -82,7 +82,7 @@ float getDistanceFromUnit(std::shared_ptr<state::PlayerStateHandler> state, stat
 }
 
 /**
- * Fuction to find Nearest Enemy from a given Unit
+ * Function to find Nearest Enemy from a given Unit
  *
  * @param[in]  state  The state
  * @param[in]  id     The identifier for the Unit
@@ -90,18 +90,19 @@ float getDistanceFromUnit(std::shared_ptr<state::PlayerStateHandler> state, stat
  * @return     A pair object containing (NearestEnemyUnitId, NearestEnemyUnitDistance)
  */
 std::pair<state::act_id_t, float> NearestEnemy(std::shared_ptr<state::PlayerStateHandler> state, state::act_id_t id) {
+
 	state::UnitView parentUnit = state->GetUnitFromId(id, NULL);
 	state::list_act_id_t enemies = state->GetPlayerEnemyIds();
+
 	state::act_id_t nearestEnemyId = -1;
-	float nearestEnemyDistance = -1, dist;
+	float nearestEnemyDistance = FLT_MAX, dist;
+
 	for (int i = 0; i < enemies.size(); i++) {
+
 		state::EnemyUnitView enemyUnit = state->GetEnemyUnitFromId(enemies[i], NULL);
 		dist = enemyUnit.GetPosition().distance(parentUnit.GetPosition());
-		if (nearestEnemyDistance == -1) {
-			nearestEnemyDistance = dist;
-			nearestEnemyId = enemyUnit.GetId();
-		}
-		else if (dist < nearestEnemyDistance) {
+
+		if (dist < nearestEnemyDistance) {
 			nearestEnemyDistance = dist;
 			nearestEnemyId = enemyUnit.GetId();
 		}
