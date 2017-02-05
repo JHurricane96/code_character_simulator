@@ -53,7 +53,7 @@ state::Terrain DepopulateTerrain(const IPC::Terrain& TerrainMessage) {
 					terrain_type = state::MOUNTAIN;
 					break;
 			}
-			Row.push_back(state::TerrainElement(terrain_type, physics::Vector2D(i * NoOfRows, j * NoOfRows), SideLength));
+			Row.push_back(state::TerrainElement(terrain_type, physics::Vector2D(i * SideLength, j * SideLength), SideLength));
 		}
 		Grid.push_back(Row);
 	}
