@@ -387,6 +387,15 @@ std::vector<std::shared_ptr<FireBall> > State::GetProjectiles() {
 	return projectile_handler.GetProjectiles();
 }
 
+std::vector<int64_t> State::GetScores() {
+	std::vector<int64_t> scores;
+	for (int i = 0; i <= LAST_PLAYER; ++i) {
+		scores.push_back(
+			(flag_capture_score[i] * 50) - (base_poisoning_penalty[i] / 1500)
+		);
+	}
+	return scores;
+}
 
 list_act_id_t State::GetRespawnables(PlayerId player_id) {
 	list_act_id_t respawnables;

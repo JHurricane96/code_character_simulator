@@ -319,6 +319,14 @@ public:
 	 */
 	std::vector<std::shared_ptr<FireBall> > GetProjectiles();
 	/**
+	 * Gets the total weighted scores of all players
+	 *
+	 * Returns a list indexed by PlayerId
+	 *
+	 * @return     The scores
+	 */
+	std::vector<int64_t> GetScores();
+	/**
 	 * Gets the actor from identifier.
 	 *
 	 * The parameter success's value indicates the outcome of the call
