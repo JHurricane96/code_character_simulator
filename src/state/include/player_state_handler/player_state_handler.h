@@ -258,6 +258,12 @@ public:
 	 */
 	EnemyUnitView GetEnemyUnitFromId(act_id_t actor_id, int * success);
 	/**
+	 * Gets the player's score
+	 *
+	 * @return     The score
+	 */
+	int64_t GetScore();
+	/**
 	 * Gets a player's dead units whose time_to_respawn is 0
 	 *
 	 * @return     List of respawnables' Actor IDs

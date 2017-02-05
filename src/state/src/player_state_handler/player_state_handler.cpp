@@ -192,6 +192,10 @@ PlayerStateHandler::GetEnemyUnitFromId(act_id_t actor_id, int * success) {
 	return EnemyUnitView(actor.get());
 }
 
+int64_t PlayerStateHandler::GetScore() {
+	return state->GetScores()[player_id];
+}
+
 list_act_id_t PlayerStateHandler::GetRespawnables() {
 	return state->GetRespawnables(player_id);
 }
