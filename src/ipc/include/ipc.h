@@ -21,7 +21,8 @@ class IPC_EXPORT Interrupts {
 private:
 		/**
 		 * Describe simulation status
-		 * True: Play, False: Pause
+		 * - True: Play
+		 * - False: Pause
 		 */
 		std::atomic<bool> play;
 
@@ -75,22 +76,30 @@ public:
 		bool GetRestartStatus();
 
 		/**
-		 * Sets the state of the simulation
+		 * Sets the play status
+		 *
+		 * @param[in]  play_status  The play status
 		 */
 		void SetPlayStatus(bool play_status);
 
 		/**
-		 * Sets the level number of currently loaded level
+		 * Sets the level number
+		 *
+		 * @param[in]  current_level  The current level
 		 */
 		void SetLevelNumber(int current_level);
 
 		/**
-		 * Sets the exit status of the simulator
+		 * Sets the exit status
+		 *
+		 * @param[in]  exit_status  The exit status
 		 */
 		void SetExitStatus(bool exit_status);
 
 		/**
-		 * Sets the restart status of the simulator
+		 * Sets the restart status
+		 *
+		 * @param[in]  restart_status  The restart status
 		 */
 		void SetRestartStatus(bool restart_status);
 
@@ -102,9 +111,31 @@ class IPC_EXPORT Logger {
 	std::mutex logmutex;
 
 	public:
+
+		/**
+		 * Gets the logs
+		 *
+		 * @return     The logs
+		 */
 		std::vector<std::string> GetLogs();
+
+		/**
+		 * Sets the logs
+		 *
+		 * @param[in]  log   The log
+		 */
 		void SetLogs(std::string log);
+
+		/**
+		 * Empties the logger
+		 */
 		void EmptyLogs();
+
+		/**
+		 * Creates a singleton of the logger
+		 *
+		 * @return     returns a logger instance
+		 */
 		static Logger& Instance();
 };
 
@@ -112,9 +143,42 @@ class IPC_EXPORT Logger {
  * Inter process communication methods between renderer and simulator
  * Utilises Protocol Buffers for serializing structured data
  */
+	/**
+	 * Passes the state to renderer every update
+	 *
+	 * @param[in]  StateVar    The state variable
+	 * @param[in]  ExitStatus  The exit status
+	 */
 	IPC_EXPORT void StateTransfer (std::shared_ptr<state::State> StateVar, bool ExitStatus);
+
+	/**
+	 * Stores a terrain
+	 *
+	 * @param[in]  TerrainVar  The terrain variable
+	 * @param[in]  filename    The filename
+	 */
 	IPC_EXPORT void StoreTerrain(state::Terrain TerrainVar, std::string filename);
+
+	/**
+	 * Loads a terrain
+	 *
+	 * @param[in]  filename  The filename
+	 *
+	 * @return     Returns a state::Terrain
+	 */
 	IPC_EXPORT state::Terrain LoadTerrain(std::string filename);
+
+	/**
+	 * Listen to the renderer for an interrupt
+	 *
+	 * Interrupts can be of 4 types:
+	 * - PlayStatus
+	 * - LevelNumber
+	 * - ExitStatus
+	 * - RestartStatus
+	 *
+	 * @param      InterruptVar  The interrupt variable
+	 */
 	IPC_EXPORT void IncomingInterrupts(Interrupts* InterruptVar);
 }
 #endif // IPC_IPC_H
