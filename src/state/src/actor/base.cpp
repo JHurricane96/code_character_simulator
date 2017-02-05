@@ -66,6 +66,14 @@ int64_t Base::GetBasePoisonPenalty(
 	return penalty > 0 ? penalty : 0;
 }
 
+int64_t Base::GetBasePoisoningThreshold() {
+	return base_poisoning_threshold;
+}
+
+int64_t Base::GetBasePoisoningRadius() {
+	return base_poisoning_radius;
+}
+
 void Base::Update(float delta_time) {};
 
 }
