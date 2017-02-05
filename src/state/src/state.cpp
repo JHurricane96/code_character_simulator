@@ -740,7 +740,7 @@ void State::MergeWithBuffer(const State& state, PlayerId player_id) {
 		state.flags[(player_id + 1) % (LAST_PLAYER + 1)].get(), actors
 	);
 
-	flag_capture_score = state.flag_capture_score;
+	flag_capture_score[player_id] = state.flag_capture_score[player_id];
 }
 
 void State::MergeWithMain(const State& state) {
@@ -770,6 +770,7 @@ void State::MergeWithMain(const State& state) {
 	terrain.MergeWithMain(state.terrain);
 	projectile_handler.MergeWithMain(state.projectile_handler, actors);
 
+	flag_capture_score = state.flag_capture_score;
 	base_poisoning_penalty = state.base_poisoning_penalty;
 }
 
