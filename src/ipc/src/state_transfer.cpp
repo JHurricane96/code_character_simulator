@@ -28,7 +28,9 @@ void PopulateActors(std::shared_ptr<state::State> StateVar, IPC::State* StateMes
 	std::vector<std::shared_ptr<state::Actor> > P1_Actors = StateVar->GetPlayerActors(P1);
 	std::vector<std::shared_ptr<state::Actor> > P2_Actors = StateVar->GetPlayerActors(P2);
 
-	int ActorLength = P1_Actors.size() + P2_Actors.size();
+	std::vector<std::shared_ptr<state::FireBall> > Projectiles = StateVar->GetProjectiles();
+
+	int ActorLength = P1_Actors.size() + P2_Actors.size() + Projectiles.size();
 
 	bool ScoutVisibleP1 = !StateVar->GetEnemyScouts(P2).empty();
 	bool ScoutVisibleP2 = !StateVar->GetEnemyScouts(P1).empty();
@@ -84,9 +86,6 @@ void PopulateActors(std::shared_ptr<state::State> StateVar, IPC::State* StateMes
 
 			case state::ActorType::MAGICIAN	:
 				ActorMessageP1->set_actor_type(IPC::State::Actor::MAGICIAN);
-				break;
-			case state::ActorType::FIREBALL	:
-				ActorMessageP1->set_actor_type(IPC::State::Actor::FIREBALL);
 				break;
 			case state::ActorType::BASE		:
 				ActorMessageP1->set_actor_type(IPC::State::Actor::BASE);
@@ -166,9 +165,6 @@ void PopulateActors(std::shared_ptr<state::State> StateVar, IPC::State* StateMes
 			case state::ActorType::MAGICIAN	:
 				ActorMessageP2->set_actor_type(IPC::State::Actor::MAGICIAN);
 				break;
-			case state::ActorType::FIREBALL	:
-				ActorMessageP2->set_actor_type(IPC::State::Actor::FIREBALL);
-				break;
 			case state::ActorType::BASE		:
 				ActorMessageP2->set_actor_type(IPC::State::Actor::BASE);
 				break;
@@ -194,6 +190,22 @@ void PopulateActors(std::shared_ptr<state::State> StateVar, IPC::State* StateMes
 
 		}
 	}
+
+	for(auto Projectile : Projectiles)
+	{
+		IPC::State::Actor* ActorMessageProjectiles = StateMessage->add_actors();
+
+		ActorMessageProjectiles->set_id(Projectile->GetId());
+		ActorMessageProjectiles->set_player_id(Projectile->GetPlayerId());
+
+		physics::Vector2D pos = Projectile->GetPosition();
+
+		ActorMessageProjectiles->set_x(pos.x);
+		ActorMessageProjectiles->set_y(pos.y);
+
+		ActorMessageProjectiles->set_actor_type(IPC::State::Actor::FIREBALL);
+	}
+
 	StateMessage->set_no_of_actors(ActorLength);
 
 	return;
