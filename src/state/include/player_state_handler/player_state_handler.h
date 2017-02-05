@@ -264,6 +264,12 @@ public:
 	 */
 	int64_t GetScore();
 	/**
+	 * Gets the enemy's score
+	 *
+	 * @return     The enemy's score
+	 */
+	int64_t GetEnemyScore();
+	/**
 	 * Gets a player's dead units whose time_to_respawn is 0
 	 *
 	 * @return     List of respawnables' Actor IDs

@@ -196,6 +196,10 @@ int64_t PlayerStateHandler::GetScore() {
 	return state->GetScores()[player_id];
 }
 
+int64_t PlayerStateHandler::GetEnemyScore() {
+	return state->GetScores()[(player_id + 1) % (LAST_PLAYER + 1)];
+}
+
 list_act_id_t PlayerStateHandler::GetRespawnables() {
 	return state->GetRespawnables(player_id);
 }
