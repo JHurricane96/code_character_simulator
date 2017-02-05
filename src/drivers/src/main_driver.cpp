@@ -52,6 +52,7 @@ void MainDriver::GlobalUpdateLoop() {
 		}
 		std::this_thread::sleep_for(std::chrono::milliseconds(20));
 	}
+	Stop();
 }
 
 void MainDriver::Run() {
