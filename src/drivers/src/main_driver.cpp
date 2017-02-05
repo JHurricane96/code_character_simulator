@@ -56,7 +56,7 @@ void MainDriver::GlobalUpdateLoop() {
 		}
 		std::this_thread::sleep_for(std::chrono::milliseconds(20));
 
-		ipc::StateTransfer(game_state);
+		ipc::StateTransfer(game_state, false);
 	}
 	Stop();
 }

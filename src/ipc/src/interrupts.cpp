@@ -7,11 +7,9 @@
 #include <stdlib.h>
 #include "ipc.h"
 
-void DepopulateInterrupt(std::string InterruptMessage, ipc::Interrupts* InterruptVar) {
+void DepopulateInterrupt(int Interrupt, ipc::Interrupts* InterruptVar) {
 
-	int Interrupt = atoi (InterruptMessage.c_str());
-	int Status = 0;
-	int Count = 0;
+	int Status = 0, Count = 0;
 
 	while(Interrupt > 0) {
 
@@ -61,13 +59,20 @@ namespace ipc {
 
 	void IncomingInterrupts(ipc::Interrupts* InterruptVar) {
 
-		while(true) {
+		bool flag = true;
+
+		while(flag) {
 
 			std::string InterruptMessage;
 
 			std::cin >> InterruptMessage;
 
-			DepopulateInterrupt(InterruptMessage, InterruptVar);
+			int Interrupt = atoi (InterruptMessage.c_str());
+
+			if(Interrupt == 0)
+				flag = false;
+			else
+				DepopulateInterrupt(Interrupt, InterruptVar);
 		}
 		return;
 	}

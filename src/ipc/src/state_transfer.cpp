@@ -208,10 +208,10 @@ void PopulateActors(std::shared_ptr<state::State> StateVar, IPC::State* StateMes
 
 	StateMessage->set_no_of_actors(ActorLength);
 
-	std::vector<int64_t> Scores = StateVar->GetFlagCaptureScore();
+	/*std::vector<int64_t> Scores = StateVar->GetFlagCaptureScore();
 
 	StateMessage->set_score_player1(Scores[0]);
-	StateMessage->set_score_player2(Scores[1]);
+	StateMessage->set_score_player2(Scores[1]);*/
 
 	StateMessage->set_exit_status(ExitStatus);
 
