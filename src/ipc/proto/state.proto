@@ -124,4 +124,9 @@ message State {
 	 * Simulation exit status
 	 */
 	bool exit_status = 8;
+
+	/**
+	 * User debugger strings
+	 */
+	repeated string user_logs = 9;
 }

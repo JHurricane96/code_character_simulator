@@ -101,20 +101,10 @@ class IPC_EXPORT Logger {
 	static Logger *static_instance;
 
 	public:
-		std::vector<std::string> GetLogs() {
-			return logs;
-		}
-		void SetLogs(std::string log) {
-			logs.push_back(log);
-		}
-		void EmptyLogs() {
-			logs.clear();
-		}
-		static Logger *instance() {
-			if(!static_instance)
-				static_instance = new Logger;
-			return static_instance;
-		}
+		std::vector<std::string> GetLogs();
+		void SetLogs(std::string log);
+		void EmptyLogs();
+		static Logger* Instance();
 };
 
 /**

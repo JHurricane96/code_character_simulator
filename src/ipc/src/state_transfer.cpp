@@ -208,10 +208,10 @@ void PopulateActors(std::shared_ptr<state::State> StateVar, IPC::State* StateMes
 
 	StateMessage->set_no_of_actors(ActorLength);
 
-	/*std::vector<int64_t> Scores = StateVar->GetFlagCaptureScore();
+	std::vector<int64_t> Scores = StateVar->GetScores();
 
 	StateMessage->set_score_player1(Scores[0]);
-	StateMessage->set_score_player2(Scores[1]);*/
+	StateMessage->set_score_player2(Scores[1]);
 
 	StateMessage->set_exit_status(ExitStatus);
 
@@ -294,6 +294,18 @@ void PopulateLOS(std::shared_ptr<state::State> StateVar, IPC::State* StateMessag
 	return;
 }
 
+void PopulateLogger(IPC::State* StateMessage) {
+
+	std::vector<std::string> Logs = ipc::Logger::Instance()->GetLogs();
+
+	for(auto Log : Logs) {
+
+		StateMessage->add_user_logs(Log);
+	}
+
+	ipc::Logger::Instance()->EmptyLogs();
+}
+
 namespace ipc {
 
 	/**
@@ -317,6 +329,8 @@ namespace ipc {
 		PopulateActors(StateVar, &StateMessage, ExitStatus);
 
 		PopulateLOS(StateVar, &StateMessage);
+
+		PopulateLogger(&StateMessage);
 
 		StateMessage.SerializeToOstream(&std::cout);
 
