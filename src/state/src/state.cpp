@@ -761,6 +761,7 @@ void State::MergeWithMain(const State& state) {
 	terrain.MergeWithMain(state.terrain);
 	projectile_handler.MergeWithMain(state.projectile_handler, actors);
 
+	base_poisoning_penalty = state.base_poisoning_penalty;
 }
 
 }
