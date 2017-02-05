@@ -64,6 +64,10 @@ void MainDriver::Run() {
 	runner = std::thread(&MainDriver::GlobalUpdateLoop, this);
 }
 
+void MainDriver::Join() {
+	runner.join();
+}
+
 void MainDriver::Stop() {
 	StopP1();
 	StopP2();
