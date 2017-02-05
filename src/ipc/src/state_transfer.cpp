@@ -294,6 +294,11 @@ void PopulateLOS(std::shared_ptr<state::State> StateVar, IPC::State* StateMessag
 	return;
 }
 
+/**
+ * Adds the user logs to the state message
+ *
+ * @param      StateMessage  The state message
+ */
 void PopulateLogger(IPC::State* StateMessage) {
 
 	std::vector<std::string> Logs = ipc::Logger::Instance().GetLogs();

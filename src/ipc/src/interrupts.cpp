@@ -7,6 +7,21 @@
 #include <stdlib.h>
 #include "ipc.h"
 
+/**
+ * Extracts the interrupts from the string pattern
+ *
+ * - WXXYZ is the pattern of the interrupt
+ * - Each digit can be 1 or 2
+ *
+ * - W	: 	PlayStatus
+ * - XX	:	LevelNumber
+ * - Y	: 	ExitStatus
+ * - Z	:	RestartStatus
+ *
+ * @param[in]  Interrupt     The interrupt
+ * @param      InterruptVar  The interrupt variable
+ */
+
 void DepopulateInterrupt(int Interrupt, ipc::Interrupts* InterruptVar) {
 
 	int Status = 0, Count = 0;
