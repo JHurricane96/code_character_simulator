@@ -60,6 +60,18 @@ public:
 		std::vector<std::vector<std::shared_ptr<Actor> > > actors
 	);
 	/**
+	 * Get the base poisoning radius of the base
+	 *
+	 * @return     The base_poisoning_radius
+	 */
+	int64_t GetBasePoisoningRadius();
+	/**
+	 * Get the base poisoning threshold of the base
+	 *
+	 * @return     The base_poisoning_threshold
+	 */
+	int64_t GetBasePoisoningThreshold();
+	/**
 	 * Update function to be called every tick
 	 *
 	 * @param[in]  delta_time  The difference in time between the
