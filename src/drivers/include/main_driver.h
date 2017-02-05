@@ -85,6 +85,10 @@ public:
 	 */
 	void Run();
 	/**
+	 * Calls join on the runner thread
+	 */
+	void Join();
+	/**
 	 * Stops the GlobalUpdateLoop thread
 	 * 
 	 * Must be called only after Ending both PlayerDriver threads
