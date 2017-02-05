@@ -132,7 +132,9 @@ TowerView::TowerView(Tower * tower):
 	UnitView(tower),
 	fire_ball_speed(tower->GetFireBallSpeed()),
 	fire_ball_ttl(tower->GetFireBallTtl()),
-	contention_radius(tower->GetContentionRadius()) {}
+	contention_radius(tower->GetContentionRadius()),
+	contention_score(tower->GetContentionScore()),
+	max_contention_score(tower->GetMaxContentionScore()) {}
 
 int64_t TowerView::GetFireBallSpeed() {
 	return fire_ball_speed;
@@ -144,6 +146,14 @@ int64_t TowerView::GetFireBallTtl() {
 
 int64_t TowerView::GetContentionRadius() {
 	return contention_radius;
+}
+
+float TowerView::GetContentionScore() {
+	return contention_score;
+}
+
+int64_t TowerView::GetMaxContentionScore() {
+	return max_contention_score;
 }
 
 EnemyTowerView::EnemyTowerView(Tower * tower):
