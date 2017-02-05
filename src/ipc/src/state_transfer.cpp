@@ -20,7 +20,7 @@
  * @param[in]  StateVar        the state::State object
  * @param[in]  StateMessage    the IPC::State message object
  */
-void PopulateActors(std::shared_ptr<state::State> StateVar, IPC::State* StateMessage) {
+void PopulateActors(std::shared_ptr<state::State> StateVar, IPC::State* StateMessage, bool ExitStatus) {
 
 	state::PlayerId P1 = state::PLAYER1;
 	state::PlayerId P2 = state::PLAYER2;
@@ -208,6 +208,13 @@ void PopulateActors(std::shared_ptr<state::State> StateVar, IPC::State* StateMes
 
 	StateMessage->set_no_of_actors(ActorLength);
 
+	std::vector<int64_t> Scores = StateVar->GetFlagCaptureScore();
+
+	StateMessage->set_score_player1(Scores[0]);
+	StateMessage->set_score_player2(Scores[1]);
+
+	StateMessage->set_exit_status(ExitStatus);
+
 	return;
 }
 
@@ -297,7 +304,7 @@ namespace ipc {
 	 * @param[in]  StateVar  the state object
 	 */
 
-	void StateTransfer(std::shared_ptr<state::State> StateVar) {
+	void StateTransfer(std::shared_ptr<state::State> StateVar, bool ExitStatus) {
 
 		/**
 		 * Verify that the version of the library that we linked against is
@@ -307,7 +314,7 @@ namespace ipc {
 
 		IPC::State StateMessage;
 
-		PopulateActors(StateVar, &StateMessage);
+		PopulateActors(StateVar, &StateMessage, ExitStatus);
 
 		PopulateLOS(StateVar, &StateMessage);
 
