@@ -148,10 +148,20 @@ int64_t TowerView::GetContentionRadius() {
 
 EnemyTowerView::EnemyTowerView(Tower * tower):
 	EnemyUnitView(tower),
-	contention_radius(tower->GetContentionRadius()) {}
+	contention_radius(tower->GetContentionRadius()),
+	contention_score(tower->GetContentionScore()),
+	max_contention_score(tower->GetMaxContentionScore()) {}
 
 int64_t EnemyTowerView::GetContentionRadius() {
 	return contention_radius;
+}
+
+float EnemyTowerView::GetContentionScore() {
+	return contention_score;
+}
+
+int64_t EnemyTowerView::GetMaxContentionScore() {
+	return max_contention_score;
 }
 
 MagicianView::MagicianView(Magician * magician):
@@ -166,5 +176,4 @@ int64_t MagicianView::GetFireBallSpeed() {
 int64_t MagicianView::GetFireBallTtl() {
 	return fire_ball_ttl;
 }
-
 }

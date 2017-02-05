@@ -239,6 +239,16 @@ private:
 	 * Measured in coordinates
 	 */
 	int64_t contention_radius;
+	/**
+	 * The present contention score
+	 * Varies between -max_contention_score and max_contention_score
+	 */
+	float contention_score;
+	/**
+	 * The contention score a player must reach to attain tower ownership
+	 * Calculated as sum of difference in number of units over time
+	 */
+	int64_t max_contention_score;
 public:
 	explicit EnemyTowerView(Tower * tower);
 	/**
@@ -247,6 +257,18 @@ public:
 	 * @return     The contention_radius
 	 */
 	int64_t GetContentionRadius();
+	/**
+	 * Gets the contention score for the tower
+	 *
+	 * @return     The contention_score
+	 */
+	float GetContentionScore();
+	/**
+	 * Gets the maximum contention score for the tower
+	 *
+	 * @return     The max_contention_score
+	 */
+	int64_t GetMaxContentionScore();
 };
 
 class TowerView: public UnitView {
