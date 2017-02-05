@@ -507,6 +507,7 @@ void State::FlagDrop(PlayerId player_id, int * success) {
 	king->DropFlag();
 	enemy_flag->Drop();
 	enemy_flag->MoveToBase(GetEnemyBase(player_id)->GetPosition());
+	flag_capture_score[player_id] += 1;
 	SetIfValid(success, 1);
 }
 
@@ -729,6 +730,8 @@ void State::MergeWithBuffer(const State& state, PlayerId player_id) {
 	flags[(player_id + 1) % (LAST_PLAYER + 1)]->MergeWithBuffer(
 		state.flags[(player_id + 1) % (LAST_PLAYER + 1)].get(), actors
 	);
+
+	flag_capture_score = state.flag_capture_score;
 }
 
 void State::MergeWithMain(const State& state) {
