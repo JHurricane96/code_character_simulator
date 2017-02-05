@@ -411,6 +411,37 @@ public:
 	int64_t GetBasePoisoningThreshold();
 };
 
+class EnemyBaseView : public EnemyUnitView {
+private:
+	/**
+	 * The radius around the base for which base poisoning is applicable
+	 *
+	 * Base poisoning is when players are docked points for camping near their
+	 * base. Done to discourage negative tactics.
+	 */
+	int64_t base_poisoning_radius;
+	/**
+	 * The maximum numerical advantage that a player can have over his opponent
+	 * in terms of number of troops positioned near his base for which base
+	 * poisoning doesn't apply
+	 */
+	int64_t base_poisoning_threshold;
+public:
+	explicit EnemyBaseView(Base * base);
+	/**
+	 * Get the base poisoning radius of the base
+	 *
+	 * @return     The base_poisoning_radius
+	 */
+	int64_t GetBasePoisoningRadius();
+	/**
+	 * Get the base poisoning threshold of the base
+	 *
+	 * @return     The base_poisoning_threshold
+	 */
+	int64_t GetBasePoisoningThreshold();
+};
+
 }
 
 #endif

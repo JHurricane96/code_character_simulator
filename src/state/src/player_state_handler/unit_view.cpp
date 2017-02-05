@@ -211,4 +211,16 @@ int64_t BaseView::GetBasePoisoningRadius() {
 	return base_poisoning_radius;
 }
 
+EnemyBaseView::EnemyBaseView(Base * base):
+	EnemyUnitView(base),
+	base_poisoning_radius(base->GetBasePoisoningRadius()),
+	base_poisoning_threshold(base->GetBasePoisoningThreshold()) {}
+
+int64_t EnemyBaseView::GetBasePoisoningThreshold() {
+	return base_poisoning_threshold;
+}
+
+int64_t EnemyBaseView::GetBasePoisoningRadius() {
+	return base_poisoning_radius;
+}
 }
