@@ -9,6 +9,7 @@
 #include "state.h"
 #include "ipc_export.h"
 #include <atomic>
+#include <mutex>
 
 namespace ipc {
 
@@ -98,13 +99,13 @@ public:
 class IPC_EXPORT Logger {
 
 	std::vector<std::string> logs;
-	static Logger *static_instance;
+	std::mutex logmutex;
 
 	public:
 		std::vector<std::string> GetLogs();
 		void SetLogs(std::string log);
 		void EmptyLogs();
-		static Logger* Instance();
+		static Logger& Instance();
 };
 
 /**

@@ -296,14 +296,14 @@ void PopulateLOS(std::shared_ptr<state::State> StateVar, IPC::State* StateMessag
 
 void PopulateLogger(IPC::State* StateMessage) {
 
-	std::vector<std::string> Logs = ipc::Logger::Instance()->GetLogs();
+	std::vector<std::string> Logs = ipc::Logger::Instance().GetLogs();
 
 	for(auto Log : Logs) {
 
 		StateMessage->add_user_logs(Log);
 	}
 
-	ipc::Logger::Instance()->EmptyLogs();
+	ipc::Logger::Instance().EmptyLogs();
 }
 
 namespace ipc {
