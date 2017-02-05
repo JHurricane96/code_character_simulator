@@ -66,7 +66,7 @@ bool Tower::Contend(
 				count[pid]++;
 	}
 	contention_score += (count[0] - count[1]) * delta_time;
-	if (abs(contention_score) >= max_contention_score) {
+	if (std::abs(contention_score) >= max_contention_score) {
 		Respawn(static_cast<TowerOwner>((contention_score < 0)));
 		return true;
 	}
@@ -116,7 +116,7 @@ int64_t Tower::GetContentionRadius() {
 	return contention_radius;
 }
 
-int64_t Tower::GetContentionScore() {
+float Tower::GetContentionScore() {
 	return contention_score;
 }
 

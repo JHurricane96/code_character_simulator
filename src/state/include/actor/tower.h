@@ -46,7 +46,7 @@ private:
 	 * The present contention score
 	 * Varies between -max_contention_score and max_contention_score
 	 */
-	int64_t contention_score;
+	float contention_score;
 	/**
 	 * Speed of a fire_ball fired from the tower
 	 */
@@ -142,7 +142,7 @@ public:
 	 *
 	 * @return     The contention_score
 	 */
-	int64_t GetContentionScore();
+	float GetContentionScore();
 	/**
 	 * Gets the maximum contention score for the tower
 	 *
