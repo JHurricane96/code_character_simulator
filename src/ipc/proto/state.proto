@@ -113,4 +113,15 @@ message State {
 	 * Tower contention bar limit
 	 */
 	float contention_meter_limit = 5;
+
+	/**
+	 * Current scores of player 1 and 2
+	 */
+	int64 score_player1 = 6;
+	int64 score_player2 = 7;
+
+	/**
+	 * Simulation exit status
+	 */
+	bool exit_status = 8;
 }
