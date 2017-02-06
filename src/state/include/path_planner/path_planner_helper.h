@@ -118,15 +118,12 @@ public:
 	 * @param[in]  is_leader          Indicates if leader of formation
 	 * @param[in]  leader             The leader of the formation.
 	 *                                Valid only if is_leader is set
-	 * @param[in]  speed              The speed with which this unit
-	 *                                moves
 	 */
 	void SetPath(
 		int64_t formation_id,
 		physics::Vector2D relative_position,
 		bool is_leader,
-		std::shared_ptr<Actor> leader,
-		float speed
+		std::shared_ptr<Actor> leader
 	);
 	/**
 	 * Sets is_path_planning to false
@@ -184,12 +181,6 @@ public:
 	 */
 	bool IsPathPlanning();
 	/**
-	 * Speeds this unit up
-	 *
-	 * Called if all units in this unit's formation are in formation
-	 */
-	void SpeedUp();
-	/**
 	 * Determines if the unit is in formation
 	 *
 	 * @return     true if in formation, false otherwise
@@ -203,11 +194,13 @@ public:
 	 * @param      sorted_allies   Ally units sorted by x co-ordinate
 	 * @param      sorted_enemies  Enemy units sorted by x co-ordinate
 	 * @param[in]  destination     The destination
+	 * @param[in]  speed           The speed with which this unit should travel
 	 */
 	void Update(
 		std::vector<std::shared_ptr<Actor> > &sorted_allies,
 		std::vector<std::shared_ptr<Actor> > &sorted_enemies,
-		physics::Vector2D destination
+		physics::Vector2D destination,
+		float speed
 	);
 	/**
 	 * Merge this, a PathPlannerHelper in the main state, with the

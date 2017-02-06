@@ -40,6 +40,10 @@ private:
 	 */
 	std::shared_ptr<Actor> leader;
 	/**
+	 * The maximum speed of the slowest unit in the formation
+	 */
+	float unit_min_speed;
+	/**
 	 * Formation maker that returns list of points that define the
 	 * formation
 	 */

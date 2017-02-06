@@ -19,11 +19,11 @@ is_finished(false) {
 		formation_maker->ReturnFormation(units.size());
 	leader = units[0];
 
-	float min_speed = units[0]->GetMaxSpeed();
+	unit_min_speed = units[0]->GetMaxSpeed();
 
 	for (auto unit : units) {
-		if (min_speed > unit->GetMaxSpeed()) {
-			min_speed = unit->GetMaxSpeed();
+		if (unit_min_speed > unit->GetMaxSpeed()) {
+			unit_min_speed = unit->GetMaxSpeed();
 		}
 	}
 
@@ -31,8 +31,7 @@ is_finished(false) {
 		formation_id,
 		formation_positions[0],
 		true,
-		NULL,
-		min_speed
+		NULL
 	);
 
 	for (int64_t i = 1; i < units.size(); ++i) {
@@ -40,8 +39,7 @@ is_finished(false) {
 			formation_id,
 			formation_positions[i],
 			false,
-			units[0],
-			min_speed
+			units[0]
 		);
 	}
 }
@@ -106,9 +104,15 @@ void Formation::Update(
 		auto formation_positions =
 			formation_maker->ReturnFormation(units.size());
 
+		unit_min_speed = units[0]->GetMaxSpeed();
+
 		for (int64_t i = 0; i < units.size(); ++i) {
 			units[i]->GetPathPlannerHelper()->
 			UpdateRelativePosition(formation_positions[i]);
+
+			if (unit_min_speed > units[0]->GetMaxSpeed()) {
+				unit_min_speed = units[0]->GetMaxSpeed();
+			}
 		}
 	}
 
@@ -131,11 +135,6 @@ void Formation::Update(
 
 	int64_t no_units_in_formation = 0;
 	for (auto unit : units) {
-		unit->GetPathPlannerHelper()->Update(
-			sorted_allies,
-			sorted_enemies,
-			destinations.back()
-		);
 		if (unit->GetPathPlannerHelper()->IsInFormation()) {
 			no_units_in_formation++;
 		}
@@ -143,13 +142,31 @@ void Formation::Update(
 
 	if (no_units_in_formation == units.size()) {
 		for (auto unit : units) {
-			unit->GetPathPlannerHelper()->SpeedUp();
+			unit->GetPathPlannerHelper()->Update(
+				sorted_allies,
+				sorted_enemies,
+				destinations.back(),
+				unit_min_speed
+			);
 		}
 	}
 	else {
 		for (auto unit : units) {
 			if (!unit->GetPathPlannerHelper()->IsInFormation()) {
-				unit->GetPathPlannerHelper()->SpeedUp();
+				unit->GetPathPlannerHelper()->Update(
+					sorted_allies,
+					sorted_enemies,
+					destinations.back(),
+					unit->GetMaxSpeed()
+				);
+			}
+			else {
+				unit->GetPathPlannerHelper()->Update(
+					sorted_allies,
+					sorted_enemies,
+					destinations.back(),
+					unit_min_speed / 2
+				);
 			}
 		}
 	}
