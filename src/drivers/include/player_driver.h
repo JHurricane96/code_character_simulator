@@ -84,6 +84,10 @@ public:
 	 * Sets is_paused to true
 	 */
 	void Pause();
+	/**
+	 * Sets is_paused to false
+	 */
+	void Resume();
 	/*
 	 * Stops the UpdateLoop thread
 	 */

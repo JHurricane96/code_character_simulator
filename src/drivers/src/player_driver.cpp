@@ -48,6 +48,10 @@ void PlayerDriver::Pause() {
 	is_paused = true;
 }
 
+void PlayerDriver::Resume() {
+	is_paused = false;
+}
+
 void PlayerDriver::Stop() {
 	game_over = true;
 	runner.join();
