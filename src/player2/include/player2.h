@@ -8,7 +8,11 @@
 namespace player2 {
 
 class PLAYER2_EXPORT Player2 : public player::PlayerAiHelper {
+private:
+	int balls;
+	std::shared_ptr<state::FormationMaker> f;
 public:
+	Player2();
 	void Update(std::shared_ptr<state::PlayerStateHandler> state) override;
 };
 
