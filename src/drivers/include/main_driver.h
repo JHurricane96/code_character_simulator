@@ -88,7 +88,8 @@ public:
 		player::PlayerAi p2_code,
 		std::shared_ptr<state::State> s1,
 		std::shared_ptr<state::State> s2,
-		std::shared_ptr<state::State> s3
+		std::shared_ptr<state::State> s3,
+		int64_t total_game_duration
 	);
 	/**
 	 * Creates a thread whose Handler Function is the GlobalUpdateLoop

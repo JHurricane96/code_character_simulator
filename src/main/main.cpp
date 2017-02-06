@@ -220,7 +220,7 @@ int main(int argc, char * argv[])
 	state::PlayerStateHandler PSH2(S2.get(), state::PLAYER2);
 
 	drivers::MainDriver driver(player::PlayerAi(std::shared_ptr<player::PlayerAiHelper>(new player1::Player1())),
-		player::PlayerAi(std::shared_ptr<player::PlayerAiHelper>(new player2::Player2())), S, S1, S2);
+		player::PlayerAi(std::shared_ptr<player::PlayerAiHelper>(new player2::Player2())), S, S1, S2, 1 * 60 * 1000);
 
 	driver.Run();
 
