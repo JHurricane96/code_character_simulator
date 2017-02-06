@@ -3,8 +3,14 @@
 namespace state {
 
 PathPlannerHelperView::PathPlannerHelperView(
-	PathPlannerHelper * path_planner_helper):
-	is_path_planning(path_planner_helper->IsPathPlanning()) {}
+	PathPlannerHelper * path_planner_helper) {
+	if (path_planner_helper) {
+		is_path_planning = path_planner_helper->IsPathPlanning();
+	}
+	else {
+		is_path_planning = false;
+	}
+}
 
 bool PathPlannerHelperView::IsPathPlanning(){
 	return is_path_planning;
