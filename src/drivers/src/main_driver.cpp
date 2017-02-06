@@ -88,11 +88,18 @@ void MainDriver::GlobalUpdateLoop() {
 		);
 
 		if (!InterruptVar->GetPlayStatus()) {
+			auto pause_start_time = std::chrono::high_resolution_clock::now();
 			p1_driver->Pause();
 			p2_driver->Pause();
 			while (!InterruptVar->GetPlayStatus());
 			p1_driver->Resume();
 			p2_driver->Resume();
+			auto pause_end_time = std::chrono::high_resolution_clock::now();
+			auto pause_duration =
+				std::chrono::duration_cast<std::chrono::milliseconds>(
+					pause_end_time - pause_start_time
+				);
+			prev_time += pause_duration;
 		}
 	}
 	RendererInput.join();
