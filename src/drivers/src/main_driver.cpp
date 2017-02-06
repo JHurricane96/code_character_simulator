@@ -12,7 +12,8 @@ MainDriver::MainDriver(
 	player::PlayerAi p2_code,
 	std::shared_ptr<state::State> s1,
 	std::shared_ptr<state::State> s2,
-	std::shared_ptr<state::State> s3) :
+	std::shared_ptr<state::State> s3,
+	int64_t total_game_duration) :
 	game_state(s1),
 	p1_state_buffer(s2),
 	p2_state_buffer(s3),
@@ -21,7 +22,7 @@ MainDriver::MainDriver(
 	p1_driver(new PlayerDriver(p1_buffer, p1_code)),
 	p2_driver(new PlayerDriver(p2_buffer, p2_code)),
 	game_over(false),
-	total_game_duration(1 * 60 * 1000),
+	total_game_duration(total_game_duration),
 	fps(30) {}
 
 void MainDriver::GlobalUpdateLoop() {
