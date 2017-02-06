@@ -14,18 +14,22 @@ namespace ai {
  * Class for attack rules for guard strategies and utilities
  */
 class AttackRules {
+
 	/**
 	 * The formation generally used for attack
 	 */
 	state::FormationMaker *formation;
 public:
+
 	AttackRules();
+
 	/**
 	 * The strategy for the attack per unit per tick
 	 *
 	 * @param[in]  unitId  The unit identifier
 	 */
 	void Strategy(state::act_id_t unitId, std::shared_ptr<state::PlayerStateHandler> state);
+
 	/**
 	 * The utility function or the transition specifier for the Attack state
 	 *
