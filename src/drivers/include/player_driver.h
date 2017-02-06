@@ -37,6 +37,12 @@ private:
 	 */
 	std::atomic<bool> game_over;
 	/**
+	 * True if the simulation is paused, false otherwise
+	 *
+	 * Set by the MainDriver via Pause and Resume
+	 */
+	std::atomic<bool> is_paused;
+	/**
 	 * Time consumed by the PlayerDriver
 	 */
 	float total_time;

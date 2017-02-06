@@ -8,6 +8,7 @@ namespace drivers {
 PlayerDriver::PlayerDriver(std::shared_ptr<state::PlayerStateHandler> player_buffer, player::PlayerAi player_code) :
 	is_modify_done(false),
 	game_over(false),
+	is_paused(false),
 	code(player_code)
 {
 	total_time = 0;
