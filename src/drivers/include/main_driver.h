@@ -67,6 +67,12 @@ private:
 	 */
 	int64_t total_game_duration;
 	/**
+	 * FPS at which the simulation will try to run at
+	 *
+	 * FPS will not exceed this value, but it may be below it
+	 */
+	int64_t fps;
+	/**
 	 * Infinite loop handling all the game Updates
 	 */
 	void GlobalUpdateLoop();

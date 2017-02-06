@@ -21,7 +21,8 @@ MainDriver::MainDriver(
 	p1_driver(new PlayerDriver(p1_buffer, p1_code)),
 	p2_driver(new PlayerDriver(p2_buffer, p2_code)),
 	game_over(false),
-	total_game_duration(1 * 60 * 1000) {}
+	total_game_duration(1 * 60 * 1000),
+	fps(30) {}
 
 void MainDriver::GlobalUpdateLoop() {
 	bool modified1, modified2;
