@@ -44,6 +44,10 @@ void PlayerDriver::Run() {
 	runner = std::thread(&PlayerDriver::UpdateLoop, this);
 }
 
+void PlayerDriver::Pause() {
+	is_paused = true;
+}
+
 void PlayerDriver::Stop() {
 	game_over = true;
 	runner.join();

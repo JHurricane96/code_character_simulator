@@ -80,6 +80,10 @@ public:
 	 * Creates a Thread whose Handler Function is the UpdateLoop
 	 */
 	void Run();
+	/**
+	 * Sets is_paused to true
+	 */
+	void Pause();
 	/*
 	 * Stops the UpdateLoop thread
 	 */
