@@ -30,10 +30,22 @@ void MainDriver::GlobalUpdateLoop() {
 	ipc::Interrupts* InterruptVar(new ipc::Interrupts);
 	std::thread RendererInput(ipc::IncomingInterrupts, InterruptVar);
 
+	std::chrono::milliseconds game_duration(0);
+
+	auto prev_time = std::chrono::high_resolution_clock::now();
+
 	while(1) {
 		if (game_over) {
 			break;
 		}
+
+		auto start_time = std::chrono::high_resolution_clock::now();
+		auto update_duration = std::chrono::duration_cast<std::chrono::milliseconds>(
+			start_time - prev_time
+		);
+		game_duration += update_duration;
+		prev_time = start_time;
+
 		modified1 = modified2 = false;
 		if(p1_driver->GetIsModifyDone()) {
 			game_state->MergeWithBuffer(*p1_state_buffer, state::PLAYER1);
@@ -43,7 +55,7 @@ void MainDriver::GlobalUpdateLoop() {
 			game_state->MergeWithBuffer(*p2_state_buffer, state::PLAYER2);
 			modified2 = true;
 		}
-		game_state->Update(0.8);
+		game_state->Update((float) update_duration.count() / fps);
 		if (modified1) {
 			p1_state_buffer->MergeWithMain(*game_state);
 		}
@@ -56,10 +68,25 @@ void MainDriver::GlobalUpdateLoop() {
 		if (modified2) {
 			p2_driver->SetIsModifyDone(false);
 		}
-		std::this_thread::sleep_for(std::chrono::milliseconds(20));
 
-		ipc::StateTransfer(game_state, false);
+		if (game_duration.count() >= total_game_duration) {
+			ipc::StateTransfer(game_state, true);
+			break;
+		}
+		else {
+			ipc::StateTransfer(game_state, false);
+		}
+
+		auto end_time = std::chrono::high_resolution_clock::now();
+		auto calculcation_duration =
+			std::chrono::duration_cast<std::chrono::milliseconds>(
+				end_time - start_time
+			);
+		std::this_thread::sleep_for(std::chrono::milliseconds(
+			std::max((long)0, 1000 / fps - calculcation_duration.count()))
+		);
 	}
+	RendererInput.join();
 	Stop();
 }
 
