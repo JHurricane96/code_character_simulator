@@ -85,6 +85,14 @@ void MainDriver::GlobalUpdateLoop() {
 		std::this_thread::sleep_for(std::chrono::milliseconds(
 			std::max((long)0, 1000 / fps - calculcation_duration.count()))
 		);
+
+		if (!InterruptVar->GetPlayStatus()) {
+			p1_driver->Pause();
+			p2_driver->Pause();
+			while (!InterruptVar->GetPlayStatus());
+			p1_driver->Resume();
+			p2_driver->Resume();
+		}
 	}
 	RendererInput.join();
 	Stop();
