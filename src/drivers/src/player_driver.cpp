@@ -29,6 +29,9 @@ void PlayerDriver::UpdateLoop() {
 		if (game_over) {
 			break;
 		}
+		if (is_paused) {
+			while (is_paused);
+		}
 		if(is_modify_done) continue;
 		clock_t clocker = clock();
 		code.Update(buffer);
