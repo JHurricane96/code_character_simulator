@@ -63,6 +63,10 @@ private:
 	 */
 	std::atomic<bool> game_over;
 	/**
+	 * The total duration of the simulation in milliseconds
+	 */
+	int64_t total_game_duration;
+	/**
 	 * Infinite loop handling all the game Updates
 	 */
 	void GlobalUpdateLoop();
