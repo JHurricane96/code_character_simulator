@@ -22,8 +22,7 @@ void PathPlannerHelper::SetPath(
 	int64_t formation_id,
 	physics::Vector2D relative_position,
 	bool is_leader,
-	std::shared_ptr<Actor> leader,
-	float speed
+	std::shared_ptr<Actor> leader
 ) {
 	this->formation_id = formation_id;
 	this->relative_position = relative_position;
@@ -32,7 +31,6 @@ void PathPlannerHelper::SetPath(
 	}
 	else { this->leader = NULL; }
 	auto self = this->self.lock();
-	self->SetSpeed(speed);
 	is_path_planning = true;
 }
 
@@ -101,15 +99,11 @@ bool PathPlannerHelper::IsInFormation() {
 	}
 }
 
-void PathPlannerHelper::SpeedUp() {
-	auto self = this->self.lock();
-	self->SetVelocity(self->GetVelocity() * 2);
-}
-
 void PathPlannerHelper::Update(
 	std::vector<std::shared_ptr<Actor> > &sorted_allies,
 	std::vector<std::shared_ptr<Actor> > &sorted_enemies,
-	physics::Vector2D destination
+	physics::Vector2D destination,
+	float speed
 ) {
 	auto self = this->self.lock();
 	this->leader_destination = destination;
@@ -117,7 +111,7 @@ void PathPlannerHelper::Update(
 	if (to_dest.magnitude() != 0) {
 		to_dest = to_dest / to_dest.magnitude();
 	}
-	self->SetVelocity(to_dest * self->GetSpeed() / 2);
+	self->SetVelocity(to_dest * speed);
 }
 
 void PathPlannerHelper::MergeWithBuffer(
