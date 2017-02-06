@@ -209,7 +209,7 @@ void Actor::StopAttack() {
 }
 
 void Actor::Damage(int64_t damage_amount) {
-	hp -= damage_amount;
+	hp = std::max((int64_t) 0, hp - damage_amount);
 }
 
 Actor * Actor::GetRespawnLocation() {
