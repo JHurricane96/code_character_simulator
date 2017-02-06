@@ -15,6 +15,8 @@ EnemyUnitView::EnemyUnitView() {}
 EnemyUnitView::EnemyUnitView(Actor * actor)
 	: id(actor->GetId()),
 	actor_type(actor->GetActorType()),
+	can_attack(actor->CanAttack()),
+	can_plan_path(actor->CanPathPlan()),
 	hp(actor->GetHp()),
 	size(actor->GetSize()),
 	position(actor->GetPosition()) {}
@@ -31,6 +33,14 @@ ActorType EnemyUnitView::GetActorType() {
 	return actor_type;
 }
 
+bool EnemyUnitView::CanAttack() {
+	return can_attack;
+}
+
+bool EnemyUnitView::CanPathPlan() {
+	return can_plan_path;
+}
+
 int64_t EnemyUnitView::GetSize() {
 	return size;
 }
@@ -45,6 +55,8 @@ UnitView::UnitView()
 UnitView::UnitView(Actor * actor)
 	: id(actor->GetId()),
 	actor_type(actor->GetActorType()),
+	can_attack(actor->CanAttack()),
+	can_plan_path(actor->CanPathPlan()),
 	attack(actor->GetAttack()),
 	hp(actor->GetHp()),
 	max_hp(actor->GetMaxHp()),
@@ -70,6 +82,8 @@ UnitView::UnitView(Actor * actor)
 UnitView::UnitView(const UnitView& other):
 	id(other.id),
 	actor_type(other.actor_type),
+	can_attack(other.can_attack),
+	can_plan_path(other.can_plan_path),
 	attack(other.attack),
 	hp(other.hp),
 	max_hp(other.max_hp),
@@ -133,6 +147,14 @@ physics::Vector2D UnitView::GetPosition() {
 
 ActorType UnitView::GetActorType() {
 	return actor_type;
+}
+
+bool UnitView::CanAttack() {
+	return can_attack;
+}
+
+bool UnitView::CanPathPlan() {
+	return can_plan_path;
 }
 
 PathPlannerHelperView UnitView::GetPathPlannerHelper() {
