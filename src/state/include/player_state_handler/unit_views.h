@@ -52,6 +52,14 @@ private:
 	*/
 	ActorType actor_type;
 	/**
+	 * true if this Actor can attack, false otherwise
+	 */
+	bool can_attack;
+	/**
+	 * true if this Actor can path plan, false otherwise
+	 */
+	bool can_plan_path;
+	/**
 	 * The HP of this Actor
 	 */
 	int64_t hp;
@@ -87,6 +95,18 @@ public:
 	 */
 	ActorType GetActorType();
 	/**
+	 * Returns can_attack
+	 *
+	 * @return     true if able to attack, false otherwise
+	 */
+	bool CanAttack();
+	/**
+	 * Returns can_plan_path
+	 *
+	 * @return     true if able to path plan, false otherwise
+	 */
+	bool CanPathPlan();
+	/**
 	 * Gets the Actor's size
 	 *
 	 * @return     The Actor's size
@@ -115,6 +135,14 @@ private:
 	 * The type of this Actor
 	 */
 	ActorType actor_type;
+	/**
+	 * true if this Actor can attack, false otherwise
+	 */
+	bool can_attack;
+	/**
+	 * true if this Actor can path plan, false otherwise
+	 */
+	bool can_plan_path;
 	/**
 	 * The damage the actor can deal
 	 */
@@ -205,6 +233,18 @@ public:
 	 * @return     The Actor's type
 	 */
 	ActorType GetActorType();
+	/**
+	 * Returns can_attack
+	 *
+	 * @return     true if able to attack, false otherwise
+	 */
+	bool CanAttack();
+	/**
+	 * Returns can_plan_path
+	 *
+	 * @return     true if able to path plan, false otherwise
+	 */
+	bool CanPathPlan();
 	/**
 	 * Gets the actor's target
 	 *
