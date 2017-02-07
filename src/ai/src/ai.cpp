@@ -24,7 +24,9 @@ public:
 	virtual GroupState* update (
 		state::act_id_t unitId, 
 		std::shared_ptr<state::PlayerStateHandler> state_handler,
-		std::vector<std::pair<int64_t, int>> sortedEnemies
+		std::vector<std::pair<int64_t, int>> sortedEnemies,
+		std::vector<state::act_id_t> &kingsGuard,
+		std::vector<state::act_id_t> &flagsGuard
 	) {};
 	GroupState* DefaultActionUtility() {}; // utility to decide what to set as default state
 };	
@@ -103,7 +105,9 @@ public:
 	GroupState* update(
 		state::act_id_t unitId, 
 		std::shared_ptr<state::PlayerStateHandler> state_handler, 
-		std::vector<std::pair<int64_t, int>> sortedEnemies
+		std::vector<std::pair<int64_t, int>> sortedEnemies,
+		std::vector<state::act_id_t> &kingsGuard,
+		std::vector<state::act_id_t> &flagsGuard
 	);
 >>>>>>> Guard AI V1.0
 
@@ -129,10 +133,12 @@ GroupState* Attack::SelectState(state::act_id_t unitId, std::shared_ptr<state::P
 GroupState* Guard::update(
 	state::act_id_t unitId, 
 	std::shared_ptr<state::PlayerStateHandler> state_handler, 
-	std::vector<std::pair<int64_t, int>> sortedEnemies
+	std::vector<std::pair<int64_t, int>> sortedEnemies,
+	std::vector<state::act_id_t> &kingsGuard,
+	std::vector<state::act_id_t> &flagsGuard
 ) {
 	groupUtilityHolder = 0;
-	guard_rules -> Strategy(unitId, state_handler, b1, b2, groupUtilityHolder, sortedEnemies);
+	guard_rules -> Strategy(unitId, state_handler, kingsGuard, flagsGuard, groupUtilityHolder, sortedEnemies);
 	return SelectState(unitId, state_handler);
 }
 
@@ -159,9 +165,11 @@ public:
 
 	virtual void update (
 		std::shared_ptr<state::PlayerStateHandler> state_handler, 
-		std::vector<std::pair<int64_t, int>> sortedEnemies
+		std::vector<std::pair<int64_t, int>> sortedEnemies,
+		std::vector<state::act_id_t> &kingsGuard,
+		std::vector<state::act_id_t> &flagsGuard
 	) {
-		GroupState* NewState = state->update(unitId, state_handler, sortedEnemies);
+		GroupState* NewState = state->update(unitId, state_handler, sortedEnemies, kingsGuard, flagsGuard);
 		if(NewState != NULL)
 		{
 			delete state;
@@ -294,7 +302,7 @@ void AI::Update(std::shared_ptr<state::PlayerStateHandler> state) {
 	AI::SetSortedEnemies(state);
 
 	for (auto &group : groups)
-		group -> update(state, sortedEnemies);
+		group -> update(state, sortedEnemies, kingsGuard, flagsGuard);
 }
 
 }

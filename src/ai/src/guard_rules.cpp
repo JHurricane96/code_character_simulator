@@ -129,7 +129,7 @@ void GuardRules::Strategy(
 		}
 		return;
 	}
-	if (state->GetFlag().GetVelocity().magnitude() > 0 || GetEnemyAllyHpRatio(state, state->GetFlag().GetId(), terrainElementSize * 2) > 1) {
+	if (state->GetFlag().GetVelocity().magnitude() > 0 || GetEnemyAllyHpRatio(state, state->GetFlag().GetId(), 10) > 1) {
 		state::act_id_t optimalEnemy = GetOptimalTarget(state, state->GetFlag().GetId(), terrainElementSize * 2, sortedEnemies);
 		if (optimalEnemy != -1 && state->GetUnitFromId(optimalEnemy, nullptr).GetPosition().distance(state->GetUnitFromId(unitId, nullptr).GetPosition()) <= state->GetUnitFromId(unitId, nullptr).GetAttackRange()) {
 			state::list_act_id_t attackers;
@@ -145,7 +145,7 @@ void GuardRules::Strategy(
 				state->MoveUnits(movers, std::vector<physics::Vector2D>({state->GetUnitFromId(optimalEnemy, nullptr).GetPosition()}), formation, nullptr);
 		}
 	}
-	else if (GetEnemyAllyHpRatio(state, state->GetKing().GetId(), terrainElementSize * 2) > 1) {
+	else if (GetEnemyAllyHpRatio(state, state->GetKing().GetId(), 10) > 1) {
 		state::act_id_t optimalEnemy = GetOptimalTarget(state, state->GetKing().GetId(), terrainElementSize * 2, sortedEnemies);
 		if (optimalEnemy != -1 && state->GetUnitFromId(optimalEnemy, nullptr).GetPosition().distance(state->GetUnitFromId(unitId, nullptr).GetPosition()) <= state->GetUnitFromId(unitId, nullptr).GetAttackRange()) {
 			state::list_act_id_t attackers;
@@ -161,7 +161,7 @@ void GuardRules::Strategy(
 				state->MoveUnits(movers, std::vector<physics::Vector2D>({state->GetUnitFromId(optimalEnemy, nullptr).GetPosition()}), formation, nullptr);
 		}
 	}
-	else if (GetEnemyAllyHpRatio(state, unitId, terrainElementSize * 2) > 1) {
+	else if (GetEnemyAllyHpRatio(state, unitId, 10) > 1) {
 		state::act_id_t weakestTowerId = -1;
 		float weakestTowerHp = FLT_MAX, hp;
 		std::vector<state::TowerView> towers = state->GetTowers();
