@@ -22,5 +22,7 @@ public:
 	void SetSortedEnemies(std::shared_ptr<state::PlayerStateHandler> state);
 };
 
+
+
 }
 #endif //AI_AI_H

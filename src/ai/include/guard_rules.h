@@ -35,11 +35,21 @@ public:
 	 * @param[in]  kingsGuardParam  The kings guard param
 	 * @param[in]  flagsGuardParam  The flags guard param
 	 */
-	GuardRules(std::unique_ptr<std::vector<state::act_id_t>> kingsGuardParam, std::unique_ptr<std::vector<state::act_id_t>> flagsGuardParam, state::FormationMaker *formationParam);
-	
-	void Strategy (
-		state::act_id_t unitId,
-		std::shared_ptr<state::PlayerStateHandler> state
+	GuardRules(state::FormationMaker *formationParam = new DefaultFormation());
+	/**
+	 * The strategy for guarding per unit per tick
+	 *
+	 * @param[in]  unitId            The unit identifier
+	 * @param[in]  state             The state
+	 * @param      groupStateHolder  The group state holder
+	 */
+	void Strategy(
+		state::act_id_t unitId, 
+		std::shared_ptr<state::PlayerStateHandler> state, 
+		std::vector<state::act_id_t> &kingsGuard, 
+		std::vector<state::act_id_t> &flagsGuard, 
+		int &groupUtilityHolder,
+		std::vector<std::pair<int64_t, int>> sortedEnemies
 	);
 
 	int Utility(int &groupStateHolder);
