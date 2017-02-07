@@ -73,9 +73,20 @@ private:
 	 */
 	int64_t fps;
 	/**
+	 * true if the simulation is running headless,
+	 * false if running with a renderer
+	 */
+	bool is_headless;
+	/**
 	 * Infinite loop handling all the game Updates
 	 */
 	void GlobalUpdateLoop();
+	/**
+	 * Infinite loop handling all the game Updates
+	 *
+	 * This loop is for running the simulator without a renderer
+	 */
+	void GlobalUpdateLoopHeadless();
 	/**
 	 * Logs a Time Ratio between the 2 PlayerDriver objects
 	 *
@@ -89,7 +100,8 @@ public:
 		std::shared_ptr<state::State> s1,
 		std::shared_ptr<state::State> s2,
 		std::shared_ptr<state::State> s3,
-		int64_t total_game_duration
+		int64_t total_game_duration,
+		bool is_headless
 	);
 	/**
 	 * Creates a thread whose Handler Function is the GlobalUpdateLoop

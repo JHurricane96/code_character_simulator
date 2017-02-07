@@ -204,8 +204,16 @@ state::Terrain LoadTerrain(std::string file_name)
 
 int main(int argc, char * argv[])
 {
+	bool is_headless;
 	std::string exec_path(argv[0]);
 	exec_path = exec_path.substr(0, exec_path.size() - 4);
+
+	if (argv[1][0] == 'r') {
+		is_headless = false;
+	}
+	else {
+		is_headless = true;
+	}
 
 	state::Terrain TT(ipc::LoadTerrain(exec_path + "level1_terrain"));
 
@@ -220,7 +228,7 @@ int main(int argc, char * argv[])
 	state::PlayerStateHandler PSH2(S2.get(), state::PLAYER2);
 
 	drivers::MainDriver driver(player::PlayerAi(std::shared_ptr<player::PlayerAiHelper>(new player1::Player1())),
-		player::PlayerAi(std::shared_ptr<player::PlayerAiHelper>(new player2::Player2())), S, S1, S2, 1 * 60 * 1000);
+		player::PlayerAi(std::shared_ptr<player::PlayerAiHelper>(new player2::Player2())), S, S1, S2, 1 * 60 * 1000, is_headless);
 
 	driver.Run();
 
