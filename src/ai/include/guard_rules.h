@@ -44,7 +44,8 @@ public:
 		std::shared_ptr<state::PlayerStateHandler> state, 
 		std::vector<state::act_id_t> &kingsGuard, 
 		std::vector<state::act_id_t> &flagsGuard, 
-		int &groupUtilityHolder
+		int &groupUtilityHolder,
+		std::vector<std::pair<int64_t, int>> sortedEnemies
 	);
 	int Utility(int &groupStateHolder);
 };

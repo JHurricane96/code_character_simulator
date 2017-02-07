@@ -53,7 +53,7 @@ state::State MakeState(state::Terrain terrain)
 	sorted_actors[1].push_back(std::static_pointer_cast<state::Actor>(bases[1]));
 
 	kings[0] = std::shared_ptr<state::King>(new state::King(2, state::PLAYER1, 0, 400, 400, 10, 10, 100,
-		0, 0, physics::Vector2D(4 * ELEMENT_SIZE, 4 * ELEMENT_SIZE), physics::Vector2D(0, 0), 1,
+		0, 0, physics::Vector2D(4.5 * ELEMENT_SIZE, 4.5 * ELEMENT_SIZE), physics::Vector2D(0, 0), 1,
 		0));
 	kings[0]->AddPathPlanner(state::PathPlannerHelper(kings[0]));
 	sorted_actors[0].push_back(std::static_pointer_cast<state::Actor>(kings[0]));

@@ -37,17 +37,9 @@ public:
 		state::act_id_t unitId, 
 		std::shared_ptr<state::PlayerStateHandler> state_handler,
 		std::vector<std::pair<int64_t, int>> sortedEnemies
-	) {
-		attack_rules -> Strategy(unitId, state_handler, sortedEnemies);
-		return SelectState(unitId, state_handler);
-	}
+	);
 
-	GroupState* SelectState(state::act_id_t unitId, std::shared_ptr<state::PlayerStateHandler> state_handler) {
-		int new_state_no = attack_rules -> Utility(unitId, state_handler);
-		if(new_state_no == 4)
-			//return new GuardRules;
-		return NULL; 
-	}
+	GroupState* SelectState(state::act_id_t unitId, std::shared_ptr<state::PlayerStateHandler> state_handler);
 };
 
 class Explore : public GroupState
@@ -88,32 +80,47 @@ class Guard : public GroupState
 	std::vector<state::act_id_t> b1, b2;
 public:
 	GuardRules * guard_rules = new GuardRules();
-	GroupState* update(state::act_id_t unitId, std::shared_ptr<state::PlayerStateHandler> state_handler)
-	{
-		groupUtilityHolder = 0;
-		guard_rules -> Strategy(unitId, state_handler, b1, b2, groupUtilityHolder);
-		return SelectState(unitId, state_handler);
-	}
+	GroupState* update(
+		state::act_id_t unitId, 
+		std::shared_ptr<state::PlayerStateHandler> state_handler, 
+		std::vector<std::pair<int64_t, int>> sortedEnemies
+	);
 
-	GroupState* SelectState(state::act_id_t unitId, std::shared_ptr<state::PlayerStateHandler> state_handler) {
-		int new_state_no = guard_rules -> Utility(groupUtilityHolder);
-		if(new_state_no == 1)
-			//return new AttackRules;
-		return NULL;
-	}
-	/*GroupState* update(Group *group, std::shared_ptr<state::PlayerStateHandler> state_handler)
-	{
-		return SelectState();
-	}
-
-	GroupState* SelectState() {
-	}
-	void GuardStrategy() {};
-	void AttackUtility() {};
-	void RetreatUtility() {};
-	void ExploreUtility() {};
-	void GuardUtility() {};*/
+	GroupState* SelectState(state::act_id_t unitId, std::shared_ptr<state::PlayerStateHandler> state_handler);
 };
+
+GroupState* Attack::update (
+	state::act_id_t unitId, 
+	std::shared_ptr<state::PlayerStateHandler> state_handler,
+	std::vector<std::pair<int64_t, int>> sortedEnemies
+) {
+	attack_rules -> Strategy(unitId, state_handler, sortedEnemies);
+	return SelectState(unitId, state_handler);
+}
+
+GroupState* Attack::SelectState(state::act_id_t unitId, std::shared_ptr<state::PlayerStateHandler> state_handler) {
+	int new_state_no = attack_rules -> Utility(unitId, state_handler);
+	if(new_state_no == 4)
+		return new Guard;
+	return NULL; 
+}
+
+GroupState* Guard::update(
+	state::act_id_t unitId, 
+	std::shared_ptr<state::PlayerStateHandler> state_handler, 
+	std::vector<std::pair<int64_t, int>> sortedEnemies
+) {
+	groupUtilityHolder = 0;
+	guard_rules -> Strategy(unitId, state_handler, b1, b2, groupUtilityHolder, sortedEnemies);
+	return SelectState(unitId, state_handler);
+}
+
+GroupState* Guard::SelectState(state::act_id_t unitId, std::shared_ptr<state::PlayerStateHandler> state_handler) {
+	int new_state_no = guard_rules -> Utility(groupUtilityHolder);
+	if(new_state_no == 1)
+		// return new Attack;
+	return NULL;
+}
 
 class Group
 {
@@ -123,7 +130,7 @@ private:
 	GroupState* state;
 	// list_act_id_t group_actors;	// actors in this group
 public:
-	Group(state::act_id_t actid) : state(new Attack())
+	Group(state::act_id_t actid) : state(new Guard())
 	{
 		unitId = actid;
 		group_id = rand() % mod;
