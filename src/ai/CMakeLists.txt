@@ -4,7 +4,7 @@ project(ai)
 set(SOURCE_FILES
 	src/ai.cpp
 	src/attack_rules.cpp
-	#src/guard_rules.cpp
+	src/guard_rules.cpp
 )
 
 set(INCLUDE_PATH include)
