@@ -15,6 +15,7 @@ private:
 	bool init_groups;
 	state::list_act_id_t all_actors;
 	std::vector<std::pair<int64_t, int>> sortedEnemies;
+	std::vector<state::act_id_t> kingsGuard, flagsGuard;
 	std::vector <Group*> groups;
 public:
 	AI();
