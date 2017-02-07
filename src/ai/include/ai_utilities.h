@@ -135,5 +135,14 @@ bool InAttackRange (
 	state::EnemyUnitView enemy
 );
 
+class DefaultFormation : public state::FormationMaker {
+	std::vector<physics::Vector2D> ReturnFormation(int64_t formation_size) override {
+		return std::vector<physics::Vector2D>(formation_size, physics::Vector2D(0, 0));
+	}
+};
+
+bool IsEnemyTowerDominating();
+
 }
+
 #endif // AI_AI_UTILITIES_H
