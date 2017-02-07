@@ -24,7 +24,7 @@ std::unique_ptr<ActorState> ActorAttackState::Update(
 			new ActorPathPlanningState()
 		);
 	}
-	else if (target == nullptr || target->IsDead()) {
+	else if (target == nullptr || target->IsDead() || target->GetPlayerId() == actor->GetPlayerId()) {
 		return std::unique_ptr<ActorState>(new ActorIdleState());
 	}
 	else if (actor->GetPosition().distance(target->GetPosition())
