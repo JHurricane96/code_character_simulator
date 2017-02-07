@@ -63,13 +63,13 @@ state::State MakeState(state::Terrain terrain)
 
 	scouts[0][0] = std::shared_ptr<state::Scout>(new state::Scout(6, state::PLAYER1, 0, 300, 300, 37, 10,
 		55, 0, 0, physics::Vector2D(4 * ELEMENT_SIZE, 4 * ELEMENT_SIZE), physics::Vector2D(0, 0),
-		4, 0, 0));
+		6, 0, 0));
 	scouts[0][0]->AddPathPlanner(state::PathPlannerHelper(scouts[0][0]));
 	sorted_actors[0].push_back(std::static_pointer_cast<state::Actor>(scouts[0][0]));
 
 	scouts[1][0] = std::shared_ptr<state::Scout>(new state::Scout(7, state::PLAYER2, 0, 300, 300, 37, 10,
 		55, 0, 0, physics::Vector2D(27 * ELEMENT_SIZE, 27 * ELEMENT_SIZE),
-		physics::Vector2D(0, 0), 4, 0, 0));
+		physics::Vector2D(0, 0), 6, 0, 0));
 	scouts[1][0]->AddPathPlanner(state::PathPlannerHelper(scouts[1][0]));
 	sorted_actors[1].push_back(std::static_pointer_cast<state::Actor>(scouts[1][0]));
 
