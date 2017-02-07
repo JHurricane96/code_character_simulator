@@ -8,6 +8,7 @@
 #include <memory>
 #include "ai.h"
 #include "attack_rules.h"
+#include "guard_rules.h"
 
 #define mod 1000000000
 typedef int64_t act_id_t;
@@ -56,6 +57,8 @@ public:
 
 	GroupState* SelectState(state::act_id_t unitId, std::shared_ptr<state::PlayerStateHandler> state_handler) {
 		int new_state_no = attack_rules -> Utility(unitId, state_handler);
+		if(new_state_no == 4)
+			//return new GuardRules;
 		return NULL; 
 	}
 };
@@ -94,7 +97,21 @@ class Retreat : public GroupState
 
 class Guard : public GroupState
 {
-	GroupState* update(Group *group, std::shared_ptr<state::PlayerStateHandler> state_handler)
+public:
+	GuardRules * guard_rules = new GuardRules();
+	GroupState* update(state::act_id_t unitId, std::shared_ptr<state::PlayerStateHandler> state_handler)
+	{
+		guard_rules -> Strategy(unitId, state_handler);
+		return SelectState(unitId, state_handler);
+	}
+
+	GroupState* SelectState(state::act_id_t unitId, std::shared_ptr<state::PlayerStateHandler> state_handler) {
+		int new_state_no = guard_rules -> Utility(unitId, state_handler);
+		if(new_state_no == 1)
+			//return new AttackRules;
+		return NULL;
+	}
+	/*GroupState* update(Group *group, std::shared_ptr<state::PlayerStateHandler> state_handler)
 	{
 		return SelectState();
 	}
@@ -105,7 +122,7 @@ class Guard : public GroupState
 	void AttackUtility() {};
 	void RetreatUtility() {};
 	void ExploreUtility() {};
-	void GuardUtility() {};
+	void GuardUtility() {};*/
 };
 
 class Group
