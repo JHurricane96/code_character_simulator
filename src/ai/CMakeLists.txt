@@ -5,6 +5,7 @@ set(SOURCE_FILES
 	src/ai.cpp
 	src/attack_rules.cpp
 	src/guard_rules.cpp
+	src/ai_utilities.cpp
 )
 
 set(INCLUDE_PATH include)
@@ -15,6 +16,7 @@ if (NOT BUILD_ALL)
 	include(${CMAKE_INSTALL_PREFIX}/physics_config.cmake)
 	include(${CMAKE_INSTALL_PREFIX}/state_config.cmake)
 	include(${CMAKE_INSTALL_PREFIX}/player_config.cmake)
+	include(${CMAKE_INSTALL_PREFIX}/ipc_config.cmake)
 endif()
 
 set(LIBRARY_INSTALL_PATH ${CMAKE_INSTALL_PREFIX}/lib)
@@ -22,7 +24,7 @@ set(RUNTIME_INSTALL_PATH ${CMAKE_INSTALL_PREFIX}/bin)
 set(INCLUDE_INSTALL_PATH ${CMAKE_INSTALL_PREFIX}/include)
 
 add_library(ai SHARED ${SOURCE_FILES})
-target_link_libraries(ai state physics player)
+target_link_libraries(ai state physics player ipc)
 set_property(TARGET ai PROPERTY CXX_STANDARD 11)
 generate_export_header(ai EXPORT_FILE_NAME ${EXPORTS_FILE_PATH})
 target_include_directories(ai PUBLIC

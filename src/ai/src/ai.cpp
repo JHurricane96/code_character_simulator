@@ -9,31 +9,11 @@
 #include "ai.h"
 #include "attack_rules.h"
 #include "guard_rules.h"
+#include "ai_utilities.h"
 
 #define mod 1000000000
 typedef int64_t act_id_t;
 typedef std::vector<int64_t> list_act_id_t;
-
-/**
-  * The Main AI Class
-  */
-// class AI 
-// {
-// public:
-// 	list_act_id_t all_actors;
-// 	map <int, Group*> groups;
-// 	AI() 
-// 	{
-// 		// todo: initialise list of actor ids before passing
-// 		Group *begin = Group(all_actors);
-// 	}
-
-// 	void Update(std::shared_ptr<state::PlayerStateHandler> state) 
-// 	{
-// 		// see how state object is passed to this function and pass it down
-// 		for (auto &group : groups) (group.second) -> update(); 	
-// 	}
-// }
 
 namespace ai {
 
@@ -41,7 +21,11 @@ class GroupState
 {
 public:
 	GroupState() {}; // this constructor should set the default starting state
-	virtual GroupState* update(state::act_id_t unitIdg, std::shared_ptr<state::PlayerStateHandler> state_handler) {};
+	virtual GroupState* update (
+		state::act_id_t unitId, 
+		std::shared_ptr<state::PlayerStateHandler> state_handler,
+		std::vector<std::pair<int64_t, int>> sortedEnemies
+	) {};
 	GroupState* DefaultActionUtility() {}; // utility to decide what to set as default state
 };	
 
@@ -49,9 +33,12 @@ class Attack : public GroupState
 {
 public:
 	AttackRules * attack_rules = new AttackRules();
-	GroupState* update(state::act_id_t unitId, std::shared_ptr<state::PlayerStateHandler> state_handler)
-	{
-		attack_rules -> Strategy(unitId, state_handler);
+	GroupState* update (
+		state::act_id_t unitId, 
+		std::shared_ptr<state::PlayerStateHandler> state_handler,
+		std::vector<std::pair<int64_t, int>> sortedEnemies
+	) {
+		attack_rules -> Strategy(unitId, state_handler, sortedEnemies);
 		return SelectState(unitId, state_handler);
 	}
 
@@ -100,10 +87,13 @@ class Guard : public GroupState
 	int groupUtilityHolder;
 public:
 	GuardRules * guard_rules = new GuardRules();
-	GroupState* update(state::act_id_t unitId, std::shared_ptr<state::PlayerStateHandler> state_handler)
-	{
-		groupUtilityHolder = 0;
-		guard_rules -> Strategy(unitId, state_handler, groupUtilityHolder);
+
+	GroupState* update (
+		state::act_id_t unitId, 
+		std::shared_ptr<state::PlayerStateHandler> state_handler,
+		std::vector<std::pair<int64_t, int>> sortedEnemies
+	) {
+		guard_rules -> Strategy(unitId, state_handler);
 		return SelectState(unitId, state_handler);
 	}
 
@@ -141,9 +131,11 @@ public:
 		group_id = rand() % mod;
 	}
 
-	virtual void update(std::shared_ptr<state::PlayerStateHandler> state_handler) 
-	{
-		GroupState* NewState = state->update(unitId, state_handler);
+	virtual void update (
+		std::shared_ptr<state::PlayerStateHandler> state_handler, 
+		std::vector<std::pair<int64_t, int>> sortedEnemies
+	) {
+		GroupState* NewState = state->update(unitId, state_handler, sortedEnemies);
 		if(NewState != NULL)
 		{
 			delete state;
@@ -234,8 +226,35 @@ public:
 	}*/
 };
 
+/**
+* Comparison function for the sort function used in GetEnemyAllyHpRatio
+*
+* @param[in]  a     Comparison parameter 1
+* @param[in]  b     Comparison parameter 2
+*
+* @return     boolean var indicating whether a is lesser than b
+*/
+
+
 AI::AI() {
 	init_groups = false;
+}
+
+void AI::SetSortedEnemies (
+	std::shared_ptr<state::PlayerStateHandler> state
+) {
+
+	auto enemies = state->GetPlayerEnemyIds();
+	for(auto enemy : enemies) {
+		sortedEnemies.push_back (
+				std::make_pair (
+					enemy,
+					state->GetEnemyUnitFromId(enemy, nullptr).GetHp()
+				)
+			);
+	}
+	std::sort(sortedEnemies.begin(), sortedEnemies.end(), SortedBySecondElement);
+	return;
 }
 
 void AI::Update(std::shared_ptr<state::PlayerStateHandler> state) {
@@ -246,8 +265,10 @@ void AI::Update(std::shared_ptr<state::PlayerStateHandler> state) {
 		init_groups = true;
 	}
 
+	AI::SetSortedEnemies(state);
+
 	for (auto &group : groups)
-		group -> update(state);
+		group -> update(state, sortedEnemies);
 }
 
 }

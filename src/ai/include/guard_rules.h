@@ -36,14 +36,12 @@ public:
 	 * @param[in]  flagsGuardParam  The flags guard param
 	 */
 	GuardRules(std::unique_ptr<std::vector<state::act_id_t>> kingsGuardParam, std::unique_ptr<std::vector<state::act_id_t>> flagsGuardParam, state::FormationMaker *formationParam);
-	/**
-	 * The strategy for guarding per unit per tick
-	 *
-	 * @param[in]  unitId            The unit identifier
-	 * @param[in]  state             The state
-	 * @param      groupStateHolder  The group state holder
-	 */
-	void Strategy(state::act_id_t unitId, std::shared_ptr<state::PlayerStateHandler> state, int &groupStateHolder);
+	
+	void Strategy (
+		state::act_id_t unitId,
+		std::shared_ptr<state::PlayerStateHandler> state
+	);
+
 	int Utility(int &groupStateHolder);
 };
 
