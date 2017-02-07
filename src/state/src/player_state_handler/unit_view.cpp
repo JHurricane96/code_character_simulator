@@ -251,4 +251,25 @@ int64_t EnemyBaseView::GetBasePoisoningThreshold() {
 int64_t EnemyBaseView::GetBasePoisoningRadius() {
 	return base_poisoning_radius;
 }
+
+KingView::KingView() {}
+
+KingView::KingView(King * king):
+	UnitView(king),
+	has_flag(king->HasFlag()) {}
+
+bool KingView::HasFlag() {
+	return has_flag;
+}
+
+EnemyKingView::EnemyKingView() {}
+
+EnemyKingView::EnemyKingView(King* king):
+	EnemyUnitView(king),
+	has_flag(king->HasFlag()) {}
+
+bool EnemyKingView::HasFlag() {
+	return has_flag;
+}
+
 }

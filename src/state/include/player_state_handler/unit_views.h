@@ -11,6 +11,7 @@
 #include "actor/tower.h"
 #include "actor/magician.h"
 #include "actor/base.h"
+#include "actor/king.h"
 #include "vector2d.h"
 #include "path_planner/path_planner_helper.h"
 #include "state_export.h"
@@ -286,12 +287,10 @@ public:
 
 typedef UnitView SwordsmanView;
 typedef UnitView ScoutView;
-typedef UnitView KingView;
 typedef UnitView FlagView;
 typedef EnemyUnitView EnemySwordsmanView;
 typedef EnemyUnitView EnemyMagicianView;
 typedef EnemyUnitView EnemyScoutView;
-typedef EnemyUnitView EnemyKingView;
 typedef EnemyUnitView EnemyFlagView;
 
 class EnemyTowerView: public EnemyUnitView {
@@ -480,6 +479,40 @@ public:
 	 * @return     The base_poisoning_threshold
 	 */
 	int64_t GetBasePoisoningThreshold();
+};
+
+class KingView : public UnitView {
+private:
+	/**
+	 * True if king has flag, false otherwise
+	 */
+	bool has_flag;
+public:
+	KingView();
+	explicit KingView(King * king);
+	/**
+	 * Determines if this king has a flag
+	 *
+	 * @return     false if king doesn't have the flag, true otherwise
+	 */
+	bool HasFlag();
+};
+
+class EnemyKingView : public EnemyUnitView {
+private:
+	/**
+	 * True if king has flag, false otherwise
+	 */
+	bool has_flag;
+public:
+	EnemyKingView();
+	explicit EnemyKingView(King * king);
+	/**
+	 * Determines if this king has a flag
+	 *
+	 * @return     false if king doesn't have the flag, true otherwise
+	 */
+	bool HasFlag();
 };
 
 }
