@@ -97,16 +97,18 @@ class Retreat : public GroupState
 
 class Guard : public GroupState
 {
+	int groupUtilityHolder;
 public:
 	GuardRules * guard_rules = new GuardRules();
 	GroupState* update(state::act_id_t unitId, std::shared_ptr<state::PlayerStateHandler> state_handler)
 	{
-		guard_rules -> Strategy(unitId, state_handler);
+		groupUtilityHolder = 0;
+		guard_rules -> Strategy(unitId, state_handler, groupUtilityHolder);
 		return SelectState(unitId, state_handler);
 	}
 
 	GroupState* SelectState(state::act_id_t unitId, std::shared_ptr<state::PlayerStateHandler> state_handler) {
-		int new_state_no = guard_rules -> Utility(unitId, state_handler);
+		int new_state_no = guard_rules -> Utility(groupUtilityHolder);
 		if(new_state_no == 1)
 			//return new AttackRules;
 		return NULL;
