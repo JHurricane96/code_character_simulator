@@ -9,32 +9,30 @@ using namespace std;
 
 namespace ai {
 
-GuardRules::GuardRules(std::unique_ptr<std::vector<state::act_id_t>> kingsGuardParam, std::unique_ptr<std::vector<state::act_id_t>> flagsGuardParam, state::FormationMaker *formationParam = new DefaultFormation()) {
+GuardRules::GuardRules(state::FormationMaker *formationParam) {
 	formation = formationParam;
-	kingsGuard = kingsGuardParam;
-	flagsGuard = flagsGuardParam;
 }
 
-void GuardRules::Strategy(state::act_id_t unitId, std::shared_ptr<state::PlayerStateHandler> state, int &groupUtilityHolder) {
+void GuardRules::Strategy(state::act_id_t unitId, std::shared_ptr<state::PlayerStateHandler> state, std::vector<state::act_id_t> &kingsGuard, std::vector<state::act_id_t> &flagsGuard, int &groupUtilityHolder) {
 	auto map_bounds = state->OffsetToTerrainElement(physics::Vector2D(0, 0)).size;
 	auto lim = map_bounds * state->GetTerrainRows() - 1;
-	if (*flagsGuard.size() < 4) {
-		*flagsGuard.push_back(unitId);
+	if (flagsGuard.size() < 4) {
+		flagsGuard.push_back(unitId);
 	}
-	else if (*kingsGuard.size() < 4) {
-		*kingsGuard.push_back(unitId);
+	else if (kingsGuard.size() < 4) {
+		kingsGuard.push_back(unitId);
 	}
 	int isKingsGuard = -1, isFlagsGuard = -1;
-	for (int i = 0; i < *kingsGuard.size(); i++) {
-		if (*kingsGuard[i] == unitId) isKingsGuard = i;
+	for (int i = 0; i < kingsGuard.size(); i++) {
+		if (kingsGuard[i] == unitId) isKingsGuard = i;
 	}
-	for (int i = 0; i < *flagsGuard.size(); i++) {
-		if (*flagsGuard[i] == unitId) isFlagsGuard = i;
+	for (int i = 0; i < flagsGuard.size(); i++) {
+		if (flagsGuard[i] == unitId) isFlagsGuard = i;
 	}
 	if (isKingsGuard >= 0) {
 		state::act_id_t optimalEnemy = GetOptimalEnemy(state, state->GetKing().GetId(), 5);
 		if (state->GetUnitFromId(optimalEnemy, nullptr).GetPosition().distance(state->GetUnitFromId(unitId, nullptr).GetPosition()) <= state->GetUnitFromId(unitId, nullptr).GetAttackRange()) {
-			*kingsGuard.erase(*kingsGuard.begin() + isKingsGuard);
+			kingsGuard.erase(kingsGuard.begin() + isKingsGuard);
 			state::list_act_id_t attackers;
 			attackers.push_back(unitId);
 			state->AttackUnit(attackers, optimalEnemy, nullptr);
@@ -77,7 +75,7 @@ void GuardRules::Strategy(state::act_id_t unitId, std::shared_ptr<state::PlayerS
 	else if (isFlagsGuard >= 0) {
 		state::act_id_t optimalEnemy = GetOptimalEnemy(state, state->GetFlag().GetId(), 5);
 		if (state->GetUnitFromId(optimalEnemy, nullptr).GetPosition().distance(state->GetUnitFromId(unitId, nullptr).GetPosition()) <= state->GetUnitFromId(unitId, nullptr).GetAttackRange()) {
-			*flagsGuard.erase(*flagsGuard.begin() + isFlagsGuard);
+			flagsGuard.erase(flagsGuard.begin() + isFlagsGuard);
 			state::list_act_id_t attackers;
 			attackers.push_back(unitId);
 			state->AttackUnit(attackers, optimalEnemy, nullptr);

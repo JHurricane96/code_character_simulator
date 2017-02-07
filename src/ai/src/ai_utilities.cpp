@@ -257,4 +257,18 @@ bool IsAttackingKing (
 		return false;
 }
 
+bool IsEnemyTowerDominating(std::shared_ptr<state::PlayerStateHandler> state) {
+	std::vector<state::TowerView> allyTowers = state->GetTowers();
+	std::vector<state::TowerView> foeTowers = state->GetEnemyTowers();
+	float allySum = 0, foeSum = 0;
+	for (int i = 0; i < allyTowers.size(); i++) {
+		allySum += allyTowers[i].GetHp();	
+	}
+	for (int i = 0; i < foeTowers.size(); i++) {
+		foeSum += foeTowers[i].GetHp();	
+	}
+	if (foeSum > allySum) return true;
+	else return false;
+}
+
 }

@@ -2,11 +2,12 @@
  * @file attack_rules.h
  * Implementation file of the Attack Strategies and Utilities for a Single Actor Unit per tick
  */
-#ifndef ATTACK_RULES_H
-#define ATTACK_RULES_H
+#ifndef AI_ATTACK_RULES_H
+#define AI_ATTACK_RULES_H
 
 #include <memory>
 #include "player_state_handler/player_state_handler.h"
+#include "ai_utilities.h"
 
 namespace ai {
 
@@ -28,7 +29,11 @@ public:
 	 *
 	 * @param[in]  unitId  The unit identifier
 	 */
-	void Strategy(state::act_id_t unitId, std::shared_ptr<state::PlayerStateHandler> state);
+	void Strategy (
+		state::act_id_t unitId,
+		std::shared_ptr<state::PlayerStateHandler> state,
+		std::vector<std::pair<int64_t, int>> sortedEnemies
+	);
 
 	/**
 	 * The utility function or the transition specifier for the Attack state
@@ -41,5 +46,4 @@ public:
 };
 
 }
-
-#endif
+#endif // AI_ATTACK_RULES_H

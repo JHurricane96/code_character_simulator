@@ -1,7 +1,7 @@
-#include "state.h"
-#include "utilities.h"
 #include "player_state_handler/player_state_handler.h"
 #include "attack_rules.h"
+#include "ai_utilities.h"
+#include "ipc.h"
 
 #include <bits/stdc++.h>
 
@@ -10,12 +10,6 @@
 #define SWORDHIT 100
 #define MAGEHIT 150
 namespace ai {
-
-class DefaultFormation : public state::FormationMaker {
-	std::vector<physics::Vector2D> ReturnFormation(int64_t formation_size) override {
-		return std::vector<physics::Vector2D>(formation_size, physics::Vector2D(0, 0));
-	}
-};
 
 /**
  * Comparison function for the sort function used in GetEnemyAllyHpRatio
@@ -294,24 +288,6 @@ AttackRules::AttackRules() {
 }
 
 /**
- * Check if enemy unit is within range to attack
- *
- * @param[in]  state   The state
- * @param[in]  unitId  The unit identifier
- * @param[in]  enemy   The enemy
- *
- * @return     True if in range, False otherwise.
- */
-bool InAttackRange (
-	std::shared_ptr<state::PlayerStateHandler> state,
-	state::act_id_t unitId,
-	state::EnemyUnitView enemy
-)	{
-	auto unit = state -> GetUnitFromId(unitId, nullptr);
-	return (enemy.GetPosition().distance(unit.GetPosition()) <= unit.GetAttackRange());
-}
-
-/**
  * Strategy to effectively attack enemies whilst in attack state
  *
  * @param[in]  unitId  The unit identifier
@@ -319,32 +295,36 @@ bool InAttackRange (
  */
 void AttackRules::Strategy (
 	state::act_id_t unitId,
-	std::shared_ptr<state::PlayerStateHandler> state
+	std::shared_ptr<state::PlayerStateHandler> state,
+	std::vector<std::pair<int64_t, int>> sortedEnemies
 )	{
-		if (state->GetUnitFromId(unitId, nullptr).GetVelocity().magnitude() > 0
-			|| state->GetUnitFromId(unitId, nullptr).GetPathPlannerHelper().IsPathPlanning()
-			|| !state->GetUnitFromId(unitId, nullptr).CanAttack()
+		if (state->GetUnitFromId(unitId, nullptr).GetPathPlannerHelper().IsPathPlanning()
+			|| ( !state->GetUnitFromId(unitId, nullptr).CanAttack()
+			&& state->GetUnitFromId(unitId, nullptr).GetActorType() != state::ActorType::KING )
 			|| !state->GetUnitFromId(unitId, nullptr).CanPathPlan()
 			|| IsAttackingEnemy(state, unitId)
 		) {
+			if(state->GetUnitFromId(unitId, nullptr).GetActorType() == state::ActorType::KING)
+				// ipc::Logger::Instance().SetLogs("Returning King");
+				std::cerr << "Returning King\n";
 			return;
 		}
 
 		std::vector<int64_t> terrain_weights(3);
 		if (state->GetUnitFromId(unitId, nullptr).GetActorType() == state::ActorType::MAGICIAN) {
 			terrain_weights[state::MOUNTAIN] = 1;
-			terrain_weights[state::PLAIN] = 2;
-			terrain_weights[state::FOREST] = 4;
+			terrain_weights[state::PLAIN] = 1;
+			terrain_weights[state::FOREST] = 1;
 		}
 		else if (state->GetUnitFromId(unitId, nullptr).GetActorType() == state::ActorType::SWORDSMAN) {
-			terrain_weights[state::MOUNTAIN] = 2;
-			terrain_weights[state::PLAIN] = 2;
+			terrain_weights[state::MOUNTAIN] = 1;
+			terrain_weights[state::PLAIN] = 1;
 			terrain_weights[state::FOREST] = 1;
 		}
 		else if (state->GetUnitFromId(unitId, nullptr).GetActorType() == state::ActorType::KING) {
 			terrain_weights[state::MOUNTAIN] = 1;
 			terrain_weights[state::PLAIN] = 1;
-			terrain_weights[state::FOREST] = 4;
+			terrain_weights[state::FOREST] = 1;
 		}
 		else if (state->GetUnitFromId(unitId, nullptr).GetActorType() == state::ActorType::SCOUT) {
 			terrain_weights[state::MOUNTAIN] = 1;
@@ -352,152 +332,180 @@ void AttackRules::Strategy (
 			terrain_weights[state::FOREST] = 1;
 		}
 
-		std::unique_ptr<int> success(new int());
-		auto enemy_king = state -> GetEnemyKing(success.get());
-		float AttackValidity = GetEnemyAllyHpRatio(state, unitId, 20);
+		auto unitView = state->GetUnitFromId(unitId, nullptr);
+		state::list_act_id_t traveller;
+		std::vector<physics::Vector2D> tempPath;
 
-		state::ActorType typeTower = state::ActorType::TOWER;
-		auto nearestEnemyTower = NearestEnemy(state, unitId, &typeTower);
+		if(unitView.GetActorType() == state::ActorType::KING) {
+			// std::unique_ptr<int> flagCaptureStatus(new int());
+			int flagCaptureStatus;
+			std::unique_ptr<int> flagDropStatus(new int());
 
-		/* Look for enemy's nearest tower */
-
-		if( nearestEnemyTower.first != -1) {
-			if (InAttackRange(state, unitId, state -> GetEnemyUnitFromId(nearestEnemyTower.first, nullptr)) ) {
-				state::list_act_id_t attackers;
-				attackers.push_back(unitId);
-				state->AttackUnit(attackers, nearestEnemyTower.first, nullptr);
-			}
-			else {
-				auto target = state->GetEnemyUnitFromId (nearestEnemyTower.first, nullptr);
-				state::list_act_id_t attackers;
-				attackers.push_back(unitId);
-				std::vector<physics::Vector2D> tempPath;
-				state->MoveUnits(attackers, target.GetPosition(), formation, terrain_weights, tempPath, nullptr);
+			state->FlagCapture(&flagCaptureStatus);
+			switch(flagCaptureStatus) {
+				case -1:
+					traveller.push_back(unitId);
+					state->MoveUnits (
+						traveller,
+						std::vector<physics::Vector2D>({state->GetEnemyBase().GetPosition()}),
+						formation,
+						nullptr);
+					break;
+				case -2:
+					state->FlagDrop(flagDropStatus.get());
+					switch(*flagDropStatus) {
+						case -1:
+							traveller.push_back(unitId);
+							state->MoveUnits (
+								traveller,
+								std::vector<physics::Vector2D>({state->GetBase().GetPosition()}),
+								formation,
+								nullptr);
+							break;
+					}
+				case 1:
+					traveller.push_back(unitId);
+					state->MoveUnits (
+						traveller,
+						std::vector<physics::Vector2D>({state->GetBase().GetPosition()}),
+						formation,
+						nullptr);
+					break;
 			}
 		}
+		else {
+			std::unique_ptr<int> success(new int());
+			auto enemy_king = state -> GetEnemyKing(success.get());
+			float AttackValidity = GetEnemyAllyHpRatio(state, unitId, 20);
 
-		/* Try to attack king if in LOS */
+			state::ActorType typeTower = state::ActorType::TOWER;
+			auto nearestEnemyTower = NearestEnemy(state, unitId, &typeTower);
 
-		if (*success == 1) {
-			if (InAttackRange(state, unitId, enemy_king)) {
-				state::list_act_id_t attackers;
-				attackers.push_back(unitId);
-				state -> AttackUnit(attackers,enemy_king.GetId(), nullptr);
-			}
-			/*else {
-				state::list_act_id_t attackers;
-				attackers.push_back(unitId);
-				std::vector<physics::Vector2D> tempPath;
-				state->MoveUnits (
-					attackers,
-					enemy_king.GetPosition(),
-					formation,
-					terrain_weights,
-					tempPath,
-					nullptr);
-			}*/
-		}
+			/* Look for enemy's nearest tower */
 
-		/* Check if wise to attack */
-
-		else if (AttackValidity < 1 && AttackValidity != -1 || true) {
-			auto unit = state -> GetUnitFromId (unitId, nullptr);
-			auto weakestEnemy = WeakestEnemy(state, unitId, unit.GetAttackRange());
-
-			/* Try to attack weakest enemy in LOS */
-
-			if(weakestEnemy.second < unit.GetHp() && (weakestEnemy.first != -1)) {
-				if( InAttackRange(state, unitId, state -> GetEnemyUnitFromId(weakestEnemy.first, nullptr)) ) {
+			if( nearestEnemyTower.first != -1) {
+				if (InAttackRange(state, unitId, state -> GetEnemyUnitFromId(nearestEnemyTower.first, nullptr)) ) {
 					state::list_act_id_t attackers;
 					attackers.push_back(unitId);
-					state -> AttackUnit(attackers, weakestEnemy.first, nullptr);
+					state->AttackUnit(attackers, nearestEnemyTower.first, nullptr);
 				}
 				else {
-						auto target = state->GetEnemyUnitFromId (weakestEnemy.first, nullptr);
-						state::list_act_id_t attackers;
-						attackers.push_back(unitId);
-						std::vector<physics::Vector2D> tempPath;
-						state->MoveUnits (
-							attackers,
-							target.GetPosition(),
-							formation,
-							terrain_weights,
-							tempPath,
-							nullptr);
+					auto target = state->GetEnemyUnitFromId (nearestEnemyTower.first, nullptr);
+					state::list_act_id_t attackers;
+					attackers.push_back(unitId);
+					std::vector<physics::Vector2D> tempPath;
+					state->MoveUnits(attackers, std::vector<physics::Vector2D>({target.GetPosition()}), formation, nullptr);
 				}
 			}
 
-			/* Otherwise pursue nearest enemy */
+			/* Try to attack king if in LOS */
 
-			else {
+			if (*success == 1) {
+				if (InAttackRange(state, unitId, enemy_king)) {
+					state::list_act_id_t attackers;
+					attackers.push_back(unitId);
+					state -> AttackUnit(attackers,enemy_king.GetId(), nullptr);
+				}
+				else {
+					state::list_act_id_t attackers;
+					attackers.push_back(unitId);
+					std::vector<physics::Vector2D> tempPath;
+					state->MoveUnits (
+						attackers,
+						std::vector<physics::Vector2D>({enemy_king.GetPosition()}),
+						formation,
+						nullptr);
+				}
+			}
 
-				state::ActorType typeScout = state::ActorType::SCOUT;
-				state::ActorType typeBase = state::ActorType::BASE;
-				state::ActorType typeSwordsman = state::ActorType::SWORDSMAN;
-				state::ActorType typeMagician = state::ActorType::MAGICIAN;
+			/* Check if wise to attack */
 
-				auto nearestEnemyScout = NearestEnemy(state, unitId, &typeScout);
-				auto nearestEnemyBase = NearestEnemy(state, unitId, &typeBase);
+			else if (AttackValidity < 1 && AttackValidity != -1 || true) {
+				auto unit = state -> GetUnitFromId (unitId, nullptr);
+				auto weakestEnemy = WeakestEnemy(state, unitId, unit.GetAttackRange());
 
-				/* Look for enemy's nearest scout */
+				/* Try to attack weakest enemy in LOS */
 
-				if( nearestEnemyScout.first != -1
-					&& InAttackRange(state, unitId, state -> GetEnemyUnitFromId(nearestEnemyScout.first, nullptr)) ) {
+				if(weakestEnemy.second < unit.GetHp() && (weakestEnemy.first != -1)) {
+					if( InAttackRange(state, unitId, state -> GetEnemyUnitFromId(weakestEnemy.first, nullptr)) ) {
 						state::list_act_id_t attackers;
 						attackers.push_back(unitId);
-						state->AttackUnit(attackers, nearestEnemyScout.first, nullptr);
-					}
-
-				/* Look for enemy's base */
-
-				else if( nearestEnemyBase.first != -1) {
-					if (InAttackRange(state, unitId, state -> GetEnemyUnitFromId(nearestEnemyBase.first, nullptr)) ) {
-						state::list_act_id_t attackers;
-						attackers.push_back(unitId);
-						state->AttackUnit(attackers, nearestEnemyBase.first, nullptr);
-					}
-					else {
-						auto target = state->GetEnemyUnitFromId (nearestEnemyBase.first, nullptr);
-						state::list_act_id_t attackers;
-						attackers.push_back(unitId);
-						std::vector<physics::Vector2D> tempPath;
-						state->MoveUnits(attackers, target.GetPosition(), formation, terrain_weights, tempPath, nullptr);
+						state -> AttackUnit(attackers, weakestEnemy.first, nullptr);
 					}
 				}
 
-				/* Look for nearest enemy swordsman/mage */
+				/* Otherwise pursue nearest enemy */
 
 				else {
-					auto nearestEnemySwordsman = NearestEnemy(state, unitId, &typeSwordsman);
-					auto nearestEnemyMagician = NearestEnemy(state, unitId, &typeMagician);
-					std::pair<state::act_id_t, float> target(-1, FLT_MAX);
 
-					if(nearestEnemySwordsman.first == -1 && nearestEnemyMagician.first != -1) {
-						target = nearestEnemyMagician;
-					}
-					else if(nearestEnemySwordsman.first != -1 && nearestEnemyMagician.first == -1) {
-						target = nearestEnemySwordsman;
-					}
-					else if(nearestEnemySwordsman.first != -1 && nearestEnemyMagician.first != -1) {
-						auto swordsmanUnit = state -> GetEnemyUnitFromId(nearestEnemySwordsman.first, nullptr);
-						auto magicianUnit = state -> GetEnemyUnitFromId(nearestEnemyMagician.first, nullptr);
+					state::ActorType typeScout = state::ActorType::SCOUT;
+					state::ActorType typeBase = state::ActorType::BASE;
+					state::ActorType typeSwordsman = state::ActorType::SWORDSMAN;
+					state::ActorType typeMagician = state::ActorType::MAGICIAN;
 
-						target = ( (MAGEHIT/(magicianUnit.GetHp() + TINY)) > (SWORDHIT/(swordsmanUnit.GetHp() + TINY)) ) 
-						? nearestEnemyMagician : nearestEnemySwordsman;
-					}
+					auto nearestEnemyScout = NearestEnemy(state, unitId, &typeScout);
+					auto nearestEnemyBase = NearestEnemy(state, unitId, &typeBase);
 
-					if(target.first != -1) {
-						if (InAttackRange(state, unitId, state -> GetEnemyUnitFromId(target.first, nullptr)) ) {
+					/* Look for enemy's nearest scout */
+
+					if( nearestEnemyScout.first != -1
+						&& InAttackRange(state, unitId, state -> GetEnemyUnitFromId(nearestEnemyScout.first, nullptr)) ) {
 							state::list_act_id_t attackers;
 							attackers.push_back(unitId);
-							state->AttackUnit(attackers, target.first, nullptr);
+							state->AttackUnit(attackers, nearestEnemyScout.first, nullptr);
+						}
+
+					/* Look for enemy's base */
+
+					else if( nearestEnemyBase.first != -1) {
+						if (InAttackRange(state, unitId, state -> GetEnemyUnitFromId(nearestEnemyBase.first, nullptr)) ) {
+							state::list_act_id_t attackers;
+							attackers.push_back(unitId);
+							state->AttackUnit(attackers, nearestEnemyBase.first, nullptr);
 						}
 						else {
-							auto targetUnit = state->GetEnemyUnitFromId (target.first, nullptr);
+							auto target = state->GetEnemyUnitFromId (nearestEnemyBase.first, nullptr);
 							state::list_act_id_t attackers;
 							attackers.push_back(unitId);
 							std::vector<physics::Vector2D> tempPath;
-							state->MoveUnits(attackers, targetUnit.GetPosition(), formation, terrain_weights, tempPath, nullptr);
+							state->MoveUnits(attackers, std::vector<physics::Vector2D>({target.GetPosition()}), formation, nullptr);
+						}
+					}
+
+					/* Look for nearest enemy swordsman/mage */
+
+					else {
+						auto nearestEnemySwordsman = NearestEnemy(state, unitId, &typeSwordsman);
+						auto nearestEnemyMagician = NearestEnemy(state, unitId, &typeMagician);
+						std::pair<state::act_id_t, float> target(-1, FLT_MAX);
+
+						if(nearestEnemySwordsman.first == -1 && nearestEnemyMagician.first != -1) {
+							target = nearestEnemyMagician;
+						}
+						else if(nearestEnemySwordsman.first != -1 && nearestEnemyMagician.first == -1) {
+							target = nearestEnemySwordsman;
+						}
+						else if(nearestEnemySwordsman.first != -1 && nearestEnemyMagician.first != -1) {
+							auto swordsmanUnit = state -> GetEnemyUnitFromId(nearestEnemySwordsman.first, nullptr);
+							auto magicianUnit = state -> GetEnemyUnitFromId(nearestEnemyMagician.first, nullptr);
+
+							target = ( (MAGEHIT/(magicianUnit.GetHp() + TINY)) > (SWORDHIT/(swordsmanUnit.GetHp() + TINY)) )
+							? nearestEnemyMagician : nearestEnemySwordsman;
+						}
+
+						if(target.first != -1) {
+							if (InAttackRange(state, unitId, state -> GetEnemyUnitFromId(target.first, nullptr)) ) {
+								state::list_act_id_t attackers;
+								attackers.push_back(unitId);
+								state->AttackUnit(attackers, target.first, nullptr);
+							}
+							else {
+								auto targetUnit = state->GetEnemyUnitFromId (target.first, nullptr);
+								state::list_act_id_t attackers;
+								attackers.push_back(unitId);
+								std::vector<physics::Vector2D> tempPath;
+								state->MoveUnits(attackers, std::vector<physics::Vector2D>({targetUnit.GetPosition()}), formation, nullptr);
+							}
 						}
 					}
 				}
@@ -506,6 +514,9 @@ void AttackRules::Strategy (
 }
 
 int AttackRules::Utility(state::act_id_t unitId, std::shared_ptr<state::PlayerStateHandler> state) {
+
+	if(state->GetEnemyUnitFromId (unitId, nullptr).GetActorType() == state::ActorType::KING)
+		return 1;
 
 	float enemyAllyHpRatio = GetEnemyAllyHpRatio(state, unitId, 20);
 	float distFromEnemyBase = GetDistanceFromUnit(state, unitId, state -> GetEnemyBase().GetPosition());

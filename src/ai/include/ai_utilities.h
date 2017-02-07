@@ -3,6 +3,12 @@
  * Utility functions for AI
 */
 
+#ifndef AI_AI_UTILITIES_H
+#define AI_AI_UTILITIES_H
+
+#include "player_state_handler/player_state_handler.h"
+#include <bits/stdc++.h>
+
 namespace ai {
 
 /**
@@ -129,4 +135,17 @@ bool InAttackRange (
 	state::EnemyUnitView enemy
 );
 
+<<<<<<< Updated upstream
 }
+#endif // AI_AI_UTILITIES_H
+=======
+class DefaultFormation : public state::FormationMaker {
+	std::vector<physics::Vector2D> ReturnFormation(int64_t formation_size) override {
+		return std::vector<physics::Vector2D>(formation_size, physics::Vector2D(0, 0));
+	}
+};
+
+bool IsEnemyTowerDominating();
+
+}
+>>>>>>> Stashed changes
