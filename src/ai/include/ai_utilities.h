@@ -146,8 +146,8 @@ bool IsEnemyTowerDominating(std::shared_ptr<state::PlayerStateHandler> state);
 state::act_id_t GetOptimalTarget (
 	std::shared_ptr<state::PlayerStateHandler> state,
 	state::act_id_t unitId,
-	float threshold,
-	std::vector<std::pair<int64_t, int>> sortedEnemies
+	std::vector<std::pair<int64_t, int>> sortedEnemies,
+	float threshold = -1
 );
 
 }
