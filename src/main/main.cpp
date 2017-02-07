@@ -82,7 +82,7 @@ state::State MakeState(state::Terrain terrain)
 			state::PlayerId p = static_cast<state::PlayerId>(i);
 			towers[i][j] = std::shared_ptr<state::Tower>(new state::Tower(++id_count, p, 80, 600,
 				600, 0, 10, 0, 0, 0, tower_pos[i * 3 + j] * ELEMENT_SIZE,
-				physics::Vector2D(0, 0), 5, 40, 5 * ELEMENT_SIZE, 100, 7, 10, 300, 2));
+				physics::Vector2D(0, 0), 5, 40, 5 * ELEMENT_SIZE, 100, 5, 10, 300, 2));
 			sorted_actors[i].push_back(
 				std::static_pointer_cast<state::Actor>(towers[i][j]));
 		}
