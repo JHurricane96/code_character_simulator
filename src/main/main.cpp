@@ -6,6 +6,9 @@
 #include "main_driver.h"
 #include "player1.h"
 #include "player2.h"
+#include "ai.h"
+
+#define TINY 0.001
 
 const int64_t ELEMENT_SIZE = 200;
 
@@ -70,6 +73,7 @@ state::State MakeState(state::Terrain terrain)
 	scouts[1][0] = std::shared_ptr<state::Scout>(new state::Scout(7, state::PLAYER2, 0, 300, 300, 37, 10,
 		55, 0, 0, physics::Vector2D(27 * ELEMENT_SIZE, 27 * ELEMENT_SIZE),
 		physics::Vector2D(0, 0), 6, 0, 0));
+
 	scouts[1][0]->AddPathPlanner(state::PathPlannerHelper(scouts[1][0]));
 	sorted_actors[1].push_back(std::static_pointer_cast<state::Actor>(scouts[1][0]));
 
@@ -94,8 +98,8 @@ state::State MakeState(state::Terrain terrain)
 			state::PlayerId p = static_cast<state::PlayerId>(i);
 			swordsmen[i][j] = std::shared_ptr<state::Swordsman>(
 				new state::Swordsman(++id_count, p, 50, 200, 200, 20, 10, 20, 0, 0,
-					physics::Vector2D(team_pos * ELEMENT_SIZE, team_pos * ELEMENT_SIZE),
-					physics::Vector2D(0, 0), 2, 10, 30));
+					physics::Vector2D((team_pos) * ELEMENT_SIZE, (team_pos) * ELEMENT_SIZE),
+					physics::Vector2D(0, 0), 30, 10, 30));
 			swordsmen[i][j]->AddPathPlanner(state::PathPlannerHelper(swordsmen[i][j]));
 			sorted_actors[i].push_back(
 				std::static_pointer_cast<state::Actor>(swordsmen[i][j]));
@@ -108,7 +112,7 @@ state::State MakeState(state::Terrain terrain)
 			state::PlayerId p = static_cast<state::PlayerId>(i);
 			magicians[i][j] = std::shared_ptr<state::Magician>(
 				new state::Magician(++id_count, p, 100, 150, 150, 30, 10, 30, 0, 0,
-					physics::Vector2D(team_pos * ELEMENT_SIZE, team_pos * ELEMENT_SIZE),
+					physics::Vector2D((team_pos) * ELEMENT_SIZE, (team_pos) * ELEMENT_SIZE),
 					physics::Vector2D(0, 0), 3, 25, 3 * ELEMENT_SIZE, 60, 100, 10));
 			magicians[i][j]->AddPathPlanner(state::PathPlannerHelper(magicians[i][j]));
 			sorted_actors[i].push_back(
@@ -227,8 +231,8 @@ int main(int argc, char * argv[])
 	auto S2 = std::shared_ptr<state::State>(new state::State(state));
 	state::PlayerStateHandler PSH2(S2.get(), state::PLAYER2);
 
-	drivers::MainDriver driver(player::PlayerAi(std::shared_ptr<player::PlayerAiHelper>(new player1::Player1())),
-		player::PlayerAi(std::shared_ptr<player::PlayerAiHelper>(new player2::Player2())), S, S1, S2, 1 * 60 * 1000, is_headless);
+	drivers::MainDriver driver(player::PlayerAi(std::shared_ptr<player::PlayerAiHelper>(new ai::AI())),
+		player::PlayerAi(std::shared_ptr<player::PlayerAiHelper>(new ai::AI())), S, S1, S2, 5 * 60 * 1000, is_headless);
 
 	driver.Run();
 

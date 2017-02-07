@@ -3,6 +3,12 @@
  * Utility functions for AI
 */
 
+#ifndef AI_AI_UTILITIES_H
+#define AI_AI_UTILITIES_H
+
+#include "player_state_handler/player_state_handler.h"
+#include <bits/stdc++.h>
+
 namespace ai {
 
 /**
@@ -130,3 +136,4 @@ bool InAttackRange (
 );
 
 }
+#endif // AI_AI_UTILITIES_H

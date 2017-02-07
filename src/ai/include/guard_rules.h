@@ -28,7 +28,11 @@ public:
 	 *
 	 * @param[in]  unitId  The unit identifier
 	 */
-	void Strategy(state::act_id_t unitId, std::shared_ptr<state::PlayerStateHandler> state);
+	void Strategy (
+		state::act_id_t unitId,
+		std::shared_ptr<state::PlayerStateHandler> state
+	);
+
 
 	/**
 	 * The utility function or the transition specifier for the guard state
