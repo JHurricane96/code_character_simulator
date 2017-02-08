@@ -12,6 +12,7 @@ if (NOT BUILD_ALL)
 	include(${CMAKE_INSTALL_PREFIX}/physics_config.cmake)
 	include(${CMAKE_INSTALL_PREFIX}/state_config.cmake)
 	include(${CMAKE_INSTALL_PREFIX}/player_config.cmake)
+	include(${CMAKE_INSTALL_PREFIX}/ipc_config.cmake)
 endif()
 
 set(LIBRARY_INSTALL_PATH ${CMAKE_INSTALL_PREFIX}/lib)
@@ -19,7 +20,7 @@ set(RUNTIME_INSTALL_PATH ${CMAKE_INSTALL_PREFIX}/bin)
 set(INCLUDE_INSTALL_PATH ${CMAKE_INSTALL_PREFIX}/include)
 
 add_library(player1 SHARED ${SOURCE_FILES})
-target_link_libraries(player1 state physics player)
+target_link_libraries(player1 state physics player ipc)
 set_property(TARGET player1 PROPERTY CXX_STANDARD 11)
 generate_export_header(player1 EXPORT_FILE_NAME ${EXPORTS_FILE_PATH})
 target_include_directories(player1 PUBLIC
