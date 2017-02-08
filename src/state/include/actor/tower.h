@@ -32,6 +32,10 @@ private:
 	 */
 	TowerOwner tower_owner;
 	/**
+	 * The tower's previous owner
+	 */
+	TowerOwner prev_tower_owner;
+	/**
 	 * Radius around tower that units need to be present to contend for
 	 * tower ownership
 	 * Measured in coordinates
@@ -125,6 +129,12 @@ public:
 	 * @return     The tower's owner
 	 */
 	TowerOwner GetTowerOwner();
+	/**
+	 * Gets the tower's previous owner
+	 *
+	 * @return     The tower's previous owner
+	 */
+	TowerOwner GetPrevTowerOwner();
 	/**
 	 * Gets the speed of a fire_ball fired from the tower
 	 *
