@@ -6,6 +6,7 @@
 #include "main_driver.h"
 #include "player1.h"
 #include "player2.h"
+#include "ai1.h"
 
 const int64_t ELEMENT_SIZE = 200;
 
@@ -228,7 +229,7 @@ int main(int argc, char * argv[])
 	state::PlayerStateHandler PSH2(S2.get(), state::PLAYER2);
 
 	drivers::MainDriver driver(player::PlayerAi(std::shared_ptr<player::PlayerAiHelper>(new player1::Player1())),
-		player::PlayerAi(std::shared_ptr<player::PlayerAiHelper>(new player2::Player2())), S, S1, S2, 1 * 60 * 1000, is_headless);
+		player::PlayerAi(std::shared_ptr<player::PlayerAiHelper>(new ai1::Ai1())), S, S1, S2, 5 * 60 * 1000, is_headless);
 
 	driver.Run();
 
