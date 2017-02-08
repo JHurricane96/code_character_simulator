@@ -81,7 +81,6 @@ class Guard : public GroupState
 	int groupUtilityHolder;
 public:
 	GuardRules * guard_rules = new GuardRules();
-<<<<<<< 2de0dc3c85b20320a8d24ebbc485d5b9b8a72c89
 	GroupState* update (
 		state::act_id_t unitId, 
 		std::shared_ptr<state::PlayerStateHandler> state_handler,
@@ -102,6 +101,8 @@ public:
 		return SelectState();
 	}
 =======
+=======
+>>>>>>> a50d7b62072539f783013967d127364eb25efe9d
 	GroupState* update(
 		state::act_id_t unitId, 
 		std::shared_ptr<state::PlayerStateHandler> state_handler, 
@@ -109,7 +110,10 @@ public:
 		std::vector<state::act_id_t> &kingsGuard,
 		std::vector<state::act_id_t> &flagsGuard
 	);
+<<<<<<< HEAD
 >>>>>>> Guard AI V1.0
+=======
+>>>>>>> a50d7b62072539f783013967d127364eb25efe9d
 
 	GroupState* SelectState(state::act_id_t unitId, std::shared_ptr<state::PlayerStateHandler> state_handler);
 };

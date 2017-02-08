@@ -11,12 +11,6 @@
 #define MAGEHIT 150
 namespace ai {
 
-class DefaultFormation : public state::FormationMaker {
-	std::vector<physics::Vector2D> ReturnFormation(int64_t formation_size) override {
-		return std::vector<physics::Vector2D>(formation_size, physics::Vector2D(0, 0));
-	}
-};
-
 AttackRules::AttackRules() {
 	formation = new DefaultFormation();
 }

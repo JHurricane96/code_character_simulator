@@ -9,11 +9,10 @@ using namespace std;
 
 namespace ai {
 
-GuardRules::GuardRules(std::unique_ptr<std::vector<state::act_id_t>> kingsGuardParam, std::unique_ptr<std::vector<state::act_id_t>> flagsGuardParam, state::FormationMaker *formationParam = new DefaultFormation()) {
+GuardRules::GuardRules(state::FormationMaker *formationParam) {
 	formation = formationParam;
-	kingsGuard = kingsGuardParam;
-	flagsGuard = flagsGuardParam;
 }
+
 void GuardRules::Strategy(
 	state::act_id_t unitId, 
 	std::shared_ptr<state::PlayerStateHandler> state, 
@@ -29,11 +28,11 @@ void GuardRules::Strategy(
 	auto terrainElementSize = state->OffsetToTerrainElement(physics::Vector2D(0, 0), nullptr).size;
 	auto lim = terrainElementSize * state->GetTerrainRows() - 5;
 	int isKingsGuard = -1, isFlagsGuard = -1;
-	for (int i = 0; i < *kingsGuard.size(); i++) {
-		if (*kingsGuard[i] == unitId) isKingsGuard = i;
+	for (int i = 0; i < kingsGuard.size(); i++) {
+		if (kingsGuard[i] == unitId) isKingsGuard = i;
 	}
-	for (int i = 0; i < *flagsGuard.size(); i++) {
-		if (*flagsGuard[i] == unitId) isFlagsGuard = i;
+	for (int i = 0; i < flagsGuard.size(); i++) {
+		if (flagsGuard[i] == unitId) isFlagsGuard = i;
 	}
 	if (isFlagsGuard == -1 && flagsGuard.size() < 4) {
 		flagsGuard.push_back(unitId);

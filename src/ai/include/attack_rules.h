@@ -7,6 +7,7 @@
 
 #include <memory>
 #include "player_state_handler/player_state_handler.h"
+#include "ai_utilities.h"
 
 namespace ai {
 
