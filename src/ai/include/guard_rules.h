@@ -3,8 +3,8 @@
  * Headers file for defence strategies
  */
 
-#ifndef GUARD_RULES_H
-#define GUARD_RULES_H
+#ifndef AI_GUARD_RULES_H
+#define AI_GUARD_RULES_H
 
 #include <memory>
 #include <vector>
@@ -25,15 +25,11 @@ class GuardRules {
 	 * The formation generally used for guarding
 	 */
 	state::FormationMaker *formation;
-	std::unique_ptr<std::vector<state::act_id_t>> kingsGuard;
-	std::unique_ptr<std::vector<state::act_id_t>> flagsGuard;
 public:
 	/**
 	 * Constructor for the GuardRules class
 	 *
 	 * @param      formation       The formation
-	 * @param[in]  kingsGuardParam  The kings guard param
-	 * @param[in]  flagsGuardParam  The flags guard param
 	 */
 	GuardRules(state::FormationMaker *formationParam = new DefaultFormation());
 	/**
@@ -51,10 +47,9 @@ public:
 		int &groupUtilityHolder,
 		std::vector<std::pair<int64_t, int>> sortedEnemies
 	);
-
 	int Utility(int &groupStateHolder);
 };
 
 }
 
-#endif
+#endif //AI_GUARD_RULES_H

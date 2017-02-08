@@ -38,7 +38,9 @@ public:
 	GroupState* update (
 		state::act_id_t unitId, 
 		std::shared_ptr<state::PlayerStateHandler> state_handler,
-		std::vector<std::pair<int64_t, int>> sortedEnemies
+		std::vector<std::pair<int64_t, int>> sortedEnemies,
+		std::vector<state::act_id_t> &kingsGuard,
+		std::vector<state::act_id_t> &flagsGuard
 	);
 
 	GroupState* SelectState(state::act_id_t unitId, std::shared_ptr<state::PlayerStateHandler> state_handler);
@@ -81,7 +83,6 @@ class Guard : public GroupState
 	int groupUtilityHolder;
 public:
 	GuardRules * guard_rules = new GuardRules();
-	
 	GroupState* update(
 		state::act_id_t unitId, 
 		std::shared_ptr<state::PlayerStateHandler> state_handler, 
@@ -96,7 +97,9 @@ public:
 GroupState* Attack::update (
 	state::act_id_t unitId, 
 	std::shared_ptr<state::PlayerStateHandler> state_handler,
-	std::vector<std::pair<int64_t, int>> sortedEnemies
+	std::vector<std::pair<int64_t, int>> sortedEnemies,
+	std::vector<state::act_id_t> &kingsGuard,
+	std::vector<state::act_id_t> &flagsGuard
 ) {
 	attack_rules -> Strategy(unitId, state_handler, sortedEnemies);
 	return SelectState(unitId, state_handler);
@@ -173,7 +176,6 @@ public:
 		sort(hps.begin(), hps.end(), std::greater<int>());
 		set < pair <int, act_id_t> > group_hps;
 		vector < list_act_id_t > actor_splits(hps.size());
-
 		for (auto &id: group_actors) 
 		{
 			int hp = // get current actor hp
@@ -181,10 +183,8 @@ public:
 		}
 		// clip extra HP from requested distribution
 		hps = clipExtra(hps, accumulate(group_hps.begin(), group_hps.end(), 0));
-
 		int cur = 0; // index of HP in hps array being allocated
 		int cur_split_index = 0;
-
 		for (int i = 0; i < hps.size(); ++i)
 		{
 			int req_hp = hps[i];
@@ -207,7 +207,6 @@ public:
 		for (auto actors : actor_splits) Group(actors);
 		groups.erase(groups.find(*this -> group_id));
 	}
-
 	void merge(vector <Group*> grps, GroupState* new_state=GroupState())
 	{
 		list_act_id_t new_actors;
@@ -219,14 +218,12 @@ public:
 		Group(new_actors, new_state);
 		for (auto &old_grp : grps) groups.erase(groups.find(old_grp -> group_id));
 	}
-
 	vector <int> clipExtra(vector <int> hps, int extra)
 	{
 		int residueOfEach = extra / hps.size();
 		for (auto &hp: hps) hp -= residueOfEach;   // assuming this remains +ve
 		return hps;
 	}
-
 	int getCeil(set < pair <int, act_id_t> > hps, x) 
 	{
 		set < pair <int, act_id_t> > :: iterator it = hps.lower_bound(x);
