@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.6.2)
 project(player1)
 
-set(SOURCE_FILES
-	src/player1.cpp
+file(GLOB_RECURSE SOURCE_FILES
+	src/*.cpp
 )
 set(INCLUDE_PATH include)
 set(EXPORTS_DIR ${CMAKE_BINARY_DIR}/exports)
