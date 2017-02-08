@@ -50,6 +50,12 @@ float GetEnemyAllyHpRatio (
 	int k
 );
 
+float GetEnemyAllyHpRatioByThreshold (
+	std::shared_ptr<state::PlayerStateHandler> state,
+	state::act_id_t id,
+	float threshold
+);
+
 /**
  * Function to find distance of a unit from a given unit
  *

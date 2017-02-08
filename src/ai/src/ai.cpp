@@ -127,7 +127,7 @@ GroupState* Guard::update(
 GroupState* Guard::SelectState(state::act_id_t unitId, std::shared_ptr<state::PlayerStateHandler> state_handler) {
 	int new_state_no = guard_rules -> Utility(groupUtilityHolder);
 	if(new_state_no == 1)
-		// return new Attack;
+		 return new Attack;
 	return NULL;
 }
 
@@ -139,7 +139,7 @@ private:
 	GroupState* state;
 	// list_act_id_t group_actors;	// actors in this group
 public:
-	Group(state::act_id_t actid) : state(new Guard())
+	Group(state::act_id_t actid) : state(new Attack())
 	{
 		unitId = actid;
 		group_id = rand() % mod;
