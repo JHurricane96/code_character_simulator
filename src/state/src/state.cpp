@@ -687,18 +687,24 @@ void State::Update(float delta_time) {
 		if (actor->GetActorType() == ActorType::TOWER) {
 			std::shared_ptr<Tower> tower = std::static_pointer_cast<Tower>(actor);
 			if (tower->IsDead()) {
-				auto pid = tower->GetTowerOwner();
-				if (pid != TowerOwner::UNOWNED) {
-					towers[(int)pid].erase( std::find(
-										towers[(int)pid].begin(),
-										towers[(int)pid].end(),
-										tower) );
-					sorted_actors[(int)pid].erase( std::find(
-										sorted_actors[(int)pid].begin(),
-										sorted_actors[(int)pid].end(),
-										actor) );
-				}
+				auto pid = (int)tower->GetTowerOwner();
 				if (tower->Contend(delta_time, sorted_actors)) {
+					int64_t i;
+					auto prev_pid = (int) tower->GetPrevTowerOwner();
+					for (i = 0; i < towers[prev_pid].size(); ++i) {
+						if (towers[prev_pid][i]->GetId() == tower->GetId()) {
+							break;
+						}
+					}
+					towers[prev_pid].erase(towers[prev_pid].begin() + i);
+
+					for (i = 0; i < sorted_actors[prev_pid].size(); ++i) {
+						if (sorted_actors[prev_pid][i]->GetId() == tower->GetId()) {
+							break;
+						}
+					}
+					sorted_actors[prev_pid].erase(sorted_actors[prev_pid].begin() + i);
+
 					auto id = actor->GetPlayerId();
 					sorted_actors[id].push_back(actor);
 					towers[id].push_back(tower);

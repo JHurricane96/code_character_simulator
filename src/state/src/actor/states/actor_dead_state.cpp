@@ -12,10 +12,16 @@ std::unique_ptr<ActorState> ActorDeadState::Update(
 	Actor * actor,
 	float delta_time
 ) {
+	if (actor->GetActorType() == ActorType::TOWER) {
+		if (actor->IsDead()) {
+			return nullptr;
+		}
+		else {
+			return std::unique_ptr<ActorState>(new ActorIdleState());
+		}
+	}
 	if (actor->GetTimeToRespawn() <= 0 &&
 		actor->GetRespawnLocation() != nullptr) {
-		if (actor->GetActorType() == ActorType::TOWER && actor->IsDead())
-			return nullptr;
 		return std::unique_ptr<ActorState>(new ActorIdleState());
 	}
 	actor->DecreaseRespawnTime(delta_time);
@@ -23,7 +29,9 @@ std::unique_ptr<ActorState> ActorDeadState::Update(
 }
 
 void ActorDeadState::Exit(Actor * actor) {
-	actor->Respawn();
+	if (actor->GetActorType() != ActorType::TOWER) {
+		actor->Respawn();
+	}
 }
 
 std::unique_ptr<ActorState> ActorDeadState::Clone() {

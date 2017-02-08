@@ -45,7 +45,8 @@ Tower::Tower(
 		true,
 		false
 	),
-	tower_owner(TowerOwner::UNOWNED),
+	tower_owner(static_cast<TowerOwner>(player_id)),
+	prev_tower_owner(static_cast<TowerOwner>(player_id)),
 	contention_radius(contention_radius),
 	max_contention_score(max_contention_score),
 	contention_score(0),
@@ -67,6 +68,7 @@ bool Tower::Contend(
 	}
 	contention_score += (count[0] - count[1]) * delta_time;
 	if (std::abs(contention_score) >= max_contention_score) {
+		prev_tower_owner = tower_owner;
 		Respawn(static_cast<TowerOwner>((contention_score < 0)));
 		return true;
 	}
@@ -102,6 +104,10 @@ int64_t Tower::GetFireBallTtl() {
 
 TowerOwner Tower::GetTowerOwner() {
 	return tower_owner;
+}
+
+TowerOwner Tower::GetPrevTowerOwner() {
+	return prev_tower_owner;
 }
 
 int64_t Tower::GetFireBallSize() {
@@ -142,6 +148,7 @@ void Tower::Update(float delta_time) {
 
 void Tower::MergeWithMain(const Tower * tower) {
 	tower_owner = tower->tower_owner;
+	prev_tower_owner = tower->prev_tower_owner;
 	contention_score = tower->contention_score;
 	ready_to_attack = tower->ready_to_attack;
 }
