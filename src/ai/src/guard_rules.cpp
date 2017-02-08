@@ -223,4 +223,3 @@ int GuardRules::Utility(int &groupUtilityHolder) {
 }
 
 }
-

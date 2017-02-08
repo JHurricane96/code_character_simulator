@@ -30,11 +30,6 @@ public:
 	 * Constructor for the GuardRules class
 	 *
 	 * @param      formation       The formation
-<<<<<<< HEAD
-	 * @param[in]  kingsGuardParam  The kings guard param
-	 * @param[in]  flagsGuardParam  The flags guard param
-=======
->>>>>>> a50d7b62072539f783013967d127364eb25efe9d
 	 */
 	GuardRules(state::FormationMaker *formationParam = new DefaultFormation());
 	/**
