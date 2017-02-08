@@ -41,12 +41,12 @@ state::State MakeState(state::Terrain terrain)
 	sorted_actors[1].push_back(std::static_pointer_cast<state::Actor>(flags[1]));
 
 	bases[0] = std::shared_ptr<state::Base>(new state::Base(4, state::PLAYER1, 0, 0, 0, 0, 10, 0, 0, 0,
-		physics::Vector2D(4 * ELEMENT_SIZE, 4 * ELEMENT_SIZE), physics::Vector2D(0, 0), 5, 0,
+		physics::Vector2D(4 * ELEMENT_SIZE, 4 * ELEMENT_SIZE), physics::Vector2D(0, 0), 3, 0,
 		4 * ELEMENT_SIZE, 10));
 	sorted_actors[0].push_back(std::static_pointer_cast<state::Actor>(bases[0]));
 
 	bases[1] = std::shared_ptr<state::Base>(new state::Base(5, state::PLAYER2, 0, 0, 0, 0, 10, 0, 0, 0,
-		physics::Vector2D(27 * ELEMENT_SIZE, 27 * ELEMENT_SIZE), physics::Vector2D(0, 0), 5, 0,
+		physics::Vector2D(27 * ELEMENT_SIZE, 27 * ELEMENT_SIZE), physics::Vector2D(0, 0), 3, 0,
 		4 * ELEMENT_SIZE, 10));
 	sorted_actors[1].push_back(std::static_pointer_cast<state::Actor>(bases[1]));
 
