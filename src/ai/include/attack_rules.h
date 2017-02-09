@@ -34,6 +34,7 @@ public:
 	void Strategy (
 		state::act_id_t unitId,
 		std::shared_ptr<state::PlayerStateHandler> state,
+		int &groupUtilityHolder,
 		std::vector<std::pair<int64_t, int>> sortedEnemies
 	);
 
@@ -44,7 +45,7 @@ public:
 	 *
 	 * @return     int var (1-GoToAtack, 2-GoToRetreat, 3-GoToExplore, 4-GoToGuard)
 	 */
-	int Utility(state::act_id_t unitId, std::shared_ptr<state::PlayerStateHandler> state);
+	int Utility(int &groupUtilityHolder);
 	
 };
 
