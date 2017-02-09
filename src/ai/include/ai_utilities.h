@@ -26,6 +26,12 @@ bool SortedBySecondElement (
 	float> &b
 );
 
+state::act_id_t NearestEnemyByType (
+	std::shared_ptr<state::PlayerStateHandler> state,
+	state::act_id_t id,
+	std::vector<state::ActorType> types
+);
+
 /**
  * Returns positive if positive, else 0
  *

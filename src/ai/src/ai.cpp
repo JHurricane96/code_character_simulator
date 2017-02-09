@@ -108,7 +108,7 @@ GroupState* Attack::update (
 GroupState* Attack::SelectState(state::act_id_t unitId, std::shared_ptr<state::PlayerStateHandler> state_handler) {
 	int new_state_no = attack_rules -> Utility(unitId, state_handler);
 	if(new_state_no == 4)
-		return new Guard;
+			return new Guard;
 	return NULL; 
 }
 
@@ -127,7 +127,7 @@ GroupState* Guard::update(
 GroupState* Guard::SelectState(state::act_id_t unitId, std::shared_ptr<state::PlayerStateHandler> state_handler) {
 	int new_state_no = guard_rules -> Utility(groupUtilityHolder);
 	if(new_state_no == 1)
-		 return new Attack;
+		return new Attack;
 	return NULL;
 }
 
@@ -139,7 +139,7 @@ private:
 	GroupState* state;
 	// list_act_id_t group_actors;	// actors in this group
 public:
-	Group(state::act_id_t actid) : state(new Attack())
+	Group(state::act_id_t actid) : state(new Guard())
 	{
 		unitId = actid;
 		group_id = rand() % mod;
@@ -277,6 +277,12 @@ void AI::Update(std::shared_ptr<state::PlayerStateHandler> state) {
 
 	AI::SetSortedEnemies(state);
 
+	auto to_respawn_ids = state->GetRespawnables();
+
+	for (auto to_respawn_id : to_respawn_ids) {
+		state->RespawnUnit(to_respawn_id, state->GetBase().GetId(), NULL);
+	}
+	
 	for (auto &group : groups)
 		group -> update(state, sortedEnemies, kingsGuard, flagsGuard);
 }
