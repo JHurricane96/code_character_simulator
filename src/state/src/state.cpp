@@ -681,6 +681,10 @@ void State::Update(float delta_time) {
 				.CoordinateToTerrainElement(target->GetPosition())
 				.GetLos(actor->GetPlayerId()) != DIRECT_LOS) {
 				actor->StopAttack();
+				target->SetIsUnderAttack(false);
+			}
+			else {
+				target->SetIsUnderAttack(true);
 			}
 		}
 
