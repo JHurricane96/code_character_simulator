@@ -86,7 +86,7 @@ void MainDriver::GlobalUpdateLoop() {
 				end_time - start_time
 			);
 		std::this_thread::sleep_for(std::chrono::milliseconds(
-			std::max((long)0, 1000 / fps - calculcation_duration.count()))
+			std::max<long>((long)0, 1000 / fps - calculcation_duration.count()))
 		);
 
 		if (!InterruptVar->GetPlayStatus()) {
@@ -160,7 +160,7 @@ void MainDriver::GlobalUpdateLoopHeadless() {
 				end_time - start_time
 			);
 		std::this_thread::sleep_for(std::chrono::milliseconds(
-			std::max((long)0, 1000 / fps - calculcation_duration.count()))
+			std::max<long>((long)0, 1000 / fps - calculcation_duration.count()))
 		);
 	}
 	Stop();
