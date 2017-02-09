@@ -10,7 +10,7 @@ bool SortedBySecondElement (
 		return (a.second < b.second);
 }
 
-float relu (float x) {
+float Relu (float x) {
 	if (x > 0)
 		return x;
 	return 0;

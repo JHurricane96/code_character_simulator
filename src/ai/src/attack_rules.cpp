@@ -27,9 +27,10 @@ void AttackRules::Strategy (
 			|| !state->GetUnitFromId(unitId, nullptr).CanPathPlan()
 			|| IsAttackingEnemy(state, unitId)
 		) {
-			if(state->GetUnitFromId(unitId, nullptr).GetActorType() == state::ActorType::KING)
-				// ipc::Logger::Instance().SetLogs("Returning King");
-				std::cerr << "Returning King\n";
+			if(state->GetUnitFromId(unitId, nullptr).GetActorType() == state::ActorType::KING) {
+				ipc::Logger::Instance().SetLogs("Lol");
+			}
+
 			return;
 		}
 
@@ -266,7 +267,7 @@ int AttackRules::Utility(state::act_id_t unitId, std::shared_ptr<state::PlayerSt
 	if (isAttackingKing) return 1;
 
 	float attackUtility = (1.0 / enemyAllyHpRatio) * (1.0 / sqrt(distFromBase) + 1.0 / distFromEnemyBase + 1.0 / sqrt(distFromKing) + 1.0 / sqrt(distFromEnemyKing)); 
-	float guard_utility = relu(eaHPratioBase - 0.8) + relu(eaHPratioKing - 1);
+	float guard_utility = Relu(eaHPratioBase - 0.8) + Relu(eaHPratioKing - 1);
 	float retreat_utility = 1. / (attackUtility + TINY);
 	float explore_utility = 1. / distFromBase + 1. / (attackUtility + guard_utility + TINY);
 
