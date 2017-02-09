@@ -62,6 +62,7 @@ UnitView::UnitView(Actor * actor)
 	: id(actor->GetId()),
 	actor_type(actor->GetActorType()),
 	can_attack(actor->CanAttack()),
+	is_under_attack(actor->IsUnderAttack()),
 	can_plan_path(actor->CanPathPlan()),
 	attack(actor->GetAttack()),
 	hp(actor->GetHp()),
@@ -157,6 +158,10 @@ ActorType UnitView::GetActorType() {
 
 bool UnitView::CanAttack() {
 	return can_attack;
+}
+
+bool UnitView::IsUnderAttack() {
+	return is_under_attack;
 }
 
 bool UnitView::CanPathPlan() {
