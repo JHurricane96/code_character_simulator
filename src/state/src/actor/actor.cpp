@@ -36,6 +36,7 @@ Actor::Actor(
 	state(new ActorIdleState()),
 	can_attack(can_attack),
 	can_plan_path(can_plan_path),
+	is_under_attack(false),
 	attack(attack),
 	hp(hp),
 	max_hp(max_hp),
@@ -161,6 +162,14 @@ physics::Vector2D Actor::GetPosition() {
 
 bool Actor::IsDead() {
 	return is_dead;
+}
+
+bool Actor::IsUnderAttack() {
+	return is_under_attack;
+}
+
+void Actor::SetIsUnderAttack(bool status) {
+	this->is_under_attack = status;
 }
 
 void Actor::SetSpeed(float speed) {

@@ -57,6 +57,10 @@ protected:
 	 */
 	bool can_attack;
 	/**
+	 * If true, actor is being attacked, else is not
+	 */
+	bool is_under_attack;
+	/**
 	 * If true, actor can path plan, else cannot
 	 */
 	bool can_plan_path;
@@ -286,6 +290,12 @@ public:
 	 */
 	int64_t GetAttackRange();
 	/**
+	 * Sets the Actor's is_being_attacked
+	 *
+	 * @param[in]  status  The new status
+	 */
+	void SetIsUnderAttack(bool status);
+	/**
 	 * Sets the Actor's velocity
 	 *
 	 * @param[in]  new_velocity  The new velocity
@@ -307,6 +317,12 @@ public:
 	 * A virtual method for units to override based on their attack style
 	 */
 	virtual void Attack();
+	/**
+	 * Determines if the Actor is under attack
+	 *
+	 * @return     true if under attack, false otherwise
+	 */
+	bool IsUnderAttack();
 	/**
 	 * Determines if the Actor is dead
 	 *
