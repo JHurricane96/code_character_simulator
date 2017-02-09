@@ -218,7 +218,10 @@ int main(int argc, char * argv[])
 		is_headless = true;
 	}
 
-	state::Terrain TT(ipc::LoadTerrain(exec_path + "level1_terrain"));
+
+	std::string terrain_file_path(argv[3]);
+
+	state::Terrain TT(ipc::LoadTerrain(terrain_file_path));
 
 	auto state = MakeState(TT);
 
