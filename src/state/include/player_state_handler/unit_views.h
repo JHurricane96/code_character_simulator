@@ -141,6 +141,10 @@ private:
 	 */
 	bool can_attack;
 	/**
+	 * true if this Actor is uner attack, false otherwise
+	 */
+	bool is_under_attack;
+	/**
 	 * true if this Actor can path plan, false otherwise
 	 */
 	bool can_plan_path;
@@ -234,6 +238,12 @@ public:
 	 * @return     The Actor's type
 	 */
 	ActorType GetActorType();
+	/**
+	 * Returns is_under_attack
+	 *
+	 * @return     true if under attack, false otherwise
+	 */
+	bool IsUnderAttack();
 	/**
 	 * Returns can_attack
 	 *
