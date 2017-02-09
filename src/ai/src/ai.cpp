@@ -127,7 +127,7 @@ GroupState* Guard::update(
 GroupState* Guard::SelectState(state::act_id_t unitId, std::shared_ptr<state::PlayerStateHandler> state_handler) {
 	int new_state_no = guard_rules -> Utility(groupUtilityHolder);
 	if(new_state_no == 1)
-		//return new Attack;
+		return new Attack;
 	return NULL;
 }
 
