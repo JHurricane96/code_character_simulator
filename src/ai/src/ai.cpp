@@ -33,6 +33,7 @@ public:
 
 class Attack : public GroupState
 {
+	int groupUtilityHolder;
 public:
 	AttackRules * attack_rules = new AttackRules();
 	GroupState* update (
@@ -101,12 +102,13 @@ GroupState* Attack::update (
 	std::vector<state::act_id_t> &kingsGuard,
 	std::vector<state::act_id_t> &flagsGuard
 ) {
-	attack_rules -> Strategy(unitId, state_handler, sortedEnemies);
+	groupUtilityHolder = 0;
+	attack_rules -> Strategy(unitId, state_handler, groupUtilityHolder, sortedEnemies);
 	return SelectState(unitId, state_handler);
 }
 
 GroupState* Attack::SelectState(state::act_id_t unitId, std::shared_ptr<state::PlayerStateHandler> state_handler) {
-	int new_state_no = attack_rules -> Utility(unitId, state_handler);
+	int new_state_no = attack_rules -> Utility(groupUtilityHolder);
 	if(new_state_no == 4)
 			return new Guard;
 	return NULL; 

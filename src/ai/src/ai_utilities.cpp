@@ -158,6 +158,7 @@ state::act_id_t GetOptimalTarget (
 ) {
 	auto enemies = sortedEnemies;
 
+
 	/** 
 	 * Check if enemy king is available, 
 	 * in range and return it if it needs to be attacked 
@@ -214,6 +215,13 @@ std::pair<state::act_id_t, float> NearestEnemy (
 					nearestEnemyDistance = dist;
 					nearestEnemyId = enemyUnit.GetId();
 				}
+				else if(dist == nearestEnemyDistance) {
+					if(state->GetEnemyUnitFromId(nearestEnemyId, nullptr).GetHp() 
+						< state->GetEnemyUnitFromId(enemyUnit.GetId(), nullptr).GetHp()) {
+						nearestEnemyDistance = dist;
+						nearestEnemyId = enemyUnit.GetId();
+					}
+				}
 			}
 		}
 		else {
@@ -225,6 +233,13 @@ std::pair<state::act_id_t, float> NearestEnemy (
 				if (dist < nearestEnemyDistance && (enemyUnit.GetActorType() == *type) ) {
 					nearestEnemyDistance = dist;
 					nearestEnemyId = enemyUnit.GetId();
+				}
+				else if(dist == nearestEnemyDistance) {
+					if(state->GetEnemyUnitFromId(nearestEnemyId, nullptr).GetHp() 
+						< state->GetEnemyUnitFromId(enemyUnit.GetId(), nullptr).GetHp()) {
+						nearestEnemyDistance = dist;
+						nearestEnemyId = enemyUnit.GetId();
+					}
 				}
 			}
 		}
@@ -322,6 +337,23 @@ bool IsEnemyTowerDominating(std::shared_ptr<state::PlayerStateHandler> state) {
 	}
 	if (foeSum > allySum) return true;
 	else return false;
+}
+
+state::list_act_id_t GetAttackingUnits(
+	std::shared_ptr<state::PlayerStateHandler> state,
+	state::act_id_t enemy_unit_id
+) {
+	state::list_act_id_t attacking_unit_ids;
+	auto unit_ids = state->GetPlayerUnitIds();
+	for (auto unit_id : unit_ids) {
+		auto unit = state->GetUnitFromId(unit_id, NULL);
+		int success;
+		auto target = unit.GetAttackTarget(&success);
+		if (success == 1 && target->GetId() == enemy_unit_id) {
+			attacking_unit_ids.push_back(unit_id);
+		}
+	}
+	return attacking_unit_ids;
 }
 
 }
