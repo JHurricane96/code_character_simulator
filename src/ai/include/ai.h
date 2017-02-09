@@ -69,6 +69,19 @@ public:
 	 * @param[in]  state  The state
 	 */
 	void SetSortedEnemies(std::shared_ptr<state::PlayerStateHandler> state);
+
+	/**
+	 * @brief      Gets the optimal respawn location.
+	 *
+	 * @param[in]  state          The state
+	 * @param[in]  to_respawn_id  To respawn identifier
+	 *
+	 * @return     The optimal respawn location.
+	 */
+	state::act_id_t GetOptimalRespawnLocation (
+		std::shared_ptr<state::PlayerStateHandler> state,
+		state::act_id_t to_respawn_id
+	);
 };
 
 }
