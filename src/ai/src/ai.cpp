@@ -181,6 +181,30 @@ void AI::SetSortedEnemies (
 	return;
 }
 
+state::act_id_t AI::GetOptimalRespawnLocation (
+	std::shared_ptr<state::PlayerStateHandler> state,
+	state::act_id_t to_respawn_id
+) {
+	std::vector<state::TowerView> towers = state->GetTowers();
+	if(towers.size()==0) {
+		return state->GetBase().GetId();
+	}
+	else {
+		state::act_id_t towerId;
+		float leastDistance = FLT_MAX;
+		for(auto tower : towers) {
+
+			if(leastDistance > tower.GetPosition().distance(state->GetEnemyFlag().GetPosition())) {
+
+				leastDistance = tower.GetPosition().distance(state->GetEnemyFlag().GetPosition());
+				towerId = tower.GetId();
+			}
+		}
+		return towerId;
+	}
+
+}
+
 void AI::Update(std::shared_ptr<state::PlayerStateHandler> state) {
 	if (!init_groups){
 		for (auto actid : state -> GetPlayerUnitIds()) {
@@ -194,8 +218,13 @@ void AI::Update(std::shared_ptr<state::PlayerStateHandler> state) {
 	auto to_respawn_ids = state->GetRespawnables();
 
 	for (auto to_respawn_id : to_respawn_ids) {
-		if (rand() % 2 == 0)
+		if(state->GetUnitFromId(to_respawn_id, nullptr).GetActorType() != state::ActorType::KING) {
+			auto locationId = GetOptimalRespawnLocation(state, to_respawn_id);
+			state->RespawnUnit(to_respawn_id, locationId, NULL);
+		}
+		if (rand() % 2 == 0) {
 			state->RespawnUnit(to_respawn_id, state->GetBase().GetId(), NULL);
+		}
 		else {
 			auto towers = state->GetTowers();
 			int chosen = rand() % towers.size();
