@@ -222,7 +222,7 @@ void GuardRules::Strategy(
 		}
 	}
 	else {
-		state::act_id_t nearestEnemy = NearestEnemyByType(state, unitId, scSwMaToTypes);
+		state::act_id_t nearestEnemy = NearestEnemyByType(state, unitId, scSwMaTypes);
 		if (nearestEnemy != -1 && InAttackRange(state, unitId, state->GetEnemyUnitFromId(nearestEnemy, nullptr))) {
 			state::list_act_id_t attackers;
 			attackers.push_back(unitId);
