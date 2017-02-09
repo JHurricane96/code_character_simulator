@@ -476,14 +476,14 @@ void State::FlagCapture(PlayerId player_id, int * success) {
 		SetIfValid(success, 0);
 	}
 
-	if (king->GetPosition().distance(enemy_flag->GetPosition()) >
-		king->GetSize() + enemy_flag->GetSize()) {
-		SetIfValid(success, -1);
+	if (king->HasFlag()) {
+		SetIfValid(success, -2);
 		return;
 	}
 
-	if (king->HasFlag()) {
-		SetIfValid(success, -2);
+	if (king->GetPosition().distance(enemy_flag->GetPosition()) >
+		king->GetSize() + enemy_flag->GetSize()) {
+		SetIfValid(success, -1);
 		return;
 	}
 
@@ -502,14 +502,14 @@ void State::FlagDrop(PlayerId player_id, int * success) {
 		SetIfValid(success, 0);
 	}
 
-	if (king->GetPosition().distance(base->GetPosition()) >
-		king->GetSize() + base->GetSize()) {
-		SetIfValid(success, -1);
+	if (!king->HasFlag()) {
+		SetIfValid(success, -2);
 		return;
 	}
 
-	if (!king->HasFlag()) {
-		SetIfValid(success, -2);
+	if (king->GetPosition().distance(base->GetPosition()) >
+		king->GetSize() + base->GetSize()) {
+		SetIfValid(success, -1);
 		return;
 	}
 
