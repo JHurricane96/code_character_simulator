@@ -1,3 +1,5 @@
+#include <iostream>
+#include <string>
 #include <fstream>
 #include <algorithm>
 #include <cmath>
@@ -177,7 +179,7 @@ state::Terrain LoadTerrain(std::string file_name)
 {
 	std::string line;
 	std::ifstream file(file_name);
-	getline(file, line);
+	std::getline(file, line);
 	int rows = (int)sqrt(line.size());
 	int total = line.size();
 	std::vector<std::vector<state::TerrainElement> > grid;
