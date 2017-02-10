@@ -337,6 +337,12 @@ namespace ipc {
 
 		PopulateLogger(&StateMessage);
 
+		int32_t sizeOfMessage  = StateMessage.ByteSize();
+
+		std::cout << sizeOfMessage;
+
+		std::cout << std::flush;
+
 		StateMessage.SerializeToOstream(&std::cout);
 
 		std::cout << std::flush;
