@@ -6,6 +6,7 @@ set(SOURCE_FILES
 	src/attack_rules.cpp
 	src/guard_rules.cpp
 	src/ai_utilities.cpp
+	src/group_state.cpp
 )
 
 set(INCLUDE_PATH include)

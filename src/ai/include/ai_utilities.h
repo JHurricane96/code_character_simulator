@@ -2,7 +2,6 @@
  * @file ai_utilities.h
  * Utility functions for AI
 */
-
 #ifndef AI_AI_UTILITIES_H
 #define AI_AI_UTILITIES_H
 

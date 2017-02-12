@@ -7,11 +7,6 @@
 
 namespace ai {
 
-#define INF 10000
-#define TINY 0.00001
-#define SWORDHIT 100
-#define MAGEHIT 150
-
 AttackRules::AttackRules() {
 	formation = new DefaultFormation();
 }

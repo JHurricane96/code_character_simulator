@@ -2,7 +2,6 @@
  * @file guard_rules.h
  * Headers file for defence strategies
  */
-
 #ifndef AI_GUARD_RULES_H
 #define AI_GUARD_RULES_H
 
