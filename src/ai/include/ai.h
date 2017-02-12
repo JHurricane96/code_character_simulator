@@ -1,17 +1,18 @@
+/**
+ * @file ai.h
+ * The AI class for the main unit update loop
+ * and information retention between updates
+*/
 #ifndef AI_AI_H
 #define AI_AI_H
 
 #include <memory>
 #include <map>
 #include "player_ai_helper.h"
+#include "group_state.h"
 #include "ai_export.h"
 
 namespace ai {
-
-/**
- * Forward declaration for class group.
- */
-class Group;
 
 /**
  * Class for ai.
