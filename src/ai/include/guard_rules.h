@@ -31,12 +31,16 @@ public:
 	 * @param      formation       The formation
 	 */
 	GuardRules(state::FormationMaker *formationParam = new DefaultFormation());
+
 	/**
-	 * The strategy for guarding per unit per tick
+	 * The guard strategy for the unit at every tick
 	 *
-	 * @param[in]  unitId            The unit identifier
-	 * @param[in]  state             The state
-	 * @param      groupStateHolder  The group state holder
+	 * @param[in]  unitId              The unit identifier
+	 * @param[in]  state               The state
+	 * @param      kingsGuard          The kings guard
+	 * @param      flagsGuard          The flags guard
+	 * @param      groupUtilityHolder  The group utility holder
+	 * @param[in]  sortedEnemies       The sorted enemies
 	 */
 	void Strategy(
 		state::act_id_t unitId, 

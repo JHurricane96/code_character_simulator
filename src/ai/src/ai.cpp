@@ -14,8 +14,9 @@
 
 namespace ai {
 
-AI::AI() {
+AI::AI(int level) {
 	init_groups = false;
+	aiLevel = level;
 }
 
 void AI::SetSortedEnemies (
@@ -87,7 +88,7 @@ void AI::Update(std::shared_ptr<state::PlayerStateHandler> state) {
 	}
 	
 	for (auto &group : groups)
-		group -> update(state, sortedEnemies, kingsGuard, flagsGuard);
+		group -> update(state, sortedEnemies, kingsGuard, flagsGuard, aiLevel);
 }
 
 }

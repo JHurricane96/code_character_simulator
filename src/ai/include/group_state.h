@@ -36,6 +36,7 @@ public:
 	 * @param[in]  sortedEnemies  The sorted enemies
 	 * @param      kingsGuard     The kings guard
 	 * @param      flagsGuard     The flags guard
+	 * @param      aiLevel        The ai level
 	 *
 	 * @return     Returns the state the unit needs to be in for the next
 	 * update
@@ -45,7 +46,8 @@ public:
 		std::shared_ptr<state::PlayerStateHandler> state_handler,
 		std::vector<std::pair<int64_t, int>> sortedEnemies,
 		std::vector<state::act_id_t> &kingsGuard,
-		std::vector<state::act_id_t> &flagsGuard
+		std::vector<state::act_id_t> &flagsGuard,
+		int aiLevel
 	) {};
 
 };
@@ -77,6 +79,7 @@ public:
 	 * @param[in]  sortedEnemies  The sorted enemies
 	 * @param      kingsGuard     The kings guard
 	 * @param      flagsGuard     The flags guard
+	 * @param      aiLevel        The ai level
 	 *
 	 * @return     Returns new state
 	 */
@@ -85,7 +88,8 @@ public:
 		std::shared_ptr<state::PlayerStateHandler> state_handler,
 		std::vector<std::pair<int64_t, int>> sortedEnemies,
 		std::vector<state::act_id_t> &kingsGuard,
-		std::vector<state::act_id_t> &flagsGuard
+		std::vector<state::act_id_t> &flagsGuard,
+		int aiLevel
 	);
 
 	/**
@@ -129,6 +133,7 @@ public:
 	 * @param[in]  sortedEnemies  The sorted enemies
 	 * @param      kingsGuard     The kings guard
 	 * @param      flagsGuard     The flags guard
+	 * @param      aiLevel        The ai level
 	 *
 	 * @return     Returns new state
 	 */
@@ -137,7 +142,8 @@ public:
 		std::shared_ptr<state::PlayerStateHandler> state_handler,
 		std::vector<std::pair<int64_t, int>> sortedEnemies,
 		std::vector<state::act_id_t> &kingsGuard,
-		std::vector<state::act_id_t> &flagsGuard
+		std::vector<state::act_id_t> &flagsGuard,
+		int aiLevel
 	);
 
 	/**
@@ -190,12 +196,14 @@ public:
 	 * @param[in]  sortedEnemies  The sorted enemies
 	 * @param      kingsGuard     The kings guard
 	 * @param      flagsGuard     The flags guard
+	 * @param      aiLevel        The ai level
 	 */
 	virtual void update (
 		std::shared_ptr<state::PlayerStateHandler> state_handler,
 		std::vector<std::pair<int64_t, int>> sortedEnemies,
 		std::vector<state::act_id_t> &kingsGuard,
-		std::vector<state::act_id_t> &flagsGuard
+		std::vector<state::act_id_t> &flagsGuard,
+		int aiLevel
 	);
 };
 
