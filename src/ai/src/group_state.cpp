@@ -14,9 +14,10 @@ void Group::update (
 	std::shared_ptr<state::PlayerStateHandler> state_handler,
 	std::vector<std::pair<int64_t, int>> sortedEnemies,
 	std::vector<state::act_id_t> &kingsGuard,
-	std::vector<state::act_id_t> &flagsGuard
+	std::vector<state::act_id_t> &flagsGuard,
+	int aiLevel
 ) {
-	ai::GroupState* NewState = state->update(unitId, state_handler, sortedEnemies, kingsGuard, flagsGuard);
+	ai::GroupState* NewState = state->update(unitId, state_handler, sortedEnemies, kingsGuard, flagsGuard, aiLevel);
 	if(NewState != NULL)
 	{
 		delete state;
@@ -29,10 +30,11 @@ GroupState* Attack::update (
 	std::shared_ptr<state::PlayerStateHandler> state_handler,
 	std::vector<std::pair<int64_t, int>> sortedEnemies,
 	std::vector<state::act_id_t> &kingsGuard,
-	std::vector<state::act_id_t> &flagsGuard
+	std::vector<state::act_id_t> &flagsGuard,
+	int aiLevel
 ) {
 	groupUtilityHolder = 0;
-	attack_rules -> Strategy(unitId, state_handler, groupUtilityHolder, sortedEnemies);
+	attack_rules -> Strategy(unitId, state_handler, groupUtilityHolder, sortedEnemies, aiLevel);
 	return SelectState(unitId, state_handler);
 }
 
@@ -48,7 +50,8 @@ GroupState* Guard::update(
 	std::shared_ptr<state::PlayerStateHandler> state_handler,
 	std::vector<std::pair<int64_t, int>> sortedEnemies,
 	std::vector<state::act_id_t> &kingsGuard,
-	std::vector<state::act_id_t> &flagsGuard
+	std::vector<state::act_id_t> &flagsGuard,
+	int aiLevel
 ) {
 	groupUtilityHolder = 0;
 	guard_rules -> Strategy(unitId, state_handler, kingsGuard, flagsGuard, groupUtilityHolder, sortedEnemies);

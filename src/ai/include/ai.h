@@ -50,12 +50,18 @@ private:
 	 * Vector of all groups
 	 */
 	std::vector <Group*> groups;
+
+	/**
+	 * Scales strength of AI according to level
+	 */
+	int aiLevel;
+
 public:
 
 	/**
 	 * Constructor for AI.
 	 */
-	AI();
+	AI(int level);
 
 	/**
 	 * Updates the state.

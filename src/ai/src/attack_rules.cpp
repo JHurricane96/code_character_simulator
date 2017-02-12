@@ -15,7 +15,8 @@ void AttackRules::Strategy (
 	state::act_id_t unitId,
 	std::shared_ptr<state::PlayerStateHandler> state,
 	int &groupUtilityHolder,
-	std::vector<std::pair<int64_t, int>> sortedEnemies
+	std::vector<std::pair<int64_t, int>> sortedEnemies,
+	int aiLevel
 )	{
 		if (( !state->GetUnitFromId(unitId, nullptr).CanAttack()
 			&& state->GetUnitFromId(unitId, nullptr).GetActorType() != state::ActorType::KING )
@@ -131,7 +132,7 @@ void AttackRules::Strategy (
 			state::ActorType typeTower = state::ActorType::TOWER;
 			auto nearestEnemyTower = NearestEnemy(state, unitId, &typeTower);
 
-			if( nearestEnemyTower.first != -1) {
+			if( nearestEnemyTower.first != -1 && aiLevel == 3) {
 				if (InAttackRange(state, unitId, state -> GetEnemyUnitFromId(nearestEnemyTower.first, nullptr)) ) {
 					state::list_act_id_t attackers;
 					attackers.push_back(unitId);

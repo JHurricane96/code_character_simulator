@@ -27,15 +27,20 @@ public:
 	AttackRules();
 
 	/**
-	 * The strategy for the attack per unit per tick
+	 * The attack strategy for the unit at every tick
 	 *
-	 * @param[in]  unitId  The unit identifier
+	 * @param[in]  unitId              The unit identifier
+	 * @param[in]  state               The state
+	 * @param      groupUtilityHolder  The group utility holder
+	 * @param[in]  sortedEnemies       The sorted enemies
+	 * @param[in]  aiLevel             The ai level
 	 */
 	void Strategy (
 		state::act_id_t unitId,
 		std::shared_ptr<state::PlayerStateHandler> state,
 		int &groupUtilityHolder,
-		std::vector<std::pair<int64_t, int>> sortedEnemies
+		std::vector<std::pair<int64_t, int>> sortedEnemies,
+		int aiLevel
 	);
 
 	/**
