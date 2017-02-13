@@ -120,6 +120,7 @@ private:
 	 * The number of points each player has lost as a result of base poisoning
 	 */
 	std::vector<int64_t> base_poisoning_penalty;
+	std::vector<int64_t> tower_capture_score;
 public:
 	State();
 	State(

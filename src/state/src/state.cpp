@@ -23,7 +23,8 @@ State::State(
 	path_planner(terrain.GetRows()),
 	terrain(terrain),
 	flag_capture_score(std::vector<int64_t>(LAST_PLAYER+1, 0)),
-	base_poisoning_penalty(std::vector<int64_t>(LAST_PLAYER+1, 0)) {}
+	base_poisoning_penalty(std::vector<int64_t>(LAST_PLAYER+1, 0)),
+	tower_capture_score(std::vector<int64_t>(LAST_PLAYER+1, 0)) {}
 
 State::State(
 		Terrain terrain,
@@ -48,7 +49,8 @@ State::State(
 	path_planner(terrain.GetRows()),
 	terrain(terrain),
 	flag_capture_score(std::vector<int64_t>(LAST_PLAYER+1, 0)),
-	base_poisoning_penalty(std::vector<int64_t>(LAST_PLAYER+1, 0)) {
+	base_poisoning_penalty(std::vector<int64_t>(LAST_PLAYER+1, 0)),
+	tower_capture_score(std::vector<int64_t>(LAST_PLAYER+1, 0)) {
 		for (int64_t i = 0; i <= LAST_PLAYER; i++) {
 			list_act_id_t l;
 			for (auto actor: sorted_actors[i])
@@ -81,7 +83,8 @@ State::State(
 	path_planner(terrain.GetRows()),
 	terrain(terrain),
 	flag_capture_score(std::vector<int64_t>(LAST_PLAYER+1, 0)),
-	base_poisoning_penalty(std::vector<int64_t>(LAST_PLAYER+1, 0)) {}
+	base_poisoning_penalty(std::vector<int64_t>(LAST_PLAYER+1, 0)),
+	tower_capture_score(std::vector<int64_t>(LAST_PLAYER+1, 0)) {}
 
 std::shared_ptr<Actor> State::GetActorFromId(
 		PlayerId player_id,
@@ -391,7 +394,9 @@ std::vector<int64_t> State::GetScores() {
 	std::vector<int64_t> scores;
 	for (int i = 0; i <= LAST_PLAYER; ++i) {
 		scores.push_back(
-			(flag_capture_score[i] * 50) - (base_poisoning_penalty[i] / 1500)
+			(flag_capture_score[i] * 50) -
+			(base_poisoning_penalty[i] / 1500) +
+			(tower_capture_score[i] / 300)
 		);
 	}
 	return scores;
@@ -730,6 +735,9 @@ void State::Update(float delta_time) {
 
 	projectile_handler.Update(delta_time, towers, magicians, &terrain);
 
+	for (int64_t i = 0; i <= LAST_PLAYER; ++i) {
+		tower_capture_score[i] += towers[i].size();
+	}
 }
 
 void State::MergeWithBuffer(const State& state, PlayerId player_id) {
@@ -785,6 +793,7 @@ void State::MergeWithMain(const State& state) {
 
 	flag_capture_score = state.flag_capture_score;
 	base_poisoning_penalty = state.base_poisoning_penalty;
+	tower_capture_score = state.tower_capture_score;
 }
 
 }
