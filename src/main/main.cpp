@@ -219,7 +219,9 @@ int main(int argc, char * argv[])
 		is_headless = true;
 	}
 
-	int level_number = 2;
+	int level_number;
+
+	sscanf(argv[2], "%d", &level_number);
 
 	std::string terrain_file_path(argv[3]);
 
@@ -235,8 +237,16 @@ int main(int argc, char * argv[])
 	auto S2 = std::shared_ptr<state::State>(new state::State(state));
 	state::PlayerStateHandler PSH2(S2.get(), state::PLAYER2);
 
-	drivers::MainDriver driver(player::PlayerAi(std::shared_ptr<player::PlayerAiHelper>(new ai::AI(level_number))),
-		player::PlayerAi(std::shared_ptr<player::PlayerAiHelper>(new ai1::Ai1())), S, S1, S2, 5 * 60 * 1000, is_headless);
+	player::PlayerAiHelper* ai;
+	if (level_number == 1) {
+		ai = new ai1::Ai1();
+	}
+	else {
+		ai = new ai::AI(level_number);
+	}
+
+	drivers::MainDriver driver(player::PlayerAi(std::shared_ptr<player::PlayerAiHelper>(new player1::Player1())),
+		player::PlayerAi(std::shared_ptr<player::PlayerAiHelper>(ai)), S, S1, S2, 5 * 60 * 1000, is_headless);
 
 	driver.Run();
 
