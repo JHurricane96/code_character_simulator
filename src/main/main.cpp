@@ -52,26 +52,26 @@ state::State MakeState(state::Terrain terrain)
 		4 * ELEMENT_SIZE, 10));
 	sorted_actors[1].push_back(std::static_pointer_cast<state::Actor>(bases[1]));
 
-	kings[0] = std::shared_ptr<state::King>(new state::King(2, state::PLAYER1, 0, 400, 400, 10, 10, 100,
+	kings[0] = std::shared_ptr<state::King>(new state::King(2, state::PLAYER1, 0, 400, 400, 10, 10, 210,
 		0, 0, physics::Vector2D(4 * ELEMENT_SIZE, 4 * ELEMENT_SIZE), physics::Vector2D(0, 0), 1,
 		0));
 	kings[0]->AddPathPlanner(state::PathPlannerHelper(kings[0]));
 	sorted_actors[0].push_back(std::static_pointer_cast<state::Actor>(kings[0]));
 
-	kings[1] = std::shared_ptr<state::King>(new state::King(3, state::PLAYER2, 0, 400, 400, 10, 10, 100,
+	kings[1] = std::shared_ptr<state::King>(new state::King(3, state::PLAYER2, 0, 400, 400, 10, 10, 210,
 		0, 0, physics::Vector2D(27 * ELEMENT_SIZE, 27 * ELEMENT_SIZE), physics::Vector2D(0, 0), 1,
 		0));
 	kings[1]->AddPathPlanner(state::PathPlannerHelper(kings[1]));
 	sorted_actors[1].push_back(std::static_pointer_cast<state::Actor>(kings[1]));
 
 	scouts[0][0] = std::shared_ptr<state::Scout>(new state::Scout(6, state::PLAYER1, 0, 300, 300, 37, 10,
-		55, 0, 0, physics::Vector2D(4 * ELEMENT_SIZE, 4 * ELEMENT_SIZE), physics::Vector2D(0, 0),
+		90, 0, 0, physics::Vector2D(4 * ELEMENT_SIZE, 4 * ELEMENT_SIZE), physics::Vector2D(0, 0),
 		6, 0, 0));
 	scouts[0][0]->AddPathPlanner(state::PathPlannerHelper(scouts[0][0]));
 	sorted_actors[0].push_back(std::static_pointer_cast<state::Actor>(scouts[0][0]));
 
 	scouts[1][0] = std::shared_ptr<state::Scout>(new state::Scout(7, state::PLAYER2, 0, 300, 300, 37, 10,
-		55, 0, 0, physics::Vector2D(27 * ELEMENT_SIZE, 27 * ELEMENT_SIZE),
+		90, 0, 0, physics::Vector2D(27 * ELEMENT_SIZE, 27 * ELEMENT_SIZE),
 		physics::Vector2D(0, 0), 6, 0, 0));
 	scouts[1][0]->AddPathPlanner(state::PathPlannerHelper(scouts[1][0]));
 	sorted_actors[1].push_back(std::static_pointer_cast<state::Actor>(scouts[1][0]));
@@ -96,7 +96,7 @@ state::State MakeState(state::Terrain terrain)
 			int team_pos = i == 0 ? 1 : 29;
 			state::PlayerId p = static_cast<state::PlayerId>(i);
 			swordsmen[i][j] = std::shared_ptr<state::Swordsman>(
-				new state::Swordsman(++id_count, p, 20, 200, 200, 20, 10, 20, 0, 0,
+				new state::Swordsman(++id_count, p, 20, 200, 200, 20, 10, 45, 0, 0,
 					physics::Vector2D(team_pos * ELEMENT_SIZE, team_pos * ELEMENT_SIZE),
 					physics::Vector2D(0, 0), 2, 10, 30));
 			swordsmen[i][j]->AddPathPlanner(state::PathPlannerHelper(swordsmen[i][j]));
@@ -110,7 +110,7 @@ state::State MakeState(state::Terrain terrain)
 			int team_pos = i == 0 ? 1 : 29;
 			state::PlayerId p = static_cast<state::PlayerId>(i);
 			magicians[i][j] = std::shared_ptr<state::Magician>(
-				new state::Magician(++id_count, p, 50, 150, 150, 30, 10, 30, 0, 0,
+				new state::Magician(++id_count, p, 50, 150, 150, 30, 10, 60, 0, 0,
 					physics::Vector2D(team_pos * ELEMENT_SIZE, team_pos * ELEMENT_SIZE),
 					physics::Vector2D(0, 0), 3, 25, 3 * ELEMENT_SIZE, 60, 100, 10));
 			magicians[i][j]->AddPathPlanner(state::PathPlannerHelper(magicians[i][j]));
