@@ -98,7 +98,7 @@ void AttackRules::Strategy (
 					traveller.push_back(unitId);
 					state->MoveUnits (
 						traveller,
-						std::vector<physics::Vector2D>({state->GetEnemyBase().GetPosition()}),
+						std::vector<physics::Vector2D>({state->GetEnemyFlag().GetPosition()}),
 						formation,
 						nullptr);
 					break;
