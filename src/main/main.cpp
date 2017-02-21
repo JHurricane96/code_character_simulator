@@ -252,5 +252,10 @@ int main(int argc, char * argv[])
 
 	driver.Join();
 
+	if (is_headless) {
+		auto scores = S->GetScores();
+		std::cout << argv[4] << ':' << scores[0] << ':' << scores[1] << std::endl;
+	}
+
 	return 0;
 }
