@@ -189,7 +189,6 @@ void MainDriver::Stop() {
 	StopP1();
 	StopP2();
 	game_over = true;
-	runner.join();
 }
 
 void MainDriver::StopP1() {
