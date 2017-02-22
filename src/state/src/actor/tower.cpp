@@ -1,5 +1,6 @@
 #include "actor/tower.h"
 #include <algorithm>
+#include <cmath>
 
 namespace state {
 
@@ -67,7 +68,7 @@ bool Tower::Contend(
 				count[pid]++;
 	}
 	contention_score += (count[0] - count[1]) * delta_time;
-	if (std::abs(contention_score) >= max_contention_score) {
+	if (fabs(contention_score) >= max_contention_score) {
 		prev_tower_owner = tower_owner;
 		Respawn(static_cast<TowerOwner>((contention_score < 0)));
 		return true;
